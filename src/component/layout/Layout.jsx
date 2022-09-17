@@ -7,17 +7,17 @@ import SideBar from './SideBar';
 
 function Layout({ children, sidebar = true, header = true }) {
     return (
-        <LayoutWrapper>
+        <StyleLayout>
             {header ? <Header /> : null}
             {sidebar ? <SideBar /> : null}
             <Main>{children}</Main>
-        </LayoutWrapper>
+        </StyleLayout>
     );
 }
 
 export default Layout;
 
-const LayoutWrapper = styled.div``;
+const StyleLayout = styled.div``;
 
 const Main = styled.div``;
 
