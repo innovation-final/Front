@@ -40,6 +40,11 @@ const VARIANTS = {
         --button-bg-color: #feca57;
         --button-hover-bg-color: #ff9f43;
     `,
+    transparent: css`
+        --button-color: #212529;
+        --button-bg-color: rgba(0, 0, 0, 0);
+        --button-hover-bg-color: rgba(0, 0, 0, 0);
+    `,
 };
 
 function Button(props) {
