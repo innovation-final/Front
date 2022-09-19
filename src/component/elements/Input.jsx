@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 function Input(props) {
-    const { multiLine } = props;
+    const { multiLine, placeholder } = props;
 
     if (multiLine) return <StyleTextArea />;
-    return <StyleInput />;
+    return <StyleInput placeholder={placeholder} />;
 }
 
 export default Input;
@@ -16,12 +16,14 @@ Input.defaultProps = {
 };
 Input.propTypes = {
     multiLine: PropTypes.bool,
+    placeholder: PropTypes.string,
 };
 
 const StyleInput = styled.input`
     padding: 10px;
     border: 1px solid #48dbfb;
     border-radius: 10px;
+    width: 100%;
 
     &:active,
     &:focus,

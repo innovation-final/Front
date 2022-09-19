@@ -36,7 +36,7 @@ export default SideBar;
 
 const StyleSideBar = styled.div`
     position: fixed;
-    z-index: 10;
+    z-index: 999;
     left: 0;
     top: 0;
     width: ${props => (props.wide ? 290 : 74)}px;
