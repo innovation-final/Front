@@ -2,15 +2,18 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import WideStore from './context/WideContext';
 
 function Router() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-            </Routes>
-        </BrowserRouter>
+        <WideStore>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                </Routes>
+            </BrowserRouter>
+        </WideStore>
     );
 }
 

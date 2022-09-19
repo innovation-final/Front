@@ -9,7 +9,7 @@ const api = axios.create({
     },
 });
 
-api.interceptors.request.use(config => {});
+api.interceptors.request.use();
 
 api.interceptors.response.use();
 
