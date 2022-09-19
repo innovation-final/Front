@@ -28,7 +28,6 @@ const StyleHeader = styled.div`
     flex-direction: row;
     align-items: center;
     border-bottom: 2px solid #9a9a9a;
-
     margin-bottom: 10px;
 `;
 
