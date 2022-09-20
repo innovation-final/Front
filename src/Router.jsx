@@ -6,6 +6,7 @@ import PostDetail from './pages/PostDetail';
 import WideStore from './context/WideContext';
 import Community from './pages/Community';
 import CommunityBoard from './pages/CommunityBoard';
+import BoardWrite from './component/community/BoardWrite';
 
 function Router() {
     return (
@@ -16,6 +17,10 @@ function Router() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/post/:id" element={<PostDetail />} />
                     <Route path="/community" element={<Community />} />
+                    <Route
+                        path="/communityboardwrite"
+                        element={<BoardWrite />}
+                    />
                     <Route
                         path="/communityboard"
                         element={<CommunityBoard />}
