@@ -1,16 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useQuery } from 'react-query';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import { useParams } from 'react-router-dom';
+import { postAPI } from '../../shared/api';
 import Button from '../elements/Button';
 import ProfileCard from './ProfileCard';
+import LoadingSpinner from '../elements/LoadingSpinner';
 
 function PostBox() {
+    const { id } = useParams();
+    // eslint-disable-next-line no-unused-vars
+    const { data, isLoading } = useQuery(['post', id], () =>
+        postAPI.getPost(id),
+    );
+    const postInfo = data?.data.data;
+    console.log(data?.data.data);
+
+    if (isLoading) return <LoadingSpinner />;
     return (
         <StylePostBox>
             <ContentWrapper>
                 <SubHeader>
-                    <StockName>삼성전자</StockName>
+                    <StockName>{postInfo.stockName}</StockName>
                     <PostInfoBox>
                         <ViewCount>조회 수 : 0</ViewCount>
                         <CommentCount>댓글 : 0</CommentCount>
@@ -18,13 +31,16 @@ function PostBox() {
                 </SubHeader>
                 <Header>
                     <TitleBox>
-                        <Title>Stocks Talk Open!</Title>
+                        <Title>{postInfo.title}</Title>
                         <DateBox>2022-09-19</DateBox>
                     </TitleBox>
                 </Header>
 
-                <ProfileCard />
-                <Content>아 나락갔네 ㅠ</Content>
+                <ProfileCard
+                    name={postInfo.member.nickname}
+                    email={postInfo.member.email}
+                />
+                <Content>{postInfo.content}</Content>
             </ContentWrapper>
             <LikeToggleBox>
                 <Buttons>

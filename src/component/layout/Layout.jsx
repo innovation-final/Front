@@ -22,6 +22,7 @@ export default Layout;
 
 const StyleLayout = styled.div`
     display: relative;
+    font-family: 'Pretendard-Regular';
 `;
 
 const Main = styled.div`

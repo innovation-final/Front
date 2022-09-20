@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Comment from './Comment';
 
 const data = [
-    { author: '준수', body: '안녕하세요', date: Date.now() },
-    { author: '개미', body: '출근실헝 ㅠ', date: Date.now() },
+    { id: 0, author: '준수', body: '안녕하세요', date: Date.now() },
+    { id: 1, author: '개미', body: '출근실헝 ㅠ', date: Date.now() },
 ];
 
 function CommentList() {
@@ -12,6 +12,7 @@ function CommentList() {
         <StyledCommentList>
             {data.map(comment => (
                 <Comment
+                    key={comment.id}
                     author={comment.author}
                     body={comment.body}
                     date={comment.date}

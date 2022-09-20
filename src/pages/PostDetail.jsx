@@ -30,4 +30,6 @@ const PageWrapper = styled.div`
     padding: 30px;
     border: 1px solid #9a9a9a;
     border-radius: 10px;
+
+    box-shadow: 3px 3px 3px 3px gray;
 `;

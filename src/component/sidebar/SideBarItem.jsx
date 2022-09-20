@@ -105,14 +105,13 @@ const IconBox = styled.div`
     cursor: pointer;
 `;
 const ItemTitle = styled(motion.div)`
+    font-family: 'Pretendard-Regular';
     padding: 5px;
     overflow: hidden;
     font-weight: 600;
     color: #525961;
-
-    letter-spacing: -2px;
+    letter-spacing: -1px;
     font-size: 14px;
-
     cursor: pointer;
 `;
 

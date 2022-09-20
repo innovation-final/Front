@@ -67,6 +67,7 @@ export default Button;
 const StyleButton = styled.button`
     ${props => props.size}
     ${props => props.variant}
+    font-family: 'Pretendard-Regular';
     margin: 0;
     border: none;
     font-size: var(--button-font-size, 1rem);
@@ -98,6 +99,6 @@ Button.defaultProps = {
 Button.propTypes = {
     disabled: PropTypes.bool,
     size: PropTypes.string,
-    children: PropTypes.string,
+    children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     variant: PropTypes.string,
 };
