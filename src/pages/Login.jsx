@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import GoogleLogin from 'react-google-login';
 import KakaoLogin from '../static/kakao_login_large_narrow.png';
-import Background from '../static/backgroundImage.jpg';
+
 import GoogleLogo from '../static/GoogleLogo.png';
 import ScrollIcon from '../static/scroll-icon.png';
 import Spinner from '../static/Spinner.gif';
@@ -17,7 +17,7 @@ function Login() {
 
     useEffect(() => {
         setIsLoading(true);
-        setTimeout(() => setIsLoading(false), 1500);
+        setTimeout(() => setIsLoading(false), 1000);
     }, [isPC]);
 
     return (
@@ -45,14 +45,20 @@ function Login() {
                 </h1>
 
                 <DivButton>
-                    <button type="button">
+                    <button
+                        type="button"
+                        onClick={() => console.log('카카오 로그인')}
+                    >
                         <img src={KakaoLogin} alt="카카오" />
                     </button>
                     <GoogleLogin
                         clientId="893727311597-528p6s979bj28k9ru1qkg0tulrtsll0s.apps.googleusercontent.com"
                         buttonText="Google 로그인"
-                        render={() => (
-                            <GoogleButton type="button">
+                        render={renderProps => (
+                            <GoogleButton
+                                type="button"
+                                onClick={renderProps.onClick}
+                            >
                                 <img src={GoogleLogo} alt="G" />
                                 <span>Google 로그인</span>
                             </GoogleButton>
@@ -78,7 +84,7 @@ const LoginLayout = styled.div`
     font-family: 'Roboto';
     width: 100vw;
     height: 100vh;
-    background: url(${Background}) center no-repeat;
+    background-color: skyblue;
     background-size: cover;
     display: flex;
     flex-direction: ${props => (props.isPC ? 'row' : 'column')};
@@ -143,7 +149,8 @@ const DivContent = styled.div`
     height: 150px;
 
     h1 {
-        font-size: 2rem;
+        color: white;
+        font-size: 3rem;
         line-height: 1.5;
         margin-bottom: 1em;
     }
