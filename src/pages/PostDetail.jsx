@@ -26,7 +26,8 @@ function PostDetail() {
 export default PostDetail;
 
 const PageWrapper = styled.div`
-    background-color: aliceblue;
+    background-color: white;
     padding: 30px;
-    border-radius: 30px;
+    border: 1px solid #9a9a9a;
+    border-radius: 10px;
 `;

@@ -101,14 +101,14 @@ const ItemContainer = styled.div`
 const IconBox = styled.div`
     padding: 10px;
     margin-left: 10px;
-    color: #222f3e;
+    color: #525961;
     cursor: pointer;
 `;
 const ItemTitle = styled(motion.div)`
     padding: 5px;
     overflow: hidden;
     font-weight: 600;
-    color: #222f3e;
+    color: #525961;
 
     letter-spacing: -2px;
     font-size: 14px;

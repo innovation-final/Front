@@ -109,14 +109,6 @@ const PostInfoBox = styled.div`
 const ViewCount = styled.div`
     font-size: 13px;
 `;
-const LikeCount = styled.div`
-    font-size: 17px;
-    font-weight: 600;
-    width: 80px;
-    margin: 0px 10px;
-    letter-spacing: -1px;
-    padding-top: 10px;
-`;
 const CommentCount = styled.div`
     font-size: 13px;
 `;
@@ -135,7 +127,14 @@ const LikeToggleBox = styled.div`
 const Buttons = styled.div`
     width: 10%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+`;
+const LikeCount = styled.div`
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0px 10px;
+    letter-spacing: -1px;
+    padding-top: 10px;
 `;
 
 const LikeBox = styled.div``;
