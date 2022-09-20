@@ -9,7 +9,7 @@ const menuItems = [
     { title: '커뮤니티', subItems: ['자유게시판', '실시간 댓글'] },
     { title: '모의투자' },
     { title: '뉴스전체' },
-    { title: '내 업무' },
+    { title: '내 정보', subItems: ['내 정보 수정', '관심종목 관리'] },
 ];
 
 function SideBar() {
@@ -42,7 +42,7 @@ const StyleSideBar = styled.div`
     width: ${props => (props.wide ? 290 : 74)}px;
     height: 100vh;
     background-color: skyblue;
-    color: #222f3e;
+    color: white;
 
     border-right: 1px solid white;
 

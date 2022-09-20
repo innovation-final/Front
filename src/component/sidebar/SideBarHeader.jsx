@@ -27,8 +27,7 @@ const StyleHeader = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-bottom: 2px solid white;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 `;
 
 const IconBox = styled.div`

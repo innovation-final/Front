@@ -26,5 +26,5 @@ const StyleHeader = styled.div`
     justify-content: space-between;
     z-index: 999;
 
-    background-color: white;
+    background-color: skyblue;
 `;

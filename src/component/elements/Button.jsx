@@ -22,8 +22,8 @@ const SIZES = {
 const VARIANTS = {
     normal: css`
         --button-color: #ffffff;
-        --button-bg-color: #48dbfb;
-        --button-hover-bg-color: #0abde3;
+        --button-bg-color: skyblue;
+        --button-hover-bg-color: skyblue;
     `,
     success: css`
         --button-color: #ffffff;

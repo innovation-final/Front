@@ -38,7 +38,7 @@ function SideBarItem({ title, subItems }) {
                         {title === '뉴스전체' ? (
                             <NewspaperIcon fontSize="large" />
                         ) : null}
-                        {title === '내 업무' ? (
+                        {title === '내 정보' ? (
                             <PhoneAndroidIcon fontSize="large" />
                         ) : null}
                     </IconBox>
@@ -105,13 +105,13 @@ const IconBox = styled.div`
     cursor: pointer;
 `;
 const ItemTitle = styled(motion.div)`
-    font-family: 'Pretendard-Regular';
     padding: 5px;
     overflow: hidden;
     font-weight: 600;
     color: #525961;
     letter-spacing: -1px;
-    font-size: 14px;
+    font-size: 17px;
+
     cursor: pointer;
 `;
 
@@ -124,6 +124,7 @@ const SubContainer = styled(motion.div)`
 
 const ArrowContainer = styled.div`
     margin-right: 10px;
+    color: #525961;
     visibility: ${props => (props.wide ? 'visible' : 'hidden')};
     transform: rotate(${props => (props.subWide ? 90 : 0)}deg);
     transition: transform ease-in-out 0.3s;
