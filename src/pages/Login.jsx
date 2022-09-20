@@ -1,37 +1,32 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { throttle } from 'lodash';
-import { isMobile } from 'react-device-detect';
 import GoogleLogin from 'react-google-login';
 import KakaoLogin from '../static/kakao_login_large_narrow.png';
 import Background from '../static/backgroundImage.jpg';
 import GoogleLogo from '../static/GoogleLogo.png';
+import ScrollIcon from '../static/scroll-icon.png';
+import Spinner from '../static/Spinner.gif';
+import useWindowSize from '../hooks/useWindowSize';
 
 function Login() {
-    console.log(isMobile);
-    const [isPC, setIsPC] = useState(!isMobile);
-    const throttled = useCallback(throttle(newValue => newValue(), 500));
-    const handleResize = () => {
-        if (window.innerWidth <= 1023) {
-            setIsPC(false);
-        } else {
-            setIsPC(true);
-        }
-    };
-
-    const throttleResize = () => {
-        throttled(handleResize);
-    };
+    const [isLoading, setIsLoading] = useState(false);
+    const { width } = useWindowSize();
+    const isPC = useMemo(() => {
+        return width >= 1024;
+    }, [width]);
 
     useEffect(() => {
-        handleResize();
-        window.addEventListener('resize', throttleResize);
-        return () => {
-            window.removeEventListener('resize', throttleResize);
-        };
-    }, []);
+        setIsLoading(true);
+        setTimeout(() => setIsLoading(false), 1500);
+    }, [isPC]);
+
     return (
         <LoginLayout isPC={isPC}>
+            {isLoading && (
+                <Loading>
+                    <img src={Spinner} alt="로딩중입니다" />
+                </Loading>
+            )}
             {isPC && (
                 <Header>
                     <nav>
@@ -68,6 +63,11 @@ function Login() {
                     />
                 </DivButton>
             </DivContent>
+            <img
+                className="scroll"
+                src={ScrollIcon}
+                alt="아래로 스크롤 해보세요"
+            />
         </LoginLayout>
     );
 }
@@ -84,6 +84,33 @@ const LoginLayout = styled.div`
     flex-direction: ${props => (props.isPC ? 'row' : 'column')};
     color: white;
     font-weight: bold;
+
+    .scroll {
+        width: 2rem;
+        position: absolute;
+        bottom: 0%;
+        left: 49%;
+        z-index: 15px;
+    }
+
+    @media screen and (max-width: 1023px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+`;
+
+const Loading = styled.div`
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `;
 
 const Header = styled.header`
@@ -92,13 +119,9 @@ const Header = styled.header`
     display: flex;
     justify-content: center;
 
-    @media screen and (max-width: 1023px) {
-        width: 100%;
-    }
-
     nav {
         position: absolute;
-        top: 150px;
+        top: 100px;
         left: 50px;
     }
 
@@ -113,7 +136,7 @@ const Header = styled.header`
 
 const DivContent = styled.div`
     margin-top: auto;
-    margin-bottom: 300px;
+    margin-bottom: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
