@@ -42,7 +42,6 @@ const StyleSideBar = styled.div`
     width: ${props => (props.wide ? 290 : 74)}px;
     height: 100vh;
 
-    background: #c8d6e5;
     border-right: 1px solid #e5e9f2;
 
     transition: width ease-in-out 0.3s;

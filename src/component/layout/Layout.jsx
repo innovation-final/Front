@@ -28,14 +28,13 @@ const Main = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    transform: translateX(${props => (props.wide ? 290 : 70)}px);
-    margin-left: 3%;
-    margin-right: auto;
+    transform: translate(${props => (props.wide ? 290 : 70)}px, 57px);
     /* width: 80vw; */
-    width: calc(80vw + ${props => (props.wide ? 0 : 220)}px);
+    width: calc(100% - ${props => (props.wide ? 290 : 70)}px);
     max-width: 100%;
     box-sizing: border-box;
     padding: 30px;
+    padding-left: 60px;
     z-index: 11;
     transition: all ease-in-out 0.3s;
     /* transition: transform ease-in-out 0.3s; */
