@@ -41,8 +41,10 @@ const StyleSideBar = styled.div`
     top: 0;
     width: ${props => (props.wide ? 290 : 74)}px;
     height: 100vh;
+    background-color: skyblue;
+    color: #222f3e;
 
-    border-right: 1px solid #e5e9f2;
+    border-right: 1px solid white;
 
     transition: width ease-in-out 0.3s;
 `;
