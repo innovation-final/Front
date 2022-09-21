@@ -6,10 +6,11 @@ import GoogleLogo from '../../static/GoogleLogo.png';
 import { LoginLayout } from './style';
 import ScrollIcon from '../../static/scroll-icon.png';
 
-function MainPage() {
+function MainPage(props) {
+    const { id, bgColor } = props;
     const navigate = useNavigate();
     return (
-        <LoginLayout>
+        <LoginLayout id={id} bgColor={bgColor}>
             <DivContent>
                 <h1>
                     모의투자로 대비하는 <br />
