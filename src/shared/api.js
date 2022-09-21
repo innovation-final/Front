@@ -7,9 +7,9 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
         Authorization:
-            'BEARER eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb29uZ2VyMzMwMEBnbWFpbC5jb20iLCJpYXQiOjE2NjM3NjEwMjksImV4cCI6MTY2Mzk0MTAyOX0.D9dt_f514SrA3rZd6gkKigSL8oWYzp4PO3EykxDGmfQ',
+            'BEARER eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoanM3NzI4QGtha2FvLmNvbSIsImlhdCI6MTY2Mzc2MzQ2NywiZXhwIjoxNjYzOTQzNDY3fQ.vDFDgosyivg_7wBThaEfEeW3VXDi0jKJ8JwLZF56nV4',
         'refresh-token':
-            'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjM3NjEwMjksImV4cCI6MTY2NDk3MDYyOX0.J9L0j9A1bolN0J9b2gkzs8CnFK8FEALA-yT-Jv7tUHs',
+            'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjM3NjM0NjcsImV4cCI6MTY2NDk3MzA2N30.-n0fvznpFOxyFkSEtDYDTelmh0Y6CnzRsgg0Ytt4EA8',
     },
 });
 
@@ -27,4 +27,10 @@ export const postAPI = {
     getPost: id => api.get(`/post/${id}`),
 };
 
-export const commentAPI = {};
+export const commentAPI = {
+    postComment: (postId, request) =>
+        api.post(`/auth/comment/${postId}`, request),
+    putComment: (commentId, request) =>
+        api.put(`/auth/comment/${commentId}`, request),
+    deleteComment: commentId => api.delete(`/auth/comment/${commentId}`),
+};

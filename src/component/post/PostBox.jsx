@@ -1,6 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useQuery } from 'react-query';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -19,14 +20,13 @@ function PostBox() {
         postAPI.getPost(id),
     );
     const postInfo = data?.data.data;
-    console.log(data?.data.data);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const deleteHandler = e => {
-        const post_id = Number(id);
+        const postId = Number(id);
         e.preventDefault();
-        dispatch(deleteBoardpost(post_id));
+        dispatch(deleteBoardpost(postId));
         navigate(-1);
     };
 
@@ -49,7 +49,9 @@ function PostBox() {
 
                     <PostInfoBox>
                         <ViewCount>조회 수 : 0</ViewCount>
-                        <CommentCount>댓글 : 0</CommentCount>
+                        <CommentCount>
+                            댓글 : {postInfo.comments.length}
+                        </CommentCount>
                     </PostInfoBox>
                 </SubHeader>
                 <Header>
@@ -59,10 +61,7 @@ function PostBox() {
                     </TitleBox>
                 </Header>
 
-                <ProfileCard
-                    name={postInfo.nickname}
-                    email={postInfo?.member?.email}
-                />
+                <ProfileCard user={postInfo.member} />
                 <Content>{postInfo.content}</Content>
             </ContentWrapper>
             <LikeToggleBox>
@@ -72,7 +71,7 @@ function PostBox() {
                             <ThumbUpIcon />
                         </LikeBox>
                     </Button>
-                    <LikeCount>5467</LikeCount>
+                    <LikeCount>{postInfo.dislikes + postInfo.likes}</LikeCount>
                     <Button variant="error">
                         <LikeBox>
                             <ThumbDownIcon />
@@ -85,6 +84,28 @@ function PostBox() {
 }
 
 export default PostBox;
+
+PostBox.propTypes = {
+    postInfo: PropTypes.shape({
+        title: PropTypes.string,
+        content: PropTypes.string,
+        stockName: PropTypes.string,
+        likes: PropTypes.number,
+        dislikes: PropTypes.number,
+        nickname: PropTypes.string,
+        member: PropTypes.shape({
+            nickname: PropTypes.string,
+            email: PropTypes.string,
+        }),
+        comments: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.number,
+                nickname: PropTypes.string,
+                content: PropTypes.string,
+            }),
+        ),
+    }),
+};
 
 const StylePostBox = styled.div`
     position: relative;
