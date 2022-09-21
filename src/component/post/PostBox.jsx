@@ -3,11 +3,14 @@ import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { postAPI } from '../../shared/api';
 import Button from '../elements/Button';
 import ProfileCard from './ProfileCard';
 import LoadingSpinner from '../elements/LoadingSpinner';
+import { deleteBoardpost } from '../../redux/modules/postSlice';
 
 function PostBox() {
     const { id } = useParams();
@@ -18,12 +21,32 @@ function PostBox() {
     const postInfo = data?.data.data;
     console.log(data?.data.data);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const deleteHandler = e => {
+        const post_id = Number(id);
+        e.preventDefault();
+        dispatch(deleteBoardpost(post_id));
+        navigate(-1);
+    };
+
     if (isLoading) return <LoadingSpinner />;
     return (
         <StylePostBox>
             <ContentWrapper>
                 <SubHeader>
                     <StockName>{postInfo.stockName}</StockName>
+                    <div>
+                        <Button
+                            variant="transparent"
+                            disabled={false}
+                            name="postDeleteButton"
+                            onclick={deleteHandler}
+                        >
+                            <DeleteOutlineIcon fontSize="small" />
+                        </Button>
+                    </div>
+
                     <PostInfoBox>
                         <ViewCount>조회 수 : 0</ViewCount>
                         <CommentCount>댓글 : 0</CommentCount>
