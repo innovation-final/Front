@@ -7,6 +7,7 @@ import WideStore from './context/WideContext';
 import Community from './pages/Community';
 import CommunityBoard from './pages/CommunityBoard';
 import BoardWrite from './component/community/BoardWrite';
+import Redirect from './pages/Redirect';
 
 function Router() {
     return (
@@ -15,6 +16,7 @@ function Router() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/redirect" element={<Redirect />} />
                     <Route path="/post/:id" element={<PostDetail />} />
                     <Route path="/community" element={<Community />} />
                     <Route

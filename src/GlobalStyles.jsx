@@ -12,6 +12,15 @@ const GlobalStyle = createGlobalStyle`
         font-weight:400;
         font-style:normal;
     }
+
+    body{
+        -ms-overflow-style: none;
+    }
+    
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
 `;
 
 export default GlobalStyle;
