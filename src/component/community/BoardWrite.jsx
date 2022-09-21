@@ -23,7 +23,7 @@ function BoardWrite() {
             content,
         };
         dispatch(addBoardpost(addboard));
-        navigate('/communityboard');
+        navigate(-1);
     };
 
     return (

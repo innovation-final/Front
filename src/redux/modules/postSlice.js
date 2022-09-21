@@ -37,6 +37,19 @@ export const getBoardpost = createAsyncThunk(
     },
 );
 
+// 삭제 delete
+export const deleteBoardpost = createAsyncThunk(
+    '/deleteBoardpost',
+    async (payload, thunkAPI) => {
+        try {
+            await api.delete(`/auth/post/${payload}`);
+            return thunkAPI.fulfillWithValue(payload);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    },
+);
+
 const post = createSlice({
     name: 'post',
     initialState,
@@ -73,6 +86,23 @@ const post = createSlice({
             const newState = state;
             newState.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
             newState.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
+        },
+        // deleteTravelCard Thunk
+        [deleteBoardpost.pending]: state => {
+            const newState = state;
+            newState.success = true;
+        },
+        [deleteBoardpost.fulfilled]: (state, action) => {
+            const newState = state;
+            newState.success = false;
+            newState.post = state.posts.filter(
+                post => post.id !== action.payload,
+            );
+        },
+        [deleteBoardpost.rejected]: (state, action) => {
+            const newState = state;
+            newState.success = false;
+            newState.error = action.payload;
         },
     },
 });

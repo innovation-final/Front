@@ -13,7 +13,7 @@ function CommunityBoard() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { post } = useSelector(state => state.post);
-    console.log('글확인', post);
+    // console.log('글확인', post);
     useEffect(() => {
         dispatch(getBoardpost());
     }, []);

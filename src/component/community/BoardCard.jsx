@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -7,6 +8,7 @@ function BoardCard({ post }) {
     const { title, stockName, content, id } = post;
 
     const navigate = useNavigate();
+
     return (
         <div>
             <div
