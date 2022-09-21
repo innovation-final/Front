@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../elements/Button';
 
-function ProfileCard(props) {
-    const { name, email } = props;
+function ProfileCard({ user }) {
+    const { nickname, email } = user;
     return (
         <StyleProfileCard>
             <Wrapper>
@@ -12,7 +12,7 @@ function ProfileCard(props) {
                     <ProfileImage src="https://image.edaily.co.kr/images/photo/files/NP/S/2020/03/PS20031800048.jpg" />
                 </ImageBox>
                 <ContentBox>
-                    <UserName>{name}</UserName>
+                    <UserName>{nickname}</UserName>
                     <UserComment>{email}</UserComment>
                 </ContentBox>
             </Wrapper>
@@ -26,8 +26,10 @@ function ProfileCard(props) {
 export default ProfileCard;
 
 ProfileCard.propTypes = {
-    name: PropTypes.string,
-    email: PropTypes.string,
+    user: PropTypes.shape({
+        nickname: PropTypes.string,
+        email: PropTypes.string,
+    }),
 };
 
 const StyleProfileCard = styled.div`

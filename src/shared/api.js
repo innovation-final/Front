@@ -1,11 +1,15 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://52.78.70.12/api';
+const BASE_URL = 'https://hakjoonkim.shop/api';
 
 const api = axios.create({
     baseURL: BASE_URL,
     headers: {
         'Content-Type': 'application/json',
+        Authorization:
+            'BEARER eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoanM3NzI4QGtha2FvLmNvbSIsImlhdCI6MTY2Mzc2MzQ2NywiZXhwIjoxNjYzOTQzNDY3fQ.vDFDgosyivg_7wBThaEfEeW3VXDi0jKJ8JwLZF56nV4',
+        'refresh-token':
+            'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjM3NjM0NjcsImV4cCI6MTY2NDk3MzA2N30.-n0fvznpFOxyFkSEtDYDTelmh0Y6CnzRsgg0Ytt4EA8',
     },
 });
 
@@ -23,4 +27,10 @@ export const postAPI = {
     getPost: id => api.get(`/post/${id}`),
 };
 
-export const commentAPI = {};
+export const commentAPI = {
+    postComment: (postId, request) =>
+        api.post(`/auth/comment/${postId}`, request),
+    putComment: (commentId, request) =>
+        api.put(`/auth/comment/${commentId}`, request),
+    deleteComment: commentId => api.delete(`/auth/comment/${commentId}`),
+};

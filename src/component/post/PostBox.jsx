@@ -1,23 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
+import PropTypes from 'prop-types';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import { useParams } from 'react-router-dom';
-import { postAPI } from '../../shared/api';
 import Button from '../elements/Button';
 import ProfileCard from './ProfileCard';
-import LoadingSpinner from '../elements/LoadingSpinner';
 
-function PostBox() {
-    const { id } = useParams();
-    const { data, isLoading } = useQuery(['post', id], () =>
-        postAPI.getPost(id),
-    );
-    const postInfo = data?.data.data;
-    console.log(data?.data.data);
-
-    if (isLoading) return <LoadingSpinner />;
+function PostBox({ postInfo }) {
     return (
         <StylePostBox>
             <ContentWrapper>
@@ -25,7 +14,9 @@ function PostBox() {
                     <StockName>{postInfo.stockName}</StockName>
                     <PostInfoBox>
                         <ViewCount>조회 수 : 0</ViewCount>
-                        <CommentCount>댓글 : 0</CommentCount>
+                        <CommentCount>
+                            댓글 : {postInfo.comments.length}
+                        </CommentCount>
                     </PostInfoBox>
                 </SubHeader>
                 <Header>
@@ -35,10 +26,7 @@ function PostBox() {
                     </TitleBox>
                 </Header>
 
-                <ProfileCard
-                    name={postInfo.nickname}
-                    email={postInfo?.member?.email}
-                />
+                <ProfileCard user={postInfo.member} />
                 <Content>{postInfo.content}</Content>
             </ContentWrapper>
             <LikeToggleBox>
@@ -48,7 +36,7 @@ function PostBox() {
                             <ThumbUpIcon />
                         </LikeBox>
                     </Button>
-                    <LikeCount>5467</LikeCount>
+                    <LikeCount>{postInfo.dislikes + postInfo.likes}</LikeCount>
                     <Button variant="error">
                         <LikeBox>
                             <ThumbDownIcon />
@@ -61,6 +49,28 @@ function PostBox() {
 }
 
 export default PostBox;
+
+PostBox.propTypes = {
+    postInfo: PropTypes.shape({
+        title: PropTypes.string,
+        content: PropTypes.string,
+        stockName: PropTypes.string,
+        likes: PropTypes.number,
+        dislikes: PropTypes.number,
+        nickname: PropTypes.string,
+        member: PropTypes.shape({
+            nickname: PropTypes.string,
+            email: PropTypes.string,
+        }),
+        comments: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.number,
+                nickname: PropTypes.string,
+                content: PropTypes.string,
+            }),
+        ),
+    }),
+};
 
 const StylePostBox = styled.div`
     position: relative;

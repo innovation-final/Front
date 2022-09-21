@@ -3,20 +3,22 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 function Input(props) {
-    const { multiLine, placeholder } = props;
-
-    if (multiLine) return <StyleTextArea />;
-    return <StyleInput placeholder={placeholder} />;
+    const { multiLine, placeholder, _onChange } = props;
+    if (multiLine)
+        return <StyleTextArea placeholder={placeholder} onChange={_onChange} />;
+    return <StyleInput placeholder={placeholder} onChange={_onChange} />;
 }
 
 export default Input;
 
 Input.defaultProps = {
     multiLine: false,
+    _onChange: () => {},
 };
 Input.propTypes = {
     multiLine: PropTypes.bool,
     placeholder: PropTypes.string,
+    _onChange: PropTypes.func,
 };
 
 const StyleInput = styled.input`
