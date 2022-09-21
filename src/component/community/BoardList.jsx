@@ -81,7 +81,7 @@ const Card = styled.div`
     border-radius: 5px;
     border: 1px solid #79a7ca;
     /* background-color: rgba(214, 227, 239, 0.468); */
-    background-image: linear-gradient(to top, #e6e9f0 0%, #e6f0fe 100%);
+    background-color: #93cce71b;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 
