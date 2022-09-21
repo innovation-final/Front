@@ -11,7 +11,6 @@ import LoadingSpinner from '../elements/LoadingSpinner';
 
 function PostBox() {
     const { id } = useParams();
-    // eslint-disable-next-line no-unused-vars
     const { data, isLoading } = useQuery(['post', id], () =>
         postAPI.getPost(id),
     );
