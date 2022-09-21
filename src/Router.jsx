@@ -2,13 +2,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import PostDetail from './pages/PostDetail';
 import WideStore from './context/WideContext';
 import Community from './pages/Community';
 import CommunityBoard from './pages/CommunityBoard';
 import BoardWrite from './component/community/BoardWrite';
 import Redirect from './pages/Redirect';
 import BoardEdit from './component/community/BoardEdit';
+import PostDetail from './pages/PostDetail';
 
 function Router() {
     return (

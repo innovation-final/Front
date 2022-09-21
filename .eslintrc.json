@@ -11,5 +11,6 @@
         "react/require-default-props": "off",
         "no-console": "off",
         "react/prop-types": "off"
-    }
+    },
+    "ecmaVersion": 2020
 }
