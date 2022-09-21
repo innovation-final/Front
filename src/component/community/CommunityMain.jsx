@@ -112,7 +112,7 @@ const BoxLayout = styled.div`
     width: 100%;
 `;
 
-const CardTitle = styled.h5`
+const CardTitle = styled.p`
     font-size: 20px;
     text-overflow: ellipsis;
     overflow: hidden;

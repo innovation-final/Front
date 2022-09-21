@@ -4,14 +4,19 @@
         "es6": true,
         "node": true
     },
+
     "extends": ["airbnb", "plugin:prettier/recommended"],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/require-default-props": "off",
-        "no-console": "off"
+        "no-console": "off",
+        "no-shadow": "off"
+        // "react/prop-types": 0
     },
     "parser": "@babel/eslint-parser",
-    "requireConfigFile": false, // <== ADD THIS
-    "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
-    "sourceType": "module" // Allows for the use of imports
+    "requireConfigFile": false,
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "babelOptions": { "configFile": "./.babelrc" },
+    "parserOptions": { "requireConfigFile": "false" }
 }
