@@ -1,4 +1,5 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -19,14 +20,13 @@ function PostBox() {
         postAPI.getPost(id),
     );
     const postInfo = data?.data.data;
-    console.log(data?.data.data);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const deleteHandler = e => {
-        const post_id = Number(id);
+        const postId = Number(id);
         e.preventDefault();
-        dispatch(deleteBoardpost(post_id));
+        dispatch(deleteBoardpost(postId));
         navigate(-1);
     };
 

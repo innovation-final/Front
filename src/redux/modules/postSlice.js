@@ -15,7 +15,6 @@ export const addBoardpost = createAsyncThunk(
     async (payload, thunkAPI) => {
         try {
             const data = await api.post('/auth/post', payload);
-
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
@@ -29,7 +28,6 @@ export const getBoardpost = createAsyncThunk(
     async (postId, thunkAPI) => {
         try {
             const data = await api.get('/post');
-
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
@@ -62,8 +60,7 @@ const post = createSlice({
         [addBoardpost.fulfilled]: (state, action) => {
             const newState = state;
             newState.success = false;
-            newState.post.push(action.payload);
-
+            newState.post = [action.payload, ...newState.post];
             return newState;
         },
 
@@ -71,7 +68,6 @@ const post = createSlice({
             const newState = state;
             newState.success = false;
             newState.error = action.payload.data;
-            return newState;
         },
         [getBoardpost.pending]: state => {
             const newState = state;

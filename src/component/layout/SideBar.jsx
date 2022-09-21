@@ -14,11 +14,11 @@ function SideBar() {
         { title: '주식보기', onClickFn: () => navigate('/') },
         {
             title: '커뮤니티',
-            onClickFn: () => navigate('/'),
+            onClickFn: () => navigate('/community'),
             subItems: [
                 {
                     title: '자유게시판',
-                    onClickFn: () => navigate('/community'),
+                    onClickFn: () => navigate('/communityboard'),
                 },
                 { title: '실시간 댓글', onClickFn: () => navigate('/') },
             ],
