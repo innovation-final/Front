@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import KakaoLogin from '../../static/kakao_login_large_narrow.png';
@@ -8,7 +10,37 @@ import ScrollIcon from '../../static/scroll-icon.png';
 
 function MainPage(props) {
     const { id, bgColor } = props;
+    //const REST_API_KEY = '8574b7f614af462f907d48b93aa7f210';
+    const REST_API_KEY = '91598580aab0e9b9f40aa19be86152f6';
+    const REDIRECT_URI = 'https://hakjoonkim.shop/api/user/callback';
+    const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    const code = new URL(window.location.href).searchParams.get('code');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log('하하');
+        const getToken = async () => {
+            try {
+                console.log('하하');
+                const res = await axios
+                    .get(
+                        `https://hakjoonkim.shop/api/member/login/kakao?code=${code}`,
+                    )
+                    .then(res => {
+                        console.log('응답 확인', res);
+                        const token = res.headers.authorization;
+                        window.localStorage.setItem('token', token);
+                        navigate('/');
+                    })
+                    .catch(err => console.log(err));
+                console.log(res);
+            } catch (e) {
+                console.error(e);
+            }
+        };
+        getToken();
+    }, []);
+
     return (
         <LoginLayout id={id} bgColor={bgColor}>
             <DivContent>
@@ -23,7 +55,7 @@ function MainPage(props) {
                         onClick={() => {
                             navigate('/redirect', {
                                 state: {
-                                    url: 'https://hakjoonkim.shop/api/member/login/kakao',
+                                    url: KAKAO_AUTH_URI,
                                 },
                             });
                         }}
