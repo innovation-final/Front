@@ -10,13 +10,7 @@
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/require-default-props": "off",
         "no-console": "off",
-        "no-shadow": "off",
-        "react/prop-types": 0
+        "react/prop-types": "off"
     },
-    "parser": "@babel/eslint-parser",
-    "requireConfigFile": false,
-    "ecmaVersion": 2018,
-    "sourceType": "module",
-    "babelOptions": { "configFile": "./.babelrc" },
-    "parserOptions": { "requireConfigFile": "false" }
+    "ecmaVersion": 2020
 }
