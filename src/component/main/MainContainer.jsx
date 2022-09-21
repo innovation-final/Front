@@ -6,7 +6,7 @@ import { WideContext } from '../../context/WideContext';
 function MainContainer({ children }) {
     const context = useContext(WideContext);
     const { wide } = context;
-    return <StyleMainContainer wide={wide}>{children}</StyleMainContainer>;
+    return <StyleMainContainer $wide={wide}>{children}</StyleMainContainer>;
 }
 
 export default MainContainer;

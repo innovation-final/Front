@@ -8,8 +8,8 @@ import { WideContext } from '../../context/WideContext';
 
 const responsive = {
     pc: css`
-        transform: translate(${props => (props.wide ? 290 : 70)}px, 57px);
-        width: calc(100% - ${props => (props.wide ? 290 : 70)}px);
+        transform: translate(${props => (props.$wide ? 290 : 70)}px, 57px);
+        width: calc(100% - ${props => (props.$wide ? 290 : 70)}px);
         padding: 30px;
         padding-left: 60px;
     `,
@@ -31,7 +31,7 @@ function Layout({ children, sidebar = true, header = true }) {
         <StyleLayout>
             {header && isPC ? <Header /> : null}
             {sidebar ? <SideBar /> : null}
-            <Main wide={wide} isPC={isPC}>
+            <Main $wide={wide} isPC={isPC}>
                 {children}
             </Main>
         </StyleLayout>
@@ -63,6 +63,6 @@ const Main = styled.div`
 
 Layout.propTypes = {
     children: PropTypes.node.isRequired,
-    sidebar: PropTypes.bool.isRequired,
-    header: PropTypes.bool.isRequired,
+    sidebar: PropTypes.bool,
+    header: PropTypes.bool,
 };

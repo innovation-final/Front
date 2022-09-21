@@ -37,8 +37,8 @@ function PostBox() {
                 </Header>
 
                 <ProfileCard
-                    name={postInfo.member.nickname}
-                    email={postInfo.member.email}
+                    name={postInfo.nickname}
+                    email={postInfo?.member?.email}
                 />
                 <Content>{postInfo.content}</Content>
             </ContentWrapper>

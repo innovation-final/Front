@@ -35,8 +35,8 @@ const StyleProfileCard = styled.div`
     flex-direction: row;
     padding: 10px;
     margin-bottom: 50px;
-    /* border: 1px solid gray;
-    border-radius: 15px; */
+    /* border: 1px solid gray; */
+    border-radius: 15px;
 `;
 
 const Wrapper = styled.div`

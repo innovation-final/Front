@@ -9,7 +9,7 @@ const WideAnimation = {
     end: { opacity: 1, transition: { duration: 0.5 } },
 };
 
-function SideBarSubItem({ title, subWide }) {
+function SideBarSubItem({ title, onClickFn, subWide }) {
     const context = useContext(WideContext);
     const { wide } = context;
 
@@ -17,10 +17,11 @@ function SideBarSubItem({ title, subWide }) {
         <>
             {subWide && wide ? (
                 <StyleSubItem
-                    wide={wide}
+                    $wide={wide}
                     variants={WideAnimation}
                     initial="start"
                     animate="end"
+                    onClick={onClickFn}
                 >
                     {title}
                 </StyleSubItem>
@@ -50,4 +51,5 @@ const StyleSubItem = styled(motion.div)`
 SideBarSubItem.propTypes = {
     title: PropTypes.string,
     subWide: PropTypes.bool,
+    onClickFn: PropTypes.func,
 };
