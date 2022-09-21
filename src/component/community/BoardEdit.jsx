@@ -6,7 +6,7 @@ import Layout from '../layout/Layout';
 import useInput from '../../hooks/useInput';
 import { addBoardpost } from '../../redux/modules/postSlice';
 
-function BoardWrite() {
+function BoardEdit() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ function BoardWrite() {
             content,
         };
         dispatch(addBoardpost(addboard));
-        navigate(-1);
+        navigate('/communityboard');
     };
 
     return (
@@ -64,7 +64,7 @@ function BoardWrite() {
                         className="btn btn-outline-primary"
                         onClick={submitHandler}
                     >
-                        완료
+                        수정완료
                     </Button>
                 </ButtonLayout>
             </Card>
@@ -72,7 +72,7 @@ function BoardWrite() {
     );
 }
 
-export default BoardWrite;
+export default BoardEdit;
 
 const CardLayout = styled.div`
     margin: 15px;
