@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -8,7 +9,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PropTypes from 'prop-types';
 import Button from '../elements/Button';
-import Input from '../elements/Input';
+import { commentAPI } from '../../shared/api';
 
 const commentAnimation = {
     start: { opacity: 0, y: 10 },
@@ -17,21 +18,57 @@ const commentAnimation = {
 };
 
 function Comment(props) {
-    const { author, body, date } = props;
-    const [editComment, setEditComment] = React.useState(body);
+    const ref = useRef(null);
+    const { id, nickname, content } = props;
+    const [editComment, setEditComment] = React.useState(content);
     const [isEdit, setIsEdit] = React.useState(false);
+    const queryClient = useQueryClient();
+
+    const deleteComment = async _id => {
+        const response = await commentAPI.deleteComment(_id);
+        return response;
+    };
+    const putComment = async req => {
+        const response = await commentAPI.putComment(id, req);
+        return response;
+    };
+
+    const mutation = useMutation(_id => deleteComment(_id), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+    });
+    const editMutation = useMutation(req => putComment(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+    });
+
+    const onDelete = () => {
+        mutation.mutate(id);
+    };
+    const onClickEdit = () => {
+        editMutation.mutate({ content: editComment });
+        setIsEdit(false);
+    };
+    const onCancel = () => {
+        setIsEdit(false);
+        setEditComment(content);
+    };
 
     const onChange = event => {
         setEditComment(event.target.value);
     };
 
-    const dateData = new Date(date);
-    const year = dateData.getFullYear();
-    const month = `${dateData.getMonth() + 1}`.padStart(2, 0);
-    const day = `${dateData.getDate()}`.padStart(2, 0);
-    const hours = `${dateData.getHours()}`.padStart(2, 0);
-    const minutes = `${dateData.getMinutes()}`.padStart(2, 0);
-    const seconds = `${dateData.getSeconds()}`.padStart(2, 0);
+    // const dateData = new Date(date);
+    // const year = dateData.getFullYear();
+    // const month = `${dateData.getMonth() + 1}`.padStart(2, 0);
+    // const day = `${dateData.getDate()}`.padStart(2, 0);
+    // const hours = `${dateData.getHours()}`.padStart(2, 0);
+    // const minutes = `${dateData.getMinutes()}`.padStart(2, 0);
+    // const seconds = `${dateData.getSeconds()}`.padStart(2, 0);
     return (
         <WrapperContainer
             variants={commentAnimation}
@@ -42,8 +79,8 @@ function Comment(props) {
             <WriterBox>
                 <WrapperUserInfo>
                     <AccountCircleIcon />
-                    <Writer>{author}</Writer>
-                    <DateBox>{`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`}</DateBox>
+                    <Writer>{nickname}</Writer>
+                    {/* <DateBox>{`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`}</DateBox> */}
                 </WrapperUserInfo>
                 <Buttons>
                     <Button
@@ -58,28 +95,29 @@ function Comment(props) {
                                 onClick={() => setIsEdit(true)}
                             />
                         ) : (
-                            <CancelIcon
-                                fontSize="small"
-                                onClick={() => setIsEdit(false)}
-                            />
+                            <CancelIcon fontSize="small" onClick={onCancel} />
                         )}
                     </Button>
                     {!isEdit ? (
-                        <Button
-                            variant="transparent"
-                            disabled={false}
-                            name="commentButton"
-                        >
-                            <DeleteOutlineIcon fontSize="small" />
-                        </Button>
+                        <ButtonBox onClick={onDelete}>
+                            <Button
+                                variant="transparent"
+                                disabled={false}
+                                name="commentButton"
+                            >
+                                <DeleteOutlineIcon fontSize="small" />
+                            </Button>
+                        </ButtonBox>
                     ) : (
-                        <Button
-                            variant="transparent"
-                            disabled={false}
-                            name="commentButton"
-                        >
-                            <SaveIcon fontSize="small" />
-                        </Button>
+                        <ButtonBox onClick={onClickEdit}>
+                            <Button
+                                variant="transparent"
+                                disabled={false}
+                                name="commentButton"
+                            >
+                                <SaveIcon fontSize="small" />
+                            </Button>
+                        </ButtonBox>
                     )}
                 </Buttons>
             </WriterBox>
@@ -87,13 +125,14 @@ function Comment(props) {
                 <Wrapper>
                     {!isEdit ? (
                         <Contents>
-                            {body.length >= 80
-                                ? `${body.slice(0, 85)}...`
-                                : body}
+                            {content.length >= 80
+                                ? `${content.slice(0, 85)}...`
+                                : content}
                         </Contents>
                     ) : (
                         <InputBox>
                             <Input
+                                ref={ref}
                                 onChange={onChange}
                                 placeholder="내용을 입력해주세요."
                                 value={editComment}
@@ -110,9 +149,10 @@ function Comment(props) {
 export default Comment;
 
 Comment.propTypes = {
-    author: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
+    id: PropTypes.number,
+    nickname: PropTypes.string,
+    content: PropTypes.string.isRequired,
+    // date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 const WrapperUserInfo = styled.div`
@@ -177,6 +217,19 @@ const Contents = styled.div``;
 const InputBox = styled.div`
     width: 95%;
 `;
+const Input = styled.input`
+    font-family: 'Pretendard-Regular';
+    padding: 10px;
+    border: 1px solid #48dbfb;
+    border-radius: 10px;
+    width: 100%;
+
+    &:active,
+    &:focus,
+    &:hover {
+        outline: 2px solid #0abde3;
+    }
+`;
 const Buttons = styled.div`
     display: flex;
     justify-content: space-between;
@@ -184,9 +237,11 @@ const Buttons = styled.div`
     margin-right: 20px;
 `;
 
-const DateBox = styled.div`
-    width: 40%;
-    margin-left: 10px;
-    font-size: calc(0.2em + 0.5vw);
-    text-align: left;
-`;
+const ButtonBox = styled.div``;
+
+// const DateBox = styled.div`
+//     width: 40%;
+//     margin-left: 10px;
+//     font-size: calc(0.2em + 0.5vw);
+//     text-align: left;
+// `;

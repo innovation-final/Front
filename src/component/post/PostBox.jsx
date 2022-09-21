@@ -1,30 +1,68 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { postAPI } from '../../shared/api';
 import Button from '../elements/Button';
 import ProfileCard from './ProfileCard';
+import LoadingSpinner from '../elements/LoadingSpinner';
+import { deleteBoardpost } from '../../redux/modules/postSlice';
 
 function PostBox() {
+    const { id } = useParams();
+    // eslint-disable-next-line no-unused-vars
+    const { data, isLoading } = useQuery(['post', id], () =>
+        postAPI.getPost(id),
+    );
+    const postInfo = data?.data.data;
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const deleteHandler = e => {
+        const postId = Number(id);
+        e.preventDefault();
+        dispatch(deleteBoardpost(postId));
+        navigate(-1);
+    };
+
+    if (isLoading) return <LoadingSpinner />;
     return (
         <StylePostBox>
             <ContentWrapper>
                 <SubHeader>
-                    <StockName>삼성전자</StockName>
+                    <StockName>{postInfo.stockName}</StockName>
+                    <div>
+                        <Button
+                            variant="transparent"
+                            disabled={false}
+                            name="postDeleteButton"
+                            onclick={deleteHandler}
+                        >
+                            <DeleteOutlineIcon fontSize="small" />
+                        </Button>
+                    </div>
+
                     <PostInfoBox>
                         <ViewCount>조회 수 : 0</ViewCount>
-                        <CommentCount>댓글 : 0</CommentCount>
+                        <CommentCount>
+                            댓글 : {postInfo.comments.length}
+                        </CommentCount>
                     </PostInfoBox>
                 </SubHeader>
                 <Header>
                     <TitleBox>
-                        <Title>Stocks Talk Open!</Title>
+                        <Title>{postInfo.title}</Title>
                         <DateBox>2022-09-19</DateBox>
                     </TitleBox>
                 </Header>
 
-                <ProfileCard />
-                <Content>아 나락갔네 ㅠ</Content>
+                <ProfileCard user={postInfo.member} />
+                <Content>{postInfo.content}</Content>
             </ContentWrapper>
             <LikeToggleBox>
                 <Buttons>
@@ -33,7 +71,7 @@ function PostBox() {
                             <ThumbUpIcon />
                         </LikeBox>
                     </Button>
-                    <LikeCount>5467</LikeCount>
+                    <LikeCount>{postInfo.dislikes + postInfo.likes}</LikeCount>
                     <Button variant="error">
                         <LikeBox>
                             <ThumbDownIcon />
@@ -46,6 +84,28 @@ function PostBox() {
 }
 
 export default PostBox;
+
+PostBox.propTypes = {
+    postInfo: PropTypes.shape({
+        title: PropTypes.string,
+        content: PropTypes.string,
+        stockName: PropTypes.string,
+        likes: PropTypes.number,
+        dislikes: PropTypes.number,
+        nickname: PropTypes.string,
+        member: PropTypes.shape({
+            nickname: PropTypes.string,
+            email: PropTypes.string,
+        }),
+        comments: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.number,
+                nickname: PropTypes.string,
+                content: PropTypes.string,
+            }),
+        ),
+    }),
+};
 
 const StylePostBox = styled.div`
     position: relative;

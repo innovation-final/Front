@@ -13,7 +13,7 @@ function SideBarHeader() {
             <IconBox onClick={() => setWide(props => !props)}>
                 <MenuIcon fontSize="large" />
             </IconBox>
-            <LogoBox wide={wide}>
+            <LogoBox $wide={wide}>
                 <Logo />
             </LogoBox>
         </StyleHeader>
@@ -27,8 +27,7 @@ const StyleHeader = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-bottom: 2px solid white;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 `;
 
 const IconBox = styled.div`
@@ -41,5 +40,5 @@ const IconBox = styled.div`
 const LogoBox = styled.div`
     padding: 10px;
     overflow: hidden;
-    visibility: ${props => (props.wide ? 'visible' : 'hidden')};
+    visibility: ${props => (props.$wide ? 'visible' : 'hidden')};
 `;

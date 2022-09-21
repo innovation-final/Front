@@ -8,6 +8,7 @@ import Community from './pages/Community';
 import CommunityBoard from './pages/CommunityBoard';
 import BoardWrite from './component/community/BoardWrite';
 import Redirect from './pages/Redirect';
+import BoardEdit from './component/community/BoardEdit';
 
 function Router() {
     return (
@@ -27,6 +28,7 @@ function Router() {
                         path="/communityboard"
                         element={<CommunityBoard />}
                     />
+                    <Route path="/boardedit" element={<BoardEdit />} />
                 </Routes>
             </BrowserRouter>
         </WideStore>

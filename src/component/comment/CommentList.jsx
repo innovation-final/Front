@@ -1,20 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Comment from './Comment';
 
-const data = [
-    { author: '준수', body: '안녕하세요', date: Date.now() },
-    { author: '개미', body: '출근실헝 ㅠ', date: Date.now() },
-];
-
-function CommentList() {
+function CommentList({ comments }) {
+    if (!comments.length)
+        return <NoComments>댓글이 없습니다 .댓글을 작성해주세요</NoComments>;
     return (
         <StyledCommentList>
-            {data.map(comment => (
+            {comments.map(comment => (
                 <Comment
-                    author={comment.author}
-                    body={comment.body}
-                    date={comment.date}
+                    key={comment.id}
+                    id={comment.id}
+                    nickname={comment.member.nickname}
+                    content={comment.content}
                 />
             ))}
         </StyledCommentList>
@@ -22,6 +21,24 @@ function CommentList() {
 }
 
 export default CommentList;
+
+CommentList.propTypes = {
+    comments: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            nickname: PropTypes.string,
+            content: PropTypes.string,
+        }),
+    ),
+};
+
+const NoComments = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+`;
 
 const StyledCommentList = styled.div`
     display: flex;

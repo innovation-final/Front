@@ -16,7 +16,7 @@ const WideAnimation = {
     end: { opacity: 1, transition: { duration: 0.5 } },
 };
 
-function SideBarItem({ title, subItems }) {
+function SideBarItem({ title, onClickFn, subItems }) {
     const context = useContext(WideContext);
     const { wide, setWide } = context;
 
@@ -24,7 +24,7 @@ function SideBarItem({ title, subItems }) {
     return (
         <>
             <StyleItem>
-                <ItemContainer>
+                <ItemContainer onClick={onClickFn}>
                     <IconBox onMouseOver={() => setWide(true)}>
                         {title === '주식보기' ? (
                             <BarChartIcon fontSize="large" />
@@ -38,7 +38,7 @@ function SideBarItem({ title, subItems }) {
                         {title === '뉴스전체' ? (
                             <NewspaperIcon fontSize="large" />
                         ) : null}
-                        {title === '내 업무' ? (
+                        {title === '내 정보' ? (
                             <PhoneAndroidIcon fontSize="large" />
                         ) : null}
                     </IconBox>
@@ -53,7 +53,7 @@ function SideBarItem({ title, subItems }) {
                     ) : null}
                 </ItemContainer>
                 <ArrowContainer
-                    wide={wide}
+                    $wide={wide}
                     subWide={subWide}
                     onClick={() => setSubWide(props => !props)}
                 >
@@ -68,7 +68,12 @@ function SideBarItem({ title, subItems }) {
                 >
                     {subItems &&
                         subItems.map(sub => (
-                            <SideBarSubItem title={sub} subWide={subWide} />
+                            <SideBarSubItem
+                                key={sub.title}
+                                title={sub.title}
+                                onClickFn={sub.onClickFn}
+                                subWide={subWide}
+                            />
                         ))}
                 </SubContainer>
             ) : null}
@@ -80,7 +85,13 @@ export default SideBarItem;
 
 SideBarItem.propTypes = {
     title: PropTypes.string.isRequired,
-    subItems: PropTypes.arrayOf(PropTypes.string),
+    subItems: PropTypes.arrayOf(
+        PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            onClickFn: PropTypes.func.isRequired,
+        }),
+    ),
+    onClickFn: PropTypes.func,
 };
 
 const StyleItem = styled.div`
@@ -109,9 +120,8 @@ const ItemTitle = styled(motion.div)`
     overflow: hidden;
     font-weight: 600;
     color: #525961;
-
-    letter-spacing: -2px;
-    font-size: 14px;
+    letter-spacing: -1px;
+    font-size: 17px;
 
     cursor: pointer;
 `;
@@ -125,7 +135,8 @@ const SubContainer = styled(motion.div)`
 
 const ArrowContainer = styled.div`
     margin-right: 10px;
-    visibility: ${props => (props.wide ? 'visible' : 'hidden')};
+    color: #525961;
+    visibility: ${props => (props.$wide ? 'visible' : 'hidden')};
     transform: rotate(${props => (props.subWide ? 90 : 0)}deg);
     transition: transform ease-in-out 0.3s;
 `;
