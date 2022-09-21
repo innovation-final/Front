@@ -20,6 +20,7 @@ Input.propTypes = {
 };
 
 const StyleInput = styled.input`
+    font-family: 'Pretendard-Regular';
     padding: 10px;
     border: 1px solid #48dbfb;
     border-radius: 10px;

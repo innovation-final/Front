@@ -1,13 +1,17 @@
 import React from 'react';
 import Layout from '../component/layout/Layout';
-import Button from '../component/elements/Button';
-import Input from '../component/elements/Input';
+import MainContainer from '../component/main/MainContainer';
+import ContentBox from '../component/elements/ContentBox';
 
 function Home() {
     return (
         <Layout header sidebar>
-            <Button> 엄청긴버튼을 만든다면 어떻게되나요 </Button>
-            <Input />
+            <MainContainer>
+                <ContentBox title="코스피/코스닥" />
+                <ContentBox title="관심종목" />
+                <ContentBox title="인기종목" />
+                <ContentBox title="수익률 높은 종목" />
+            </MainContainer>
         </Layout>
     );
 }

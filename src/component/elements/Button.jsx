@@ -22,8 +22,8 @@ const SIZES = {
 const VARIANTS = {
     normal: css`
         --button-color: #ffffff;
-        --button-bg-color: #48dbfb;
-        --button-hover-bg-color: #0abde3;
+        --button-bg-color: skyblue;
+        --button-hover-bg-color: skyblue;
     `,
     success: css`
         --button-color: #ffffff;
@@ -67,6 +67,7 @@ export default Button;
 const StyleButton = styled.button`
     ${props => props.size}
     ${props => props.variant}
+    font-family: 'Pretendard-Regular';
     margin: 0;
     border: none;
     font-size: var(--button-font-size, 1rem);
@@ -98,6 +99,6 @@ Button.defaultProps = {
 Button.propTypes = {
     disabled: PropTypes.bool,
     size: PropTypes.string,
-    children: PropTypes.string,
+    children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     variant: PropTypes.string,
 };

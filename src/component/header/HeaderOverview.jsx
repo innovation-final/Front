@@ -16,7 +16,6 @@ function HeaderOverview() {
 export default HeaderOverview;
 
 const StyleOverview = styled.div`
-    height: 57px;
     transform: translateX(${props => (props.wide ? 290 : 70)}px);
     width: calc(50% + ${props => (props.wide ? 0 : 220)}px);
     transition: all ease-in-out 0.3s;

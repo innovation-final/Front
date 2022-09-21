@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../elements/Button';
 
-function ProfileCard() {
+function ProfileCard(props) {
+    const { name, email } = props;
     return (
         <StyleProfileCard>
             <Wrapper>
@@ -10,8 +12,8 @@ function ProfileCard() {
                     <ProfileImage src="https://image.edaily.co.kr/images/photo/files/NP/S/2020/03/PS20031800048.jpg" />
                 </ImageBox>
                 <ContentBox>
-                    <UserName>개미</UserName>
-                    <UserComment>열심히 일하는 개미입니다.</UserComment>
+                    <UserName>{name}</UserName>
+                    <UserComment>{email}</UserComment>
                 </ContentBox>
             </Wrapper>
             <ButtonBox>
@@ -23,13 +25,18 @@ function ProfileCard() {
 
 export default ProfileCard;
 
+ProfileCard.propTypes = {
+    name: PropTypes.string,
+    email: PropTypes.string,
+};
+
 const StyleProfileCard = styled.div`
     display: flex;
     flex-direction: row;
     padding: 10px;
     margin-bottom: 50px;
-    /* border: 1px solid gray;
-    border-radius: 15px; */
+    /* border: 1px solid gray; */
+    border-radius: 15px;
 `;
 
 const Wrapper = styled.div`
