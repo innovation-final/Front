@@ -1,17 +1,14 @@
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { postAPI } from '../../shared/api';
 import Button from '../elements/Button';
 import ProfileCard from './ProfileCard';
 import LoadingSpinner from '../elements/LoadingSpinner';
-import { deleteBoardpost } from '../../redux/modules/postSlice';
 
 function PostBox() {
     const { id } = useParams();
@@ -21,13 +18,30 @@ function PostBox() {
     );
     const postInfo = data?.data.data;
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const deleteHandler = e => {
-        const postId = Number(id);
-        e.preventDefault();
-        dispatch(deleteBoardpost(postId));
-        navigate(-1);
+
+    const queryClient = useQueryClient();
+
+    const deletePost = async postId => {
+        const response = await postAPI.deletePost(postId);
+        return response;
+    };
+
+    const mutation = useMutation(postId => deletePost(postId), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            navigate(`/communityboard`);
+            queryClient.invalidateQueries('posts');
+        },
+        // onSettled: () => {
+        //     // 요청이 성공하든, 에러가 발생되든 실행하고 싶은 경우
+        //     console.log('실행시켜주세요ㅠㅠ');
+        // },
+    });
+
+    const onPostDelete = () => {
+        mutation.mutate(id);
+        console.log('dd', onPostDelete);
     };
 
     if (isLoading) return <LoadingSpinner />;
@@ -37,20 +51,26 @@ function PostBox() {
                 <SubHeader>
                     <StockName>{postInfo.stockName}</StockName>
                     <div>
-                        <Button
-                            variant="transparent"
-                            disabled={false}
+                        <Deletebutton
                             name="postDeleteButton"
-                            onclick={deleteHandler}
+                            onClick={onPostDelete}
                         >
-                            <DeleteOutlineIcon fontSize="small" />
-                        </Button>
-                    </div>
+                            삭제
+                        </Deletebutton>
 
+                        <Editbutton
+                            name="commentButton"
+                            onClick={() => {
+                                navigate(`/boardedit/${id}`);
+                            }}
+                        >
+                            수정
+                        </Editbutton>
+                    </div>
                     <PostInfoBox>
                         <ViewCount>조회 수 : 0</ViewCount>
                         <CommentCount>
-                            댓글 : {postInfo.comments.length}
+                            댓글: {postInfo.comments.length}
                         </CommentCount>
                     </PostInfoBox>
                 </SubHeader>
@@ -198,3 +218,28 @@ const LikeCount = styled.div`
 `;
 
 const LikeBox = styled.div``;
+
+const Editbutton = styled.button`
+    width: 90px;
+    height: 30px;
+    background-color: #ffffff;
+    border: 1px solid #79a7ca;
+    border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    &:hover {
+        background-color: #b2dbf4;
+    }
+`;
+const Deletebutton = styled.button`
+    width: 90px;
+    height: 30px;
+    background-color: #ffffff;
+    border: 1px solid #79a7ca;
+    border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    &:hover {
+        background-color: #b2dbf4;
+    }
+`;
