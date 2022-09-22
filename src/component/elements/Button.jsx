@@ -48,7 +48,7 @@ const VARIANTS = {
 };
 
 function Button(props) {
-    const { disabled, size, variant, children } = props;
+    const { disabled, size, variant, _onClick, children } = props;
     const sizeStyle = SIZES[size];
     const variantStyle = VARIANTS[variant];
     return (
@@ -56,6 +56,7 @@ function Button(props) {
             size={sizeStyle}
             disabled={disabled}
             variant={variantStyle}
+            onClick={_onClick}
         >
             {children}
         </StyleButton>
@@ -95,10 +96,12 @@ Button.defaultProps = {
     size: 'sm',
     disabled: false,
     variant: 'normal',
+    _onClick: () => {},
 };
 Button.propTypes = {
     disabled: PropTypes.bool,
     size: PropTypes.string,
     children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     variant: PropTypes.string,
+    _onClick: PropTypes.func,
 };

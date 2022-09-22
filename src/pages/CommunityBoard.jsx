@@ -1,94 +1,79 @@
-import React from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
-import Layout from '../component/layout/Layout';
-import BoardCard from '../component/community/BoardCard';
-import BoardContainer from '../component/community/BoardContainer';
 import { postAPI } from '../shared/api';
+import Layout from '../component/layout/Layout';
+import BoardContainer from '../component/community/BoardContainer';
 import BoardCards from '../component/community/BoardCards';
+import Button from '../component/elements/Button';
+import Pagination from '../component/elements/Pagination';
+import LoadingSpinner from '../component/elements/LoadingSpinner';
+import SelectBox from '../component/elements/SelectBox';
 
 function CommunityBoard() {
     const navigate = useNavigate();
     const { data } = useQuery('posts', () => postAPI.getPosts());
-    const posts = data?.data.data;
+    const postArray = data?.data.data;
 
+    const [posts, setPosts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postPerPage] = useState(10);
+
+    useEffect(() => {
+        setPosts(postArray);
+    });
+
+    const indexOfLastPost = currentPage * postPerPage;
+    const indexOfFirstPost = indexOfLastPost - postPerPage;
+    const currentPosts = posts?.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = pageNum => setCurrentPage(pageNum);
+
+    if (!data) return <LoadingSpinner />;
     return (
         <Layout>
             <BoardContainer>
-                <div style={{ display: 'flex', height: '50px' }}>
-                    <div
-                        style={{
-                            width: '100%',
-                            marginLeft: '15px',
-                            fontSize: '15px',
-                            float: 'left',
-                        }}
-                    >
-                        <FormControl
-                            variant="standard"
-                            style={{
-                                width: '100px',
-                                fontSize: '15px',
-                                float: 'left',
-                            }}
-                        >
-                            <Select
-                                labelId="demo-simple-select-standard-label"
-                                id="demo-simple-select-standard"
-                                label="Age"
-                            >
-                                <MenuItem
-                                //  value={10}
-                                >
-                                    최신순
-                                </MenuItem>
-                                <MenuItem
-                                // value={20}
-                                >
-                                    좋아요순
-                                </MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
-                    <div style={{ height: '50px' }}>
+                <CommunityHeader>
+                    <HeaderTitle>자유게시판</HeaderTitle>
+                    <Handlers>
                         <Button
-                            type="button"
-                            className="btn btn-outline-primary"
-                            onClick={() => {
+                            size="md"
+                            _onClick={() => {
                                 navigate('/communityboardwrite');
                             }}
-                            aria-hidden="true"
                         >
                             글쓰기
                         </Button>
-                    </div>
-                </div>
-                <BoardCards>
-                    {posts &&
-                        posts.map(post => (
-                            <BoardCard key={post.id} post={post} />
-                        ))}
-                </BoardCards>
+                        <SelectBox options={['최신순', '좋아요순']} />
+                    </Handlers>
+                </CommunityHeader>
+                <BoardCards data={currentPosts} />
             </BoardContainer>
+            <Pagination
+                postPerPage={postPerPage}
+                totalPosts={posts?.length}
+                paginate={paginate}
+                currentPage={currentPage}
+            />
         </Layout>
     );
 }
 
 export default CommunityBoard;
 
-const Button = styled.button`
-    width: 90px;
-    height: 30px;
-    background-color: #ffffff;
-    border: 1px solid #79a7ca;
-    border-radius: 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    &:hover {
-        background-color: #b2dbf4;
-    }
+const CommunityHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    margin-bottom: 30px;
+`;
+const HeaderTitle = styled.div`
+    font-size: 25px;
+`;
+const Handlers = styled.div`
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;
