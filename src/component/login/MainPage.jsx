@@ -18,10 +18,8 @@ function MainPage(props) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('하하');
         const getToken = async () => {
             try {
-                console.log('하하');
                 const res = await axios
                     .get(
                         `https://hakjoonkim.shop/api/member/login/kakao?code=${code}`,
