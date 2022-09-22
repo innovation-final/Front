@@ -1,12 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import Layout from '../component/layout/Layout';
 import MainContainer from '../component/main/MainContainer';
 import ContentBox from '../component/elements/ContentBox';
+// import GoogleLogIn from '../component/login/GoogleLogIn';
 
 function Home() {
-    const location = useLocation();
-    console.log(location);
     return (
         <Layout header sidebar>
             <MainContainer>
