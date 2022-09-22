@@ -6,6 +6,7 @@ import Select from '@mui/material/Select';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Layout from '../component/layout/Layout';
+
 import BoardCard from '../component/community/BoardCard';
 import { getBoardpost } from '../redux/modules/postSlice';
 

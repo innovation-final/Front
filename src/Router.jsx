@@ -26,7 +26,7 @@ function Router() {
                         path="/communityboard"
                         element={<CommunityBoard />}
                     />
-                    <Route path="/boardedit" element={<BoardEdit />} />
+                    <Route path="/boardedit/:id" element={<BoardEdit />} />
                 </Routes>
             </BrowserRouter>
         </WideStore>

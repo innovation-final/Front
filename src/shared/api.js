@@ -25,6 +25,8 @@ export const userAPI = {};
 
 export const postAPI = {
     getPost: id => api.get(`/post/${id}`),
+    deletePost: postId => api.delete(`/auth/post/${postId}`),
+    editPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
 };
 
 export const commentAPI = {

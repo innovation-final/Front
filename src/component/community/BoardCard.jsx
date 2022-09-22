@@ -1,16 +1,42 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { postAPI } from '../../shared/api';
 
 function BoardCard({ post }) {
     const { title, stockName, content, id } = post;
 
     const navigate = useNavigate();
 
+    const queryClient = useQueryClient();
+
+    const deletePost = async id => {
+        const response = await postAPI.deletePost(id);
+        return response;
+    };
+
+    const mutation = useMutation(id => deletePost(id), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+        onSettled: () => {
+            // 요청이 성공하든, 에러가 발생되든 실행하고 싶은 경우
+            console.log('실행시켜주세요ㅠㅠ');
+        },
+    });
+
+    const onPostDelete = () => {
+        mutation.mutate(id);
+    };
+
     return (
         <div>
+            <Deletebutton name="postDeleteButton" onclick={onPostDelete}>
+                삭제
+            </Deletebutton>
             <div
                 onClick={() => {
                     navigate(`/post/${id}`);
@@ -60,5 +86,18 @@ const Card = styled.div`
 
     &:hover {
         opacity: 0.7;
+    }
+`;
+
+const Deletebutton = styled.button`
+    width: 90px;
+    height: 30px;
+    background-color: #ffffff;
+    border: 1px solid #79a7ca;
+    border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    &:hover {
+        background-color: #b2dbf4;
     }
 `;

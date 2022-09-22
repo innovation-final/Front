@@ -1,29 +1,37 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
+
+import PropTypes from 'prop-types';
 import Layout from '../layout/Layout';
-import useInput from '../../hooks/useInput';
-import { addBoardpost } from '../../redux/modules/postSlice';
+import { postAPI } from '../../shared/api';
 
-function BoardEdit() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+function BoardEdit(props) {
+    const { id, title, content, stockName } = props;
+    const [putPost, setPutPost] = React.useState(props);
 
-    const [title, onChangeTitleHandler] = useInput();
-    const [content, onChangeContentHandler] = useInput();
-    const [stockName, onChangeStockNameHandler] = useInput();
+    const queryClient = useQueryClient();
 
-    const submitHandler = e => {
-        e.preventDefault();
+    const editPost = async req => {
+        const response = await postAPI.editPost(id, req);
+        return response;
+    };
 
-        const addboard = {
-            title,
-            stockName,
-            content,
-        };
-        dispatch(addBoardpost(addboard));
-        navigate('/communityboard');
+    const editMutation = useMutation(req => editPost(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+    });
+    const onClickEdit = () => {
+        editMutation.mutate({
+            content: putPost,
+            title: putPost,
+            stockName: putPost,
+        });
+    };
+    const onChange = event => {
+        setPutPost(event.target.value);
     };
 
     return (
@@ -31,30 +39,30 @@ function BoardEdit() {
             <Card className="card">
                 <CardLayout className="card-body">
                     <CardDiv>
-                        <h1 className="card-text">제목: &nbsp;</h1>
+                        <h1 className="card-text">제목:{title} &nbsp;</h1>
                         <Input
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="제목"
-                            onChange={onChangeTitleHandler}
+                            onChange={onChange}
                         />
                     </CardDiv>
                     <CardDiv>
-                        <h1 className="card-text">종목: &nbsp;</h1>
+                        <h1 className="card-text">종목:{stockName} &nbsp;</h1>
                         <Input
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="종목"
-                            onChange={onChangeStockNameHandler}
+                            onChange={onChange}
                         />
                     </CardDiv>
                     <ContentDiv>
-                        <h1 className="card-text">내용: &nbsp;</h1>
+                        <h1 className="card-text">내용:{content} &nbsp;</h1>
                         <TextareaContent
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="내용"
-                            onChange={onChangeContentHandler}
+                            onChange={onChange}
                         />
                     </ContentDiv>
                 </CardLayout>
@@ -62,7 +70,7 @@ function BoardEdit() {
                     <Button
                         type="button"
                         className="btn btn-outline-primary"
-                        onClick={submitHandler}
+                        onClick={onClickEdit}
                     >
                         수정완료
                     </Button>
@@ -73,6 +81,13 @@ function BoardEdit() {
 }
 
 export default BoardEdit;
+BoardEdit.propTypes = {
+    id: PropTypes.number,
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    stockName: PropTypes.string.isRequired,
+    // date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+};
 
 const CardLayout = styled.div`
     margin: 15px;
