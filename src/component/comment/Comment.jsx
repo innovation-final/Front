@@ -33,7 +33,7 @@ function Comment(props) {
         return response;
     };
 
-    const mutation = useMutation(_id => deleteComment(_id), {
+    const deleteMutation = useMutation(_id => deleteComment(_id), {
         onError: error => console.log(error),
         onSuccess: () => {
             queryClient.invalidateQueries('post');
@@ -47,7 +47,7 @@ function Comment(props) {
     });
 
     const onDelete = () => {
-        mutation.mutate(id);
+        deleteMutation.mutate(id);
     };
     const onClickEdit = () => {
         editMutation.mutate({ content: editComment });

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +10,6 @@ import KakaoButton from './KakaoButton';
 
 function MainPage(props) {
     const { id, bgColor } = props;
-    //const REST_API_KEY = '8574b7f614af462f907d48b93aa7f210';
     const REST_API_KEY = '91598580aab0e9b9f40aa19be86152f6';
     const REDIRECT_URI = 'http://localhost:3000/login';
     const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -25,10 +23,10 @@ function MainPage(props) {
                     .get(
                         `https://hakjoonkim.shop/api/member/login/kakao?code=${code}`,
                     )
-                    .then(res => {
-                        console.log('응답 확인', res);
-                        const accessToken = res.headers.authorization;
-                        const refreshToken = res.headers['refresh-token'];
+                    .then(response => {
+                        console.log('응답 확인', response);
+                        const accessToken = response.headers.authorization;
+                        const refreshToken = response.headers['refresh-token'];
                         window.localStorage.setItem(
                             'access-token',
                             accessToken,

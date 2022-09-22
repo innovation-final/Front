@@ -15,7 +15,10 @@ export const addBoardpost = createAsyncThunk(
     async (payload, thunkAPI) => {
         try {
             const data = await api.post('/auth/post', payload);
-            return thunkAPI.fulfillWithValue(data.data);
+            return thunkAPI.fulfillWithValue({
+                data: data.data,
+                request: payload,
+            });
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
@@ -54,14 +57,15 @@ const post = createSlice({
     reducers: {},
     extraReducers: {
         // addboard Thunk
-        // [addBoardpost.pending]: state => {
-        //     state.success = true;
-        // },
+        [addBoardpost.pending]: state => {
+            state.isLoading = true;
+            state.success = false;
+        },
         [addBoardpost.fulfilled]: (state, action) => {
-            const newState = state;
-            newState.success = false;
-            newState.post = [action.payload, ...newState.post];
-            return newState;
+            state.isLoading = false;
+            state.success = false;
+            state.post = [action.payload.request, ...state.post];
+            return state;
         },
 
         [addBoardpost.rejected]: (state, action) => {
@@ -92,7 +96,7 @@ const post = createSlice({
             const newState = state;
             newState.success = false;
             newState.post = state.posts.filter(
-                post => post.id !== action.payload,
+                postone => postone.id !== action.payload,
             );
         },
         [deleteBoardpost.rejected]: (state, action) => {
