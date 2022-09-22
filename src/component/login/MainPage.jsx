@@ -12,7 +12,7 @@ function MainPage(props) {
     const { id, bgColor } = props;
     //const REST_API_KEY = '8574b7f614af462f907d48b93aa7f210';
     const REST_API_KEY = '91598580aab0e9b9f40aa19be86152f6';
-    const REDIRECT_URI = 'https://hakjoonkim.shop/api/user/callback';
+    const REDIRECT_URI = 'http://localhost:3000/login';
     const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     const code = new URL(window.location.href).searchParams.get('code');
     const navigate = useNavigate();
@@ -28,8 +28,16 @@ function MainPage(props) {
                     )
                     .then(res => {
                         console.log('응답 확인', res);
-                        const token = res.headers.authorization;
-                        window.localStorage.setItem('token', token);
+                        const accessToken = res.headers.authorization;
+                        const refreshToken = res.headers['refresh-token'];
+                        window.localStorage.setItem(
+                            'access-token',
+                            accessToken,
+                        );
+                        window.localStorage.setItem(
+                            'refresh-token',
+                            refreshToken,
+                        );
                         navigate('/');
                     })
                     .catch(err => console.log(err));
