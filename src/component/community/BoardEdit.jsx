@@ -1,23 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
-
-import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
+import useInput from '../../hooks/useInput';
 import Layout from '../layout/Layout';
 import { postAPI } from '../../shared/api';
 
-function BoardEdit(props) {
-    const { id, title, content, stockName } = props;
-    const [putPost, setPutPost] = React.useState(props);
-
+function BoardEdit() {
+    const { id } = useParams();
+    console.log('d', id);
     const queryClient = useQueryClient();
 
-    const editPost = async req => {
-        const response = await postAPI.editPost(id, req);
+    const [updateTitle, onChangeTitleHandler] = useInput();
+    const [updateStockName, onChangeStockNameHandler] = useInput();
+    const [updateContent, onChangeContentHandler] = useInput();
+
+    const putPost = async req => {
+        const response = await postAPI.putPost(id, req);
         return response;
     };
 
-    const editMutation = useMutation(req => editPost(req), {
+    const editMutation = useMutation(req => putPost(req), {
         onError: error => console.log(error),
         onSuccess: () => {
             queryClient.invalidateQueries('post');
@@ -25,13 +28,10 @@ function BoardEdit(props) {
     });
     const onClickEdit = () => {
         editMutation.mutate({
-            content: putPost,
-            title: putPost,
-            stockName: putPost,
+            content: updateContent,
+            title: updateTitle,
+            stockName: updateStockName,
         });
-    };
-    const onChange = event => {
-        setPutPost(event.target.value);
     };
 
     return (
@@ -39,30 +39,30 @@ function BoardEdit(props) {
             <Card className="card">
                 <CardLayout className="card-body">
                     <CardDiv>
-                        <h1 className="card-text">제목:{title} &nbsp;</h1>
+                        <h1 className="card-text">제목: &nbsp;</h1>
                         <Input
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="제목"
-                            onChange={onChange}
+                            onChange={onChangeTitleHandler}
                         />
                     </CardDiv>
                     <CardDiv>
-                        <h1 className="card-text">종목:{stockName} &nbsp;</h1>
+                        <h1 className="card-text">종목: &nbsp;</h1>
                         <Input
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="종목"
-                            onChange={onChange}
+                            onChange={onChangeStockNameHandler}
                         />
                     </CardDiv>
                     <ContentDiv>
-                        <h1 className="card-text">내용:{content} &nbsp;</h1>
+                        <h1 className="card-text">내용:&nbsp;</h1>
                         <TextareaContent
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="내용"
-                            onChange={onChange}
+                            onChange={onChangeContentHandler}
                         />
                     </ContentDiv>
                 </CardLayout>
@@ -81,13 +81,6 @@ function BoardEdit(props) {
 }
 
 export default BoardEdit;
-BoardEdit.propTypes = {
-    id: PropTypes.number,
-    title: PropTypes.oneOfType([PropTypes.string]),
-    content: PropTypes.string,
-    stockName: PropTypes.string,
-    // date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-};
 
 const CardLayout = styled.div`
     margin: 15px;
