@@ -6,14 +6,16 @@ const api = axios.create({
     baseURL: BASE_URL,
     headers: {
         'Content-Type': 'application/json',
-        Authorization:
-            'BEARER eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoanM3NzI4QGtha2FvLmNvbSIsImlhdCI6MTY2Mzc2MzQ2NywiZXhwIjoxNjYzOTQzNDY3fQ.vDFDgosyivg_7wBThaEfEeW3VXDi0jKJ8JwLZF56nV4',
-        'refresh-token':
-            'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjM3NjM0NjcsImV4cCI6MTY2NDk3MzA2N30.-n0fvznpFOxyFkSEtDYDTelmh0Y6CnzRsgg0Ytt4EA8',
     },
 });
 
-api.interceptors.request.use();
+api.interceptors.request.use(function (config) {
+    const accessToken = localStorage.getItem('access-token');
+    const refreshToken = localStorage.getItem('refresh-token');
+    config.headers.common['access-token'] = `${accessToken}`;
+    config.headers.common['refresh-token'] = `${refreshToken}`;
+    return config;
+});
 
 api.interceptors.response.use();
 
@@ -25,6 +27,9 @@ export const userAPI = {};
 
 export const postAPI = {
     getPost: id => api.get(`/post/${id}`),
+    getPosts: () => api.get(`/post`),
+    deletePost: postId => api.delete(`/auth/post/${postId}`),
+    editPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
 };
 
 export const commentAPI = {
