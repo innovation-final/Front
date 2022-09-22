@@ -4,13 +4,13 @@
         "es6": true,
         "node": true
     },
-
+    "root": true,
+    "ecmaVersion": 2020,
     "extends": ["airbnb", "plugin:prettier/recommended"],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/require-default-props": "off",
         "no-console": "off",
         "react/prop-types": "off"
-    },
-    "ecmaVersion": 2020
+    }
 }

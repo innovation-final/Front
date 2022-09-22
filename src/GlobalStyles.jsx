@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
         font-weight:400;
         font-style:normal;
     };
+
     @font-face {
     font-family: 'Pretendard-Regular';
     src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
@@ -19,7 +20,13 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     };
 
-    
+    body{
+     -ms-overflow-style: none;
+    }
+ 
+    ::-webkit-scrollbar {
+    display: none;
+    }
 
 `;
 
