@@ -41,7 +41,6 @@ function PostBox() {
 
     const onPostDelete = () => {
         mutation.mutate(id);
-        console.log('dd', onPostDelete);
     };
 
     if (isLoading) return <LoadingSpinner />;
