@@ -11,6 +11,7 @@
         "react/require-default-props": "off",
         "no-console": "off",
         "react/prop-types": "off",
+        "react/self-closing-comp": "off",
         "no-param-reassign": [
             "error",
             {
@@ -18,11 +19,11 @@
                 "ignorePropertyModificationsFor": ["state", "config"]
             }
         ]
-    },
-    "parser": "@babel/eslint-parser",
-    "requireConfigFile": false,
-    "ecmaVersion": 2020,
-    "sourceType": "module",
-    "babelOptions": { "configFile": "./.babelrc" },
-    "parserOptions": { "requireConfigFile": "false" }
+    }
+    // "parser": "@babel/eslint-parser",
+    // "requireConfigFile": false,
+    // "ecmaVersion": 2020,
+    // "sourceType": "module",
+    // "babelOptions": { "configFile": "./.babelrc" },
+    // "parserOptions": { "requireConfigFile": "false" }
 }
