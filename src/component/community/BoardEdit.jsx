@@ -83,9 +83,9 @@ function BoardEdit(props) {
 export default BoardEdit;
 BoardEdit.propTypes = {
     id: PropTypes.number,
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    stockName: PropTypes.string.isRequired,
+    title: PropTypes.oneOfType([PropTypes.string]),
+    content: PropTypes.string,
+    stockName: PropTypes.string,
     // date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
