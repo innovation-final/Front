@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import MainPage from '../component/login/MainPage';
+import MainPage from '../component/login/LoginPage';
 
 import Spinner from '../static/Spinner.gif';
 import useWindowSize from '../hooks/useWindowSize';

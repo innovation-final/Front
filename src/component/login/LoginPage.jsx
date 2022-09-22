@@ -3,10 +3,11 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import KakaoLogin from '../../static/kakao_login_large_narrow.png';
-import GoogleLogo from '../../static/GoogleLogo.png';
+
 import { LoginLayout } from './style';
 import ScrollIcon from '../../static/scroll-icon.png';
+import GoogleButton from './GoogleButton';
+import KakaoButton from './KakaoButton';
 
 function MainPage(props) {
     const { id, bgColor } = props;
@@ -55,34 +56,8 @@ function MainPage(props) {
                     나만의 주식 Life
                 </h1>
 
-                <DivButton>
-                    <button
-                        type="button"
-                        onClick={() => {
-                            navigate('/redirect', {
-                                state: {
-                                    url: KAKAO_AUTH_URI,
-                                },
-                            });
-                        }}
-                    >
-                        <img src={KakaoLogin} alt="카카오" />
-                    </button>
-
-                    <GoogleButton
-                        type="button"
-                        onClick={() => {
-                            navigate('/redirect', {
-                                state: {
-                                    url: 'https://hakjoonkim.shop/api/member/login/google',
-                                },
-                            });
-                        }}
-                    >
-                        <img src={GoogleLogo} alt="G" />
-                        <span>Google 로그인</span>
-                    </GoogleButton>
-                </DivButton>
+                <KakaoButton />
+                <GoogleButton />
             </DivContent>
             <img
                 className="scroll"
@@ -132,29 +107,5 @@ const DivButton = styled.div`
 
     @media screen and (max-width: 1023px) {
         margin: 0 auto;
-    }
-`;
-
-const GoogleButton = styled.button`
-    margin-left: 0.3rem;
-    width: 15rem !important;
-    background-color: white !important;
-    border: none;
-
-    display: flex;
-    align-items: center;
-
-    border-radius: 0.5rem;
-    height: 3.5rem;
-    img {
-        width: 1.5rem;
-        object-fit: contain;
-        margin-left: 0.9rem;
-
-        margin-right: 1.6rem;
-    }
-    span {
-        margin: 0 0.6rem;
-        font-size: 18px;
     }
 `;

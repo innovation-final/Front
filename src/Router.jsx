@@ -9,6 +9,8 @@ import BoardWrite from './component/community/BoardWrite';
 import Redirect from './pages/Redirect';
 import BoardEdit from './component/community/BoardEdit';
 import PostDetail from './pages/PostDetail';
+import Google from './server/Google';
+import Kakao from './server/Kakao';
 
 function Router() {
     return (
@@ -20,6 +22,14 @@ function Router() {
                     <Route path="/redirect" element={<Redirect />} />
                     <Route path="/post/:id" element={<PostDetail />} />
                     <Route path="/community" element={<Community />} />
+                    <Route
+                        path="/login/oauth2/code/google"
+                        element={<Google />}
+                    />
+                    <Route
+                        path="/login/oauth2/code/kakao"
+                        element={<Kakao />}
+                    />
                     <Route
                         path="/communityboardwrite"
                         element={<BoardWrite />}
