@@ -12,7 +12,6 @@ import { postAPI } from '../shared/api';
 function CommunityBoard() {
     const navigate = useNavigate();
     const { data } = useQuery('posts', () => postAPI.getPosts());
-    console.log(data);
     const posts = data?.data.data;
 
     return (

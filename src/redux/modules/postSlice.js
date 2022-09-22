@@ -63,14 +63,9 @@ const post = createSlice({
         },
         [addBoardpost.fulfilled]: (state, action) => {
             state.isLoading = false;
-            const newState = state;
-            newState.success = false;
-            newState.post = [action.payload.request, ...newState.post];
-            return newState;
-            // state.isLoading = true;
-            // state.success = false;
-            // state.post = [action.payload.info, ...state.post];
-            // return state;
+            state.success = false;
+            state.post = [action.payload.request, ...state.post];
+            return state;
         },
 
         [addBoardpost.rejected]: (state, action) => {
