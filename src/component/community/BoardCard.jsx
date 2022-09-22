@@ -10,7 +10,7 @@ const createAnimation = {
 };
 
 function BoardCard({ post }) {
-    const { title, stockName, content, id, createdAt } = post;
+    const { title, stockName, member, id, createdAt } = post;
 
     const date = new Date(createdAt);
     const year = date.getFullYear();
@@ -33,7 +33,7 @@ function BoardCard({ post }) {
                 </CardDivide>
                 <CardDivide2>
                     <CardCreatedAt>{`${year}-${month}-${day} ${hour}:${minute}`}</CardCreatedAt>
-                    <CardContent>written by {content}</CardContent>
+                    <CardWriter>written by {member.nickname}</CardWriter>
                 </CardDivide2>
             </CardLayout>
         </Card>
@@ -44,7 +44,11 @@ export default BoardCard;
 BoardCard.propTypes = {
     title: PropTypes.string,
     stockName: PropTypes.string,
-    content: PropTypes.string,
+    member: PropTypes.shape({
+        email: PropTypes.string,
+        nickname: PropTypes.string,
+        id: PropTypes.number,
+    }),
     id: PropTypes.string,
 };
 
@@ -94,7 +98,9 @@ const CardStockName = styled.div`
     overflow: hidden;
     margin-bottom: 4%;
 `;
-const CardContent = styled.div``;
+const CardWriter = styled.div`
+    font-size: 13px;
+`;
 const CardCreatedAt = styled.div`
     font-size: 13px;
 `;
