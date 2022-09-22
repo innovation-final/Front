@@ -11,7 +11,7 @@ import ProfileCard from './ProfileCard';
 import LoadingSpinner from '../elements/LoadingSpinner';
 
 function PostBox() {
-    const { id, postId } = useParams();
+    const { id } = useParams();
     // eslint-disable-next-line no-unused-vars
     const { data, isLoading } = useQuery(['post', id], () =>
         postAPI.getPost(id),
@@ -30,16 +30,18 @@ function PostBox() {
     const mutation = useMutation(postId => deletePost(postId), {
         onError: error => console.log(error),
         onSuccess: () => {
-            queryClient.invalidateQueries('post');
+            navigate(`/communityboard`);
+            queryClient.invalidateQueries('posts');
         },
-        onSettled: () => {
-            // 요청이 성공하든, 에러가 발생되든 실행하고 싶은 경우
-            console.log('실행시켜주세요ㅠㅠ');
-        },
+        // onSettled: () => {
+        //     // 요청이 성공하든, 에러가 발생되든 실행하고 싶은 경우
+        //     console.log('실행시켜주세요ㅠㅠ');
+        // },
     });
 
     const onPostDelete = () => {
-        mutation.mutate(postId);
+        mutation.mutate(id);
+        console.log('dd', onPostDelete);
     };
 
     if (isLoading) return <LoadingSpinner />;
@@ -51,7 +53,7 @@ function PostBox() {
                     <div>
                         <Deletebutton
                             name="postDeleteButton"
-                            onclick={onPostDelete}
+                            onClick={onPostDelete}
                         >
                             삭제
                         </Deletebutton>

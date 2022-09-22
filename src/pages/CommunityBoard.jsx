@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useQuery } from 'react-query';
 import Layout from '../component/layout/Layout';
-
 import BoardCard from '../component/community/BoardCard';
-import { getBoardpost } from '../redux/modules/postSlice';
+import { postAPI } from '../shared/api';
 
 function CommunityBoard() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const { post } = useSelector(state => state.post);
-    // console.log('글확인', post);
-    useEffect(() => {
-        dispatch(getBoardpost());
-    }, []);
+    const { data } = useQuery('posts', () => postAPI.getPosts());
+    console.log(data);
+    const posts = data?.data.data;
 
     return (
         <Layout>
@@ -70,7 +66,7 @@ function CommunityBoard() {
                 </div>
             </div>
 
-            {post.map(post => (
+            {posts?.map(post => (
                 <BoardCard post={post} key={post.id} />
             ))}
         </Layout>
