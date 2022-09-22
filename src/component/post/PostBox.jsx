@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useParams, useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import CancelIcon from '@mui/icons-material/Cancel';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import emptylike from '../../static/emptylike.png';
+import emptydislike from '../../static/emptydislike.png';
+import like from '../../static/like.png';
+import dislike from '../../static/dislike.png';
 import { postAPI } from '../../shared/api';
-import Button from '../elements/Button';
 import ProfileCard from './ProfileCard';
 import LoadingSpinner from '../elements/LoadingSpinner';
 
@@ -16,7 +20,9 @@ function PostBox() {
     const { data, isLoading } = useQuery(['post', id], () =>
         postAPI.getPost(id),
     );
+
     const postInfo = data?.data.data;
+    console.log(postInfo);
 
     const navigate = useNavigate();
 
@@ -42,6 +48,48 @@ function PostBox() {
     const onPostDelete = () => {
         mutation.mutate(id);
     };
+    // 좋아요
+    const likeposts = async req => {
+        const response = await postAPI.likePost(id, req);
+
+        return response;
+    };
+    const likemutation = useMutation(req => likeposts(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+    });
+
+    const [likes, setLikes] = useState(0);
+
+    const likeHandler = e => {
+        e.preventDefault();
+
+        setLikes(!likes);
+        likemutation.mutate({ likes });
+    };
+
+    // 싫어요
+    const dislikeposts = async req => {
+        const response = await postAPI.dislikePost(id, req);
+        return response;
+    };
+    const dislikemutation = useMutation(req => dislikeposts(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+    });
+
+    const [dislikes, setdisLikes] = useState(0);
+
+    const dislikeHandler = e => {
+        e.preventDefault();
+
+        setdisLikes(!dislikes);
+        dislikemutation.mutate({ dislikes });
+    };
 
     if (isLoading) return <LoadingSpinner />;
     return (
@@ -50,21 +98,23 @@ function PostBox() {
                 <SubHeader>
                     <StockName>{postInfo.stockName}</StockName>
                     <div>
-                        <Deletebutton
+                        <DeleteOutlineIcon
                             name="postDeleteButton"
                             onClick={onPostDelete}
-                        >
-                            삭제
-                        </Deletebutton>
+                        />
 
-                        <Editbutton
+                        <EditIcon
                             name="commentButton"
                             onClick={() => {
                                 navigate(`/boardedit/${id}`);
                             }}
-                        >
-                            수정
-                        </Editbutton>
+                        />
+                        <CancelIcon
+                            name="cancelButton"
+                            onClick={() => {
+                                navigate('/CommunityBoard');
+                            }}
+                        />
                     </div>
                     <PostInfoBox>
                         <ViewCount>조회 수 : 0</ViewCount>
@@ -85,17 +135,28 @@ function PostBox() {
             </ContentWrapper>
             <LikeToggleBox>
                 <Buttons>
-                    <Button>
-                        <LikeBox>
-                            <ThumbUpIcon />
-                        </LikeBox>
-                    </Button>
-                    <LikeCount>{postInfo.dislikes + postInfo.likes}</LikeCount>
-                    <Button variant="error">
-                        <LikeBox>
-                            <ThumbDownIcon />
-                        </LikeBox>
-                    </Button>
+                    {likes ? (
+                        <JoinBtn src={like} onClick={e => likeHandler(e)} />
+                    ) : (
+                        <JoinBtn
+                            src={emptylike}
+                            onClick={e => likeHandler(e)}
+                        />
+                    )}
+
+                    <LikeCount>{postInfo.likes}</LikeCount>
+                    {dislikes ? (
+                        <JoinBtn
+                            src={dislike}
+                            onClick={e => dislikeHandler(e)}
+                        />
+                    ) : (
+                        <JoinBtn
+                            src={emptydislike}
+                            onClick={e => dislikeHandler(e)}
+                        />
+                    )}
+                    <LikeCount>{postInfo.dislikes}</LikeCount>
                 </Buttons>
             </LikeToggleBox>
         </StylePostBox>
@@ -215,30 +276,33 @@ const LikeCount = styled.div`
     letter-spacing: -1px;
     padding-top: 10px;
 `;
-
-const LikeBox = styled.div``;
-
-const Editbutton = styled.button`
-    width: 90px;
-    height: 30px;
-    background-color: #ffffff;
-    border: 1px solid #79a7ca;
-    border-radius: 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    &:hover {
-        background-color: #b2dbf4;
-    }
+const JoinBtn = styled.img`
+    width: 30px;
 `;
-const Deletebutton = styled.button`
-    width: 90px;
-    height: 30px;
-    background-color: #ffffff;
-    border: 1px solid #79a7ca;
-    border-radius: 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    &:hover {
-        background-color: #b2dbf4;
-    }
-`;
+
+// const LikeBox = styled.div``;
+
+// const Editbutton = styled.button`
+//     width: 90px;
+//     height: 30px;
+//     background-color: #ffffff;
+//     border: 1px solid #79a7ca;
+//     border-radius: 5px;
+//     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+//         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+//     &:hover {
+//         background-color: #b2dbf4;
+//     }
+// `;
+// const Deletebutton = styled.button`
+//     width: 90px;
+//     height: 30px;
+//     background-color: #ffffff;
+//     border: 1px solid #79a7ca;
+//     border-radius: 5px;
+//     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+//         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+//     &:hover {
+//         background-color: #b2dbf4;
+//     }
+// `;
