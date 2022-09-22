@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useMutation, useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
-import useInput from '../../hooks/useInput';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import { postAPI } from '../../shared/api';
 
 function BoardEdit() {
-    const { id } = useParams();
-    console.log('d', id);
-    const queryClient = useQueryClient();
+    const ref = useRef(null);
 
-    const [updateTitle, onChangeTitleHandler] = useInput();
-    const [updateStockName, onChangeStockNameHandler] = useInput();
-    const [updateContent, onChangeContentHandler] = useInput();
+    const { id } = useParams();
+    // 데이터 뽑아오기
+    const { data } = useQuery(['post', id], () => postAPI.getPost(id));
+    console.log('dd', data.data.data);
+    const { stockName, title, content } = data.data.data;
+    console.log(stockName, title, content);
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+
+    // 제목수정
+    const [editTitle, setEditTitle] = React.useState(title);
+    const onChangeTitle = event => {
+        setEditTitle(event.target.value);
+    };
+    // 종목수정
+    const [editStockName, setEditStockName] = React.useState(stockName);
+    const onChangeStockName = event => {
+        setEditStockName(event.target.value);
+    };
+    // 내용 수정
+    const [editContent, setEditContent] = React.useState(content);
+    const onChangeContent = event => {
+        setEditContent(event.target.value);
+    };
 
     const putPost = async req => {
         const response = await postAPI.putPost(id, req);
@@ -26,12 +44,14 @@ function BoardEdit() {
             queryClient.invalidateQueries('post');
         },
     });
+    // 수정 버튼
     const onClickEdit = () => {
         editMutation.mutate({
-            content: updateContent,
-            title: updateTitle,
-            stockName: updateStockName,
+            title: editTitle,
+            content: editContent,
+            stockName: editStockName,
         });
+        navigate(`/post/${id}`);
     };
 
     return (
@@ -44,7 +64,9 @@ function BoardEdit() {
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="제목"
-                            onChange={onChangeTitleHandler}
+                            onChange={onChangeTitle}
+                            ref={ref}
+                            value={editTitle}
                         />
                     </CardDiv>
                     <CardDiv>
@@ -53,7 +75,9 @@ function BoardEdit() {
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="종목"
-                            onChange={onChangeStockNameHandler}
+                            onChange={onChangeStockName}
+                            ref={ref}
+                            value={editStockName}
                         />
                     </CardDiv>
                     <ContentDiv>
@@ -62,7 +86,9 @@ function BoardEdit() {
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="내용"
-                            onChange={onChangeContentHandler}
+                            onChange={onChangeContent}
+                            ref={ref}
+                            value={editContent}
                         />
                     </ContentDiv>
                 </CardLayout>

@@ -1,28 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import useInput from '../../hooks/useInput';
-import { addBoardpost } from '../../redux/modules/postSlice';
+import { postAPI } from '../../shared/api';
 
 function BoardWrite() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     const [title, onChangeTitleHandler] = useInput();
     const [content, onChangeContentHandler] = useInput();
     const [stockName, onChangeStockNameHandler] = useInput();
 
-    const submitHandler = e => {
-        e.preventDefault();
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
-        const addboard = {
-            title,
-            stockName,
-            content,
-        };
-        dispatch(addBoardpost(addboard));
+    const addComment = async req => {
+        const response = await postAPI.postPost(req);
+        return response;
+    };
+
+    const mutation = useMutation(req => addComment(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('posts');
+        },
+    });
+
+    const submitHandler = () => {
+        mutation.mutate({ content, title, stockName });
         navigate('/communityboard');
     };
 

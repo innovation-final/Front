@@ -26,10 +26,15 @@ export default api;
 export const userAPI = {};
 
 export const postAPI = {
+    postPost: request => api.post('/auth/post', request),
     getPost: id => api.get(`/post/${id}`),
     getPosts: () => api.get(`/post`),
     deletePost: postId => api.delete(`/auth/post/${postId}`),
     putPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
+    likePost: (postId, request) =>
+        api.put(`/auth/post/like/${postId}`, request),
+    dislikePost: (postId, request) =>
+        api.put(`/auth/post/dislike/${postId}`, request),
 };
 
 export const commentAPI = {
