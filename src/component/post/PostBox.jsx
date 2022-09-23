@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useParams, useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
-import CancelIcon from '@mui/icons-material/Cancel';
+import ClearIcon from '@mui/icons-material/Clear';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import emptylike from '../../static/emptylike.png';
 import emptydislike from '../../static/emptydislike.png';
@@ -22,7 +22,9 @@ function PostBox() {
     );
 
     const postInfo = data?.data.data;
-    console.log(postInfo);
+
+    const user = data?.data.data.member;
+    console.log(user);
 
     const navigate = useNavigate();
 
@@ -46,7 +48,13 @@ function PostBox() {
     });
 
     const onPostDelete = () => {
-        mutation.mutate(id);
+        if (window.confirm('정말 삭제하겠습니까?')) {
+            mutation.mutate(id);
+            alert('삭제되었습니다');
+        } else {
+            return false;
+        }
+        return 0;
     };
     // 좋아요
     const likeposts = async req => {
@@ -94,28 +102,36 @@ function PostBox() {
     if (isLoading) return <LoadingSpinner />;
     return (
         <StylePostBox>
-            <ContentWrapper>
-                <SubHeader>
-                    <StockName>{postInfo.stockName}</StockName>
-                    <div>
-                        <DeleteOutlineIcon
-                            name="postDeleteButton"
-                            onClick={onPostDelete}
-                        />
-
-                        <EditIcon
-                            name="commentButton"
-                            onClick={() => {
-                                navigate(`/boardedit/${id}`);
-                            }}
-                        />
-                        <CancelIcon
+            <div>
+                <ButtonBox>
+                    {user.id && (
+                        <>
+                            <DeleteOutlineIcon
+                                name="postDeleteButton"
+                                onClick={onPostDelete}
+                            />
+                            <EditIcon
+                                name="commentButton"
+                                onClick={() => {
+                                    navigate(`/boardedit/${id}`);
+                                }}
+                            />
+                        </>
+                    )}
+                    <ClearButton>
+                        <ClearIcon
                             name="cancelButton"
                             onClick={() => {
                                 navigate('/CommunityBoard');
                             }}
                         />
-                    </div>
+                    </ClearButton>
+                </ButtonBox>
+            </div>
+            <ContentWrapper>
+                <SubHeader>
+                    <StockName>{postInfo.stockName}</StockName>
+
                     <PostInfoBox>
                         <ViewCount>조회 수 : 0</ViewCount>
                         <CommentCount>
@@ -190,13 +206,14 @@ PostBox.propTypes = {
 const StylePostBox = styled.div`
     position: relative;
     display: flex;
+
     flex-direction: column;
     justify-content: space-between;
 `;
 const ContentWrapper = styled.div`
     position: relative;
     min-height: 500px;
-    padding: 30px;
+    padding-top: 10px;
     margin-bottom: 30px;
 
     display: flex;
@@ -242,8 +259,8 @@ const SubHeader = styled.div`
 const PostInfoBox = styled.div`
     display: flex;
     flex-direction: row;
-    width: 15%;
-    margin-right: 20px;
+    width: 9%;
+
     justify-content: space-evenly;
 `;
 const ViewCount = styled.div`
@@ -280,29 +297,14 @@ const JoinBtn = styled.img`
     width: 30px;
 `;
 
-// const LikeBox = styled.div``;
+const ButtonBox = styled.div`
+    float: right;
 
-// const Editbutton = styled.button`
-//     width: 90px;
-//     height: 30px;
-//     background-color: #ffffff;
-//     border: 1px solid #79a7ca;
-//     border-radius: 5px;
-//     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-//         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-//     &:hover {
-//         background-color: #b2dbf4;
-//     }
-// `;
-// const Deletebutton = styled.button`
-//     width: 90px;
-//     height: 30px;
-//     background-color: #ffffff;
-//     border: 1px solid #79a7ca;
-//     border-radius: 5px;
-//     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-//         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-//     &:hover {
-//         background-color: #b2dbf4;
-//     }
-// `;
+    display: flex;
+`;
+const ClearButton = styled.div`
+    color: #c7c7c7;
+    &:hover {
+        color: #a3a1a1;
+    }
+`;
