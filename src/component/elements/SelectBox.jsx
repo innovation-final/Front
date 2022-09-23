@@ -2,12 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function SelectBox({ options = [] }) {
+function SelectBox({ options = [''], selectedOption, _getOption }) {
+    const onChange = event => {
+        event.preventDefault();
+        _getOption(event.target.value);
+    };
+
     return (
         <StyleSelectBox>
-            <select type="text">
+            <select type="text" onChange={onChange} value={selectedOption}>
                 {options.map(option => (
-                    <option key={option} value={option}>
+                    <option key={option} value={String(option)}>
                         {option}
                     </option>
                 ))}

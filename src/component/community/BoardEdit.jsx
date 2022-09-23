@@ -11,9 +11,7 @@ function BoardEdit() {
     const { id } = useParams();
     // 데이터 뽑아오기
     const { data } = useQuery(['post', id], () => postAPI.getPost(id));
-    console.log('dd', data.data.data);
     const { stockName, title, content } = data.data.data;
-    console.log(stockName, title, content);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 
 const createAnimation = {
     hidden: { opacity: 0, x: -20 },
@@ -10,7 +12,7 @@ const createAnimation = {
 };
 
 function BoardCard({ post }) {
-    const { title, stockName, member, id, createdAt } = post;
+    const { title, stockName, member, id, createdAt, likes, dislikes } = post;
 
     const date = new Date(createdAt);
     const year = date.getFullYear();
@@ -33,6 +35,16 @@ function BoardCard({ post }) {
                 </CardDivide>
                 <CardDivide2>
                     <CardCreatedAt>{`${year}-${month}-${day} ${hour}:${minute}`}</CardCreatedAt>
+                    <CardLike>
+                        <CardIconBox thumbUp>
+                            <ThumbUpOffAltIcon />
+                        </CardIconBox>
+                        {likes}
+                        <CardIconBox thumbUp={false}>
+                            <ThumbDownOffAltIcon />
+                        </CardIconBox>
+                        {dislikes}
+                    </CardLike>
                     <CardWriter>written by {member.nickname}</CardWriter>
                 </CardDivide2>
             </CardLayout>
@@ -88,6 +100,7 @@ const CardDivide2 = styled.div`
     align-items: flex-end;
     justify-content: space-between;
     width: 100%;
+    height: 70px;
 `;
 const CardTitle = styled.div`
     font-size: 25px;
@@ -100,6 +113,16 @@ const CardStockName = styled.div`
 `;
 const CardWriter = styled.div`
     font-size: 13px;
+`;
+const CardLike = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+`;
+const CardIconBox = styled.div`
+    margin: 0px 10px;
+    color: ${props => (props.thumbUp ? '#4a69bd' : '#e55039')};
 `;
 const CardCreatedAt = styled.div`
     font-size: 13px;

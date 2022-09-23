@@ -53,6 +53,7 @@ function Button(props) {
     const variantStyle = VARIANTS[variant];
     return (
         <StyleButton
+            type="button"
             size={sizeStyle}
             disabled={disabled}
             variant={variantStyle}
