@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
 import Layout from '../layout/Layout';
 import { postAPI } from '../../shared/api';
+import Button from '../elements/Button';
 
 function BoardEdit() {
     const ref = useRef(null);
@@ -13,9 +14,7 @@ function BoardEdit() {
     const { id } = useParams();
     // 데이터 뽑아오기
     const { data } = useQuery(['post', id], () => postAPI.getPost(id));
-    console.log('dd', data.data.data);
     const { stockName, title, content } = data.data.data;
-    console.log(stockName, title, content);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
@@ -118,11 +117,7 @@ function BoardEdit() {
                     </ContentDiv>
                 </CardLayout>
                 <ButtonLayout>
-                    <Button
-                        type="button"
-                        className="btn btn-outline-primary"
-                        onClick={onClickEdit}
-                    >
+                    <Button size="md" _onClick={onClickEdit}>
                         수정
                     </Button>
                 </ButtonLayout>
@@ -171,8 +166,8 @@ const Card = styled.div`
 `;
 
 const Input = styled.input`
+    padding: 10px;
     width: 95%;
-    height: 30px;
     border: 1px solid skyblue;
     background-color: #f1fafd;
     border-radius: 5px;
@@ -183,6 +178,7 @@ const Input = styled.input`
 `;
 
 const TextareaContent = styled.textarea`
+    padding: 10px;
     width: 95%;
     height: 300px;
     border: 1px solid skyblue;
@@ -195,18 +191,6 @@ const TextareaContent = styled.textarea`
 const ContentDiv = styled.div`
     display: flex;
     margin: 50px;
-`;
-
-const Button = styled.button`
-    width: 80px;
-    height: 40px;
-    background-color: #b7e6ff;
-    border: 1px solid #7fc5fc;
-    border-radius: 5px;
-    &:hover {
-        background-color: #abe4ff;
-        outline: 1px solid #5eb9ff;
-    }
 `;
 
 const ButtonLayout = styled.div`

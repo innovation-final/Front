@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion';
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import BoardCard from './BoardCard';
 
 const createAnimation = {
     hidden: { opacity: 1 },
@@ -13,22 +13,22 @@ const createAnimation = {
     },
 };
 
-function BoardCards({ children }) {
+function BoardCards({ data }) {
     return (
-        <StyleBoardCards
-            variants={createAnimation}
-            initial="hidden"
-            animate="show"
-        >
-            {children}
-        </StyleBoardCards>
+        <Container>
+            <StyleBoardCards
+                variants={createAnimation}
+                initial="hidden"
+                animate="show"
+            >
+                {data &&
+                    data.map(post => <BoardCard key={post.id} post={post} />)}
+            </StyleBoardCards>
+        </Container>
     );
 }
 
 export default BoardCards;
 
-BoardCards.propTypes = {
-    children: PropTypes.node,
-};
-
+const Container = styled.div``;
 const StyleBoardCards = styled(motion.div)``;
