@@ -9,15 +9,32 @@ const api = axios.create({
     },
 });
 
+const accessToken = localStorage.getItem('access-token');
+const refreshToken = localStorage.getItem('refresh-token');
+
 api.interceptors.request.use(function (config) {
-    const accessToken = localStorage.getItem('access-token');
-    const refreshToken = localStorage.getItem('refresh-token');
+    if (!accessToken || !refreshToken) {
+        window.location.href('/login');
+    }
+
     config.headers.authorization = `${accessToken}`;
     config.headers['refresh-token'] = `${refreshToken}`;
     return config;
 });
 
-api.interceptors.response.use();
+api.interceptors.response.use(
+    function (response) {
+        return response;
+    },
+    function (error) {
+        if (error.response.data.error.code === 'INVALID_TOKEN') {
+            console.log('토큰이 만료되었습니다.');
+            window.location.replace('/login');
+            return Promise.reject(error);
+        }
+        return Promise.reject(error);
+    },
+);
 
 export default api;
 

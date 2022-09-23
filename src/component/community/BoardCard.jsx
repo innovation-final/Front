@@ -122,7 +122,7 @@ const CardLike = styled.div`
 `;
 const CardIconBox = styled.div`
     margin: 0px 10px;
-    color: ${props => (props.thumbUp ? '#4a69bd' : '#e55039')};
+    color: ${props => (!props.thumbUp ? '#4a69bd' : '#e55039')};
 `;
 const CardCreatedAt = styled.div`
     font-size: 13px;
