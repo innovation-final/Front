@@ -25,7 +25,7 @@ function BoardWrite() {
     const mutation = useMutation(req => addComment(req), {
         onError: error => console.log(error),
         onSuccess: () => {
-            queryClient.invalidateQueries('posts');
+            queryClient.invalidateQueries('post');
         },
     });
 

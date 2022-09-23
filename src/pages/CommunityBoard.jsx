@@ -83,7 +83,7 @@ const CommunityHeader = styled.div`
     display: flex;
     justify-content: space-between;
     width: 85%;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
 `;
 const HeaderTitle = styled.div`
     font-size: 25px;
