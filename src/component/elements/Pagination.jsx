@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-// 값이 늘어났을 때 처리 아직 x
 function Pagination(props) {
     const {
         postPerPage,
