@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import Router from './Router';
 import store from './redux/store/configStore';
 import GlobalStyles from './GlobalStyles';
-import LiveChat from './component/livechat/LiveChat';
 
 function App() {
     const queryClient = new QueryClient();
@@ -13,7 +12,6 @@ function App() {
             <Provider store={store}>
                 <GlobalStyles />
                 <Router />
-                <LiveChat />
             </Provider>
         </QueryClientProvider>
     );

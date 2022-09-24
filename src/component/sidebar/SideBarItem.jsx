@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import PeopleIcon from '@mui/icons-material/People';
 import LayersIcon from '@mui/icons-material/Layers';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { motion } from 'framer-motion';
 import { WideContext } from '../../context/WideContext';
@@ -35,11 +36,14 @@ function SideBarItem({ title, onClickFn, subItems }) {
                         {title === '모의투자' ? (
                             <LayersIcon fontSize="large" />
                         ) : null}
-                        {title === '뉴스전체' ? (
-                            <NewspaperIcon fontSize="large" />
+                        {title === '랭킹보드' ? (
+                            <MilitaryTechIcon fontSize="large" />
                         ) : null}
-                        {title === '내 정보' ? (
+                        {title === '관심종목 관리' ? (
                             <PhoneAndroidIcon fontSize="large" />
+                        ) : null}
+                        {title === '마이페이지' ? (
+                            <AssignmentIndIcon fontSize="large" />
                         ) : null}
                     </IconBox>
                     {wide ? (

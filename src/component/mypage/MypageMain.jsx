@@ -41,4 +41,5 @@ const CardMedia = styled.img`
     border-radius: 500px;
     max-width: 400px;
     margin-left: 50px;
+    object-fit: cover;
 `;

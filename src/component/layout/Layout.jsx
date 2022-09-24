@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import useWindowSize from '../../hooks/useWindowSize';
 import Header from './Header';
 import SideBar from './SideBar';
+import LiveChat from '../livechat/LiveChat';
 import { WideContext } from '../../context/WideContext';
 
 const responsive = {
@@ -34,6 +35,7 @@ function Layout({ children, sidebar = true, header = true }) {
             <Main $wide={wide} isPC={isPC}>
                 {children}
             </Main>
+            <LiveChat />
         </StyleLayout>
     );
 }
@@ -50,15 +52,10 @@ const Main = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    /* transform: translate(${props => (props.wide ? 290 : 70)}px, 57px);  
-    width: calc(100% - ${props => (props.wide ? 290 : 70)}px); */
     max-width: 100%;
     box-sizing: border-box;
-    /* padding: 30px;
-    padding-left: 60px; */
     z-index: 11;
     transition: all ease-in-out 0.3s;
-    /* transition: transform ease-in-out 0.3s; */
 `;
 
 Layout.propTypes = {
