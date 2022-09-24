@@ -1,13 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function HeaderProfile() {
+    const navigate = useNavigate();
+
     return (
         <StyleProfile>
             <ImageBox>
-                <ProfileImage src="https://image.edaily.co.kr/images/photo/files/NP/S/2020/03/PS20031800048.jpg" />
+                <ProfileImage
+                    onClick={() => {
+                        navigate('/mypage');
+                    }}
+                    src="https://image.edaily.co.kr/images/photo/files/NP/S/2020/03/PS20031800048.jpg"
+                />
             </ImageBox>
             <InfoBox>
                 <ProfileInfo>
