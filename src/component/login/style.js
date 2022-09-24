@@ -61,7 +61,7 @@ export const DivButton = styled.div`
     }
 `;
 
-export const GoogleButton = styled.button`
+export const GoogleBtn = styled.button`
     margin-left: 0.3rem;
     width: 15rem !important;
     background-color: white !important;
@@ -73,7 +73,7 @@ export const GoogleButton = styled.button`
     border-radius: 0.5rem;
     height: 3.5rem;
     img {
-        width: 1.5rem;
+        width: 1.5rem !important;
         object-fit: contain;
         margin-left: 0.9rem;
 
