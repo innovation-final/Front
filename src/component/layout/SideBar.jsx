@@ -12,17 +12,7 @@ function SideBar() {
 
     const menuItems = [
         { title: '주식보기', onClickFn: () => navigate('/') },
-        {
-            title: '커뮤니티',
-            onClickFn: () => navigate('/community'),
-            subItems: [
-                {
-                    title: '자유게시판',
-                    onClickFn: () => navigate('/communityboard'),
-                },
-                { title: '실시간 댓글', onClickFn: () => navigate('/') },
-            ],
-        },
+        { title: '커뮤니티', onClickFn: () => navigate('/community') },
         { title: '모의투자', onClickFn: () => navigate('/') },
         { title: '뉴스전체', onClickFn: () => navigate('/') },
         {

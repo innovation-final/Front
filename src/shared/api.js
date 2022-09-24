@@ -9,10 +9,9 @@ const api = axios.create({
     },
 });
 
-const accessToken = localStorage.getItem('access-token');
-const refreshToken = localStorage.getItem('refresh-token');
-
 api.interceptors.request.use(function (config) {
+    const accessToken = localStorage.getItem('access-token');
+    const refreshToken = localStorage.getItem('refresh-token');
     if (!accessToken || !refreshToken) {
         window.location.href('/login');
     }

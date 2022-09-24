@@ -2,7 +2,6 @@ import React from 'react';
 import Layout from '../component/layout/Layout';
 import MainContainer from '../component/main/MainContainer';
 import ContentBox from '../component/elements/ContentBox';
-// import GoogleLogIn from '../component/login/GoogleLogIn';
 
 function Home() {
     return (

@@ -1,17 +1,51 @@
 import React from 'react';
 // import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-// 값이 늘어났을 때 처리 아직 x
-function Pagination({ postPerPage, totalPosts, paginate, currentPage }) {
+function Pagination(props) {
+    const {
+        postPerPage,
+        totalPosts,
+        paginate,
+        currentPage,
+        leftMove,
+        rightMove,
+    } = props;
+
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(totalPosts / postPerPage); i += 1) {
-        pageNumbers.push(i);
+    const totalPage = Math.ceil(totalPosts / postPerPage);
+    const pageCountView = 7;
+    const middlePage = Math.ceil(pageCountView / 2);
+    if (totalPage <= pageCountView) {
+        for (let i = 1; i <= totalPage; i += 1) {
+            pageNumbers.push(i);
+        }
+    } else if (currentPage < middlePage) {
+        for (let i = 1; i <= pageCountView; i += 1) {
+            pageNumbers.push(i);
+        }
+    } else if (currentPage > totalPage - middlePage) {
+        for (let i = totalPage - pageCountView + 1; i <= totalPage; i += 1) {
+            pageNumbers.push(i);
+        }
+    } else {
+        for (
+            let i = currentPage - (pageCountView - middlePage);
+            i <= currentPage + (pageCountView - middlePage);
+            i += 1
+        ) {
+            pageNumbers.push(i);
+        }
     }
 
     return (
         <Container>
             <PageNavigation>
+                <LeftArrow onClick={leftMove}>
+                    <ChevronLeftIcon />
+                </LeftArrow>
                 {pageNumbers.map(num => (
                     <PageBox key={num}>
                         <Page
@@ -23,6 +57,9 @@ function Pagination({ postPerPage, totalPosts, paginate, currentPage }) {
                         </Page>
                     </PageBox>
                 ))}
+                <RightArrow onClick={() => rightMove(totalPage)}>
+                    <ChevronRightIcon />
+                </RightArrow>
             </PageNavigation>
         </Container>
     );
@@ -37,7 +74,10 @@ const Container = styled.nav`
     width: 100%;
     height: 80px;
 `;
-const PageNavigation = styled.ul``;
+const PageNavigation = styled.ul`
+    display: flex;
+    align-items: center;
+`;
 const PageBox = styled.li`
     display: inline-block;
     overflow: hidden;
@@ -50,5 +90,14 @@ const Page = styled.span`
     color: ${props => (props.currentPage === props.num ? 'skyblue' : 'black')};
     font-weight: ${props => (props.currentPage === props.num ? '700' : '500')};
 
+    cursor: pointer;
+`;
+
+const LeftArrow = styled.span`
+    margin-right: 3px;
+    cursor: pointer;
+`;
+const RightArrow = styled.span`
+    margin-left: 3px;
     cursor: pointer;
 `;

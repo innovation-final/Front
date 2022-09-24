@@ -42,6 +42,14 @@ function CommunityBoard() {
         setCurrentPage(pageNum);
         window.scrollTo(0, 0);
     };
+    const leftMove = () => {
+        if (currentPage) return;
+        setCurrentPage(props => props - 1);
+    };
+    const rightMove = lastPage => {
+        if (currentPage === lastPage) return;
+        setCurrentPage(props => props + 1);
+    };
 
     if (!query.data) return <LoadingSpinner />;
     return (
@@ -72,6 +80,8 @@ function CommunityBoard() {
                 totalPosts={posts?.length}
                 paginate={paginate}
                 currentPage={currentPage}
+                leftMove={leftMove}
+                rightMove={rightMove}
             />
         </Layout>
     );
