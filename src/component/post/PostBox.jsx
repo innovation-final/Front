@@ -22,7 +22,12 @@ function PostBox() {
     );
 
     const postInfo = data?.data.data;
+    const donelike = data?.data.data.doneLike;
+    console.log(donelike);
+    const donedislike = data?.data.data.doneDisLike;
+    console.log(donedislike);
 
+    console.log(postInfo);
     const user = data?.data.data.member;
     console.log(user);
 
@@ -69,13 +74,13 @@ function PostBox() {
         },
     });
 
-    const [likes, setLikes] = useState(0);
+    const [doneLike, setLikes] = useState(false);
 
     const likeHandler = e => {
         e.preventDefault();
 
-        setLikes(!likes);
-        likemutation.mutate({ likes });
+        setLikes(!doneLike);
+        likemutation.mutate({ doneLike });
     };
 
     // 싫어요
@@ -90,13 +95,13 @@ function PostBox() {
         },
     });
 
-    const [dislikes, setdisLikes] = useState(0);
+    const [doneDisLike, setdisLikes] = useState(false);
 
     const dislikeHandler = e => {
         e.preventDefault();
 
-        setdisLikes(!dislikes);
-        dislikemutation.mutate({ dislikes });
+        setdisLikes(!doneDisLike);
+        dislikemutation.mutate({ doneDisLike });
     };
 
     if (isLoading) return <LoadingSpinner />;
@@ -151,7 +156,7 @@ function PostBox() {
             </ContentWrapper>
             <LikeToggleBox>
                 <Buttons>
-                    {likes ? (
+                    {donelike ? (
                         <JoinBtn src={like} onClick={e => likeHandler(e)} />
                     ) : (
                         <JoinBtn
@@ -161,7 +166,7 @@ function PostBox() {
                     )}
 
                     <LikeCount>{postInfo.likes}</LikeCount>
-                    {dislikes ? (
+                    {donedislike ? (
                         <JoinBtn
                             src={dislike}
                             onClick={e => dislikeHandler(e)}

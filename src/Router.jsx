@@ -10,6 +10,7 @@ import BoardEdit from './component/community/BoardEdit';
 import PostDetail from './pages/PostDetail';
 import Google from './server/Google';
 import Kakao from './server/Kakao';
+import Mypage from './pages/Mypage';
 
 function Router() {
     return (
@@ -35,6 +36,7 @@ function Router() {
                     />
 
                     <Route path="/boardedit/:id" element={<BoardEdit />} />
+                    <Route path="/mypage" element={<Mypage />} />
                 </Routes>
             </BrowserRouter>
         </WideStore>
