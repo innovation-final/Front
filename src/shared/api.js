@@ -13,11 +13,39 @@ api.interceptors.request.use(function (config) {
     const accessToken = localStorage.getItem('access-token');
     const refreshToken = localStorage.getItem('refresh-token');
     config.headers.authorization = `${accessToken}`;
-    config.headers['refresh-token'] = `${refreshToken}`;
+    //config.headers['refresh-token'] = `${refreshToken}`;
     return config;
 });
 
-api.interceptors.response.use();
+api.interceptors.response.use(
+    function (response) {
+        return response;
+    },
+    async function (error){
+        if(error.response && error.response.status === 403){
+            try {
+                const token = {}
+                token['refresh-token'] = localStorage.getItem('refresh-token');
+                const originalRequest = error.config;
+                const data = await api.get('auth/refreshtoken',{
+                    data : {token}
+                })
+                if(data){
+                    const {accessToken,refreshToken} = data.data;
+                    localStorage.setItem('access-token') = accessToken;
+                    localStorage.setItem('refresh-token') = refreshToken
+                    originalRequest.headers.authorization = `${accessToken}`;
+                    originalRequest.headers['refresh-token'] `${refreshToken}`;
+                    return await api.request(originalRequest);
+                } 
+            } catch (error) {
+                console.log('error');
+            }
+            return Promise.reject(error)
+        }
+        return Promise.reject(error);
+    }
+);
 
 export default api;
 
