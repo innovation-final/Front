@@ -39,6 +39,7 @@ const StockInfoContainer = styled.div`
     justify-content: space-between;
     height: 50px;
     margin-bottom: 20px;
+    width: 100%;
 `;
 const StockInfoLeftBox = styled.div`
     display: flex;

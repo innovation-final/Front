@@ -23,7 +23,7 @@ function TradingVolumeBox({ isPC }) {
         <StyleTradingVolumeBox isPC={isPC}>
             <Title>순매매 거래량</Title>
             <ContentBox>
-                <List fields={fields} items={items} />
+                <List fields={fields} items={items} flexRatio={1.5} />
             </ContentBox>
         </StyleTradingVolumeBox>
     );

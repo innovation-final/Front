@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import SearchIcon from '@mui/icons-material/Search';
 import SelectBox from '../elements/SelectBox';
+import Button from '../elements/Button';
 import TableItem from './TableItem';
 import TableName from './TableName';
+import Modal from '../elements/Modal';
 
 const options = ['코스피', '코스닥'];
 const defaultOption = '코스피';
@@ -31,6 +34,11 @@ function StocksBox() {
     const getOption = selected => {
         setOption(selected);
     };
+
+    const [open, isOpen] = useState(false);
+    const setIsOpen = () => {
+        isOpen(props => !props);
+    };
     return (
         <StyleStocksBox>
             <StyleHeader>
@@ -40,6 +48,11 @@ function StocksBox() {
                     selectedOption={option}
                     _getOption={getOption}
                 />
+                <SearchBox>
+                    <Button _onClick={setIsOpen}>
+                        <SearchIcon />
+                    </Button>
+                </SearchBox>
             </StyleHeader>
             <StocksContainer>
                 <TableName keys={keys} />
@@ -47,13 +60,22 @@ function StocksBox() {
                     <TableItem key={value[0]} values={value} />
                 ))}
             </StocksContainer>
+            {open ? (
+                <Modal width={800} height={700} setIsOpen={setIsOpen}>
+                    hello
+                </Modal>
+            ) : null}
         </StyleStocksBox>
     );
 }
 
 export default StocksBox;
 
-const StyleStocksBox = styled.div``;
+const StyleStocksBox = styled.div`
+    width: 100%;
+    margin-left: 2%;
+    margin-top: 1%;
+`;
 const StyleHeader = styled.div`
     display: flex;
     align-items: center;
@@ -68,4 +90,7 @@ const StocksContainer = styled.div`
     width: 90%;
     border-radius: 10px;
     padding: 30px;
+`;
+const SearchBox = styled.div`
+    margin-left: 20px;
 `;

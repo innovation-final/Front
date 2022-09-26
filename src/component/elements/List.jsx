@@ -19,7 +19,7 @@ function List({ fields = [''], items = [''], flexRatio = 1 }) {
             <FieldNameBox>{fieldRendering()}</FieldNameBox>
             <ListContainer>
                 {items.map(item => (
-                    <ListItem item={item} flexRatio={flexRatio} />
+                    <ListItem key={item[0]} item={item} flexRatio={flexRatio} />
                 ))}
             </ListContainer>
         </StyleList>

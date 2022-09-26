@@ -27,7 +27,7 @@ function StockDetailContainer() {
         <StyleDetailContainer>
             <ContainerTop isPC={isPC}>
                 <StockInfoWrapper>
-                    <StockInfoBox />
+                    <StockInfoBox isPC={isPC} />
                     <GraphBox isPC={isPC} />
                 </StockInfoWrapper>
                 <TradingVolumeBox isPC={isPC} />
@@ -55,7 +55,7 @@ const StyleDetailContainer = styled.div`
 const StockInfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 75%;
 `;
 
 const ContainerTop = styled.div`
