@@ -32,6 +32,7 @@ api.interceptors.response.use(
 
         if (response && response.data.error.code === 'ACCESS_TOKEN_EXPIRED') {
             const refreshToken = localStorage.getItem('refresh-token');
+
             const header = {};
 
             header['refresh-token'] = refreshToken;
@@ -54,14 +55,19 @@ api.interceptors.response.use(
 
                         return axios(originalRequest);
                     }
-                    if (res.data.data === 'Refresh Token Expired') {
-                        localStorage.removeItem('access-token');
-                        localStorage.removeItem('refresh-token');
-                        window.location.href = '/login';
-                    }
                     return Promise.reject(error);
                 })
-                .catch(err => console.log('에러', err));
+                .catch(err => {
+                    console.log('에러!!', err);
+                    if (
+                        err.response.data.error.code === 'REFRESH_TOKEN_EXPIRED'
+                    ) {
+                        console.log(err.response.data.error.code);
+                        localStorage.removeItem('access-token');
+                        localStorage.removeItem('refresh-token');
+                        window.location.href = '../login';
+                    }
+                });
         }
 
         return Promise.reject(error);
