@@ -12,6 +12,10 @@ const api = axios.create({
 api.interceptors.request.use(function (config) {
     const accessToken = localStorage.getItem('access-token');
     const refreshToken = localStorage.getItem('refresh-token');
+    if (!accessToken || !refreshToken) {
+        window.location.href('/login');
+    }
+
     config.headers.authorization = `${accessToken}`;
     //config.headers['refresh-token'] = `${refreshToken}`;
     return config;
@@ -21,30 +25,44 @@ api.interceptors.response.use(
     function (response) {
         return response;
     },
-    async function (error){
-        if(error.response && error.response.status === 403){
-            try {
-                const token = {}
-                token['refresh-token'] = localStorage.getItem('refresh-token');
-                const originalRequest = error.config;
-                const data = await api.get('auth/refreshtoken',{
-                    data : {token}
+    async function (error) {
+        const baseURL = 'https://hakjoonkim.shop/api';
+        const { config, response } = error;
+        const originalRequest = config;
+
+        if (response && response.data.error.code === 'ACCESS_TOKEN_EXPIRED') {
+            const refreshToken = localStorage.getItem('refresh-token');
+            const header = {};
+
+            header['refresh-token'] = refreshToken;
+
+            await axios
+                .post(`${baseURL}/auth/reissue`, null, {
+                    headers: header,
                 })
-                if(data){
-                    const {accessToken,refreshToken} = data.data;
-                    localStorage.setItem('access-token') = accessToken;
-                    localStorage.setItem('refresh-token') = refreshToken
-                    originalRequest.headers.authorization = `${accessToken}`;
-                    originalRequest.headers['refresh-token'] `${refreshToken}`;
-                    return await api.request(originalRequest);
-                } 
-            } catch (error) {
-                console.log('error');
-            }
-            return Promise.reject(error)
+                .then(res => {
+                    if (res.data.data === 'Reissue Success') {
+                        const accessToken = res.headers.authorization;
+                        const refreshToken = res.headers['refresh-token'];
+
+                        originalRequest.headers.authorization = accessToken;
+                        originalRequest.headers['refresh-token'] = refreshToken;
+
+                        localStorage.setItem('access-token', accessToken);
+                        localStorage.setItem('refresh-token', refreshToken);
+
+                        return axios(originalRequest);
+                    } else if (res.data.data === 'Refresh Token Expired') {
+                        localStorage.removeItem('access-token');
+                        localStorage.removeItem('refresh-token');
+                        window.location.href = '/login';
+                    }
+                })
+                .catch(err => console.log('에러', err));
         }
+
         return Promise.reject(error);
-    }
+    },
 );
 
 export default api;
@@ -54,7 +72,17 @@ export default api;
 export const userAPI = {};
 
 export const postAPI = {
+    postPost: request => api.post('/auth/post', request),
     getPost: id => api.get(`/post/${id}`),
+    getPosts: () => api.get(`/post`),
+    getOrderedLikePosts: () => api.get(`/post/likes`),
+    getOrderedOldPosts: () => api.get(`/post/old`),
+    deletePost: postId => api.delete(`/auth/post/${postId}`),
+    putPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
+    likePost: (postId, request) =>
+        api.post(`/auth/post/like/${postId}`, request),
+    dislikePost: (postId, request) =>
+        api.post(`/auth/post/dislike/${postId}`, request),
 };
 
 export const commentAPI = {

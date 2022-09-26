@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useParams, useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import ClearIcon from '@mui/icons-material/Clear';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import emptylike from '../../static/emptylike.png';
+import emptydislike from '../../static/emptydislike.png';
+import like from '../../static/like.png';
+import dislike from '../../static/dislike.png';
 import { postAPI } from '../../shared/api';
-import Button from '../elements/Button';
 import ProfileCard from './ProfileCard';
 import LoadingSpinner from '../elements/LoadingSpinner';
 
@@ -16,7 +20,16 @@ function PostBox() {
     const { data, isLoading } = useQuery(['post', id], () =>
         postAPI.getPost(id),
     );
+
     const postInfo = data?.data.data;
+    const donelike = data?.data.data.doneLike;
+    console.log(donelike);
+    const donedislike = data?.data.data.doneDisLike;
+    console.log(donedislike);
+
+    console.log(postInfo);
+    const user = data?.data.data.member;
+    console.log(user);
 
     const navigate = useNavigate();
 
@@ -40,33 +53,90 @@ function PostBox() {
     });
 
     const onPostDelete = () => {
-        mutation.mutate(id);
-        console.log('dd', onPostDelete);
+        if (window.confirm('정말 삭제하겠습니까?')) {
+            mutation.mutate(id);
+            alert('삭제되었습니다');
+        } else {
+            return false;
+        }
+        return 0;
+    };
+    // 좋아요
+    const likeposts = async req => {
+        const response = await postAPI.likePost(id, req);
+
+        return response;
+    };
+    const likemutation = useMutation(req => likeposts(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+    });
+
+    const [doneLike, setLikes] = useState(false);
+
+    const likeHandler = e => {
+        e.preventDefault();
+
+        setLikes(!doneLike);
+        likemutation.mutate({ doneLike });
+    };
+
+    // 싫어요
+    const dislikeposts = async req => {
+        const response = await postAPI.dislikePost(id, req);
+        return response;
+    };
+    const dislikemutation = useMutation(req => dislikeposts(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+    });
+
+    const [doneDisLike, setdisLikes] = useState(false);
+
+    const dislikeHandler = e => {
+        e.preventDefault();
+
+        setdisLikes(!doneDisLike);
+        dislikemutation.mutate({ doneDisLike });
     };
 
     if (isLoading) return <LoadingSpinner />;
     return (
         <StylePostBox>
+            <div>
+                <ButtonBox>
+                    {user.id && (
+                        <>
+                            <DeleteOutlineIcon
+                                name="postDeleteButton"
+                                onClick={onPostDelete}
+                            />
+                            <EditIcon
+                                name="commentButton"
+                                onClick={() => {
+                                    navigate(`/boardedit/${id}`);
+                                }}
+                            />
+                        </>
+                    )}
+                    <ClearButton>
+                        <ClearIcon
+                            name="cancelButton"
+                            onClick={() => {
+                                navigate('/CommunityBoard');
+                            }}
+                        />
+                    </ClearButton>
+                </ButtonBox>
+            </div>
             <ContentWrapper>
                 <SubHeader>
                     <StockName>{postInfo.stockName}</StockName>
-                    <div>
-                        <Deletebutton
-                            name="postDeleteButton"
-                            onClick={onPostDelete}
-                        >
-                            삭제
-                        </Deletebutton>
 
-                        <Editbutton
-                            name="commentButton"
-                            onClick={() => {
-                                navigate(`/boardedit/${id}`);
-                            }}
-                        >
-                            수정
-                        </Editbutton>
-                    </div>
                     <PostInfoBox>
                         <ViewCount>조회 수 : 0</ViewCount>
                         <CommentCount>
@@ -86,17 +156,28 @@ function PostBox() {
             </ContentWrapper>
             <LikeToggleBox>
                 <Buttons>
-                    <Button>
-                        <LikeBox>
-                            <ThumbUpIcon />
-                        </LikeBox>
-                    </Button>
-                    <LikeCount>{postInfo.dislikes + postInfo.likes}</LikeCount>
-                    <Button variant="error">
-                        <LikeBox>
-                            <ThumbDownIcon />
-                        </LikeBox>
-                    </Button>
+                    {donelike ? (
+                        <JoinBtn src={like} onClick={e => likeHandler(e)} />
+                    ) : (
+                        <JoinBtn
+                            src={emptylike}
+                            onClick={e => likeHandler(e)}
+                        />
+                    )}
+
+                    <LikeCount>{postInfo.likes}</LikeCount>
+                    {donedislike ? (
+                        <JoinBtn
+                            src={dislike}
+                            onClick={e => dislikeHandler(e)}
+                        />
+                    ) : (
+                        <JoinBtn
+                            src={emptydislike}
+                            onClick={e => dislikeHandler(e)}
+                        />
+                    )}
+                    <LikeCount>{postInfo.dislikes}</LikeCount>
                 </Buttons>
             </LikeToggleBox>
         </StylePostBox>
@@ -130,13 +211,14 @@ PostBox.propTypes = {
 const StylePostBox = styled.div`
     position: relative;
     display: flex;
+
     flex-direction: column;
     justify-content: space-between;
 `;
 const ContentWrapper = styled.div`
     position: relative;
     min-height: 500px;
-    padding: 30px;
+    padding-top: 10px;
     margin-bottom: 30px;
 
     display: flex;
@@ -182,8 +264,8 @@ const SubHeader = styled.div`
 const PostInfoBox = styled.div`
     display: flex;
     flex-direction: row;
-    width: 15%;
-    margin-right: 20px;
+    width: 9%;
+
     justify-content: space-evenly;
 `;
 const ViewCount = styled.div`
@@ -216,30 +298,18 @@ const LikeCount = styled.div`
     letter-spacing: -1px;
     padding-top: 10px;
 `;
-
-const LikeBox = styled.div``;
-
-const Editbutton = styled.button`
-    width: 90px;
-    height: 30px;
-    background-color: #ffffff;
-    border: 1px solid #79a7ca;
-    border-radius: 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    &:hover {
-        background-color: #b2dbf4;
-    }
+const JoinBtn = styled.img`
+    width: 30px;
 `;
-const Deletebutton = styled.button`
-    width: 90px;
-    height: 30px;
-    background-color: #ffffff;
-    border: 1px solid #79a7ca;
-    border-radius: 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+const ButtonBox = styled.div`
+    float: right;
+
+    display: flex;
+`;
+const ClearButton = styled.div`
+    color: #c7c7c7;
     &:hover {
-        background-color: #b2dbf4;
+        color: #a3a1a1;
     }
 `;
