@@ -33,7 +33,7 @@ function BoardWrite() {
         if (window.confirm('작성하겠습니까?')) {
             mutation.mutate({ content, title, stockName });
             alert('작성되었습니다');
-            navigate('/communityboard');
+            navigate('/community');
         } else {
             return false;
         }
@@ -52,7 +52,7 @@ function BoardWrite() {
                         <ClearIcon
                             name="cancelButton"
                             onClick={() => {
-                                navigate('/CommunityBoard');
+                                navigate('/Community');
                             }}
                         />
                     </ClearButton>
