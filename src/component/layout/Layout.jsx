@@ -10,13 +10,14 @@ import { WideContext } from '../../context/WideContext';
 const responsive = {
     pc: css`
         transform: translate(${props => (props.$wide ? 290 : 70)}px, 57px);
-        width: calc(100% - ${props => (props.$wide ? 290 : 70)}px);
+        width: calc(100vw - ${props => (props.$wide ? 290 : 70)}px);
         padding: 30px;
         padding-left: 60px;
     `,
     phone: css`
         transform: translate(70px);
         width: calc(100% - 70px);
+        flex-direction: column;
         padding: 10px;
     `,
 };

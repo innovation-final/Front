@@ -12,6 +12,7 @@ import Google from './server/Google';
 import Kakao from './server/Kakao';
 import Mypage from './pages/Mypage';
 import StockWhole from './pages/StockWhole';
+import StockDetail from './pages/StockDetail';
 
 function Router() {
     return (
@@ -39,6 +40,7 @@ function Router() {
                     <Route path="/boardedit/:id" element={<BoardEdit />} />
                     <Route path="/mypage" element={<Mypage />} />
                     <Route path="/stock" element={<StockWhole />} />
+                    <Route path="/stock/:id" element={<StockDetail />} />
                 </Routes>
             </BrowserRouter>
         </WideStore>

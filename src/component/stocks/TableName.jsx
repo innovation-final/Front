@@ -21,7 +21,7 @@ const StyleTableName = styled.div`
     width: 100%;
     height: 30px;
     border-radius: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     padding: 10px;
     background-color: orange;
     box-shadow: 1px 1px 1px 1px gray;

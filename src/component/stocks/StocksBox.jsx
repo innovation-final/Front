@@ -44,7 +44,7 @@ function StocksBox() {
             <StocksContainer>
                 <TableName keys={keys} />
                 {values.map(value => (
-                    <TableItem values={value} />
+                    <TableItem key={value[0]} values={value} />
                 ))}
             </StocksContainer>
         </StyleStocksBox>
