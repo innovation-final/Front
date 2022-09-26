@@ -17,7 +17,7 @@ api.interceptors.request.use(function (config) {
     }
 
     config.headers.authorization = `${accessToken}`;
-    config.headers['refresh-token'] = `${refreshToken}`;
+    // config.headers['refresh-token'] = `${refreshToken}`;
     return config;
 });
 
@@ -25,7 +25,45 @@ api.interceptors.response.use(
     function (response) {
         return response;
     },
-    function (error) {
+    async function (error) {
+        const baseURL = 'https://hakjoonkim.shop/api';
+        const { config, response } = error;
+        const originalRequest = config;
+
+        if (response && response.data.error.code === 'ACCESS_TOKEN_EXPIRED') {
+            const refreshToken = localStorage.getItem('refresh-token');
+            const header = {};
+
+            header['refresh-token'] = refreshToken;
+
+            await axios
+                .post(`${baseURL}/auth/reissue`, null, {
+                    headers: header,
+                })
+                .then(res => {
+                    if (res.data.data === 'Reissue Success') {
+                        const newAccessToken = res.headers.authorization;
+                        const newRefreshToken = res.headers['refresh-token'];
+
+                        originalRequest.headers.authorization = newAccessToken;
+                        originalRequest.headers['refresh-token'] =
+                            newRefreshToken;
+
+                        localStorage.setItem('access-token', newAccessToken);
+                        localStorage.setItem('refresh-token', newRefreshToken);
+
+                        return axios(originalRequest);
+                    }
+                    if (res.data.data === 'Refresh Token Expired') {
+                        localStorage.removeItem('access-token');
+                        localStorage.removeItem('refresh-token');
+                        window.location.href = '/login';
+                    }
+                    return Promise.reject(error);
+                })
+                .catch(err => console.log('에러', err));
+        }
+
         return Promise.reject(error);
     },
 );
