@@ -19,7 +19,7 @@ function SideBar() {
             title: '내 정보',
             onClickFn: () => navigate('/'),
             subItems: [
-                { title: '내 정보 수정', onClickFn: () => navigate('/') },
+                { title: '내 정보 수정', onClickFn: () => navigate('/mypage') },
                 { title: '관심종목 관리', onClickFn: () => navigate('/') },
             ],
         },
