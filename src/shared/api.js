@@ -26,11 +26,6 @@ api.interceptors.response.use(
         return response;
     },
     function (error) {
-        if (error.response.data.error.code === 'INVALID_TOKEN') {
-            console.log('토큰이 만료되었습니다.');
-            window.location.replace('/login');
-            return Promise.reject(error);
-        }
         return Promise.reject(error);
     },
 );
@@ -44,9 +39,10 @@ export const userAPI = {};
 export const postAPI = {
     postPost: request => api.post('/auth/post', request),
     getPost: id => api.get(`/post/${id}`),
-    getPosts: () => api.get(`/post`),
-    getOrderedLikePosts: () => api.get(`/post/likes`),
-    getOrderedOldPosts: () => api.get(`/post/old`),
+    getPosts: page => api.get(`/post?page=${page}`),
+    getOrderedLikePosts: page => api.get(`/post?page=${page}&sort=likes,DESC`),
+    getOrderedOldPosts: page =>
+        api.get(`/post?page=${page}&sort=createdAt,ASC`),
     deletePost: postId => api.delete(`/auth/post/${postId}`),
     putPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
     likePost: (postId, request) =>
