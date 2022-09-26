@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Charts from './Charts';
 import api from '../../shared/api';
-import { datas } from '../../data/data';
+import datas from '../../data/data';
+
 function Kospi() {
     const [data, setData] = useState(datas);
     useEffect(() => {

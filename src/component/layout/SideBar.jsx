@@ -11,12 +11,24 @@ function SideBar() {
     const { wide } = context;
 
     const menuItems = [
-        { title: '주식보기', onClickFn: () => navigate('/stock') },
-        { title: '커뮤니티', onClickFn: () => navigate('/community') },
+        {
+            title: '주식보기',
+            onClickFn: () => navigate('/stock'),
+            param: '/stock',
+        },
+        {
+            title: '커뮤니티',
+            onClickFn: () => navigate('/community'),
+            param: '/community',
+        },
         { title: '모의투자', onClickFn: () => navigate('/') },
         { title: '랭킹보드', onClickFn: () => navigate('/') },
         { title: '관심종목 관리', onClickFn: () => navigate('/') },
-        { title: '마이페이지', onClickFn: () => navigate('/mypage') },
+        {
+            title: '마이페이지',
+            onClickFn: () => navigate('/mypage'),
+            param: '/mypage',
+        },
     ];
 
     return (
@@ -28,6 +40,7 @@ function SideBar() {
                         key={item.title}
                         title={item.title}
                         subItems={item.subItems}
+                        param={item.param}
                         onClickFn={item.onClickFn}
                     />
                 ))}
