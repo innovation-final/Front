@@ -153,4 +153,5 @@ const Card = styled.div`
 const CardsLayout = styled.div`
     width: 30%;
     height: 362px;
+    object-fit: cover;
 `;

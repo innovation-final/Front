@@ -14,29 +14,28 @@ const options = ['최신순', '좋아요순', '오래된순'];
 const defaultOption = '최신순';
 
 function CommunityBoard() {
+    const [currentPage, setCurrentPage] = useState(1);
+    const postPerPage = 10;
+
     const navigate = useNavigate();
     const [option, setOption] = useState(defaultOption);
     const getOption = selected => {
         setOption(selected);
     };
-    const query = useGetPosts(option);
+    const query = useGetPosts(option, currentPage);
     const [posts, setPosts] = useState([]);
 
-    const postData = query.data?.data.data;
+    const postData = query.data?.data.data['페이지당 게시글'];
+    const totalPosts = query.data?.data.data['총 게시글 개수'];
     const refetchPosts = () => {
+        console.log(query.data?.data.data);
         setPosts(postData);
         query.refetch();
     };
 
     useEffect(() => {
         refetchPosts();
-    }, [postData, option, setOption]);
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const postPerPage = 10;
-    const indexOfLastPost = currentPage * postPerPage;
-    const indexOfFirstPost = indexOfLastPost - postPerPage;
-    const currentPosts = posts?.slice(indexOfFirstPost, indexOfLastPost);
+    }, [currentPage, postData, option, setOption]);
 
     const paginate = pageNum => {
         setCurrentPage(pageNum);
@@ -73,11 +72,11 @@ function CommunityBoard() {
                         글쓰기
                     </Button>
                 </CommunityHeader>
-                <BoardCards data={currentPosts} />
+                <BoardCards data={posts} />
             </BoardContainer>
             <Pagination
                 postPerPage={postPerPage}
-                totalPosts={posts?.length}
+                totalPosts={totalPosts}
                 paginate={paginate}
                 currentPage={currentPage}
                 leftMove={leftMove}

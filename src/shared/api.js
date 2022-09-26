@@ -17,7 +17,7 @@ api.interceptors.request.use(function (config) {
     }
 
     config.headers.authorization = `${accessToken}`;
-    //config.headers['refresh-token'] = `${refreshToken}`;
+    // config.headers['refresh-token'] = `${refreshToken}`;
     return config;
 });
 
@@ -42,21 +42,24 @@ api.interceptors.response.use(
                 })
                 .then(res => {
                     if (res.data.data === 'Reissue Success') {
-                        const accessToken = res.headers.authorization;
-                        const refreshToken = res.headers['refresh-token'];
+                        const newAccessToken = res.headers.authorization;
+                        const newRefreshToken = res.headers['refresh-token'];
 
-                        originalRequest.headers.authorization = accessToken;
-                        originalRequest.headers['refresh-token'] = refreshToken;
+                        originalRequest.headers.authorization = newAccessToken;
+                        originalRequest.headers['refresh-token'] =
+                            newRefreshToken;
 
-                        localStorage.setItem('access-token', accessToken);
-                        localStorage.setItem('refresh-token', refreshToken);
+                        localStorage.setItem('access-token', newAccessToken);
+                        localStorage.setItem('refresh-token', newRefreshToken);
 
                         return axios(originalRequest);
-                    } else if (res.data.data === 'Refresh Token Expired') {
+                    }
+                    if (res.data.data === 'Refresh Token Expired') {
                         localStorage.removeItem('access-token');
                         localStorage.removeItem('refresh-token');
                         window.location.href = '/login';
                     }
+                    return Promise.reject(error);
                 })
                 .catch(err => console.log('에러', err));
         }
@@ -74,9 +77,10 @@ export const userAPI = {};
 export const postAPI = {
     postPost: request => api.post('/auth/post', request),
     getPost: id => api.get(`/post/${id}`),
-    getPosts: () => api.get(`/post`),
-    getOrderedLikePosts: () => api.get(`/post/likes`),
-    getOrderedOldPosts: () => api.get(`/post/old`),
+    getPosts: page => api.get(`/post?page=${page}`),
+    getOrderedLikePosts: page => api.get(`/post?page=${page}&sort=likes,DESC`),
+    getOrderedOldPosts: page =>
+        api.get(`/post?page=${page}&sort=createdAt,ASC`),
     deletePost: postId => api.delete(`/auth/post/${postId}`),
     putPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
     likePost: (postId, request) =>

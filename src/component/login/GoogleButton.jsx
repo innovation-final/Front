@@ -1,6 +1,6 @@
 import React from 'react';
-import { DivButton, GoogleBtn } from './style';
 import { useNavigate } from 'react-router-dom';
+import { DivButton, GoogleBtn } from './style';
 import GoogleLogo from '../../static/GoogleLogo.png';
 
 function GoogleButton() {
