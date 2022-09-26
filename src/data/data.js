@@ -1,4 +1,4 @@
-export const datas = [
+const datas = [
     {
         x: new Date(1538778600000),
         y: [6629.81, 6650.5, 6623.04, 6633.33],
@@ -240,3 +240,5 @@ export const datas = [
         y: [6604.98, 6606, 6604.07, 6606],
     },
 ];
+
+export default datas;

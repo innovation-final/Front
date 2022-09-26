@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Chart from 'react-apexcharts';
 
 function Charts({ data }) {
-    const [options, setOptions] = useState({
+    const [options] = useState({
         chart: {
             id: '코스피',
         },
@@ -10,10 +10,10 @@ function Charts({ data }) {
             categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
         },
     });
-    const [series, setSeries] = useState([
+    const [series] = useState([
         {
             name: 'series-1',
-            data: data,
+            data,
         },
     ]);
 
