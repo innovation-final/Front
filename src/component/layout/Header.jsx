@@ -19,6 +19,7 @@ const StyleHeader = styled.div`
     top: 0;
     left: 0;
     width: 100%;
+    height: 60px;
     border-bottom: 2px solid skyblue;
     display: flex;
     flex-direction: row;

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { WideContext } from '../../context/WideContext';
+import LatestPost from './LatestPost';
 
 function HeaderOverview() {
     const context = useContext(WideContext);
@@ -8,7 +9,7 @@ function HeaderOverview() {
     return (
         <StyleOverview wide={wide}>
             <StockInfo>오늘의 주식현황 - 삼성전자 21.08 ▲</StockInfo>
-            <LatestPost>최신 글 - 오늘 떡상 각인가? written by 개미</LatestPost>
+            <LatestPost />
         </StyleOverview>
     );
 }
@@ -28,7 +29,4 @@ const StyleOverview = styled.div`
 const StockInfo = styled.div`
     letter-spacing: -1px;
     margin-right: 10%;
-`;
-const LatestPost = styled.div`
-    letter-spacing: -1px;
 `;
