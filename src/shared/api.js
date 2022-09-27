@@ -87,6 +87,7 @@ export const postAPI = {
     getOrderedLikePosts: page => api.get(`/post?page=${page}&sort=likes,DESC`),
     getOrderedOldPosts: page =>
         api.get(`/post?page=${page}&sort=createdAt,ASC`),
+    getLatestPostsTopFive: () => api.get(`/post/main`),
     deletePost: postId => api.delete(`/auth/post/${postId}`),
     putPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
     likePost: (postId, request) =>

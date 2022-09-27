@@ -28,7 +28,6 @@ function CommunityBoard() {
     const postData = query.data?.data.data['페이지당 게시글'];
     const totalPosts = query.data?.data.data['총 게시글 개수'];
     const refetchPosts = () => {
-        console.log(query.data?.data.data);
         setPosts(postData);
         query.refetch();
     };
