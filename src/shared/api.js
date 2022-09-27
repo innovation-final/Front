@@ -103,3 +103,7 @@ export const commentAPI = {
         api.put(`/auth/comment/${commentId}`, request),
     deleteComment: commentId => api.delete(`/auth/comment/${commentId}`),
 };
+export const mypageAPI = {
+    getMypage: api.get(`/auth/mypage`),
+    patchMypage: request => api.patch(`/auth/mypage`, request),
+};
