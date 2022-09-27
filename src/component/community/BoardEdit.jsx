@@ -14,7 +14,9 @@ function BoardEdit() {
     const { id } = useParams();
     // 데이터 뽑아오기
     const { data } = useQuery(['post', id], () => postAPI.getPost(id));
-    const { stockName, title, content } = data.data.data;
+    const stockName = data?.data.data.stockName;
+    const title = data?.data.data.title;
+    const content = data?.data.data.content;
     console.log(title);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -91,6 +93,7 @@ function BoardEdit() {
                             placeholder="제목"
                             onChange={onChangeTitle}
                             value={editTitle}
+                            ref={ref}
                         />
                     </CardDiv>
                     <CardDiv>
