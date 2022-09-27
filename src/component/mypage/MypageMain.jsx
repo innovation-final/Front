@@ -1,26 +1,27 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { useQuery } from 'react-query';
+// import { useDispatch } from 'react-redux';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import CardContent from '@mui/material/CardContent';
 import PaidIcon from '@mui/icons-material/Paid';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import Typography from '@mui/material/Typography';
 import editcog from '../../static/edit.png';
 import { mypageAPI } from '../../shared/api';
-import { userUpdate } from '../../redux/modules/userSlice';
+// import { userUpdate } from '../../redux/modules/userSlice';
 
 function MypageMain() {
     const ref = useRef(null);
-    const { data } = useQuery(['mypage'], () => mypageAPI.getMypage);
+    const { data } = useQuery('mypage', () => mypageAPI.getMypage());
+    console.log(data);
 
     const nickname = data?.data.data.nickname;
     const email = data?.data.data.email;
     const profileImg = data?.data.data.profileImg;
     console.log(profileImg);
-    // const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
     const imageInput = useRef();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const [isEdit, setIsEdit] = React.useState(false);
 
     // 닉네임 수정
@@ -56,17 +57,17 @@ function MypageMain() {
             };
         });
     };
-    // const patchMypage = async req => {
-    //     const response = await mypageAPI.patchMypage(req);
-    //     return response;
-    // };
+    const patchMypage = async req => {
+        const response = await mypageAPI.patchMypage(req);
+        return response;
+    };
 
-    // const editMutation = useMutation(req => patchMypage(req), {
-    //     onError: error => console.log(error),
-    //     onSuccess: () => {
-    //         queryClient.invalidateQueries('mypage');
-    //     },
-    // });
+    const editMutation = useMutation(req => patchMypage(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('mypage');
+        },
+    });
 
     const onClickEdit = event => {
         event.preventDefault();
@@ -76,7 +77,8 @@ function MypageMain() {
             const formData = new FormData();
             formData.append('image', editProfileImg);
             formData.append('nickname', editNickName);
-            dispatch(userUpdate(formData));
+            // dispatch(userUpdate(formData));
+            editMutation.mutate(formData);
             alert('수정되었습니다');
         } else {
             return false;
