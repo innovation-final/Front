@@ -16,7 +16,7 @@ function ProfileCard({ user }) {
         <StyleProfileCard>
             <Wrapper>
                 <ImageBox>
-                    <ProfileImage src={profileImg || ant} />
+                    <ProfileImage src={user.profileImg || ant} />
                 </ImageBox>
                 <ContentBox>
                     <UserName>{nickname}</UserName>
