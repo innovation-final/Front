@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import Chart from 'react-apexcharts';
 
-function Charts({ data }) {
-    const [options] = useState({
+function CandleStickChart({ data }) {
+    const options = {
         chart: {
             id: '코스피',
         },
         xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+            labels: {
+                format: 'dd/MM',
+            },
         },
-    });
-    const [series] = useState([
+    };
+    const series = [
         {
             name: 'series-1',
             data,
         },
-    ]);
+    ];
 
     return (
         <div>
@@ -24,11 +26,11 @@ function Charts({ data }) {
                     options={options}
                     series={series}
                     type="candlestick"
-                    width="500"
+                    width="400"
                 />
             )}
         </div>
     );
 }
 
-export default Charts;
+export default CandleStickChart;

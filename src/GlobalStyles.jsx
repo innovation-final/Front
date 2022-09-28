@@ -4,6 +4,9 @@ import reset from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
     ${reset};
 
+    @import '~slick-carousel/slick/slick.css';
+    @import '~slick~carousel/slick/slick-theme.css';
+
     @font-face {
         font-family:"Roboto";
         font-display:fallback;

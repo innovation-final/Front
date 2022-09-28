@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import CandleStickChart from './CandleStickChart';
 import api from '../../shared/api';
+import LineChart from './LineChart';
 
 function Kospi() {
     const [data, setData] = useState([]);
@@ -25,7 +25,7 @@ function Kospi() {
         fetchData();
     }, []);
 
-    return <div>{data.length > 0 && <CandleStickChart data={data} />}</div>;
+    return <div>{data.length > 0 && <LineChart data={data} />}</div>;
 }
 
 export default Kospi;

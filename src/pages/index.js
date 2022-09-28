@@ -1,0 +1,9 @@
+export { default as Community } from './Community';
+export { default as CommunityBoard } from './CommunityBoard';
+export { default as Home } from './Home';
+export { default as Login } from './Login';
+export { default as Mypage } from './Mypage';
+export { default as PostDetail } from './PostDetail';
+export { default as Redirect } from './Redirect';
+export { default as StockDetail } from './StockDetail';
+export { default as StockWhole } from './StockWhole';
