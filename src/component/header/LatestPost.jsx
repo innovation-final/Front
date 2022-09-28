@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { postAPI } from '../../shared/api';
 
 function LatestPost() {
+    const navigate = useNavigate();
     const { data, refetch } = useQuery(
         'likepost',
         () => postAPI.getLatestPostsTopFive(),
@@ -26,7 +28,11 @@ function LatestPost() {
         <StyleLatestPost>
             {posts.map(post => {
                 return (
-                    <PostBox key={post.id} count={count}>
+                    <PostBox
+                        key={post.id}
+                        count={count}
+                        onClick={() => navigate(`/post/${post.id}`)}
+                    >
                         <Title>{`최신글   -   ${post.title}`}</Title>
                         <Author>{`written by ${post.member.nickname}`}</Author>
                     </PostBox>
@@ -55,6 +61,7 @@ const PostBox = styled.div`
     height: 60px;
     transform: translateY(${props => 200 - props.count * 100}px);
     transition: all ease-in-out 0.5s;
+    cursor: pointer;
 `;
 const Title = styled.div`
     margin-right: 10px;

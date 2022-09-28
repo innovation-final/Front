@@ -7,7 +7,6 @@ function Kospi() {
     const [data, setData] = useState(datas);
     useEffect(() => {
         api.get('/stock/get').then(res => {
-            console.log(res.data);
             setData(
                 res.data.slice(0, 5).map(v => {
                     return {
@@ -24,9 +23,6 @@ function Kospi() {
         });
     }, []);
 
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
     return <div>{data && <Charts data={data} />}</div>;
 }
 

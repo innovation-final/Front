@@ -23,13 +23,8 @@ function PostBox() {
 
     const postInfo = data?.data.data;
     const donelike = data?.data.data.doneLike;
-    console.log(donelike);
     const donedislike = data?.data.data.doneDisLike;
-    console.log(donedislike);
-
-    console.log(postInfo);
     const user = data?.data.data.member;
-    console.log(user);
 
     const navigate = useNavigate();
 

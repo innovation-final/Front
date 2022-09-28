@@ -9,7 +9,7 @@ function ProfileCard({ user }) {
         <StyleProfileCard>
             <Wrapper>
                 <ImageBox>
-                    <ProfileImage src="https://image.edaily.co.kr/images/photo/files/NP/S/2020/03/PS20031800048.jpg" />
+                    <ProfileImage src={user.profileImg} />
                 </ImageBox>
                 <ContentBox>
                     <UserName>{nickname}</UserName>
