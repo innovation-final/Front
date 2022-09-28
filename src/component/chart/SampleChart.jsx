@@ -9,15 +9,7 @@ function Kospi() {
             await api.get('/stock/get').then(res => {
                 setData(
                     res.data.map(v => {
-                        return {
-                            x: new Date(),
-                            y: [
-                                v.start_price,
-                                v.higher_price,
-                                v.start_price - v.lower_price,
-                                v.current_price,
-                            ],
-                        };
+                        return v.current_price;
                     }),
                 );
             });

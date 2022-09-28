@@ -5,11 +5,7 @@ const LineChart = ({ data }) => {
         chart: {
             id: '코스피',
         },
-        xaxis: {
-            labels: {
-                format: 'dd/MM',
-            },
-        },
+        xaxis: {},
     };
     const series = [
         {
