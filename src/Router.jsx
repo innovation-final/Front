@@ -1,18 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
-import Home from './pages/Home';
-import Login from './pages/Login';
 import WideStore from './context/WideContext';
-import CommunityBoard from './pages/CommunityBoard';
+
+import {
+    Home,
+    Login,
+    Redirect,
+    PostDetail,
+    CommunityBoard,
+    Mypage,
+    StockWhole,
+    StockDetail,
+} from './pages';
 import BoardWrite from './component/community/BoardWrite';
-import Redirect from './pages/Redirect';
 import BoardEdit from './component/community/BoardEdit';
-import PostDetail from './pages/PostDetail';
-import Google from './server/Google';
-import Kakao from './server/Kakao';
-import Mypage from './pages/Mypage';
-import StockWhole from './pages/StockWhole';
-import StockDetail from './pages/StockDetail';
+import { Google, Kakao } from './server';
 
 function Router() {
     return (

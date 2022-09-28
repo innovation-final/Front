@@ -1,15 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import ant from '../../static/ant.jpg';
 import Button from '../elements/Button';
 
 function ProfileCard({ user }) {
-    const { nickname, email } = user;
+    const { nickname, profileImg, email } = user;
+
+    // if (profileImg === null) {
+    //     return like;
+    // }
+
+    console.log(profileImg);
     return (
         <StyleProfileCard>
             <Wrapper>
                 <ImageBox>
-                    <ProfileImage src={user.profileImg} />
+                    <ProfileImage src={user.profileImg || ant} />
                 </ImageBox>
                 <ContentBox>
                     <UserName>{nickname}</UserName>
@@ -76,5 +83,4 @@ const UserComment = styled.div``;
 
 const ButtonBox = styled.div`
     width: 10%;
-    margin-right: 30px;
 `;
