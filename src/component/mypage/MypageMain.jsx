@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-// import { useDispatch } from 'react-redux';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import CardContent from '@mui/material/CardContent';
 import PaidIcon from '@mui/icons-material/Paid';
@@ -8,32 +7,24 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import Typography from '@mui/material/Typography';
 import editcog from '../../static/edit.png';
 import { mypageAPI } from '../../shared/api';
-// import { userUpdate } from '../../redux/modules/userSlice';
+import ant from '../../static/ant.jpg';
 
 function MypageMain() {
     const ref = useRef(null);
-    const { data } = useQuery('mypage', () => mypageAPI.getMypage());
+    const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
     console.log(data);
 
     const nickname = data?.data.data.nickname;
     const email = data?.data.data.email;
     const profileImg = data?.data.data.profileImg;
-    console.log(profileImg);
+    // console.log(profileImg);
     const queryClient = useQueryClient();
     const imageInput = useRef();
     // const dispatch = useDispatch();
     const [isEdit, setIsEdit] = React.useState(false);
 
-    // 닉네임 수정
-    const [editNickName, setEditNickName] = React.useState(nickname);
-    const onChangeNickName = event => {
-        setEditNickName(event.target.value);
-    };
-    // 사진 수정
-    const [editProfileImg, setEditProfileImg] = React.useState(profileImg);
-    const onChangeProfileImg = async e => {
-        imageInput.current.click();
-
+    const [img, setImg] = useState('');
+    const onChangeImg = async e => {
         e.preventDefault();
         const reader = new FileReader();
         const file = e.target.files[0];
@@ -41,22 +32,44 @@ function MypageMain() {
         reader.onloadend = () => {};
         if (e.target.files) {
             const uploadFile = e.target.files[0];
-            setEditProfileImg(uploadFile);
+            setImg(uploadFile);
         }
     };
-    // 사진 미리보기
-    const [imageSrc, setImageSrc] = useState('');
 
-    const encodeFileToBase64 = fileBlob => {
-        const reader = new FileReader();
-        reader.readAsDataURL(fileBlob);
-        return new Promise(resolve => {
-            reader.onload = () => {
-                setImageSrc(reader.result);
-                resolve();
-            };
-        });
+    // 닉네임 수정
+    const [editNickName, setEditNickName] = React.useState(nickname);
+    const onChangeNickName = event => {
+        setEditNickName(event.target.value);
     };
+    // 사진 수정
+    // const [setEditProfileImg] = React.useState(profileImg);
+    // const onChangeProfileImg = async e => {
+    //     imageInput.current.click();
+
+    //     e.preventDefault();
+    //     const reader = new FileReader();
+    //     const file = e.target.files[0];
+    //     console.log(file);
+    //     reader.readAsDataURL(file);
+    //     reader.onloadend = () => {};
+    //     if (e.target.files) {
+    //         const uploadFile = e.target.files[0];
+    //         setEditProfileImg(uploadFile);
+    //     }
+    // };
+    // 사진 미리보기
+    const [imageSrc] = useState('');
+
+    // const encodeFileToBase64 = fileBlob => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(fileBlob);
+    //     return new Promise(resolve => {
+    //         reader.onload = () => {
+    //             setImageSrc(reader.result);
+    //             resolve();
+    //         };
+    //     });
+    // };
     const patchMypage = async req => {
         const response = await mypageAPI.patchMypage(req);
         return response;
@@ -69,15 +82,26 @@ function MypageMain() {
         },
     });
 
+    // const addPost = {
+    //     img: editProfileImg,
+    //     nick: editNickName,
+    // };
+
     const onClickEdit = event => {
         event.preventDefault();
         if (window.confirm('수정하겠습니까?')) {
             setIsEdit(false);
-
             const formData = new FormData();
-            formData.append('image', editProfileImg);
+            formData.append(
+                'mypage',
+                new Blob([JSON.stringify()], {
+                    type: 'application/json',
+                }),
+            );
+
+            formData.append('img', img);
             formData.append('nickname', editNickName);
-            // dispatch(userUpdate(formData));
+
             editMutation.mutate(formData);
             alert('수정되었습니다');
         } else {
@@ -97,7 +121,7 @@ function MypageMain() {
                             </Button>
                         </EditLayout>
                         <ImgCard>
-                            <CardMedia src="https://i.pinimg.com/564x/cb/a1/84/cba184151102f7032e8a9fd845f3abdb.jpg" />
+                            <CardMedia src={profileImg || ant} />
                         </ImgCard>
                         <CardContent>
                             <Typography
@@ -124,18 +148,14 @@ function MypageMain() {
                             <CogLayout>
                                 <input
                                     type="file"
-                                    name="img"
                                     id="profile-upload"
                                     accept="image/*"
                                     ref={imageInput}
-                                    multiple="multiple"
                                     // style={{ display: 'none' }}
-                                    onChange={e => {
-                                        encodeFileToBase64(e.target.files[0]);
-                                    }}
+                                    onChange={onChangeImg}
                                 />
 
-                                <Button onClick={onChangeProfileImg}>
+                                <Button onClick={onChangeImg}>
                                     <CogBtn src={editcog} />
                                 </Button>
                             </CogLayout>
@@ -157,8 +177,6 @@ function MypageMain() {
                         </CardContent>
                     </ProfileCard>
                 )}
-                {nickname}
-                <TestCardMedia src={profileImg} />
             </ProfileLayout>
             <CardsLayout>
                 <Card>
@@ -206,23 +224,20 @@ const CardLayout = styled.div`
 const ImgCard = styled.div`
     border-radius: 500px;
     position: relative;
+    width: 100%;
 `;
 
 const CardMedia = styled.img`
     border-radius: 50%;
-    height: 750px;
+    background-size: cover;
+    background-position: center;
     margin: 5% 30% 1% 20%;
-    height: 60%;
     width: 60%;
-`;
-const TestCardMedia = styled.img`
-    border: 2px solid skyblue;
-    height: 300px;
-    width: 300px;
 `;
 
 const ProfileLayout = styled.div`
-    width: 60%;
+    width: 100%;
+    height: 100%;
     height: 750px;
 `;
 
