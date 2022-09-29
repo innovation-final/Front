@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../shared/api';
-import LineChart from './LineChart';
+import CandleStickChart from './CandleStickChart';
 
 function SampleChart() {
     const [data, setData] = useState([]);
     useEffect(() => {
         async function fetchData() {
-            await api.get('/stock/get').then(res => {
+            await api.get('/stock/010140').then(res => {
                 setData(
-                    res.data.map(v => {
-                        return v.current_price;
+                    res.data.data.slice(1).map(v => {
+                        return {
+                            x: new Date(),
+                            y: [v.open, v.high, v.low, v.close],
+                        };
                     }),
                 );
             });
@@ -17,7 +20,7 @@ function SampleChart() {
         fetchData();
     }, []);
 
-    return <div>{data.length > 0 && <LineChart data={data} />}</div>;
+    return <div>{data.length > 0 && <CandleStickChart data={data} />}</div>;
 }
 
 export default SampleChart;

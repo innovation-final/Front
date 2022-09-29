@@ -2,21 +2,16 @@ import React, { useState, useEffect } from 'react';
 import CandleStickChart from './CandleStickChart';
 import api from '../../shared/api';
 
-function Kospi() {
+function Kospi({ width }) {
     const [data, setData] = useState([]);
     useEffect(() => {
         async function fetchData() {
-            await api.get('/stock/get').then(res => {
+            await api.get('/stock/005930').then(res => {
                 setData(
-                    res.data.map(v => {
+                    res.data.data.slice(1).map(v => {
                         return {
                             x: new Date(),
-                            y: [
-                                v.start_price,
-                                v.higher_price,
-                                v.start_price - v.lower_price,
-                                v.current_price,
-                            ],
+                            y: [v.open, v.high, v.low, v.close],
                         };
                     }),
                 );
@@ -25,7 +20,9 @@ function Kospi() {
         fetchData();
     }, []);
 
-    return <div>{data.length > 0 && <CandleStickChart data={data} />}</div>;
+    return (
+        <>{data.length > 0 && <CandleStickChart data={data} width={width} />}</>
+    );
 }
 
 export default Kospi;

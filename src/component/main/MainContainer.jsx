@@ -16,10 +16,9 @@ MainContainer.propTypes = {
 };
 
 const StyleMainContainer = styled.div`
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-gap: 20px;
+    margin: 20px;
     max-width: 1700px;
 `;

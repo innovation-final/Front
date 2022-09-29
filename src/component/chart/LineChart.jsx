@@ -13,10 +13,6 @@ function LineChart({ data }) {
             name: 'series-1',
             data,
         },
-        {
-            name: 'series-2',
-            data,
-        },
     ];
 
     return <Chart options={options} series={series} type="line" width="400" />;

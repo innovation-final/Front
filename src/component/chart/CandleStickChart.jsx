@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-function CandleStickChart({ data }) {
+function CandleStickChart({ data, width }) {
     const options = {
         chart: {
             id: '코스피',
@@ -26,11 +26,11 @@ function CandleStickChart({ data }) {
                     options={options}
                     series={series}
                     type="candlestick"
-                    width="400"
+                    width={width}
                 />
             )}
         </div>
     );
 }
 
-export default CandleStickChart;
+export default React.memo(CandleStickChart);
