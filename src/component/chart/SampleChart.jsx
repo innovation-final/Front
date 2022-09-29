@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../shared/api';
 import LineChart from './LineChart';
 
-function Kospi() {
+function SampleChart() {
     const [data, setData] = useState([]);
     useEffect(() => {
         async function fetchData() {
@@ -20,4 +20,4 @@ function Kospi() {
     return <div>{data.length > 0 && <LineChart data={data} />}</div>;
 }
 
-export default Kospi;
+export default SampleChart;
