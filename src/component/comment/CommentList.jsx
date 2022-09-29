@@ -12,7 +12,7 @@ function CommentList({ comments }) {
                 <Comment
                     key={comment.id}
                     id={comment.id}
-                    nickname={comment.member.nickname}
+                    member={comment.member}
                     content={comment.content}
                 />
             ))}

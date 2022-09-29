@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PropTypes from 'prop-types';
@@ -19,7 +18,7 @@ const commentAnimation = {
 
 function Comment(props) {
     const ref = useRef(null);
-    const { id, nickname, content } = props;
+    const { id, member, content } = props;
     const [editComment, setEditComment] = React.useState(content);
     const [isEdit, setIsEdit] = React.useState(false);
     const queryClient = useQueryClient();
@@ -78,8 +77,8 @@ function Comment(props) {
         >
             <WriterBox>
                 <WrapperUserInfo>
-                    <AccountCircleIcon />
-                    <Writer>{nickname}</Writer>
+                    <ProfileImage src={member.profileImg} />
+                    <Writer>{member.nickname}</Writer>
                     {/* <DateBox>{`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`}</DateBox> */}
                 </WrapperUserInfo>
                 <Buttons>
@@ -150,7 +149,6 @@ export default Comment;
 
 Comment.propTypes = {
     id: PropTypes.number,
-    nickname: PropTypes.string,
     content: PropTypes.string.isRequired,
     // date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
@@ -245,3 +243,11 @@ const ButtonBox = styled.div``;
 //     font-size: calc(0.2em + 0.5vw);
 //     text-align: left;
 // `;
+
+const ProfileImage = styled.img`
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 5px;
+`;
