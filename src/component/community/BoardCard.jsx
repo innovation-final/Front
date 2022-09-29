@@ -70,6 +70,7 @@ const Card = styled(motion.div)`
     height: 100px;
     width: 85%;
     border-radius: 15px;
+    cursor: pointer;
     border: 2px solid skyblue;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;

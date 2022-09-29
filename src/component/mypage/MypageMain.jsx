@@ -12,26 +12,29 @@ import ant from '../../static/ant.jpg';
 function MypageMain() {
     const ref = useRef(null);
     const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
-
     const nickname = data?.data.data.nickname;
     const email = data?.data.data.email;
     const profileImg = data?.data.data.profileImg;
-    // console.log(profileImg);
     const queryClient = useQueryClient();
     const imageInput = useRef();
-    // const dispatch = useDispatch();
     const [isEdit, setIsEdit] = React.useState(false);
 
+    // 사진 수정,미리보기
     const [img, setImg] = useState('');
+    const [userImage, setUserImage] = useState('');
     const onChangeImg = async e => {
         e.preventDefault();
+        imageInput.current.click();
         const reader = new FileReader();
         const file = e.target.files[0];
         reader.readAsDataURL(file);
-        reader.onloadend = () => {};
+        reader.onloadend = () => {
+            const resultImage = reader.result;
+            setUserImage(resultImage);
+        };
         if (e.target.files) {
             const uploadFile = e.target.files[0];
-            setImg(uploadFile);
+            setImg(uploadFile, reader.result);
         }
     };
 
@@ -40,35 +43,7 @@ function MypageMain() {
     const onChangeNickName = event => {
         setEditNickName(event.target.value);
     };
-    // 사진 수정
-    // const [setEditProfileImg] = React.useState(profileImg);
-    // const onChangeProfileImg = async e => {
-    //     imageInput.current.click();
 
-    //     e.preventDefault();
-    //     const reader = new FileReader();
-    //     const file = e.target.files[0];
-    //     console.log(file);
-    //     reader.readAsDataURL(file);
-    //     reader.onloadend = () => {};
-    //     if (e.target.files) {
-    //         const uploadFile = e.target.files[0];
-    //         setEditProfileImg(uploadFile);
-    //     }
-    // };
-    // 사진 미리보기
-    const [imageSrc] = useState('');
-
-    // const encodeFileToBase64 = fileBlob => {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(fileBlob);
-    //     return new Promise(resolve => {
-    //         reader.onload = () => {
-    //             setImageSrc(reader.result);
-    //             resolve();
-    //         };
-    //     });
-    // };
     const patchMypage = async req => {
         const response = await mypageAPI.patchMypage(req);
         return response;
@@ -80,11 +55,6 @@ function MypageMain() {
             queryClient.invalidateQueries('mypage');
         },
     });
-
-    // const addPost = {
-    //     img: editProfileImg,
-    //     nick: editNickName,
-    // };
 
     const onClickEdit = event => {
         event.preventDefault();
@@ -114,11 +84,10 @@ function MypageMain() {
             <ProfileLayout>
                 {!isEdit ? (
                     <ProfileCard>
-                        <EditLayout>
-                            <Button onClick={() => setIsEdit(true)}>
-                                <EditCogBtn src={editcog} />
-                            </Button>
-                        </EditLayout>
+                        <Button onClick={() => setIsEdit(true)}>
+                            <EditCogBtn src={editcog} />
+                        </Button>
+
                         <ImgCard>
                             <CardMedia src={profileImg || ant} />
                         </ImgCard>
@@ -140,17 +109,22 @@ function MypageMain() {
                     </ProfileCard>
                 ) : (
                     <ProfileCard>
-                        <EditLayout>
-                            <Button onClick={onClickEdit}>수정완료</Button>
-                        </EditLayout>
+                        <Button onClick={onClickEdit}>수정완료</Button>
+
                         <ImgCard>
+                            {profileImg && (
+                                <CardMedia
+                                    src={userImage || profileImg}
+                                    alt="preview-img"
+                                />
+                            )}
                             <CogLayout>
                                 <input
                                     type="file"
                                     id="profile-upload"
                                     accept="image/*"
                                     ref={imageInput}
-                                    // style={{ display: 'none' }}
+                                    style={{ display: 'none' }}
                                     onChange={onChangeImg}
                                 />
 
@@ -158,9 +132,6 @@ function MypageMain() {
                                     <CogBtn src={editcog} />
                                 </Button>
                             </CogLayout>
-                            {imageSrc && (
-                                <CardMedia src={imageSrc} alt="preview-img" />
-                            )}
                         </ImgCard>
                         <CardContent>
                             <InputBox>
@@ -220,27 +191,35 @@ const CardLayout = styled.div`
     width: 92%;
     height: 750px;
 `;
-const ImgCard = styled.div`
-    border-radius: 500px;
-    position: relative;
-    width: 100%;
-`;
-
-const CardMedia = styled.img`
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    margin: 5% 30% 1% 20%;
-    width: 60%;
-`;
-
 const ProfileLayout = styled.div`
     width: 100%;
     height: 100%;
     height: 750px;
 `;
 
+const ImgCard = styled.div`
+    border-radius: 500px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+`;
+
+const CardMedia = styled.img`
+    border-radius: 50%;
+    margin: 40px 0px;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+    /* margin: 5% 30% 1% 20%; */
+    width: 400px;
+    height: 400px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+`;
+
 const ProfileCard = styled.div`
+    position: relative;
     border: 2px solid skyblue;
     margin: 20px;
     border-radius: 15px;
@@ -268,11 +247,8 @@ const Text = styled.p`
     margin: 5px;
 `;
 const CogLayout = styled.div`
-    margin-top: 5px;
-    float: right;
     position: absolute;
-
-    top: 87%;
+    top: 24em;
     right: 33%;
 `;
 
@@ -285,6 +261,9 @@ const Button = styled.button`
     background-color: transparent;
     border: 0;
     cursor: pointer;
+    position: absolute;
+    right: 2px;
+    top: 5px;
 `;
 const CogBtn = styled.img`
     width: 40px;
@@ -294,10 +273,7 @@ const EditCogBtn = styled.img`
     width: 22px;
     border: 0;
 `;
-const EditLayout = styled.div`
-    margin: 5px;
-    float: right;
-`;
+
 const InputBox = styled.div`
     width: 95%;
 `;
