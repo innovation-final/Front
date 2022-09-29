@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 function Kakao() {
     const code = new URL(window.location.href).searchParams.get('code');
     const navigate = useNavigate();
@@ -8,7 +9,7 @@ function Kakao() {
     useEffect(() => {
         const getToken = async () => {
             try {
-                const res = await axios
+                const response = await axios
                     .get(
                         `https://hakjoonkim.shop/api/member/login/kakao?code=${code}`,
                     )
@@ -27,7 +28,7 @@ function Kakao() {
                         navigate('/');
                     })
                     .catch(err => console.log(err));
-                console.log(res);
+                console.log(response);
             } catch (e) {
                 console.error(e);
             }
