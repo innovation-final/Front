@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { mypageAPI } from '../../shared/api';
 
 function HeaderProfile() {
     const navigate = useNavigate();
+    const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
+    const nickname = data?.data.data.nickname;
+    const profileImg = data?.data.data.profileImg;
 
     return (
         <StyleProfile>
@@ -14,13 +19,13 @@ function HeaderProfile() {
                     onClick={() => {
                         navigate('/mypage');
                     }}
-                    src="https://image.edaily.co.kr/images/photo/files/NP/S/2020/03/PS20031800048.jpg"
+                    src={profileImg}
                 />
             </ImageBox>
             <InfoBox>
                 <ProfileInfo>
                     <Hello>어서오세요</Hello>
-                    <UserName>개미님!</UserName>
+                    <UserName>{nickname}님!</UserName>
                 </ProfileInfo>
             </InfoBox>
             <IconBox>
@@ -58,6 +63,7 @@ const ProfileImage = styled.img`
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 1px 1px 1px 1px gray;
+    cursor: pointer;
 `;
 const ProfileInfo = styled.div`
     display: flex;
