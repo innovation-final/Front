@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
 import { LoginLayout } from './style';
 import ScrollIcon from '../../static/scroll-icon.png';
 import GoogleButton from './GoogleButton';
@@ -10,9 +9,6 @@ import KakaoButton from './KakaoButton';
 
 function MainPage(props) {
     const { id, bgColor } = props;
-    const REST_API_KEY = '91598580aab0e9b9f40aa19be86152f6';
-    const REDIRECT_URI = 'http://localhost:3000/login';
-    const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     const code = new URL(window.location.href).searchParams.get('code');
     const navigate = useNavigate();
 
@@ -89,21 +85,21 @@ const DivContent = styled.div`
     }
 `;
 
-const DivButton = styled.div`
-    display: flex;
-    flex-direction: column;
+// const DivButton = styled.div`
+//     display: flex;
+//     flex-direction: column;
 
-    button {
-        background: none;
-        border: none;
-        width: 250px;
-    }
+//     button {
+//         background: none;
+//         border: none;
+//         width: 250px;
+//     }
 
-    img {
-        width: 100%;
-    }
+//     img {
+//         width: 100%;
+//     }
 
-    @media screen and (max-width: 1023px) {
-        margin: 0 auto;
-    }
-`;
+//     @media screen and (max-width: 1023px) {
+//         margin: 0 auto;
+//     }
+// `;
