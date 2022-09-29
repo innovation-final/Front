@@ -14,7 +14,6 @@ function Kakao() {
                         `https://hakjoonkim.shop/api/member/login/kakao?code=${code}`,
                     )
                     .then(res => {
-                        console.log('응답 확인', res);
                         const accessToken = res.headers.authorization;
                         const refreshToken = res.headers['refresh-token'];
                         window.localStorage.setItem(

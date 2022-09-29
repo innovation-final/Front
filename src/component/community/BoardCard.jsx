@@ -71,9 +71,9 @@ const Card = styled(motion.div)`
     margin: 10px;
     margin-bottom: 10px;
     width: 85%;
+    cursor: pointer;
     border-bottom: 2px solid skyblue;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px;
-
     &:hover {
         opacity: 0.7;
     }
