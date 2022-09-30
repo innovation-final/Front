@@ -1,3 +1,3 @@
 // Kospi 지웠음.
-export { LineChart, CandleStickChart, SampelChart } from './chart';
-export { MainContentBox, ChartSlider, MainStock } from './main';
+export { LineChart, CandleStickChart, SampleChart } from './chart';
+export { MainContentBox, Slider, MainStock } from './main';

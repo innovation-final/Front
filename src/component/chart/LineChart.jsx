@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-function LineChart({ data }) {
+function LineChart({ data, width }) {
     const options = {
         chart: {
             id: '코스피',
@@ -15,7 +15,14 @@ function LineChart({ data }) {
         },
     ];
 
-    return <Chart options={options} series={series} type="line" width="400" />;
+    return (
+        <Chart
+            options={options}
+            series={series}
+            type="candlestick"
+            width={width}
+        />
+    );
 }
 
 export default LineChart;

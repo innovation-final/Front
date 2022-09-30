@@ -1,3 +1,3 @@
-export { default as ChartSlider } from './ChartSlider';
+export { default as Slider } from './Slider';
 export { default as MainContentBox } from './MainContentBox';
 export { default as MainStock } from './MainStock';

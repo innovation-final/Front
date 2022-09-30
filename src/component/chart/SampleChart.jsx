@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../shared/api';
 import CandleStickChart from './CandleStickChart';
 
-function SampleChart() {
+function SampleChart({ width, height }) {
     const [data, setData] = useState([]);
     useEffect(() => {
         async function fetchData() {
@@ -20,7 +20,13 @@ function SampleChart() {
         fetchData();
     }, []);
 
-    return <div>{data.length > 0 && <CandleStickChart data={data} />}</div>;
+    return (
+        <div>
+            {data.length > 0 && (
+                <CandleStickChart data={data} width={width} height={height} />
+            )}
+        </div>
+    );
 }
 
 export default SampleChart;

@@ -17,8 +17,13 @@ MainContainer.propTypes = {
 
 const StyleMainContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     grid-gap: 20px;
     margin: 20px;
     max-width: 1700px;
+
+    @media screen and (min-width: 1400px) {
+        grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    }
 `;
