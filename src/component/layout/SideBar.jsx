@@ -23,7 +23,7 @@ function SideBar() {
         },
         { title: '모의투자', onClickFn: () => navigate('/') },
         { title: '랭킹보드', onClickFn: () => navigate('/') },
-        { title: '관심종목 관리', onClickFn: () => navigate('/') },
+        { title: '관심종목 관리', onClickFn: () => navigate('/interest') },
         {
             title: '마이페이지',
             onClickFn: () => navigate('/mypage'),

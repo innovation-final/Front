@@ -13,6 +13,7 @@ import {
 import BoardWrite from './component/community/BoardWrite';
 import BoardEdit from './component/community/BoardEdit';
 import { Google, Kakao } from './server';
+import Interest from './pages/Interest';
 
 function Router() {
     return (
@@ -26,11 +27,11 @@ function Router() {
                 <Route path="/login/oauth2/code/google" element={<Google />} />
                 <Route path="/login/oauth2/code/kakao" element={<Kakao />} />
                 <Route path="/communityboardwrite" element={<BoardWrite />} />
-
                 <Route path="/boardedit/:id" element={<BoardEdit />} />
                 <Route path="/mypage" element={<Mypage />} />
                 <Route path="/stock" element={<StockWhole />} />
                 <Route path="/stock/:id" element={<StockDetail />} />
+                <Route path="/interest" element={<Interest />} />
             </Routes>
         </BrowserRouter>
     );
