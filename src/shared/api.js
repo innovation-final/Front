@@ -112,3 +112,8 @@ export const mypageAPI = {
             },
         }),
 };
+
+export const stockAPI = {
+    getStockDetail: stockCode => api.get(`/stock/${stockCode}`),
+    getStocks: criteria => api.get(`/stock/rank/${criteria}`),
+};

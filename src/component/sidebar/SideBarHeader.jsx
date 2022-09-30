@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import MenuIcon from '@mui/icons-material/Menu';
 import Logo from '../elements/Logo';
-import { WideContext } from '../../context/WideContext';
+import { wideState } from '../../atoms/atoms';
 
 function SideBarHeader() {
-    const context = useContext(WideContext);
-    const { wide, setWide } = context;
+    const [wide, setWide] = useRecoilState(wideState);
 
     return (
         <StyleHeader>

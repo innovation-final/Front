@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import SelectBox from '../elements/SelectBox';
@@ -6,27 +7,20 @@ import Button from '../elements/Button';
 import TableItem from './TableItem';
 import TableName from './TableName';
 import Modal from '../elements/Modal';
+import LoadingSpinner from '../elements/LoadingSpinner';
+import { stockAPI } from '../../shared/api';
 
 const options = ['코스피', '코스닥'];
 const defaultOption = '코스피';
 const keys = [
-    '종목명',
+    '랭킹',
+    '이름',
     '현재가',
-    '전일비',
     '등락률',
-    '매수호가',
-    '매도호가',
-    '매수총잔량',
-    '매도총잔량',
-];
-const values = [
-    ['카카오', 9880, 1870, '23.35%', 7507, 8702, 44, 0],
-    ['다음', 14200, 7870, '23.35%', 4567, 7850, 44, 0],
-    ['네이버', 14200, 7870, '23.35%', 4567, 7850, 44, 0],
-    ['삼성전자', 14200, 7870, '23.35%', 4567, 7850, 44, 0],
-    ['현대중공업', 14200, 7870, '23.35%', 4567, 7850, 44, 0],
-    ['(주) SK이노베이션', 14200, 7870, '23.35%', 4567, 7850, 44, 0],
-    ['빽다방', 14200, 7870, '23.35%', 4567, 7850, 44, 0],
+    '저가',
+    '고가',
+    '거래대금(백만원)',
+    '거래량(백만원)',
 ];
 
 function StocksBox() {
@@ -39,6 +33,12 @@ function StocksBox() {
     const setIsOpen = () => {
         isOpen(props => !props);
     };
+
+    const { data, isLoading } = useQuery('stocks', () =>
+        stockAPI.getStocks('kospi_vol'),
+    );
+    if (isLoading) return <LoadingSpinner />;
+    const values = data.data.data;
     return (
         <StyleStocksBox>
             <StyleHeader>
@@ -57,7 +57,7 @@ function StocksBox() {
             <StocksContainer>
                 <TableName keys={keys} />
                 {values.map(value => (
-                    <TableItem key={value[0]} values={value} />
+                    <TableItem key={value.stockCode} values={value} />
                 ))}
             </StocksContainer>
             {open ? (

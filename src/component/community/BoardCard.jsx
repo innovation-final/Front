@@ -12,8 +12,16 @@ const createAnimation = {
 };
 
 function BoardCard({ post }) {
-    const { title, stockName, member, id, createdAt, likes, dislikes } = post;
-
+    const {
+        title,
+        stockName,
+        member,
+        id,
+        createdAt,
+        likes,
+        dislikes,
+        commentNum,
+    } = post;
     const date = new Date(createdAt);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, 0);
@@ -32,9 +40,9 @@ function BoardCard({ post }) {
                 <CardDivide>
                     <CardStockName>{stockName}</CardStockName>
                     <CardTitle>{title}</CardTitle>
+                    <CardCommentCount>{`[${commentNum}]`}</CardCommentCount>
                 </CardDivide>
                 <CardDivide2>
-                    <CardCreatedAt>{`${year}-${month}-${day} ${hour}:${minute}`}</CardCreatedAt>
                     <CardLike>
                         <CardIconBox thumbUp>
                             <ThumbUpOffAltIcon />
@@ -45,7 +53,10 @@ function BoardCard({ post }) {
                         </CardIconBox>
                         {dislikes}
                     </CardLike>
-                    <CardWriter>written by {member.nickname}</CardWriter>
+                    <CardRightDown>
+                        <CardWriter>written by {member.nickname}</CardWriter>
+                        <CardCreatedAt>{`${year}-${month}-${day} ${hour}:${minute}`}</CardCreatedAt>
+                    </CardRightDown>
                 </CardDivide2>
             </CardLayout>
         </Card>
@@ -66,14 +77,11 @@ BoardCard.propTypes = {
 
 const Card = styled(motion.div)`
     margin: 10px;
-    margin-bottom: 30px;
-    height: 100px;
+    margin-bottom: 10px;
     width: 85%;
-    border-radius: 15px;
-    border: 2px solid skyblue;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-
+    cursor: pointer;
+    border-bottom: 2px solid skyblue;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px;
     &:hover {
         opacity: 0.7;
     }
@@ -88,9 +96,9 @@ const CardLayout = styled.div`
 `;
 const CardDivide = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-left: 2%;
     width: 100%;
 `;
@@ -99,17 +107,28 @@ const CardDivide2 = styled.div`
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
-    width: 100%;
-    height: 70px;
+    width: 40%;
 `;
 const CardTitle = styled.div`
     font-size: 25px;
     overflow: hidden;
+    margin-left: 40px;
+    display: flex;
+    margin-top: 1%;
+`;
+const CardCommentCount = styled.div`
+    margin-left: 10px;
+    margin-top: 1.5%;
 `;
 const CardStockName = styled.div`
     font-size: 15px;
     overflow: hidden;
-    margin-bottom: 4%;
+    margin-top: 2%;
+`;
+
+const CardRightDown = styled.div`
+    display: flex;
+    flex-direction: row;
 `;
 const CardWriter = styled.div`
     font-size: 13px;
@@ -126,4 +145,5 @@ const CardIconBox = styled.div`
 `;
 const CardCreatedAt = styled.div`
     font-size: 13px;
+    margin-left: 20px;
 `;

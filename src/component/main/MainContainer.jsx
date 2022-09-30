@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { WideContext } from '../../context/WideContext';
+import { wideState } from '../../atoms/atoms';
 
 function MainContainer({ children }) {
-    const context = useContext(WideContext);
-    const { wide } = context;
+    const wide = useRecoilState(wideState);
     return <StyleMainContainer $wide={wide}>{children}</StyleMainContainer>;
 }
 

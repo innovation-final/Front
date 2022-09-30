@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { postAPI } from '../../shared/api';
+import { slideSelector } from '../../atoms/atoms';
 
 function LatestPost() {
     const navigate = useNavigate();
@@ -13,15 +15,15 @@ function LatestPost() {
     );
     const info = data?.data.data;
     const [posts, setPosts] = useState([]);
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useRecoilState(slideSelector);
     useEffect(() => {
         if (info) setPosts(info);
     }, [info]);
     useEffect(() => {
         setTimeout(() => {
-            setCount(props => (props + 1) % 5);
+            setCount(count);
         }, 5000);
-        if (count === 5) refetch();
+        if (count === 4) refetch();
     }, [count]);
 
     return (

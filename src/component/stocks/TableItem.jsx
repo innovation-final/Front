@@ -1,23 +1,39 @@
-import { isNumber } from 'lodash';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import FavoritesIcon from '../elements/FavoritesIcon';
+import { esUSNumberParser, millionUnit } from '../../util/parser';
 
 function TableItem({ values }) {
+    const {
+        rank,
+        stockName,
+        lastPrice,
+        fluctuationRate,
+        lowPrice,
+        highPrice,
+        tradingValue,
+        volume,
+        stockCode,
+    } = values;
     const navigate = useNavigate();
-    const parser = value => {
-        if (isNumber(value)) {
-            return value.toLocaleString('en-US');
-        }
-        return value;
-    };
     return (
         <StyleTableItem>
-            <ItemList onClick={() => navigate(`/stock/${values[0]}`)}>
-                {values.map(value => (
-                    <ItemContent key={value}>{parser(value)}</ItemContent>
-                ))}
+            <ItemList onClick={() => navigate(`/stock/${stockCode}`)}>
+                <ItemContent>{rank}</ItemContent>
+                <ItemContent>{stockName}</ItemContent>
+                <ItemContent>{esUSNumberParser(lastPrice)}</ItemContent>
+                <ItemMutateContent
+                    isMinus={fluctuationRate < 0}
+                >{`${fluctuationRate}%`}</ItemMutateContent>
+                <ItemContent>{esUSNumberParser(lowPrice)}</ItemContent>
+                <ItemContent>{esUSNumberParser(highPrice)}</ItemContent>
+                <ItemContent>
+                    {esUSNumberParser(millionUnit(tradingValue))}
+                </ItemContent>
+                <ItemContent>
+                    {esUSNumberParser(millionUnit(volume))}
+                </ItemContent>
             </ItemList>
             <Favorites>
                 <FavoritesIcon />
@@ -52,6 +68,12 @@ const ItemContent = styled.li`
     text-align: center;
     letter-spacing: -1px;
     width: 100%;
+`;
+const ItemMutateContent = styled.li`
+    text-align: center;
+    letter-spacing: -1px;
+    width: 100%;
+    color: ${props => (props.isMinus ? 'blue' : 'red')};
 `;
 
 const Favorites = styled.div`
