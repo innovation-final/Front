@@ -21,6 +21,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     margin: 10px auto;
     position: relative;
+    border: 1px solid skyblue;
 `;
 const StyleContentBox = styled.div`
     position: relative;

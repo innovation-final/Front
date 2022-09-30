@@ -1,12 +1,18 @@
 import React, { useMemo } from 'react';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import useWindowSize from '../../hooks/useWindowSize';
-import GraphBox from './GraphBox';
-import TradingVolumeBox from './TradingVolumeBox';
-import FinancialStatementBox from './FinancialStatementBox';
-import RelatedArticlesBox from './RelatedArticlesBox';
-import RelatedPostsBox from './RelatedPostsBox';
-import StockInfoBox from './StockInfoBox';
+import LoadingSpinner from '../elements/LoadingSpinner';
+import {
+    GraphBox,
+    TradingVolumeBox,
+    FinancialStatementBox,
+    RelatedArticlesBox,
+    RelatedPostsBox,
+    StockInfoBox,
+} from './index';
+import { stockAPI } from '../../shared/api';
 
 const responsive = {
     pc: css`
@@ -23,11 +29,27 @@ function StockDetailContainer() {
     const isPC = useMemo(() => {
         return width >= 1024;
     }, [width]);
+
+    const { id } = useParams();
+    const stockCode = id;
+
+    const { data, isLoading } = useQuery(
+        ['stock', stockCode],
+        () => stockAPI.getStockDetail(stockCode),
+        { refetchOnWindowFocus: false },
+    );
+    if (isLoading) return <LoadingSpinner />;
+
+    const [code, name, isKospi] = data.data.data;
+    const presentPrice = data.data.data.at(-1);
+    const prevPrice = data.data.data.at(-2);
+    const stockData = { code, name, isKospi, ...presentPrice, prevPrice };
+
     return (
         <StyleDetailContainer>
             <ContainerTop isPC={isPC}>
                 <StockInfoWrapper>
-                    <StockInfoBox isPC={isPC} />
+                    <StockInfoBox stockData={stockData} isPC={isPC} />
                     <GraphBox isPC={isPC} />
                 </StockInfoWrapper>
                 <TradingVolumeBox isPC={isPC} />

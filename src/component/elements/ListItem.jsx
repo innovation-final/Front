@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 function ListItem({ item, flexRatio }) {
@@ -11,7 +11,12 @@ function ListItem({ item, flexRatio }) {
         return result;
     };
 
-    return <ItemBox>{itemRendering()}</ItemBox>;
+    const [itemRender, setItemRender] = useState(null);
+    useEffect(() => {
+        setItemRender(itemRendering());
+    }, []);
+
+    return <ItemBox>{itemRender}</ItemBox>;
 }
 
 export default ListItem;
