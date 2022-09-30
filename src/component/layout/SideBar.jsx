@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import SideBarHeader from '../sidebar/SideBarHeader';
 import SideBarItem from '../sidebar/SideBarItem';
-import { WideContext } from '../../context/WideContext';
+import { wideState } from '../../atoms/atoms';
 
 function SideBar() {
     const navigate = useNavigate();
-    const context = useContext(WideContext);
-    const { wide } = context;
+    const wide = useRecoilValue(wideState);
 
     const menuItems = [
         {

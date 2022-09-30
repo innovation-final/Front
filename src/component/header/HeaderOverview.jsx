@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { WideContext } from '../../context/WideContext';
 import LatestPost from './LatestPost';
+import { wideState } from '../../atoms/atoms';
 
 function HeaderOverview() {
-    const context = useContext(WideContext);
-    const { wide } = context;
+    const wide = useRecoilState(wideState);
     return (
         <StyleOverview wide={wide}>
             <StockInfo>오늘의 주식현황 - 삼성전자 21.08 ▲</StockInfo>

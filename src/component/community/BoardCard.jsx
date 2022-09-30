@@ -12,8 +12,16 @@ const createAnimation = {
 };
 
 function BoardCard({ post }) {
-    const { title, stockName, member, id, createdAt, likes, dislikes } = post;
-
+    const {
+        title,
+        stockName,
+        member,
+        id,
+        createdAt,
+        likes,
+        dislikes,
+        commentNum,
+    } = post;
     const date = new Date(createdAt);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, 0);
@@ -32,7 +40,7 @@ function BoardCard({ post }) {
                 <CardDivide>
                     <CardStockName>{stockName}</CardStockName>
                     <CardTitle>{title}</CardTitle>
-                    <CardCommentCount>[1]</CardCommentCount>
+                    <CardCommentCount>{`[${commentNum}]`}</CardCommentCount>
                 </CardDivide>
                 <CardDivide2>
                     <CardLike>

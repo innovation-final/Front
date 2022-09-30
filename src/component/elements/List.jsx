@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 
@@ -14,12 +14,21 @@ function List({ fields = [''], items = [''], flexRatio = 1 }) {
         return result;
     };
 
+    const [fieldNameBox, setFieldNameBox] = useState(null);
+    useEffect(() => {
+        setFieldNameBox(fieldRendering());
+    }, []);
+
     return (
         <StyleList>
-            <FieldNameBox>{fieldRendering()}</FieldNameBox>
+            <FieldNameBox>{fieldNameBox}</FieldNameBox>
             <ListContainer>
                 {items.map(item => (
-                    <ListItem key={item[0]} item={item} flexRatio={flexRatio} />
+                    <ListItem
+                        key={Date.now()}
+                        item={item}
+                        flexRatio={flexRatio}
+                    />
                 ))}
             </ListContainer>
         </StyleList>
