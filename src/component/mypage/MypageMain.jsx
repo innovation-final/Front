@@ -22,7 +22,7 @@ function MypageMain() {
     // 사진 수정,미리보기
     const [img, setImg] = useState('');
     const [userImage, setUserImage] = useState('');
-    const onChangeImg = async e => {
+    const onChangeImg = e => {
         e.preventDefault();
         imageInput.current.click();
         const reader = new FileReader();
@@ -34,7 +34,7 @@ function MypageMain() {
         };
         if (e.target.files) {
             const uploadFile = e.target.files[0];
-            setImg(uploadFile, reader.result);
+            setImg(uploadFile);
         }
     };
 
