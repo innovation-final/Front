@@ -1,18 +1,17 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Router from './Router';
-import store from './redux/store/configStore';
 import GlobalStyles from './GlobalStyles';
 
 function App() {
     const queryClient = new QueryClient();
     return (
         <QueryClientProvider client={queryClient}>
-            <Provider store={store}>
+            <RecoilRoot>
                 <GlobalStyles />
                 <Router />
-            </Provider>
+            </RecoilRoot>
         </QueryClientProvider>
     );
 }

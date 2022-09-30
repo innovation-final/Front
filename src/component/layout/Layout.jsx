@@ -1,11 +1,12 @@
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import useWindowSize from '../../hooks/useWindowSize';
 import Header from './Header';
 import SideBar from './SideBar';
 import LiveChat from '../livechat/LiveChat';
-import { WideContext } from '../../context/WideContext';
+import { wideState } from '../../atoms/atoms';
 
 const responsive = {
     pc: css`
@@ -23,8 +24,7 @@ const responsive = {
 };
 
 function Layout({ children, sidebar = true, header = true }) {
-    const context = useContext(WideContext);
-    const { wide } = context;
+    const wide = useRecoilValue(wideState);
     const { width } = useWindowSize();
     const isPC = useMemo(() => {
         return width >= 1024;

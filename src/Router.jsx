@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
-import WideStore from './context/WideContext';
-
 import {
     Home,
     Login,
@@ -18,34 +16,23 @@ import { Google, Kakao } from './server';
 
 function Router() {
     return (
-        <WideStore>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/redirect" element={<Redirect />} />
-                    <Route path="/post/:id" element={<PostDetail />} />
-                    <Route path="/community" element={<CommunityBoard />} />
-                    <Route
-                        path="/login/oauth2/code/google"
-                        element={<Google />}
-                    />
-                    <Route
-                        path="/login/oauth2/code/kakao"
-                        element={<Kakao />}
-                    />
-                    <Route
-                        path="/communityboardwrite"
-                        element={<BoardWrite />}
-                    />
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/redirect" element={<Redirect />} />
+                <Route path="/post/:id" element={<PostDetail />} />
+                <Route path="/community" element={<CommunityBoard />} />
+                <Route path="/login/oauth2/code/google" element={<Google />} />
+                <Route path="/login/oauth2/code/kakao" element={<Kakao />} />
+                <Route path="/communityboardwrite" element={<BoardWrite />} />
 
-                    <Route path="/boardedit/:id" element={<BoardEdit />} />
-                    <Route path="/mypage" element={<Mypage />} />
-                    <Route path="/stock" element={<StockWhole />} />
-                    <Route path="/stock/:id" element={<StockDetail />} />
-                </Routes>
-            </BrowserRouter>
-        </WideStore>
+                <Route path="/boardedit/:id" element={<BoardEdit />} />
+                <Route path="/mypage" element={<Mypage />} />
+                <Route path="/stock" element={<StockWhole />} />
+                <Route path="/stock/:id" element={<StockDetail />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 

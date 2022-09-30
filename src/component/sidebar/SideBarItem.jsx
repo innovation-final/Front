@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -8,11 +9,10 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import { WideContext } from '../../context/WideContext';
+import { wideState } from '../../atoms/atoms';
 
 function SideBarItem({ title, onClickFn, param }) {
-    const context = useContext(WideContext);
-    const { wide, setWide } = context;
+    const [wide, setWide] = useRecoilState(wideState);
     const { pathname } = useLocation();
     return (
         <StyleItem>

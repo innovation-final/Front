@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import FavoritesIcon from '../elements/FavoritesIcon';
-import { esUSNumberParser } from '../../util/parser';
+import { esUSNumberParser, millionUnit } from '../../util/parser';
 
 function TableItem({ values }) {
     const {
@@ -16,7 +16,6 @@ function TableItem({ values }) {
         volume,
         stockCode,
     } = values;
-    console.log(values);
     const navigate = useNavigate();
     return (
         <StyleTableItem>
@@ -29,8 +28,12 @@ function TableItem({ values }) {
                 >{`${fluctuationRate}%`}</ItemMutateContent>
                 <ItemContent>{esUSNumberParser(lowPrice)}</ItemContent>
                 <ItemContent>{esUSNumberParser(highPrice)}</ItemContent>
-                <ItemContent>{esUSNumberParser(tradingValue)}</ItemContent>
-                <ItemContent>{esUSNumberParser(volume)}</ItemContent>
+                <ItemContent>
+                    {esUSNumberParser(millionUnit(tradingValue))}
+                </ItemContent>
+                <ItemContent>
+                    {esUSNumberParser(millionUnit(volume))}
+                </ItemContent>
             </ItemList>
             <Favorites>
                 <FavoritesIcon />
