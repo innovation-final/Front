@@ -8,6 +8,7 @@ import Button from '../elements/Button';
 import useInput from '../../hooks/useInput';
 import { postAPI } from '../../shared/api';
 import writeIcon from '../../static/write.png';
+import StockNameSearch from './StockNameSearch';
 
 function BoardWrite() {
     const [title, onChangeTitleHandler] = useInput();
@@ -69,7 +70,9 @@ function BoardWrite() {
                     </CardDiv>
                     <CardDiv>
                         <h1 className="card-text">종목: &nbsp;</h1>
+                        <StockNameSearch />
                         <Input
+                            list="search"
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="종목"
