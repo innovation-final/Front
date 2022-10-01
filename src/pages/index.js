@@ -1,5 +1,5 @@
 export { default as Community } from './Community';
-export { default as CommunityBoard } from './CommunityBoard';
+export { default as CommunityBoard } from './Community';
 export { default as Home } from './Home';
 export { default as Login } from './Login';
 export { default as Mypage } from './Mypage';

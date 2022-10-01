@@ -14,7 +14,7 @@ function RelatedPostsBox({ isPC }) {
 export default RelatedPostsBox;
 
 const StyleRelatedPostsBox = styled.div`
-    width: ${props => (props.isPC ? '32' : '100')}%;
+    width: ${props => (props.isPC ? '30' : '100')}%;
 `;
 
 const Title = styled.div`
