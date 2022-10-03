@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import ContentBox from '../elements/ContentBox';
 import { esUSNumberParser } from '../../util/parser';
 
-const keys = ['날짜', '종가', '거래량'];
+const keys = ['날짜', '종가 (KRW)', '거래량'];
 
 function TradingVolumeBox({ isPC, volumeData }) {
     console.log(volumeData);
     return (
         <StyleTradingVolumeBox isPC={isPC}>
-            <Title>순매매 거래량</Title>
+            <Title>순매매 거래량 (최근 10일)</Title>
             <ContentBox>
                 <VolumeWrapper>
                     <TableNames>
@@ -39,7 +39,7 @@ function TradingVolumeBox({ isPC, volumeData }) {
 export default React.memo(TradingVolumeBox);
 
 const StyleTradingVolumeBox = styled.div`
-    width: ${props => (props.isPC ? '25' : '100')}%;
+    width: ${props => (props.isPC ? '32' : '100')}%;
 `;
 
 const Title = styled.div`
@@ -91,11 +91,11 @@ const Volume = styled.div`
     text-align: center;
 `;
 const VolumeClose = styled.div`
-    width: 30%;
+    width: 10%;
     letter-spacing: -1px;
     font-size: 14.5px;
     margin-left: -10px;
-    text-align: center;
+    text-align: left;
 `;
 const VolumeDate = styled.div`
     width: 35%;
