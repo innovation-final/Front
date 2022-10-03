@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Comment from './Comment';
 
 function CommentList({ comments }) {
-    console.log(comments);
     if (!comments.length)
         return <NoComments>댓글이 없습니다 .댓글을 작성해주세요</NoComments>;
     return (
