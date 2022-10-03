@@ -10,10 +10,11 @@ import {
     StockWhole,
     StockDetail,
 } from './pages';
-import BoardWrite from './component/community/BoardWrite';
-import BoardEdit from './component/community/BoardEdit';
+
 import { Google, Kakao } from './server';
 import Interest from './pages/Interest';
+import BoardWrite from './component/community/BoardWrite';
+import BoardEdit from './component/community/BoardEdit';
 
 function Router() {
     return (
