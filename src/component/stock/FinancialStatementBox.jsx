@@ -99,13 +99,13 @@ const TableWrapper = styled.div`
     flex-direction: column;
     width: 99%;
     height: 100%;
-    border: 1px solid skyblue;
+    border: 1px solid ${props => props.theme.borderColor};
     border-radius: 15px;
 `;
 const RowWrapper = styled.div`
     display: flex;
-    border-bottom: 1px solid skyblue;
-    background-color: orange;
+    border-bottom: 1px solid ${props => props.theme.borderColor};
+    background-color: ${props => props.theme.secondaryColor};
     border-radius: 15px 15px 0px 0px;
 `;
 const ColumnWrapper = styled.div`
@@ -129,8 +129,8 @@ const ColumnTable = styled.ul`
     align-items: center;
     width: 20%;
     height: 90%;
-    background-color: orange;
-    border-right: 1px solid skyblue;
+    background-color: ${props => props.theme.secondaryColor};
+    border-right: 1px solid ${props => props.theme.borderColor};
     border-radius: 0px 0px 15px 25px;
 `;
 const DataTable = styled.div`

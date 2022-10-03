@@ -35,7 +35,13 @@ function LatestPost() {
                         count={count}
                         onClick={() => navigate(`/post/${post.id}`)}
                     >
-                        <Title>{`최신글   -   ${post.title}`}</Title>
+                        <Title>
+                            {`최신글 - ${
+                                post.title.length > 30
+                                    ? `${post.title.slice(0, 30)} ...`
+                                    : post.title
+                            }`}
+                        </Title>
                         <Author>{`written by ${post.member.nickname}`}</Author>
                     </PostBox>
                 );

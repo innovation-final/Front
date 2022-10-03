@@ -50,10 +50,13 @@ const StyleTableItem = styled.div`
     flex-direction: row;
     width: 100%;
     height: 30px;
-    border-bottom: 1px solid skyblue;
+    border-bottom: 1px solid ${props => props.theme.borderColor};
     padding: 10px;
-    margin-bottom: 10px;
-    background-color: white;
+    background-color: ${props => props.theme.bgColor};
+    &:hover {
+        opacity: 0.7;
+        background-color: ${props => props.theme.hoverColor};
+    }
 `;
 
 const ItemList = styled.ul`
@@ -73,11 +76,11 @@ const ItemMutateContent = styled.li`
     text-align: center;
     letter-spacing: -1px;
     width: 100%;
-    color: ${props => (props.isMinus ? 'blue' : 'red')};
+    color: ${props => (props.isMinus ? '#2980b9' : '#e74c3c')};
 `;
 
 const Favorites = styled.div`
     position: absolute;
-    left: -10px;
+    left: 10px;
     cursor: pointer;
 `;

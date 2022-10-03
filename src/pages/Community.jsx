@@ -73,14 +73,16 @@ function Community() {
                 </CommunityHeader>
                 <BoardCards data={posts} />
             </BoardContainer>
-            <Pagination
-                postPerPage={postPerPage}
-                totalPosts={totalPosts}
-                paginate={paginate}
-                currentPage={currentPage}
-                leftMove={leftMove}
-                rightMove={rightMove}
-            />
+            <PaginationBox>
+                <Pagination
+                    postPerPage={postPerPage}
+                    totalPosts={totalPosts}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                    leftMove={leftMove}
+                    rightMove={rightMove}
+                />
+            </PaginationBox>
         </Layout>
     );
 }
@@ -90,7 +92,7 @@ export default Community;
 const CommunityHeader = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 85%;
+    width: 95%;
     margin-bottom: 60px;
 `;
 const HeaderTitle = styled.div`
@@ -101,4 +103,7 @@ const Handlers = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+`;
+const PaginationBox = styled.div`
+    width: 100%;
 `;

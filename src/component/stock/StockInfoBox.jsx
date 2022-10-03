@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import FavoritesIcon from '../elements/FavoritesIcon';
 import {
     esUSNumberParser,
     toFixTwoPoint,
     arrowParser,
 } from '../../util/parser';
+import { isDarkState } from '../../atoms/atoms';
 
 function StockInfoBox({ stockData }) {
     const {
@@ -20,12 +22,13 @@ function StockInfoBox({ stockData }) {
         change,
         prevPrice,
     } = stockData;
+    const isDark = useRecoilValue(isDarkState);
     const dayToDay = close - prevPrice.close;
 
     const colorParser = value => {
-        if (value === 0) return 'black';
-        if (value < 0) return 'blue';
-        if (value > 0) return 'red';
+        if (value === 0) return isDark ? 'white' : 'black';
+        if (value < 0) return '#2980b9';
+        if (value > 0) return '#e74c3c';
         return 'black';
     };
 

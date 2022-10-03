@@ -45,7 +45,6 @@ const StyledCommentList = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     margin: 20px auto;
     padding: 10px;
     width: 100%;

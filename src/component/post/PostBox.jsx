@@ -6,10 +6,8 @@ import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import emptylike from '../../static/emptylike.png';
-import emptydislike from '../../static/emptydislike.png';
-import like from '../../static/like.png';
-import dislike from '../../static/dislike.png';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import { postAPI } from '../../shared/api';
 import ProfileCard from './ProfileCard';
 import { dateParser } from '../../util/parser';
@@ -147,27 +145,18 @@ function PostBox() {
             </ContentWrapper>
             <LikeToggleBox>
                 <Buttons>
-                    {donelike ? (
-                        <JoinBtn src={like} onClick={e => likeHandler(e)} />
-                    ) : (
-                        <JoinBtn
-                            src={emptylike}
-                            onClick={e => likeHandler(e)}
-                        />
-                    )}
+                    <JoinBtn done={donelike} onClick={e => likeHandler(e)}>
+                        <ThumbUpOffAltIcon />
+                    </JoinBtn>
 
                     <LikeCount>{postInfo.likes}</LikeCount>
-                    {donedislike ? (
-                        <JoinBtn
-                            src={dislike}
-                            onClick={e => dislikeHandler(e)}
-                        />
-                    ) : (
-                        <JoinBtn
-                            src={emptydislike}
-                            onClick={e => dislikeHandler(e)}
-                        />
-                    )}
+                    <JoinBtn2
+                        done={donedislike}
+                        onClick={e => dislikeHandler(e)}
+                    >
+                        <ThumbDownOffAltIcon />
+                    </JoinBtn2>
+
                     <LikeCount>{postInfo.dislikes}</LikeCount>
                 </Buttons>
             </LikeToggleBox>
@@ -202,7 +191,7 @@ PostBox.propTypes = {
 const StylePostBox = styled.div`
     position: relative;
     display: flex;
-
+    background-color: ${props => props.theme.bgColor};
     flex-direction: column;
     justify-content: space-between;
 `;
@@ -211,7 +200,6 @@ const ContentWrapper = styled.div`
     min-height: 500px;
     padding-top: 10px;
     margin-bottom: 30px;
-
     display: flex;
     flex-direction: column;
 `;
@@ -289,8 +277,13 @@ const LikeCount = styled.div`
     letter-spacing: -1px;
     padding-top: 10px;
 `;
-const JoinBtn = styled.img`
+const JoinBtn = styled.div`
     width: 30px;
+    color: ${props => (props.done ? 'red' : props.theme.textColor)};
+`;
+const JoinBtn2 = styled.div`
+    width: 30px;
+    color: ${props => (props.done ? 'blue' : props.theme.textColor)};
 `;
 
 const ButtonBox = styled.div`

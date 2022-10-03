@@ -27,7 +27,7 @@ const StyleMessenger = styled(motion.div)`
     align-items: center;
     width: 420px;
     height: 720px;
-    background-color: skyblue;
+    background-color: ${props => props.theme.primaryColor};
     border-radius: 30px;
     bottom: 40px;
     right: -50px;

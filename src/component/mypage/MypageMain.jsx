@@ -220,7 +220,7 @@ const CardMedia = styled.img`
 
 const ProfileCard = styled.div`
     position: relative;
-    border: 2px solid skyblue;
+    border: 2px solid ${props => props.theme.borderColor};
     margin: 20px;
     border-radius: 15px;
     overflow: scroll;
@@ -229,7 +229,7 @@ const ProfileCard = styled.div`
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 const Card = styled.div`
-    border: 2px solid skyblue;
+    border: 2px solid ${props => props.theme.borderColor};
     margin: 20px;
     height: 363px;
     border-radius: 15px;
@@ -245,6 +245,7 @@ const CardsLayout = styled.div`
 const Text = styled.p`
     font-weight: bold;
     margin: 5px;
+    color: ${props => props.theme.textColor};
 `;
 const CogLayout = styled.div`
     position: absolute;
@@ -279,14 +280,15 @@ const InputBox = styled.div`
 `;
 const Input = styled.input`
     font-family: 'Pretendard-Regular';
+    color: ${props => props.theme.textColor};
     padding: 10px;
-    border: 1px solid #48dbfb;
+    border: 1px solid ${props => props.theme.borderColor};
     border-radius: 10px;
+    background-color: ${props => props.theme.inputColor};
     width: 100%;
-
     &:active,
     &:focus,
     &:hover {
-        outline: 2px solid #0abde3;
+        outline: 2px solid ${props => props.theme.borderColor};
     }
 `;

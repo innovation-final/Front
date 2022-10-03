@@ -27,7 +27,7 @@ function Dropdown({ options, selected }) {
 export default Dropdown;
 const boxShadow = '0 4px 6px rgb(32 33 36 / 28%)';
 const DropDownContainer = styled.ul`
-    background-color: #ffffff;
+    background-color: ${props => props.theme.inputColor};
     display: block;
 
     color: #585757;

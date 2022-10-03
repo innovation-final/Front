@@ -33,7 +33,6 @@ const StyleHeader = styled.div`
 const IconBox = styled.div`
     font-size: 30px;
     padding: 10px;
-
     cursor: pointer;
     margin-left: 10px;
 `;

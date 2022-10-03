@@ -20,12 +20,12 @@ const StyleHeader = styled.div`
     left: 0;
     width: 100%;
     height: 60px;
-    border-bottom: 2px solid skyblue;
+    border-bottom: 2px solid ${props => props.theme.layoutBorderColor};
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     z-index: 999;
 
-    background-color: skyblue;
+    background-color: ${props => props.theme.primaryColor};
 `;
