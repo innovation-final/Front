@@ -7,10 +7,11 @@ function SampleChart({ width, height }) {
     useEffect(() => {
         async function fetchData() {
             await api.get('/stock/010140').then(res => {
+                console.log(res.data);
                 setData(
-                    res.data.data.slice(1).map(v => {
+                    res.data.stockDetail.map(v => {
                         return {
-                            x: new Date(),
+                            x: v.date,
                             y: [v.open, v.high, v.low, v.close],
                         };
                     }),

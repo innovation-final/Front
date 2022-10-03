@@ -4,7 +4,7 @@ import MainContainer from '../component/main/MainContainer';
 import styled from 'styled-components';
 import MainContentBox from '../component/main/MainContentBox';
 import Carousel from 'react-material-ui-carousel';
-import { Kospi, SampleChart } from '../component/chart';
+import { StockIndex, SampleChart } from '../component';
 import TableName from '../component/stocks/TableName';
 import TableItem from '../component/stocks/TableItem';
 import { useQuery } from 'react-query';
@@ -30,53 +30,58 @@ function Home() {
     if (isLoading) return <LoadingSpinner />;
     const values = data.data.data;
 
-    console.log(divRef.current);
-
     return (
         <Layout header sidebar>
             <MainContainer>
                 <MainContentBox title="코스피/코스닥" ref={divRef}>
                     <Carousel autoPlay={false} animation="slide">
-                        <Kospi
+                        <StockIndex
+                            name="kospi"
                             width={
                                 divRef.current
-                                    ? divRef.current.offsetWidth * 0.9
-                                    : '400px'
+                                    ? divRef.current.offsetWidth * 0.85
+                                    : '85%'
                             }
                         />
-                        <SampleChart
+                        <StockIndex
+                            name="kosdaq"
                             width={
                                 divRef.current
-                                    ? divRef.current.offsetWidth * 0.9
-                                    : '400px'
+                                    ? divRef.current.offsetWidth * 0.85
+                                    : '85%'
+                            }
+                            height={
+                                divRef.current
+                                    ? divRef.current.offsetHeight
+                                    : '100%'
                             }
                         />
                     </Carousel>
                 </MainContentBox>
                 <MainContentBox title="관심종목">
                     <Carousel autoPlay={true} animation="slide">
-                        <Kospi
+                        <SampleChart
                             width={
                                 divRef.current
-                                    ? divRef.current.offsetWidth * 0.9
-                                    : '400px'
+                                    ? divRef.current.offsetWidth * 0.85
+                                    : '85%'
                             }
                         />
                         <SampleChart
                             width={
                                 divRef.current
-                                    ? divRef.current.offsetWidth * 0.9
-                                    : '400px'
+                                    ? divRef.current.offsetWidth * 0.85
+                                    : '85%'
                             }
                             height={
                                 divRef.current
-                                    ? divRef.current.offsetHeight * 0.8
-                                    : '400px'
+                                    ? divRef.current.offsetHeight
+                                    : '100%'
                             }
                         />
                     </Carousel>
                 </MainContentBox>
-                <MainContentBox title="관심종목">
+                <MainContentBox title="인기종목">
                     <Carousel>
                         <div>
                             <TableName keys={keys} />
@@ -92,7 +97,7 @@ function Home() {
                         </div>
                     </Carousel>
                 </MainContentBox>
-                <MainContentBox title="인기종목">
+                <MainContentBox title="수익률 높은 종목">
                     <Carousel>
                         <DivCarousel>
                             <TableName keys={keys} />

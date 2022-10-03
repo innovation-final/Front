@@ -1,14 +1,14 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-function CandleStickChart({ data, width }) {
+function CandleStickChart({ data, width, height }) {
     const options = {
         chart: {
             id: '코스피',
         },
         xaxis: {
             labels: {
-                format: 'dd/MM',
+                show: false,
             },
         },
     };
@@ -27,6 +27,7 @@ function CandleStickChart({ data, width }) {
                     series={series}
                     type="candlestick"
                     width={width}
+                    height={height}
                 />
             )}
         </div>
