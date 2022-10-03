@@ -7,11 +7,9 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Layout from '../layout/Layout';
 import { postAPI } from '../../shared/api';
 import Button from '../elements/Button';
-import stockNames from '../elements/StockNames';
+import stockData from '../../data/stockData';
 
 function BoardEdit() {
-    const wholeTextArray = stockNames;
-
     const ref = useRef(null);
 
     const { id } = useParams();
@@ -38,7 +36,7 @@ function BoardEdit() {
     // 종목 수정
     const [inputValue, setInputValue] = useState(stockName);
     const [isHaveInputValue, setIsHaveInputValue] = useState(false);
-    const [dropDownList, setDropDownList] = useState(wholeTextArray);
+    const [dropDownList, setDropDownList] = useState(Object.keys(stockData));
     const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
 
     const showDropDownList = () => {
@@ -46,7 +44,7 @@ function BoardEdit() {
             setIsHaveInputValue(false);
             setDropDownList([]);
         } else {
-            const choosenTextList = wholeTextArray.filter(textItem =>
+            const choosenTextList = Object.keys(stockData).filter(textItem =>
                 textItem.includes(inputValue),
             );
             setDropDownList(choosenTextList);
