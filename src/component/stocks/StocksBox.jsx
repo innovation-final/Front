@@ -41,6 +41,7 @@ function StocksBox() {
     if (isLoading) return <LoadingSpinner />;
 
     const values = data.data.data;
+
     return (
         <StyleStocksBox>
             <StyleHeader>

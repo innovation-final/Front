@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -7,8 +7,11 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Layout from '../layout/Layout';
 import { postAPI } from '../../shared/api';
 import Button from '../elements/Button';
+import stockNames from '../elements/StockNames';
 
 function BoardEdit() {
+    const wholeTextArray = stockNames;
+
     const ref = useRef(null);
 
     const { id } = useParams();
@@ -17,7 +20,7 @@ function BoardEdit() {
     const stockName = data?.data.data.stockName;
     const title = data?.data.data.title;
     const content = data?.data.data.content;
-    console.log(title);
+
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
@@ -26,16 +29,59 @@ function BoardEdit() {
     const onChangeTitle = event => {
         setEditTitle(event.target.value);
     };
-    // 종목수정
-    const [editStockName, setEditStockName] = React.useState(stockName);
-    const onChangeStockName = event => {
-        setEditStockName(event.target.value);
-    };
+
     // 내용 수정
     const [editContent, setEditContent] = React.useState(content);
     const onChangeContent = event => {
         setEditContent(event.target.value);
     };
+    // 종목 수정
+    const [inputValue, setInputValue] = useState(stockName);
+    const [isHaveInputValue, setIsHaveInputValue] = useState(false);
+    const [dropDownList, setDropDownList] = useState(wholeTextArray);
+    const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
+
+    const showDropDownList = () => {
+        if (inputValue === '') {
+            setIsHaveInputValue(false);
+            setDropDownList([]);
+        } else {
+            const choosenTextList = wholeTextArray.filter(textItem =>
+                textItem.includes(inputValue),
+            );
+            setDropDownList(choosenTextList);
+        }
+    };
+
+    const clickDropDownItem = clickedItem => {
+        setInputValue(clickedItem);
+        setIsHaveInputValue(false);
+    };
+
+    const changeInputValue = event => {
+        setInputValue(event.target.value);
+        setIsHaveInputValue(true);
+    };
+    const handleDropDownKey = event => {
+        // input에 값이 있을때만 작동
+        if (isHaveInputValue) {
+            if (
+                event.key === 'ArrowDown' &&
+                dropDownList.length - 1 > dropDownItemIndex
+            ) {
+                setDropDownItemIndex(dropDownItemIndex + 1);
+            }
+
+            if (event.key === 'ArrowUp' && dropDownItemIndex >= 0)
+                setDropDownItemIndex(dropDownItemIndex - 1);
+            if (event.key === 'Enter' && dropDownItemIndex >= 0) {
+                clickDropDownItem(dropDownList[dropDownItemIndex]);
+                setDropDownItemIndex(-1);
+            }
+        }
+    };
+
+    useEffect(showDropDownList, [inputValue]);
 
     const putPost = async req => {
         const response = await postAPI.putPost(id, req);
@@ -48,13 +94,14 @@ function BoardEdit() {
             queryClient.invalidateQueries('post');
         },
     });
+
     // 수정 버튼
     const onClickEdit = () => {
         if (window.confirm('수정하겠습니까?')) {
             editMutation.mutate({
                 title: editTitle,
                 content: editContent,
-                stockName: editStockName,
+                stockName: inputValue,
             });
             alert('수정되었습니다');
             navigate(`/post/${id}`);
@@ -86,8 +133,10 @@ function BoardEdit() {
                 </ButtonBox>
                 <CardLayout className="card-body">
                     <CardDiv>
-                        <h1 className="card-text">제목: &nbsp;</h1>
-                        <Input
+                        <WriteText className="card-text">
+                            제목: &nbsp;
+                        </WriteText>
+                        <TitleInput
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="제목"
@@ -97,18 +146,73 @@ function BoardEdit() {
                         />
                     </CardDiv>
                     <CardDiv>
-                        <h1 className="card-text">종목: &nbsp;</h1>
-                        <Input
-                            className="form-control form-control-lg"
-                            type="text"
-                            placeholder="종목"
-                            onChange={onChangeStockName}
-                            ref={ref}
-                            value={editStockName}
-                        />
+                        <WholeBox>
+                            <StockInputLayout>
+                                <WriteText className="card-text">
+                                    종목: &nbsp;
+                                </WriteText>
+
+                                <div />
+                                <InputBox isHaveInputValue={isHaveInputValue}>
+                                    <StockInput
+                                        type="text"
+                                        placeholder="검색"
+                                        value={inputValue}
+                                        ref={ref}
+                                        onChange={changeInputValue}
+                                        onKeyUp={handleDropDownKey}
+                                    />
+                                    <DeleteButton
+                                        onClick={() => setInputValue('')}
+                                    >
+                                        &times;
+                                    </DeleteButton>
+                                </InputBox>
+                            </StockInputLayout>
+                            <StockDropInputLayout>
+                                {isHaveInputValue && (
+                                    <DropDownBox>
+                                        {dropDownList.length === 0 && (
+                                            <DropDownItem>
+                                                해당하는 단어가 없습니다
+                                            </DropDownItem>
+                                        )}
+                                        {dropDownList.map(
+                                            (dropDownItem, dropDownIndex) => {
+                                                return (
+                                                    <DropDownItem
+                                                        dropDownList={
+                                                            dropDownIndex
+                                                        }
+                                                        onClick={() =>
+                                                            clickDropDownItem(
+                                                                dropDownItem,
+                                                            )
+                                                        }
+                                                        onMouseOver={() =>
+                                                            setDropDownItemIndex(
+                                                                dropDownIndex,
+                                                            )
+                                                        }
+                                                        className={
+                                                            dropDownItemIndex ===
+                                                            dropDownIndex
+                                                                ? 'selected'
+                                                                : ''
+                                                        }
+                                                    >
+                                                        {dropDownItem}
+                                                    </DropDownItem>
+                                                );
+                                            },
+                                        )}
+                                    </DropDownBox>
+                                )}
+                            </StockDropInputLayout>
+                        </WholeBox>
                     </CardDiv>
                     <ContentDiv>
-                        <h1 className="card-text">내용:&nbsp;</h1>
+                        <WriteText className="card-text">내용:&nbsp;</WriteText>
                         <TextareaContent
                             className="form-control form-control-lg"
                             type="text"
@@ -144,6 +248,7 @@ const Text = styled.p`
     border-width: 1.5px;
     border-color: #5eb9ff;
 `;
+
 const Icon = styled.div`
     margin: 15px;
     height: 20px;
@@ -158,31 +263,23 @@ const CardDiv = styled.div`
     margin: 50px;
 `;
 const Card = styled.div`
+    overflow: scroll;
     margin: 10px;
     height: 80vh;
     width: 95%;
     border-radius: 10px;
-
     border: 2px solid skyblue;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
         rgba(0, 0, 0, 0.23) 0px 6px 6px;
 `;
 
-const Input = styled.input`
-    padding: 10px;
-    width: 95%;
-    border: 1px solid skyblue;
-    background-color: #f1fafd;
-    border-radius: 5px;
-
-    &:focus {
-        outline: 1px solid #5eb9ff;
-    }
+const WriteText = styled.div`
+    margin-top: 10px;
 `;
 
 const TextareaContent = styled.textarea`
-    padding: 10px;
     width: 95%;
+    padding: 9px;
     height: 300px;
     border: 1px solid skyblue;
     background-color: #f1fafd;
@@ -201,7 +298,6 @@ const ButtonLayout = styled.div`
     justify-content: center;
     align-items: center;
 `;
-
 const ClearButton = styled.div`
     color: #c7c7c7;
     margin: 10px;
@@ -213,4 +309,79 @@ const ButtonBox = styled.div`
     float: right;
 
     display: flex;
+`;
+const activeBorderRadius = '16px 16px 0 0';
+const inactiveBorderRadius = '16px 16px 16px 16px';
+
+const WholeBox = styled.div`
+    width: 100%;
+`;
+
+const InputBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 100%;
+    background-color: #f1fafd;
+    border: 1px solid skyblue;
+    border-radius: ${props =>
+        props.isHaveInputValue ? activeBorderRadius : inactiveBorderRadius};
+    z-index: 3;
+
+    &:focus-within {
+        box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);
+    }
+`;
+
+const TitleInput = styled.input`
+    padding: 10px;
+    width: 95%;
+    border: 1px solid skyblue;
+    border-radius: 5px;
+    background-color: #f1fafd;
+    &:focus {
+        outline: 1px solid #5eb9ff;
+    }
+`;
+const StockInputLayout = styled.div`
+    width: 100%;
+    display: flex;
+`;
+const StockDropInputLayout = styled.div`
+    width: 100%;
+    justify-content: center;
+`;
+
+const StockInput = styled.input`
+    flex: 1 0 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+`;
+
+const DeleteButton = styled.div`
+    cursor: pointer;
+`;
+
+const DropDownBox = styled.ul`
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    margin-left: 38px;
+    background-color: #f1fafd;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);
+    list-style-type: none;
+    z-index: 3;
+`;
+
+const DropDownItem = styled.li`
+    &.selected {
+        color: #10a3ff;
+    }
 `;
