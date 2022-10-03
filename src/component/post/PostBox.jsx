@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useParams, useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -12,11 +12,11 @@ import like from '../../static/like.png';
 import dislike from '../../static/dislike.png';
 import { postAPI } from '../../shared/api';
 import ProfileCard from './ProfileCard';
+import { dateParser } from '../../util/parser';
 import LoadingSpinner from '../elements/LoadingSpinner';
 
 function PostBox() {
     const { id } = useParams();
-    // eslint-disable-next-line no-unused-vars
     const { data, isLoading } = useQuery(['post', id], () =>
         postAPI.getPost(id),
     );
@@ -41,10 +41,6 @@ function PostBox() {
             navigate(`/communityboard`);
             queryClient.invalidateQueries('posts');
         },
-        // onSettled: () => {
-        //     // 요청이 성공하든, 에러가 발생되든 실행하고 싶은 경우
-        //     console.log('실행시켜주세요ㅠㅠ');
-        // },
     });
 
     const onPostDelete = () => {
@@ -142,7 +138,7 @@ function PostBox() {
                 <Header>
                     <TitleBox>
                         <Title>{postInfo.title}</Title>
-                        <DateBox>2022-09-19</DateBox>
+                        <DateBox>{dateParser(postInfo.createdAt)}</DateBox>
                     </TitleBox>
                 </Header>
 

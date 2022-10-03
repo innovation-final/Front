@@ -7,16 +7,11 @@ import Button from '../elements/Button';
 function ProfileCard({ user }) {
     const { nickname, profileImg, email } = user;
 
-    // if (profileImg === null) {
-    //     return like;
-    // }
-
-    console.log(profileImg);
     return (
         <StyleProfileCard>
             <Wrapper>
                 <ImageBox>
-                    <ProfileImage src={user.profileImg || ant} />
+                    <ProfileImage src={profileImg || ant} />
                 </ImageBox>
                 <ContentBox>
                     <UserName>{nickname}</UserName>
