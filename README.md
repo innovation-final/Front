@@ -1,18 +1,24 @@
-# Stock'S talk
+# Stock's talk
+관심 주식 추적과 모의투자 기능이 있는 주식 웹 서비스
 
----
+## 1.  프로젝트 소개 🗒
 
-## 개요
+## 2. 제작기간 & 팀원소개 🏃‍🏃‍♀️ 💨
+- FE - 홍준형  
+- FE - 김승원  
+- FE - 황준수  
+- BE - 김학준  
+- BE - 민지영
+## 3. 기술 스택 🛠
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"><img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=React&logoColor=white">
+<img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
+<img src="https://img.shields.io/badge/recoil-764ABC?style=for-the-badge&logo=recoil&logoColor=white">
+<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white">
+## 4. API 명세서 📃
 
----
+## 5. ERD 🗂
 
-## Developer
 
-FE - 홍준형  
-FE - 김승원  
-FE - 황준수  
-BE - 김학준  
-BE - 민지영
 
 ## Commit Message
 
@@ -26,9 +32,3 @@ REFACTOR: 코드 리펙토링
 TEST: 테스트 코트, 리펙토링 테스트 코드 추가  
 CHORE: 빌드 업무 수정, 패키지 매니저 수정(ex .gitignore 수정 같은 경우)
 
-## Stacks
-
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"><img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=React&logoColor=white">
-<img src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
-<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white">
-<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white">
