@@ -22,8 +22,8 @@ const SIZES = {
 const VARIANTS = {
     normal: css`
         --button-color: #ffffff;
-        --button-bg-color: skyblue;
-        --button-hover-bg-color: skyblue;
+        --button-bg-color: ${props => props.theme.buttonColor};
+        --button-hover-bg-color: ${props => props.theme.hoverColor};
     `,
     success: css`
         --button-color: #ffffff;
@@ -41,7 +41,7 @@ const VARIANTS = {
         --button-hover-bg-color: #ff9f43;
     `,
     transparent: css`
-        --button-color: #212529;
+        --button-color: ${props => props.theme.textColor};
         --button-bg-color: rgba(0, 0, 0, 0);
         --button-hover-bg-color: rgba(0, 0, 0, 0);
     `,

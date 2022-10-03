@@ -54,10 +54,9 @@ function PostDetail() {
 export default PostDetail;
 
 const PageWrapper = styled(motion.div)`
-    background-color: white;
+    background-color: ${props => props.theme.bgColor};
     padding: 30px;
-    border: 1px solid #9a9a9a;
+    border: 1px solid ${props => props.theme.borderColor};
     border-radius: 10px;
-
-    box-shadow: 3px 3px 3px 3px gray;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;

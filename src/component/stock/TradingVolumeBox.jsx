@@ -6,7 +6,6 @@ import { esUSNumberParser } from '../../util/parser';
 const keys = ['날짜', '종가 (KRW)', '거래량'];
 
 function TradingVolumeBox({ isPC, volumeData }) {
-    console.log(volumeData);
     return (
         <StyleTradingVolumeBox isPC={isPC}>
             <Title>순매매 거래량 (최근 10일)</Title>
@@ -51,7 +50,7 @@ const Title = styled.div`
 const VolumeWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    border: 1px solid skyblue;
+    border: 1px solid ${props => props.theme.borderColor};
     border-radius: 15px;
 `;
 const TableNames = styled.div`
@@ -60,7 +59,7 @@ const TableNames = styled.div`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: orange;
+    background-color: ${props => props.theme.secondaryColor};
     height: 37px;
     border-radius: 15px 15px 0px 0px;
 `;

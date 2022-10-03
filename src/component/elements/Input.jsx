@@ -24,14 +24,14 @@ Input.propTypes = {
 const StyleInput = styled.input`
     font-family: 'Pretendard-Regular';
     padding: 10px;
-    border: 1px solid #48dbfb;
+
+    border: 1px solid ${props => props.theme.borderColor};
     border-radius: 10px;
     width: 100%;
-
     &:active,
     &:focus,
     &:hover {
-        outline: 2px solid #0abde3;
+        outline: 2px solid ${props => props.theme.hoverBorderColor};
     }
 `;
 

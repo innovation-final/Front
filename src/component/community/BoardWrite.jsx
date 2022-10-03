@@ -154,6 +154,7 @@ function BoardWrite() {
                                             (dropDownItem, dropDownIndex) => {
                                                 return (
                                                     <DropDownItem
+                                                        key={dropDownItem}
                                                         dropDownList={
                                                             dropDownIndex
                                                         }
@@ -217,8 +218,9 @@ const Text = styled.p`
     font-size: 20px;
     font-weight: bold;
     border-bottom-style: solid;
+
     border-width: 1.5px;
-    border-color: #5eb9ff;
+    border-color: ${props => props.theme.borderColor};
 `;
 const Icon = styled.img`
     margin: 15px;
@@ -238,7 +240,7 @@ const Card = styled.div`
     height: 80vh;
     width: 95%;
     border-radius: 10px;
-    border: 2px solid skyblue;
+    border: 2px solid ${props => props.theme.borderColor};
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
         rgba(0, 0, 0, 0.23) 0px 6px 6px;
 `;
@@ -251,11 +253,12 @@ const TextareaContent = styled.textarea`
     width: 95%;
     padding: 9px;
     height: 300px;
-    border: 1px solid skyblue;
-    background-color: #f1fafd;
+    color: ${props => props.theme.textColor};
+    border: 1px solid ${props => props.theme.borderColor};
+    background-color: ${props => props.theme.inputColor};
     border-radius: 5px;
     &:focus {
-        outline: 1px solid #5eb9ff;
+        outline: 1px solid ${props => props.theme.hoverColor};
     }
 `;
 const ContentDiv = styled.div`
@@ -266,6 +269,7 @@ const ContentDiv = styled.div`
 const ButtonLayout = styled.div`
     display: flex;
     justify-content: center;
+
     align-items: center;
 `;
 const ClearButton = styled.div`
@@ -292,25 +296,28 @@ const InputBox = styled.div`
     flex-direction: row;
     padding: 10px;
     width: 100%;
-    background-color: #f1fafd;
-    border: 1px solid skyblue;
+    color: ${props => props.theme.textColor};
+    background-color: ${props => props.theme.inputColor};
+    border: 1px solid ${props => props.theme.borderColor};
     border-radius: ${props =>
         props.isHaveInputValue ? activeBorderRadius : inactiveBorderRadius};
     z-index: 3;
 
     &:focus-within {
         box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);
+        outline: 1px solid ${props => props.theme.hoverColor};
     }
 `;
 
 const TitleInput = styled.input`
     padding: 10px;
     width: 95%;
-    border: 1px solid skyblue;
+    color: ${props => props.theme.textColor};
+    border: 1px solid ${props => props.theme.borderColor};
     border-radius: 5px;
-    background-color: #f1fafd;
+    background-color: ${props => props.theme.inputColor};
     &:focus {
-        outline: 1px solid #5eb9ff;
+        outline: 1px solid ${props => props.theme.hoverColor};
     }
 `;
 const StockInputLayout = styled.div`
@@ -328,6 +335,7 @@ const StockInput = styled.input`
     padding: 0;
     width: 100%;
     background-color: transparent;
+    color: ${props => props.theme.textColor};
     border: none;
     outline: none;
 `;
@@ -341,8 +349,8 @@ const DropDownBox = styled.ul`
     margin: 0 auto;
     padding: 10px;
     margin-left: 38px;
-    background-color: #f1fafd;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: ${props => props.theme.inputColor};
+    border: 1px solid ${props => props.theme.borderColor};
     border-top: none;
     border-radius: 0 0 16px 16px;
     box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);

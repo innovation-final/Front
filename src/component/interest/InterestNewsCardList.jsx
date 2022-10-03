@@ -21,7 +21,7 @@ function InterestNewsList() {
 export default InterestNewsList;
 
 const CardContent = styled.div`
-    border-bottom: 1px solid skyblue;
+    border-bottom: 1px solid ${props => props.theme.borderColor};
     margin: 5px;
     display: flex;
 `;

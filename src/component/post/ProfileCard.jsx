@@ -61,7 +61,8 @@ const ProfileImage = styled.img`
     height: 100px;
     border-radius: 5%;
     object-fit: cover;
-    box-shadow: 3px 3px 3px 3px gray;
+    border-color: ${props => props.theme.borderColor};
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 const ContentBox = styled.div`
     display: flex;

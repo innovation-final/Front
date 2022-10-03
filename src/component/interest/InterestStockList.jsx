@@ -7,73 +7,45 @@ function InterestStockList() {
             <CardContent>
                 <InterestTitle>카카오</InterestTitle>
                 <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
                 <InterestContent>23%</InterestContent>
             </CardContent>
             <CardContent>
-                <InterestTitle>가온</InterestTitle>
+                <InterestTitle>DSC인베스트먼트</InterestTitle>
                 <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
+
                 <InterestContent>23%</InterestContent>
             </CardContent>
             <CardContent>
-                <InterestTitle>엘지</InterestTitle>
+                <InterestTitle>대신밸런스제10호스팩</InterestTitle>
                 <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
+
                 <InterestContent>23%</InterestContent>
             </CardContent>
             <CardContent>
                 <InterestTitle>삼성</InterestTitle>
                 <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
                 <InterestContent>23%</InterestContent>
             </CardContent>
             <CardContent>
                 <InterestTitle>카카오</InterestTitle>
                 <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
                 <InterestContent>23%</InterestContent>
             </CardContent>
             <CardContent>
-                <InterestTitle>가온</InterestTitle>
+                <InterestTitle>DSC인베스트먼트</InterestTitle>
                 <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
+
                 <InterestContent>23%</InterestContent>
             </CardContent>
             <CardContent>
-                <InterestTitle>엘지</InterestTitle>
+                <InterestTitle>대신밸런스제10호스팩</InterestTitle>
                 <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>삼성</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>카카오</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>가온</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>엘지</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
+
                 <InterestContent>23%</InterestContent>
             </CardContent>
             <CardContent>
                 <InterestTitle>삼성</InterestTitle>
                 <InterestContent>9,880</InterestContent>
-                <InterestContent>1535</InterestContent>
                 <InterestContent>23%</InterestContent>
             </CardContent>
         </>
@@ -83,26 +55,27 @@ function InterestStockList() {
 export default InterestStockList;
 
 const CardContent = styled.div`
-    border: 2px solid #ceecff;
+    border: 2px solid ${props => props.theme.stockBorderColor};
     border-radius: 15px;
     margin: 15px;
     display: flex;
     height: 61px;
     cursor: pointer;
     &:hover {
-        border: 2px solid #95d2f8;
-        background-color: #cef3ff;
+        border: 2px solid ${props => props.theme.hoverBorderColor};
+        background-color: ${props => props.theme.hoverColor};
     }
 `;
 const InterestTitle = styled.div`
     margin: 8px;
-    font-size: 25px;
-
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 200%;
     align-items: center;
-    justify-content: space-evenly;
     padding: 10px;
 `;
 

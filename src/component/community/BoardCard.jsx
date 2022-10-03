@@ -39,7 +39,13 @@ function BoardCard({ post }) {
             <CardLayout>
                 <CardDivide>
                     <CardStockName>{stockName}</CardStockName>
-                    <CardTitle>{title}</CardTitle>
+                    <CardTitle>
+                        {`${
+                            title.length > 30
+                                ? `${title.slice(0, 30)} ...`
+                                : title
+                        }`}
+                    </CardTitle>
                     <CardCommentCount>{`[${commentNum}]`}</CardCommentCount>
                 </CardDivide>
                 <CardDivide2>
@@ -76,23 +82,21 @@ BoardCard.propTypes = {
 };
 
 const Card = styled(motion.div)`
-    margin: 10px;
-    margin-bottom: 10px;
-    width: 85%;
+    width: 95%;
     cursor: pointer;
-    border-bottom: 2px solid skyblue;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px;
-    &:hover {
-        opacity: 0.7;
-    }
+    border-bottom: 2px solid ${props => props.theme.borderColor};
 `;
 
 const CardLayout = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 10px;
-    padding: 5px;
+    padding: 15px;
+
+    &:hover {
+        opacity: 0.7;
+        background-color: ${props => props.theme.hoverColor};
+    }
 `;
 const CardDivide = styled.div`
     display: flex;
@@ -113,16 +117,21 @@ const CardTitle = styled.div`
     font-size: 25px;
     overflow: hidden;
     margin-left: 40px;
+    letter-spacing: -1px;
     display: flex;
     margin-top: 1%;
 `;
 const CardCommentCount = styled.div`
     margin-left: 10px;
     margin-top: 1.5%;
+    font-weight: 600;
+    color: ${props => props.theme.borderColor};
 `;
 const CardStockName = styled.div`
     font-size: 15px;
     overflow: hidden;
+    letter-spacing: -1px;
+    min-width: 12%;
     margin-top: 2%;
 `;
 

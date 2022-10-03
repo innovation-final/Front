@@ -23,8 +23,7 @@ const StyleTableName = styled.div`
     border-radius: 15px;
     margin-bottom: 10px;
     padding: 10px;
-    background-color: orange;
-    box-shadow: 1px 1px 1px 1px gray;
+    background-color: ${props => props.theme.secondaryColor};
 `;
 
 const TableList = styled.ul`
