@@ -38,7 +38,7 @@ function PostBox() {
     const mutation = useMutation(postId => deletePost(postId), {
         onError: error => console.log(error),
         onSuccess: () => {
-            navigate(`/communityboard`);
+            navigate(`/community`);
             queryClient.invalidateQueries('posts');
         },
     });
@@ -118,7 +118,7 @@ function PostBox() {
                         <ClearIcon
                             name="cancelButton"
                             onClick={() => {
-                                navigate('/CommunityBoard');
+                                navigate('/community');
                             }}
                         />
                     </ClearButton>

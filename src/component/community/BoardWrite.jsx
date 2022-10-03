@@ -8,7 +8,7 @@ import Button from '../elements/Button';
 import useInput from '../../hooks/useInput';
 import { postAPI } from '../../shared/api';
 import writeIcon from '../../static/write.png';
-import stockNames from '../elements/StockNames';
+import stockData from '../../data/stockData';
 
 function BoardWrite() {
     const [title, onChangeTitleHandler] = useInput();
@@ -16,7 +16,7 @@ function BoardWrite() {
 
     const queryClient = useQueryClient();
     const navigate = useNavigate();
-    const wholeTextArray = stockNames;
+    const wholeTextArray = Object.keys(stockData);
 
     const addWrite = async req => {
         const response = await postAPI.postPost(req);
