@@ -18,7 +18,7 @@ function TradingVolumeBox({ isPC, volumeData }) {
                     </TableNames>
                     <TableData>
                         {volumeData.map(volume => (
-                            <VolumeInfo>
+                            <VolumeInfo key={volume.date}>
                                 <VolumeDate>{volume.date}</VolumeDate>
                                 <VolumeClose>
                                     {esUSNumberParser(volume.close)}
