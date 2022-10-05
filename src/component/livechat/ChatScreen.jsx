@@ -7,7 +7,6 @@ function ChatScreen() {
     const [chatList, setChatList] = useState([]);
     const [chat, setChat] = useState('');
     const client = useRef({});
-    console.log(chatList);
 
     const subscribe = () => {
         client.current.subscribe(`/sub/chat`, body => {
@@ -34,8 +33,8 @@ function ChatScreen() {
             body: JSON.stringify({
                 type: 'TALK',
                 sendTime: Date.now(),
-                imageUrl: '',
-                nickName: 'Me',
+                imageUrl: localStorage.getItem('imgUrl'),
+                nickName: localStorage.getItem('nickName'),
                 userId: '',
                 message: ch,
             }),
@@ -69,9 +68,13 @@ function ChatScreen() {
                 <MessageBox>
                     {chatList.map(ch => {
                         return (
-                            <MessageContainer
-                                key={uuid()}
-                            >{`${ch.type} : ${ch.nickName} : ${ch.message}`}</MessageContainer>
+                            <Wrapper key={uuid()}>
+                                <UserInfo>
+                                    <ProfileImg src={`${ch.imageUrl}`} />
+                                    <UserName>{`${ch.nickName}`}</UserName>
+                                </UserInfo>
+                                <MessageContainer>{`${ch.message}`}</MessageContainer>
+                            </Wrapper>
                         );
                     })}
                 </MessageBox>
@@ -120,6 +123,7 @@ const MessageBox = styled.div`
     padding: 20px;
     margin-right: 30px;
     margin-bottom: -25px;
+    overflow: scroll;
 `;
 
 const Form = styled.form`
@@ -145,6 +149,39 @@ const ButtonBox = styled.div`
     right: 13px;
     bottom: 13px;
 `;
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const UserInfo = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+`;
+const ProfileImg = styled.img`
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 1px 1px 1px 1px gray;
+    margin-right: 10px;
+`;
+const UserName = styled.div`
+    color: black;
+    font-size: 14px;
+`;
+
 const MessageContainer = styled.div`
     color: black;
+    background-color: ${props => props.theme.primaryColor};
+    margin-bottom: 10px;
+    border-radius: 15px;
+    padding: 3px;
+    padding-left: 13px;
+    width: 95%;
+    height: 30px;
+    line-height: 30px;
 `;
