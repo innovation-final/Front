@@ -22,7 +22,11 @@ function StockIndex({ name, width }) {
     }, []);
 
     return (
-        <Div>{data.length > 0 && <LineChart data={data} width={width} />}</Div>
+        <Div>
+            {data.length > 0 && (
+                <LineChart data={data} width={width} name={name} />
+            )}
+        </Div>
     );
 }
 

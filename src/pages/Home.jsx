@@ -34,13 +34,13 @@ function Home() {
         <Layout header sidebar>
             <MainContainer>
                 <MainContentBox title="코스피/코스닥" ref={divRef}>
-                    <Carousel autoPlay={false} animation="slide">
+                    <Carousel autoPlay={false} swipe={false} animation="slide">
                         <StockIndex
                             name="kospi"
                             width={
                                 divRef.current
                                     ? divRef.current.offsetWidth * 0.85
-                                    : '85%'
+                                    : '350'
                             }
                         />
                         <StockIndex
@@ -48,35 +48,37 @@ function Home() {
                             width={
                                 divRef.current
                                     ? divRef.current.offsetWidth * 0.85
-                                    : '85%'
+                                    : '350'
                             }
                             height={
                                 divRef.current
-                                    ? divRef.current.offsetHeight
-                                    : '100%'
+                                    ? divRef.current.offsetHeight * 0.7
+                                    : '300'
                             }
                         />
                     </Carousel>
                 </MainContentBox>
                 <MainContentBox title="관심종목">
-                    <Carousel autoPlay={true} animation="slide">
+                    <Carousel autoPlay={true} animation="slide" swipe="false">
                         <SampleChart
+                            name="카카오"
                             width={
                                 divRef.current
                                     ? divRef.current.offsetWidth * 0.85
-                                    : '85%'
+                                    : '350'
                             }
                         />
                         <SampleChart
+                            name="삼성중공업"
                             width={
                                 divRef.current
                                     ? divRef.current.offsetWidth * 0.85
-                                    : '85%'
+                                    : '350'
                             }
                             height={
                                 divRef.current
-                                    ? divRef.current.offsetHeight
-                                    : '100%'
+                                    ? divRef.current.offsetHeight * 0.85
+                                    : '300'
                             }
                         />
                     </Carousel>
