@@ -111,6 +111,7 @@ export const mypageAPI = {
                 'Content-Type': `multipart/form-data`,
             },
         }),
+    deleteMypage: () => api.delete(`/auth/mypage`),
 };
 
 export const stockAPI = {
@@ -119,4 +120,6 @@ export const stockAPI = {
     getStockTable: stockCode => api.get(`/stock/table/${stockCode}`),
     getStockArticle: stockCode => api.get(`/stock/news/${stockCode}`),
     getStockSearch: () => api.get(`/stock/list `),
+    postLikeStock: stockCode => api.post(`/auth/stock/like/${stockCode}`),
+    deleteLikeStock: stockCode => api.delete(`/auth/stock/like/${stockCode}`),
 };

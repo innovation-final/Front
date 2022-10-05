@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
+import { useMutation, useQueryClient } from 'react-query';
 import FavoritesIcon from '../elements/FavoritesIcon';
 import {
     esUSNumberParser,
@@ -8,6 +9,7 @@ import {
     arrowParser,
 } from '../../util/parser';
 import { isDarkState } from '../../atoms/atoms';
+import { stockAPI } from '../../shared/api';
 
 function StockInfoBox({ stockData }) {
     const {
@@ -31,13 +33,67 @@ function StockInfoBox({ stockData }) {
         if (value > 0) return '#e74c3c';
         return 'black';
     };
+    const queryClient = useQueryClient();
+    // 관심종목 등록
+    const likeStock = () => {
+        const response = stockAPI.postLikeStock();
+        return response;
+    };
+    const likemutation = useMutation(req => likeStock(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries();
+        },
+    });
+
+    const [like, setLikes] = useState();
+
+    const likeHandler = e => {
+        e.preventDefault();
+
+        setLikes(!like);
+        likemutation.mutate({ like });
+    };
+
+    // 관심종목 취소
+    const deleteLikeStock = () => {
+        const response = stockAPI.deleteLikeStock();
+        return response;
+    };
+    const dislikemutation = useMutation(req => deleteLikeStock(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+    });
+
+    const [deleteLike, setdisLikes] = useState(false);
+
+    const dislikeHandler = e => {
+        e.preventDefault();
+
+        setdisLikes(!deleteLike);
+        dislikemutation.mutate({ deleteLike });
+    };
 
     return (
         <StockInfoContainer>
             <StockInfoLeftBox>
                 <StockInfoTitleBox>
                     <StyleFavorite>
-                        <FavoritesIcon />
+                        {!like ? (
+                            <JoinBtn done={like} onClick={e => likeHandler(e)}>
+                                <FavoritesIcon />
+                            </JoinBtn>
+                        ) : (
+                            <JoinBtn
+                                done={deleteLike}
+                                onClick={e => dislikeHandler(e)}
+                            >
+                                <FavoritesIcon />
+                            </JoinBtn>
+                        )}
+
                         <StockInfoName>{name}</StockInfoName>
                     </StyleFavorite>
                     <StockInfoCode>{`E${code}`}</StockInfoCode>
@@ -139,3 +195,7 @@ const StockInfoMarketPrice = styled.div`
     margin-right: 10px;
 `;
 const StockInfoLow = styled.div``;
+const JoinBtn = styled.div`
+    width: 30px;
+    color: ${props => (props.done ? 'red' : props.theme.textColor)};
+`;

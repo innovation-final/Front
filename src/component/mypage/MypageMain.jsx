@@ -37,6 +37,20 @@ function MypageMain() {
             const uploadFile = e.target.files[0];
             setImg(uploadFile);
         }
+    }; // 탈퇴
+
+    const deleteMypage = () => {
+        const response = mypageAPI.deleteMypage();
+        return response;
+    };
+    const deleteMutation = useMutation(deleteMypage, {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries();
+        },
+    });
+    const onDelete = () => {
+        deleteMutation.mutate();
     };
 
     // 닉네임 수정
@@ -151,8 +165,9 @@ function MypageMain() {
             </ProfileLayout>
             <CardsLayout>
                 <Card>
+                    {' '}
                     <IconLayout>
-                        <PaidIcon />
+                        <PaidIcon /> <Button onClick={onDelete}>삭제</Button>
                         <Text>모의투자 수익률</Text>
                     </IconLayout>
                     <CardContent>
