@@ -118,4 +118,5 @@ export const stockAPI = {
     getStocks: criteria => api.get(`/stock/rank/${criteria}`),
     getStockTable: stockCode => api.get(`/stock/table/${stockCode}`),
     getStockArticle: stockCode => api.get(`/stock/news/${stockCode}`),
+    getStockSearch: () => api.get(`/stock/list `),
 };

@@ -12,6 +12,7 @@ import ant from '../../static/ant.jpg';
 function MypageMain() {
     const ref = useRef(null);
     const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
+    console.log(data);
     const nickname = data?.data.data.nickname;
     const email = data?.data.data.email;
     const profileImg = data?.data.data.profileImg;
