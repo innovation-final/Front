@@ -2,19 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import ClearIcon from '@mui/icons-material/Clear';
 import Layout from '../layout/Layout';
 import Button from '../elements/Button';
 import useInput from '../../hooks/useInput';
 import { postAPI } from '../../shared/api';
 import writeIcon from '../../static/write.png';
-import StockSearch from './StockSearch';
+import StockSearch from '../elements/StockSearch';
+import { searchState } from '../../atoms/atoms';
 // import stockData from '../../data/stockData';
 
 function BoardWrite() {
     const [title, onChangeTitleHandler] = useInput();
     const [content, onChangeContentHandler] = useInput();
-    const [stockName, onChangeStockNameHandler] = useInput();
+    const [onChangeStockNameHandler] = useInput();
+    const [inputValue, setInputValue] = useRecoilState(searchState);
 
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -33,7 +36,8 @@ function BoardWrite() {
 
     const submitHandler = () => {
         if (window.confirm('작성하겠습니까?')) {
-            mutation.mutate({ content, title, stockName });
+            mutation.mutate({ content, title, stockName: inputValue });
+            setInputValue('');
             alert('작성되었습니다');
             navigate('/community');
         } else {

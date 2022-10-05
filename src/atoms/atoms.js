@@ -15,6 +15,11 @@ export const isDarkState = atom({
     default: false,
 });
 
+export const searchState = atom({
+    key: 'search',
+    default: '',
+});
+
 export const slideSelector = selector({
     key: 'slideSelector',
     get: ({ get }) => {

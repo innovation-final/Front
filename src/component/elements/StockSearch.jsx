@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { stockAPI } from '../../shared/api';
+import { searchState } from '../../atoms/atoms';
 
 function StockSearch() {
     const { data } = useQuery(['stock'], () => stockAPI.getStockSearch());
@@ -14,23 +16,12 @@ function StockSearch() {
         stock.map(stocks => {
             return stocks.name;
         });
-    const stocksCode =
-        stock &&
-        stock.map(stocks => {
-            return stocks.code;
-        });
 
-    console.log('dlfma', stocksCode);
-    if (stocksCode)
-        console.log(
-            'dlfma',
-            stocksCode[stocksName?.findIndex(el => el === '삼성전자')],
-        );
     const wholeTextArray = stocksName;
 
     // 종목
 
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useRecoilState(searchState);
     const [isHaveInputValue, setIsHaveInputValue] = useState(false);
     const [dropDownList, setDropDownList] = useState(wholeTextArray);
     const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
