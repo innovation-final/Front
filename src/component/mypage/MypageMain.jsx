@@ -12,6 +12,7 @@ import ant from '../../static/ant.jpg';
 function MypageMain() {
     const ref = useRef(null);
     const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
+    console.log(data);
     const nickname = data?.data.data.nickname;
     const email = data?.data.data.email;
     const profileImg = data?.data.data.profileImg;
@@ -36,6 +37,20 @@ function MypageMain() {
             const uploadFile = e.target.files[0];
             setImg(uploadFile);
         }
+    }; // 탈퇴
+
+    const deleteMypage = () => {
+        const response = mypageAPI.deleteMypage();
+        return response;
+    };
+    const deleteMutation = useMutation(deleteMypage, {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries();
+        },
+    });
+    const onDelete = () => {
+        deleteMutation.mutate();
     };
 
     // 닉네임 수정
@@ -150,8 +165,9 @@ function MypageMain() {
             </ProfileLayout>
             <CardsLayout>
                 <Card>
+                    {' '}
                     <IconLayout>
-                        <PaidIcon />
+                        <PaidIcon /> <Button onClick={onDelete}>삭제</Button>
                         <Text>모의투자 수익률</Text>
                     </IconLayout>
                     <CardContent>
