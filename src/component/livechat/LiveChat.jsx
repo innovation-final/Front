@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import Messenger from './Messenger';
+import { toggleLiveChat } from '../../atoms/atoms';
 
 function LiveChat() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [onLiveChat, setOnLiveChat] = useRecoilState(toggleLiveChat);
     const onClick = () => {
-        setIsOpen(props => !props);
+        setOnLiveChat(props => !props);
     };
     return (
         <StyleCircle>
             <MessengerCircle onClick={onClick} />
-            <StyleLiveChat>{isOpen ? <Messenger /> : null}</StyleLiveChat>
+            <StyleLiveChat>{onLiveChat ? <Messenger /> : null}</StyleLiveChat>
             <ModeCommentIcon />
         </StyleCircle>
     );

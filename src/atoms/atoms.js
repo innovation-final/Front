@@ -15,6 +15,11 @@ export const isDarkState = atom({
     default: false,
 });
 
+export const toggleLiveChat = atom({
+    key: 'chat',
+    default: false,
+});
+
 export const slideSelector = selector({
     key: 'slideSelector',
     get: ({ get }) => {
