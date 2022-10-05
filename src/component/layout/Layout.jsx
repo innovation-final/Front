@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import useWindowSize from '../../hooks/useWindowSize';
 import Header from './Header';
 import SideBar from './SideBar';
-import LiveChat from '../livechat/LiveChat';
 import { wideState } from '../../atoms/atoms';
 
 const responsive = {
@@ -36,7 +35,6 @@ function Layout({ children, sidebar = true, header = true }) {
             <Main $wide={wide} isPC={isPC}>
                 {children}
             </Main>
-            <LiveChat />
         </StyleLayout>
     );
 }

@@ -1,17 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as StompJs from '@stomp/stompjs';
+import { useRecoilState } from 'recoil';
 import { motion } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
+import { chatLogState } from '../../atoms/atoms';
 
 function ChatScreen() {
-    const [chatList, setChatList] = useState([]);
+    const [chatList, setChatList] = useRecoilState(chatLogState);
     const [chat, setChat] = useState('');
     const client = useRef({});
     const imageUrl = localStorage.getItem('imgUrl');
     const nickName = localStorage.getItem('nickName');
-    console.log(chatList);
+    const token = localStorage.getItem('access-token');
 
     const subscribeCallback = data => {
         setChatList(props => [...props, data]);
@@ -20,7 +22,7 @@ function ChatScreen() {
             chatScreen.scrollTop = chatScreen.scrollHeight;
         }, 100);
     };
-
+    console.log(chatList);
     const subscribe = () => {
         client.current.subscribe(`/sub/chat`, body => {
             const jsonBody = JSON.parse(body.body);
@@ -48,7 +50,6 @@ function ChatScreen() {
         client.current = new StompJs.Client({
             brokerURL: 'ws://hakjoonkim.shop/stomp',
             onConnect: () => {
-                console.log('success');
                 subscribe();
             },
         });
@@ -59,7 +60,10 @@ function ChatScreen() {
     };
 
     const disconnect = () => {
-        client.current.deactivate();
+        publish(`${nickName}님이 나가셨습니다.`, 'ENTER');
+        setTimeout(() => {
+            client.current.deactivate();
+        }, 500);
     };
 
     const handleChange = event => {
@@ -77,6 +81,13 @@ function ChatScreen() {
         return () => disconnect();
     }, []);
 
+    if (token === null) {
+        return (
+            <StyleChatScreen>
+                <NeedToLogin>로그인을 해주세요</NeedToLogin>
+            </StyleChatScreen>
+        );
+    }
     return (
         <StyleChatScreen>
             <Container>
@@ -84,36 +95,27 @@ function ChatScreen() {
                     {chatList.map(ch =>
                         ch.type === 'TALK' ? (
                             <Wrapper
-                                key={uuid()}
-                                $isMine={
-                                    ch.nickName ===
-                                    localStorage.getItem('nickName')
-                                }
+                                key={`${uuid()} ${Date.now()}`}
+                                $isMine={ch.nickName === nickName}
                             >
                                 <UserInfo>
                                     <ProfileImg
                                         src={`${ch.imageUrl}`}
-                                        isMine={
-                                            ch.nickName ===
-                                            localStorage.getItem('nickName')
-                                        }
+                                        isMine={ch.nickName === nickName}
                                     />
                                     <UserName
-                                        isMine={
-                                            ch.nickName ===
-                                            localStorage.getItem('nickName')
-                                        }
+                                        isMine={ch.nickName === nickName}
                                     >{`${ch.nickName}`}</UserName>
                                 </UserInfo>
                                 <MessageContainer
-                                    isMine={
-                                        ch.nickName ===
-                                        localStorage.getItem('nickName')
-                                    }
+                                    isMine={ch.nickName === nickName}
                                 >{`${ch.message}`}</MessageContainer>
                             </Wrapper>
                         ) : (
-                            <EnterMessage>{`${ch.message}`}</EnterMessage>
+                            <EnterMessage
+                                key={`${uuid()} ${Date.now()}`}
+                                isMine={ch.nickName === nickName}
+                            >{`${ch.message}`}</EnterMessage>
                         ),
                     )}
                 </MessageBox>
@@ -248,7 +250,22 @@ const MessageContainer = styled.div`
 `;
 
 const EnterMessage = styled.div`
-    width: 100%;
+    width: 96%;
     color: black;
     background-color: rgba(1, 1, 1, 0.3);
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    display: ${props => (props.isMine ? 'none' : 'block')};
+`;
+
+const NeedToLogin = styled.div`
+    display: flex;
+    color: black;
+    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 `;

@@ -20,6 +20,11 @@ export const toggleLiveChat = atom({
     default: false,
 });
 
+export const chatLogState = atom({
+    key: 'chatlog',
+    default: [],
+});
+
 export const slideSelector = selector({
     key: 'slideSelector',
     get: ({ get }) => {
