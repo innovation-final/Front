@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+// import Swal from "sweetalert2";
 import ClearIcon from '@mui/icons-material/Clear';
 import Layout from '../layout/Layout';
 import Button from '../elements/Button';
@@ -16,7 +17,6 @@ import { searchState } from '../../atoms/atoms';
 function BoardWrite() {
     const [title, onChangeTitleHandler] = useInput();
     const [content, onChangeContentHandler] = useInput();
-    const [onChangeStockNameHandler] = useInput();
     const [inputValue, setInputValue] = useRecoilState(searchState);
 
     const queryClient = useQueryClient();
@@ -45,6 +45,10 @@ function BoardWrite() {
         }
         return 0;
     };
+    const cancelHandler = () => {
+        setInputValue('');
+        navigate('/community');
+    };
 
     return (
         <Layout>
@@ -57,9 +61,7 @@ function BoardWrite() {
                     <ClearButton>
                         <ClearIcon
                             name="cancelButton"
-                            onClick={() => {
-                                navigate('/Community');
-                            }}
+                            onClick={cancelHandler}
                         />
                     </ClearButton>
                 </ButtonBox>
@@ -76,7 +78,7 @@ function BoardWrite() {
                         />
                     </CardDiv>
                     <CardDiv>
-                        <StockSearch key={onChangeStockNameHandler} />
+                        <StockSearch />
                     </CardDiv>
                     <ContentDiv>
                         <WriteText className="card-text">
