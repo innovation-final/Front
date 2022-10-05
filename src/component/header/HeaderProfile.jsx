@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
@@ -11,6 +11,12 @@ function HeaderProfile() {
     const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
     const nickname = data?.data.data.nickname;
     const profileImg = data?.data.data.profileImg;
+    useEffect(() => {
+        if (data) {
+            localStorage.setItem('nickName', nickname);
+            localStorage.setItem('imgUrl', profileImg);
+        }
+    }, []);
 
     return (
         <StyleProfile>

@@ -3,11 +3,11 @@ import Layout from '../component/layout/Layout';
 import MainContainer from '../component/main/MainContainer';
 import styled from 'styled-components';
 import MainContentBox from '../component/main/MainContentBox';
-import Carousel from 'react-material-ui-carousel';
+// import Carousel from 'react-material-ui-carousel';
 import { StockIndex, SampleChart } from '../component';
 import TableName from '../component/stocks/TableName';
 import TableItem from '../component/stocks/TableItem';
-import { useQuery } from 'react-query';
+// import { useQuery } from 'react-query';
 import { stockAPI } from '../shared/api';
 import LoadingSpinner from '../component/elements/LoadingSpinner';
 
