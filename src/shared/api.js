@@ -13,7 +13,7 @@ api.interceptors.request.use(function (config) {
     const accessToken = localStorage.getItem('access-token');
     const refreshToken = localStorage.getItem('refresh-token');
     if (!accessToken || !refreshToken) {
-        window.location.href('/login');
+        window.location.href = '/login';
     }
 
     config.headers.authorization = `${accessToken}`;
@@ -119,6 +119,7 @@ export const stockAPI = {
     getStocks: criteria => api.get(`/stock/rank/${criteria}`),
     getStockTable: stockCode => api.get(`/stock/table/${stockCode}`),
     getStockArticle: stockCode => api.get(`/stock/news/${stockCode}`),
+    getStockPosts: stockCode => api.get(`/post/stock/${stockCode}`),
     getStockSearch: () => api.get(`/stock/list `),
     postLikeStock: stockCode => api.post(`/auth/stock/like/${stockCode}`),
     deleteLikeStock: stockCode => api.delete(`/auth/stock/like/${stockCode}`),
