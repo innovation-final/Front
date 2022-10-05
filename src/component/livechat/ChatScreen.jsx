@@ -11,18 +11,19 @@ function ChatScreen() {
     const [chatList, setChatList] = useRecoilState(chatLogState);
     const [chat, setChat] = useState('');
     const client = useRef({});
-    const imageUrl = localStorage.getItem('imgUrl');
-    const nickName = localStorage.getItem('nickName');
-    const token = localStorage.getItem('access-token');
+    const [imageUrl] = useState(localStorage.getItem('imgUrl'));
+    const [nickName] = useState(localStorage.getItem('nickName'));
+    const [token] = useState(localStorage.getItem('access-token'));
 
     const subscribeCallback = data => {
         setChatList(props => [...props, data]);
         const chatScreen = document.getElementById('chatting');
         setTimeout(() => {
-            chatScreen.scrollTop = chatScreen.scrollHeight;
+            if (chatScreen !== null)
+                chatScreen.scrollTop = chatScreen.scrollHeight;
         }, 100);
     };
-    console.log(chatList);
+
     const subscribe = () => {
         client.current.subscribe(`/sub/chat`, body => {
             const jsonBody = JSON.parse(body.body);

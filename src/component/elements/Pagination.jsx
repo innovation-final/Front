@@ -61,7 +61,7 @@ function Pagination(props) {
                         <Page
                             onClick={() => paginate(num)}
                             currentPage={currentPage}
-                            color={color}
+                            $color={color}
                             focusColor={focusColor}
                             num={num}
                         >
@@ -100,7 +100,7 @@ const Page = styled.span`
     padding: 10px;
     font-size: ${props => (props.currentPage === props.num ? '20' : '17')}px;
     color: ${props =>
-        props.currentPage === props.num ? props.focusColor : props.color};
+        props.currentPage === props.num ? props.focusColor : props.$color};
     font-weight: ${props => (props.currentPage === props.num ? '700' : '500')};
     cursor: pointer;
 `;
