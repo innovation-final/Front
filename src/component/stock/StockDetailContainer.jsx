@@ -40,10 +40,10 @@ function StockDetailContainer() {
     );
     if (isLoading) return <LoadingSpinner />;
 
-    const [code, name, isKospi] = data.data.data;
-    const presentPrice = data.data.data.at(-1);
-    const prevPrice = data.data.data.at(-2);
-    const stockData = { code, name, isKospi, ...presentPrice, prevPrice };
+    const { code, name, market, current, stockDetail } = data.data.data;
+    const prevPrice = stockDetail.at(-1);
+    const stockData = { code, name, market, ...current, prevPrice };
+    const volumeData = stockDetail.slice(-10);
 
     return (
         <StyleDetailContainer>
@@ -52,7 +52,7 @@ function StockDetailContainer() {
                     <StockInfoBox stockData={stockData} isPC={isPC} />
                     <GraphBox isPC={isPC} />
                 </StockInfoWrapper>
-                <TradingVolumeBox isPC={isPC} />
+                <TradingVolumeBox volumeData={volumeData} isPC={isPC} />
             </ContainerTop>
             <ContainerBottom isPC={isPC}>
                 <FinancialStatementBox isPC={isPC} />

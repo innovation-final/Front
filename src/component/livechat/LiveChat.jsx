@@ -30,7 +30,7 @@ const StyleCircle = styled.span`
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    background-color: skyblue;
+    background-color: ${props => props.theme.primaryColor};
     color: white;
     z-index: 999;
     right: 2%;

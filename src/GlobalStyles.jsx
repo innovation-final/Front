@@ -22,6 +22,8 @@ const GlobalStyle = createGlobalStyle`
 
     body{
      -ms-overflow-style: none;
+     background-color:${props => props.theme.bgColor};
+     color:${props => props.theme.textColor};
     }
  
     ::-webkit-scrollbar {

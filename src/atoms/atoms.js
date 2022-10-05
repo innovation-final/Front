@@ -10,6 +10,11 @@ export const slideState = atom({
     default: 0,
 });
 
+export const isDarkState = atom({
+    key: 'darkmode',
+    default: false,
+});
+
 export const slideSelector = selector({
     key: 'slideSelector',
     get: ({ get }) => {

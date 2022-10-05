@@ -76,7 +76,7 @@ const ItemContainer = styled.div`
 const IconBox = styled.div`
     padding: 10px;
     margin-left: 10px;
-    color: #525961;
+    color: ${props => props.theme.menuTextColor};
     z-index: 1;
     cursor: pointer;
 `;
@@ -89,7 +89,7 @@ const ItemTitle = styled.div`
     display: inline-block;
     padding: 5px;
     font-weight: 600;
-    color: #525961;
+    color: ${props => props.theme.menuTextColor};
     letter-spacing: -1px;
     font-size: 17px;
     white-space: nowrap;
@@ -104,6 +104,6 @@ const SelectedMenu = styled.div`
     width: 280px;
     height: 50px;
     border-radius: 15px 0px 0px 15px;
-    background-color: white;
+    background-color: ${props => props.theme.bgColor};
     z-index: -1;
 `;

@@ -166,7 +166,7 @@ const WrapperContainer = styled(motion.div)`
     align-items: center;
     z-index: 0;
 
-    border-bottom: 1px solid #bdc3c7;
+    border-bottom: 1px solid ${props => props.theme.borderColor};
     margin-bottom: 10px;
 `;
 const WriterBox = styled.div`
@@ -188,24 +188,12 @@ const StyleComment = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
     align-items: center;
     padding: 10px;
     margin-bottom: 20px;
-    color: black;
+    color: ${props => props.theme.textColor};
 `;
-// const Tail = styled.div`
-//     position: absolute;
-//     left: 0;
-//     top: 70%;
-//     width: 0;
-//     height: 0;
-//     border: 20px solid transparent;
-//     border-right-color: #3399ff;
-//     border-left: 0;
-//     border-bottom: 0;
-//     margin-top: -10px;
-//     margin-left: -20px;
-// `;
 const Wrapper = styled.div`
     width: 90%;
     margin-left: 10px;
@@ -218,14 +206,15 @@ const InputBox = styled.div`
 const Input = styled.input`
     font-family: 'Pretendard-Regular';
     padding: 10px;
-    border: 1px solid #48dbfb;
+    border: 1px solid ${props => props.theme.borderColor};
     border-radius: 10px;
     width: 100%;
-
+    color: ${props => props.theme.textColor};
+    background-color: ${props => props.theme.inputColor};
     &:active,
     &:focus,
     &:hover {
-        outline: 2px solid #0abde3;
+        outline: 2px solid ${props => props.theme.hoverBorderColor};
     }
 `;
 const Buttons = styled.div`
@@ -245,9 +234,10 @@ const ButtonBox = styled.div``;
 // `;
 
 const ProfileImage = styled.img`
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 5px;
+    box-shadow: 1px 1px 1px 1px gray;
 `;

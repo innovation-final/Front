@@ -35,10 +35,13 @@ function StocksBox() {
     };
 
     const { data, isLoading } = useQuery('stocks', () =>
-        stockAPI.getStocks('kospi_vol'),
+        stockAPI.getStocks('kospi_vol_extend'),
     );
+
     if (isLoading) return <LoadingSpinner />;
+
     const values = data.data.data;
+
     return (
         <StyleStocksBox>
             <StyleHeader>

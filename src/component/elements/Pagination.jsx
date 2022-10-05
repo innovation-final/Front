@@ -1,8 +1,9 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { isDarkState } from '../../atoms/atoms';
 
 function Pagination(props) {
     const {
@@ -13,7 +14,7 @@ function Pagination(props) {
         leftMove,
         rightMove,
     } = props;
-
+    const isDark = useRecoilValue(isDarkState);
     const pageNumbers = [];
     const totalPage = Math.ceil(totalPosts / postPerPage);
     const pageCountView = 7;
@@ -40,6 +41,15 @@ function Pagination(props) {
         }
     }
 
+    const color = () => {
+        if (isDark) return 'white';
+        return 'black';
+    };
+    const focusColor = () => {
+        if (isDark) return '#DE6B3E';
+        return 'skyblue';
+    };
+
     return (
         <Container>
             <PageNavigation>
@@ -51,6 +61,8 @@ function Pagination(props) {
                         <Page
                             onClick={() => paginate(num)}
                             currentPage={currentPage}
+                            color={color}
+                            focusColor={focusColor}
                             num={num}
                         >
                             {num}
@@ -87,9 +99,9 @@ const Page = styled.span`
     height: 10px;
     padding: 10px;
     font-size: ${props => (props.currentPage === props.num ? '20' : '17')}px;
-    color: ${props => (props.currentPage === props.num ? 'skyblue' : 'black')};
+    color: ${props =>
+        props.currentPage === props.num ? props.focusColor : props.color};
     font-weight: ${props => (props.currentPage === props.num ? '700' : '500')};
-
     cursor: pointer;
 `;
 

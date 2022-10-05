@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import FavoritesIcon from '../elements/FavoritesIcon';
-import { esUSNumberParser, toFixTwoPoint } from '../../util/parser';
+import {
+    esUSNumberParser,
+    toFixTwoPoint,
+    arrowParser,
+} from '../../util/parser';
+import { isDarkState } from '../../atoms/atoms';
 
 function StockInfoBox({ stockData }) {
     const {
@@ -16,9 +22,15 @@ function StockInfoBox({ stockData }) {
         change,
         prevPrice,
     } = stockData;
+    const isDark = useRecoilValue(isDarkState);
     const dayToDay = close - prevPrice.close;
 
-    console.log(stockData);
+    const colorParser = value => {
+        if (value === 0) return isDark ? 'white' : 'black';
+        if (value < 0) return '#2980b9';
+        if (value > 0) return '#e74c3c';
+        return 'black';
+    };
 
     return (
         <StockInfoContainer>
@@ -36,10 +48,10 @@ function StockInfoBox({ stockData }) {
                     <StockInfoPrice>{`${esUSNumberParser(
                         close,
                     )} KRW`}</StockInfoPrice>
-                    <StockInfoRate isMinus={change < 0}>
-                        전일대비 {change < 0 ? '▼' : '▲'}
-                        {esUSNumberParser(dayToDay)} |
-                        {`  ${toFixTwoPoint(change)}%`}
+                    <StockInfoRate colorParser={colorParser(dayToDay)}>
+                        {`전일대비 ${arrowParser(dayToDay)}
+                          ${esUSNumberParser(dayToDay)} |
+                        ${toFixTwoPoint(change)}%`}
                     </StockInfoRate>
                 </StockInfoTitleBox>
             </StockInfoLeftBox>
@@ -105,7 +117,7 @@ const StockInfoPrice = styled.div`
 `;
 const StockInfoRate = styled.div`
     line-height: 30px;
-    color: ${props => (props.isMinus ? 'blue' : 'red')};
+    color: ${props => props.colorParser};
 `;
 const StockInfoRightBox = styled.div`
     display: flex;

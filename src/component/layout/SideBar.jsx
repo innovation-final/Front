@@ -1,14 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import SideBarHeader from '../sidebar/SideBarHeader';
 import SideBarItem from '../sidebar/SideBarItem';
-import { wideState } from '../../atoms/atoms';
+import { wideState, isDarkState } from '../../atoms/atoms';
 
 function SideBar() {
     const navigate = useNavigate();
     const wide = useRecoilValue(wideState);
+    const setIsDark = useSetRecoilState(isDarkState);
 
     const menuItems = [
         {
@@ -23,27 +24,56 @@ function SideBar() {
         },
         { title: '모의투자', onClickFn: () => navigate('/') },
         { title: '랭킹보드', onClickFn: () => navigate('/') },
-        { title: '관심종목 관리', onClickFn: () => navigate('/interest') },
+        {
+            title: '관심종목 관리',
+            onClickFn: () => navigate('/interest'),
+            param: '/interest',
+        },
         {
             title: '마이페이지',
             onClickFn: () => navigate('/mypage'),
             param: '/mypage',
         },
     ];
+    const menuBottomItems = [
+        {
+            title: '다크모드',
+            onClickFn: () => setIsDark(props => !props),
+            param: '',
+        },
+        {
+            title: '로그인',
+            onClickFn: () => navigate('/login'),
+            param: '',
+        },
+    ];
 
     return (
         <StyleSideBar $wide={wide}>
             <Container>
-                <SideBarHeader $wide={wide} />
-                {menuItems.map(item => (
-                    <SideBarItem
-                        key={item.title}
-                        title={item.title}
-                        subItems={item.subItems}
-                        param={item.param}
-                        onClickFn={item.onClickFn}
-                    />
-                ))}
+                <TopCotainer>
+                    <SideBarHeader $wide={wide} />
+                    {menuItems.map(item => (
+                        <SideBarItem
+                            key={item.title}
+                            title={item.title}
+                            subItems={item.subItems}
+                            param={item.param}
+                            onClickFn={item.onClickFn}
+                        />
+                    ))}
+                </TopCotainer>
+                <BottomContainer>
+                    {menuBottomItems.map(item => (
+                        <SideBarItem
+                            key={item.title}
+                            title={item.title}
+                            subItems={item.subItems}
+                            param={item.param}
+                            onClickFn={item.onClickFn}
+                        />
+                    ))}
+                </BottomContainer>
             </Container>
         </StyleSideBar>
     );
@@ -58,14 +88,25 @@ const StyleSideBar = styled.div`
     top: 0;
     width: ${props => (props.$wide ? 290 : 74)}px;
     height: 100vh;
-    background-color: skyblue;
-    color: white;
+    background-color: ${props => props.theme.primaryColor};
+    color: ${props => props.theme.textColor};
 
-    border-right: 1px solid white;
+    border-right: 1px solid ${props => props.theme.layoutBorderColor};
 
     transition: width ease-in-out 0.3s;
 `;
 const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+`;
+
+const TopCotainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+const BottomContainer = styled.div`
     display: flex;
     flex-direction: column;
 `;

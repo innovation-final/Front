@@ -21,14 +21,12 @@ const Wrapper = styled.div`
     flex-direction: column;
     margin: 10px auto;
     position: relative;
-    border: 1px solid skyblue;
 `;
 const StyleContentBox = styled.div`
     position: relative;
     width: 100%;
     min-height: 320px;
     max-height: 320px;
-    border-radius: 15px;
     transition: all ease-in-out 0.3s;
     overflow: hidden;
 `;

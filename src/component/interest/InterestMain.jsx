@@ -59,7 +59,7 @@ const InterestLayout = styled.div`
 
 const InterestCard = styled.div`
     position: relative;
-    border: 2px solid skyblue;
+    border: 2px solid ${props => props.theme.borderColor};
     margin: 20px;
     border-radius: 15px;
     overflow: scroll;
@@ -69,7 +69,7 @@ const InterestCard = styled.div`
 `;
 
 const Card = styled.div`
-    border: 2px solid skyblue;
+    border: 2px solid ${props => props.theme.borderColor};
     margin: 20px;
     height: 363px;
     border-radius: 15px;
