@@ -51,6 +51,7 @@ function ChatScreen() {
         client.current = new StompJs.Client({
             brokerURL: 'ws://hakjoonkim.shop/stomp',
             onConnect: () => {
+                console.log('success');
                 subscribe();
             },
         });
@@ -74,6 +75,7 @@ function ChatScreen() {
     const handleSubmit = (event, ch) => {
         // 보내기 버튼 눌렀을 때 publish
         event.preventDefault();
+        if (ch === '') return;
         publish(ch, 'TALK');
     };
 
