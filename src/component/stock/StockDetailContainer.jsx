@@ -38,11 +38,20 @@ function StockDetailContainer() {
         () => stockAPI.getStockDetail(stockCode),
         { refetchOnWindowFocus: false },
     );
+    console.log('dd', data);
     if (isLoading) return <LoadingSpinner />;
 
-    const { code, name, market, current, stockDetail } = data.data.data;
+    const { code, name, market, current, stockDetail, doneInterest } =
+        data.data.data;
     const prevPrice = stockDetail.at(-1);
-    const stockData = { code, name, market, ...current, prevPrice };
+    const stockData = {
+        doneInterest,
+        code,
+        name,
+        market,
+        ...current,
+        prevPrice,
+    };
     const volumeData = stockDetail.slice(-10);
 
     return (
