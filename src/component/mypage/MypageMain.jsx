@@ -167,7 +167,7 @@ function MypageMain() {
                 <Card>
                     {' '}
                     <IconLayout>
-                        <PaidIcon /> <Button onClick={onDelete}>삭제</Button>
+                        <PaidIcon />
                         <Text>모의투자 수익률</Text>
                     </IconLayout>
                     <CardContent>
@@ -177,7 +177,11 @@ function MypageMain() {
                         <Typography variant="body2" color="text.secondary">
                             Lizards are a widespread group of squamate reptiles,
                             with over 6,000 species, ranging across all
+                            <WithdrawButton onClick={onDelete}>
+                                회원탈퇴
+                            </WithdrawButton>
                         </Typography>
+                        <Button onClick={onDelete}>삭제</Button>
                     </CardContent>
                 </Card>
 
@@ -281,6 +285,16 @@ const Button = styled.button`
     position: absolute;
     right: 2px;
     top: 5px;
+`;
+const WithdrawButton = styled.button`
+    background-color: #000072;
+    border: 1px solid ${props => props.theme.borderColor};
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 80px;
+    position: absolute;
 `;
 const CogBtn = styled.img`
     width: 40px;

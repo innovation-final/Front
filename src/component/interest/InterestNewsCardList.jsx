@@ -1,19 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useQuery } from 'react-query';
 
-function InterestNewsList() {
+import { stockAPI } from '../../shared/api';
+import { dateParser } from '../../util/parser';
+
+function InterestNewsList({ interestStocksNews }) {
+    const { code } = interestStocksNews;
+    const { data } = useQuery(['stocknews', code], () =>
+        stockAPI.likeNewsStock(code),
+    );
+    const stockNews = data?.data.data;
+
+    console.log(stockNews);
     return (
         <>
-            <CardContent>
-                <InterestTitle>뉴스제목</InterestTitle>
-                <InterestContent>경향</InterestContent>
-                <InterestContent>2022/09/04</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>뉴스제목</InterestTitle>
-                <InterestContent>한국일보</InterestContent>
-                <InterestContent>2022/09/04</InterestContent>
-            </CardContent>
+            {' '}
+            {stockNews &&
+                stockNews.map(stockNewslike => (
+                    <CardContent>
+                        <InterestTitle>{stockNewslike.title}</InterestTitle>
+                        <InterestContent>
+                            {dateParser(stockNewslike.pubDate)}
+                        </InterestContent>
+                    </CardContent>
+                ))}
         </>
     );
 }
@@ -30,13 +41,11 @@ const InterestTitle = styled.div`
     flex-grow: ${props => props.flexRatio};
     font-size: 14px;
     font-weight: 600;
-    letter-spacing: -1px;
-    display: flex;
 
+    display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 120%;
     align-items: center;
-    justify-content: space-evenly;
 `;
 
 const InterestContent = styled.div`

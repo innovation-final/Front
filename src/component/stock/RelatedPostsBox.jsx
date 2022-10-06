@@ -15,6 +15,7 @@ function RelatedPostsBox({ isPC }) {
     const { data, isLoading } = useQuery('stockPosts', () =>
         stockAPI.getStockPosts(id),
     );
+
     if (isLoading) return <LoadingSpinner />;
     const info = data.data.data.slice(0, 10);
     return (

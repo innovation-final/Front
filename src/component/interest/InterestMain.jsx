@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useQuery } from 'react-query';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ListIcon from '@mui/icons-material/List';
 import InterestNewsList from './InterestNewsCardList';
 import InterestStockList from './InterestStockList';
+import { stockAPI } from '../../shared/api';
 
 function InterestMain() {
+    const { data } = useQuery(['stock'], () => stockAPI.getLikeStock());
+    const interestStock = data?.data.data;
+    const interestStockNews = data?.data.data;
+
     return (
         <CardLayout>
             <InterestLayout>
@@ -15,8 +21,12 @@ function InterestMain() {
                         <ListIcon />
                         <Text>관심 등록한 주식 리스트</Text>
                     </IconLayout>
-                    <InterestStockList />
-
+                    {interestStock &&
+                        interestStock.map(interestStocks => (
+                            <InterestStockList
+                                interestStocks={interestStocks}
+                            />
+                        ))}
                     {/* <Button>
                         <EditCogBtn />
                     </Button> */}
@@ -35,8 +45,12 @@ function InterestMain() {
                         <NewspaperIcon />
                         <Text>관련기사</Text>
                     </IconLayout>
-
-                    <InterestNewsList />
+                    {interestStockNews &&
+                        interestStockNews.map(interestStocksNews => (
+                            <InterestNewsList
+                                interestStocksNews={interestStocksNews}
+                            />
+                        ))}
                 </Card>
             </CardsLayout>
         </CardLayout>
