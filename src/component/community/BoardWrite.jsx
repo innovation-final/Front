@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-// import Swal from "sweetalert2";
 import ClearIcon from '@mui/icons-material/Clear';
 import Layout from '../layout/Layout';
 import Button from '../elements/Button';
@@ -12,7 +11,6 @@ import { postAPI } from '../../shared/api';
 import writeIcon from '../../static/write.png';
 import StockSearch from '../elements/StockSearch';
 import { searchState } from '../../atoms/atoms';
-// import stockData from '../../data/stockData';
 
 function BoardWrite() {
     const [title, onChangeTitleHandler] = useInput();
