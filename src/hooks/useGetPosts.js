@@ -25,7 +25,7 @@ export default function useGetPosts(filter, page) {
     );
 
     const invalidate = () => {
-        queryClient.invalidateQueries('posts');
+        queryClient.invalidateQueries(['posts', filter]);
     };
 
     return { data: data?.data.data, isLoading, invalidate, refetch };
