@@ -7,15 +7,11 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import Typography from '@mui/material/Typography';
 import editcog from '../../static/edit.png';
 import { mypageAPI } from '../../shared/api';
-import LoadingSpinner from '../elements/LoadingSpinner';
 import ant from '../../static/ant.jpg';
 
 function MypageMain() {
     const ref = useRef(null);
-    const { data, isLoading } = useQuery(['mypage'], () =>
-        mypageAPI.getMypage(),
-    );
-    if (isLoading) return <LoadingSpinner />;
+    const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
 
     const nickname = data?.data.data.nickname;
     const profileMsg = data?.data.data.profileMsg;

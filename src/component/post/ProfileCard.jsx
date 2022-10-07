@@ -5,7 +5,7 @@ import ant from '../../static/ant.jpg';
 import Button from '../elements/Button';
 
 function ProfileCard({ user }) {
-    const { nickname, profileImg, email } = user;
+    const { nickname, profileImg, profileMsg } = user;
 
     return (
         <StyleProfileCard>
@@ -15,7 +15,7 @@ function ProfileCard({ user }) {
                 </ImageBox>
                 <ContentBox>
                     <UserName>{nickname}</UserName>
-                    <UserComment>{email}</UserComment>
+                    <UserComment>{profileMsg}</UserComment>
                 </ContentBox>
             </Wrapper>
             <ButtonBox>
