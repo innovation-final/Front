@@ -94,7 +94,7 @@ function BoardEdit() {
     const editMutation = useMutation(req => putPost(req), {
         onError: error => console.log(error),
         onSuccess: () => {
-            queryClient.invalidateQueries('post');
+            queryClient.invalidateQueries(['posts', '최신순']);
         },
     });
 

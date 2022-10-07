@@ -30,7 +30,7 @@ function BoardWrite() {
     const mutation = useMutation(req => addWrite(req), {
         onError: error => console.log(error),
         onSuccess: () => {
-            queryClient.invalidateQueries('post');
+            queryClient.invalidateQueries(['posts', '최신순']);
         },
     });
 

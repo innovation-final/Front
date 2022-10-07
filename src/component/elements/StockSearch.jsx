@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
+import { v4 as uuidv4 } from 'uuid';
 import { stockAPI } from '../../shared/api';
 import { searchState } from '../../atoms/atoms';
 
 function StockSearch() {
-    const { data } = useQuery(['stock'], () => stockAPI.getStockSearch());
+    const { data } = useQuery('stockSearch', () => stockAPI.getStockSearch());
 
     const stockNames = data?.data.data;
-
     const stock = stockNames;
-    const stocksName =
+    const stocksNameArray =
         stock &&
         stock.map(stocks => {
             return stocks.name;
         });
 
-    const wholeTextArray = stocksName;
+    const wholeTextArray = stocksNameArray;
 
     // 종목
 
@@ -25,6 +25,9 @@ function StockSearch() {
     const [isHaveInputValue, setIsHaveInputValue] = useState(false);
     const [dropDownList, setDropDownList] = useState(wholeTextArray);
     const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
+
+    // const pickOne = stock?.filter(el => el.name === inputValue);
+    // console.log(pickOne);
 
     const showDropDownList = () => {
         if (inputValue === '') {
@@ -96,7 +99,7 @@ function StockSearch() {
                         {dropDownList.map((dropDownItem, dropDownIndex) => {
                             return (
                                 <DropDownItem
-                                    key={dropDownItem}
+                                    key={uuidv4()}
                                     dropDownList={dropDownIndex}
                                     onClick={() =>
                                         clickDropDownItem(dropDownItem)
@@ -155,6 +158,7 @@ const StockInputLayout = styled.div`
     display: flex;
 `;
 const StockDropInputLayout = styled.div`
+    position: relative;
     width: 100%;
     justify-content: center;
 `;
@@ -185,7 +189,6 @@ const DropDownBox = styled.ul`
     border-radius: 0 0 16px 16px;
     box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);
     list-style-type: none;
-    z-index: 3;
 `;
 
 const DropDownItem = styled.li`

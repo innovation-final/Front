@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import SelectBox from '../elements/SelectBox';
 import Button from '../elements/Button';
 import TableItem from './TableItem';
 import TableName from './TableName';
-import Modal from '../elements/Modal';
+import StocksSearch from './StocksSearchModal';
 import LoadingSpinner from '../elements/LoadingSpinner';
-import { stockAPI } from '../../shared/api';
+import useGetStockRank from '../../hooks/useGetStockRank';
 
-const options = ['코스피', '코스닥'];
-const defaultOption = '코스피';
+const options = [
+    { name: '코스피 거래량', value: 'kospi_vol_extend' },
+    { name: '코스피 등락률', value: 'kospi_rate_extend' },
+    { name: '코스닥 거래량', value: 'kosdaq_vol_extend' },
+    { name: '코스닥 등락률', value: 'kosdaq_rate_extend' },
+];
+const defaultOption = 'kospi_vol_extend';
 const keys = [
     '랭킹',
     '이름',
@@ -28,23 +32,19 @@ function StocksBox() {
     const getOption = selected => {
         setOption(selected);
     };
-
     const [open, isOpen] = useState(false);
     const setIsOpen = () => {
         isOpen(props => !props);
     };
 
-    const { data, isLoading } = useQuery('stocks', () =>
-        stockAPI.getStocks('kospi_vol_extend'),
-    );
-    console.log(data);
+    const { data, isLoading, invalidate } = useGetStockRank(option);
 
-    if (isLoading) return <LoadingSpinner />;
-
-    const values = data.data.data;
+    useEffect(() => {
+        invalidate();
+    }, [option]);
 
     return (
-        <StyleStocksBox>
+        <StyleStocksBox isOpen={open}>
             <StyleHeader>
                 <Title>주식전체</Title>
                 <SelectBox
@@ -60,14 +60,20 @@ function StocksBox() {
             </StyleHeader>
             <StocksContainer>
                 <TableName keys={keys} />
-                {values.map(value => (
-                    <TableItem key={value.stockCode} values={value} />
-                ))}
+                {isLoading ? (
+                    <LoadingSpinner />
+                ) : (
+                    <>
+                        {data.map(value => (
+                            <TableItem key={value.stockCode} values={value} />
+                        ))}
+                    </>
+                )}
             </StocksContainer>
             {open ? (
-                <Modal width={800} height={700} setIsOpen={setIsOpen}>
+                <StocksSearch width={800} height={700} setIsOpen={setIsOpen}>
                     hello
-                </Modal>
+                </StocksSearch>
             ) : null}
         </StyleStocksBox>
     );
@@ -79,6 +85,8 @@ const StyleStocksBox = styled.div`
     width: 100%;
     margin-left: 2%;
     margin-top: 1%;
+    overflow: ${props => (props.isOpen ? 'hidden' : 'visible')};
+    height: ${props => (props.isOpen ? '85vh' : '100%')};
 `;
 const StyleHeader = styled.div`
     display: flex;
@@ -97,4 +105,5 @@ const StocksContainer = styled.div`
 `;
 const SearchBox = styled.div`
     margin-left: 20px;
+    margin-top: 10px;
 `;

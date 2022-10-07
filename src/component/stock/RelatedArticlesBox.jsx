@@ -11,10 +11,6 @@ const keys = ['기사제목', '날짜'];
 function RelatedArticlesBox({ isPC }) {
     const { id: stockCode } = useParams();
     const { data, isLoading } = useGetRelatedArticles(stockCode);
-
-    if (isLoading) return <LoadingSpinner />;
-    const info = data;
-
     return (
         <StyleRelatedArticlesBox isPC={isPC}>
             <Title>관련기사</Title>
@@ -25,25 +21,32 @@ function RelatedArticlesBox({ isPC }) {
                             <TableName key={key}>{key}</TableName>
                         ))}
                     </TableNames>
-                    <TableData>
-                        {info.map(article => (
-                            <ArticleInfo
-                                key={article.title}
-                                onClick={() =>
-                                    window.open(`${article.originallink}`)
-                                }
-                            >
-                                <ArticleTitle>
-                                    {article.title.length < 32
-                                        ? article.title
-                                        : `${article.title.slice(0, 32)} ...`}
-                                </ArticleTitle>
-                                <ArticleDate>
-                                    {dateParser(article.pubDate)}
-                                </ArticleDate>
-                            </ArticleInfo>
-                        ))}
-                    </TableData>
+                    {isLoading ? (
+                        <LoadingSpinner />
+                    ) : (
+                        <TableData>
+                            {data.map(article => (
+                                <ArticleInfo
+                                    key={article.title}
+                                    onClick={() =>
+                                        window.open(`${article.originallink}`)
+                                    }
+                                >
+                                    <ArticleTitle>
+                                        {article.title.length < 32
+                                            ? article.title
+                                            : `${article.title.slice(
+                                                  0,
+                                                  32,
+                                              )} ...`}
+                                    </ArticleTitle>
+                                    <ArticleDate>
+                                        {dateParser(article.pubDate)}
+                                    </ArticleDate>
+                                </ArticleInfo>
+                            ))}
+                        </TableData>
+                    )}
                 </ArticleWrapper>
             </ContentBox>
         </StyleRelatedArticlesBox>

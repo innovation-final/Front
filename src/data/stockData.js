@@ -45,7 +45,7 @@ const stockData = {
     'ITX-AI': { code: '099520', market: 'KOSDAQ' },
     JTC: { code: '950170', market: 'KOSDAQ' },
     JW신약: { code: '067290', market: 'KOSDAQ' },
-    'JYPEnt.': { code: '035900', market: 'KOSDAQ' },
+    'JYP Ent.': { code: '035900', market: 'KOSDAQ' },
     KBG: { code: '318000', market: 'KOSDAQ' },
     KBI메탈: { code: '024840', market: 'KOSDAQ' },
     KB오토시스: { code: '024120', market: 'KOSDAQ' },

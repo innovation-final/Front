@@ -78,8 +78,6 @@ export default api;
 
 // auth는 인증이 필요한 URL (로그인이 되어있어야 함.);
 
-export const userAPI = {};
-
 export const postAPI = {
     postPost: request => api.post('/auth/post', request),
     getPost: id => api.get(`/post/${id}`),

@@ -1,22 +1,21 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { mypageAPI } from '../../shared/api';
+import useGetUser from '../../hooks/useGetUser';
 
 function HeaderProfile() {
     const navigate = useNavigate();
-    const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
-    const nickname = data?.data.data.nickname;
-    const profileImg = data?.data.data.profileImg;
+    const { data } = useGetUser();
+    const nickname = data?.nickname;
+    const profileImg = data?.profileImg;
     useEffect(() => {
         if (data) {
             localStorage.setItem('nickName', nickname);
             localStorage.setItem('imgUrl', profileImg);
         }
-    }, []);
+    }, [data]);
 
     return (
         <StyleProfile>

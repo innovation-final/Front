@@ -20,7 +20,6 @@ function TableItem({ values }) {
         stockCode,
     } = values;
     const navigate = useNavigate();
-    console.log(doneInterest);
     const queryClient = useQueryClient();
     // 관심종목 등록
     const likeStock = _code => {

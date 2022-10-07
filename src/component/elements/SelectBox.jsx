@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
-function SelectBox({ options = [''], selectedOption, _getOption }) {
+function SelectBox({
+    options = [{ name: '', value: '' }],
+    selectedOption,
+    _getOption,
+}) {
     const onChange = event => {
         event.preventDefault();
         _getOption(event.target.value);
@@ -10,10 +13,14 @@ function SelectBox({ options = [''], selectedOption, _getOption }) {
 
     return (
         <StyleSelectBox>
-            <select type="text" onChange={onChange} value={selectedOption}>
+            <select
+                type="text"
+                onChange={onChange}
+                value={selectedOption.value}
+            >
                 {options.map(option => (
-                    <option key={option} value={String(option)}>
-                        {option}
+                    <option key={option.value} value={option.value}>
+                        {option.name}
                     </option>
                 ))}
             </select>
@@ -23,13 +30,10 @@ function SelectBox({ options = [''], selectedOption, _getOption }) {
 
 export default SelectBox;
 
-SelectBox.propTypes = {
-    options: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
 const StyleSelectBox = styled.div`
     position: relative;
     display: inline-block;
+    margin-top: 10px;
     border: 1px solid ${props => props.theme.borderColor};
     border-radius: 8px;
     height: 100%;
