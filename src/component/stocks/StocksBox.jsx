@@ -6,7 +6,7 @@ import SelectBox from '../elements/SelectBox';
 import Button from '../elements/Button';
 import TableItem from './TableItem';
 import TableName from './TableName';
-import Modal from '../elements/Modal';
+import StocksSearch from './StocksSearchModal';
 import LoadingSpinner from '../elements/LoadingSpinner';
 import { stockAPI } from '../../shared/api';
 
@@ -43,7 +43,7 @@ function StocksBox() {
     const values = data.data.data;
 
     return (
-        <StyleStocksBox>
+        <StyleStocksBox isOpen={open}>
             <StyleHeader>
                 <Title>주식전체</Title>
                 <SelectBox
@@ -64,9 +64,9 @@ function StocksBox() {
                 ))}
             </StocksContainer>
             {open ? (
-                <Modal width={800} height={700} setIsOpen={setIsOpen}>
+                <StocksSearch width={800} height={700} setIsOpen={setIsOpen}>
                     hello
-                </Modal>
+                </StocksSearch>
             ) : null}
         </StyleStocksBox>
     );
@@ -78,6 +78,8 @@ const StyleStocksBox = styled.div`
     width: 100%;
     margin-left: 2%;
     margin-top: 1%;
+    overflow: ${props => (props.isOpen ? 'hidden' : 'visible')};
+    height: ${props => (props.isOpen ? '85vh' : '100%')};
 `;
 const StyleHeader = styled.div`
     display: flex;
@@ -96,4 +98,5 @@ const StocksContainer = styled.div`
 `;
 const SearchBox = styled.div`
     margin-left: 20px;
+    margin-top: 10px;
 `;

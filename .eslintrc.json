@@ -18,7 +18,7 @@
                 "ignorePropertyModificationsFor": ["state", "config"]
             }
         ],
-        "no": "off"
+        "no-nested-ternary": "warn"
     },
     "parser": "@babel/eslint-parser",
     "requireConfigFile": false,

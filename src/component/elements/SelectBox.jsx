@@ -30,6 +30,7 @@ SelectBox.propTypes = {
 const StyleSelectBox = styled.div`
     position: relative;
     display: inline-block;
+    margin-top: 10px;
     border: 1px solid ${props => props.theme.borderColor};
     border-radius: 8px;
     height: 100%;

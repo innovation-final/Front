@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
+import { v4 as uuidv4 } from 'uuid';
 import { stockAPI } from '../../shared/api';
 import { searchState } from '../../atoms/atoms';
 
@@ -96,7 +97,7 @@ function StockSearch() {
                         {dropDownList.map((dropDownItem, dropDownIndex) => {
                             return (
                                 <DropDownItem
-                                    key={dropDownItem}
+                                    key={uuidv4()}
                                     dropDownList={dropDownIndex}
                                     onClick={() =>
                                         clickDropDownItem(dropDownItem)

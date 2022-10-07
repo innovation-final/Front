@@ -20,7 +20,7 @@ const rowKeys = ['2018/12', '2019/12', '2020/12', '2021/12'];
 
 function FinancialStatementBox({ isPC }) {
     const { id } = useParams();
-    const { data, isLoading } = useQuery(
+    const { data, isLoading, isError } = useQuery(
         ['table', id],
         () => stockAPI.getStockTable(id),
         {
@@ -29,43 +29,49 @@ function FinancialStatementBox({ isPC }) {
             refetchInterval: false,
         },
     );
-    console.log(data?.data.data);
-    if (isLoading) return <LoadingSpinner />;
-    const info = data.data.data;
+    const info = data?.data.data;
+
+    const renderTable = () => {
+        return isError ? (
+            <NoData>재무재표 정보가 없습니다.</NoData>
+        ) : (
+            <TableWrapper>
+                <RowWrapper>
+                    <RowTable>
+                        {rowKeys.map(key => (
+                            <ItemContent key={key}>{key}</ItemContent>
+                        ))}
+                    </RowTable>
+                </RowWrapper>
+                <ColumnWrapper>
+                    <ColumnTable>
+                        {columnKeys.map(key => (
+                            <ItemContent key={key}>{key}</ItemContent>
+                        ))}
+                    </ColumnTable>
+                    <DataTable>
+                        {info.map(values => (
+                            <ItemList key={uuidv4()}>
+                                {values.map(value => (
+                                    <Data key={uuidv4()}>
+                                        {esUSNumberParser(value)}
+                                    </Data>
+                                ))}
+                            </ItemList>
+                        ))}
+                    </DataTable>
+                </ColumnWrapper>
+                <Unit>단위: 억(원) | 출처 :야후파이낸스</Unit>
+            </TableWrapper>
+        );
+    };
 
     return (
         <StyleFinancialStatementBox isPC={isPC}>
             <Title>재무재표</Title>
             <Wrapper>
                 <ContentBox>
-                    <TableWrapper>
-                        <RowWrapper>
-                            <RowTable>
-                                {rowKeys.map(key => (
-                                    <ItemContent key={key}>{key}</ItemContent>
-                                ))}
-                            </RowTable>
-                        </RowWrapper>
-                        <ColumnWrapper>
-                            <ColumnTable>
-                                {columnKeys.map(key => (
-                                    <ItemContent key={key}>{key}</ItemContent>
-                                ))}
-                            </ColumnTable>
-                            <DataTable>
-                                {info.map(values => (
-                                    <ItemList key={uuidv4()}>
-                                        {values.map(value => (
-                                            <Data key={uuidv4()}>
-                                                {esUSNumberParser(value)}
-                                            </Data>
-                                        ))}
-                                    </ItemList>
-                                ))}
-                            </DataTable>
-                        </ColumnWrapper>
-                        <Unit>단위: 억(원) | 출처 :야후파이낸스</Unit>
-                    </TableWrapper>
+                    {isLoading ? <LoadingSpinner /> : renderTable()}
                 </ContentBox>
             </Wrapper>
         </StyleFinancialStatementBox>
@@ -92,9 +98,10 @@ const TableWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 99%;
-    height: 100%;
+    height: 318px;
     border: 1px solid ${props => props.theme.borderColor};
     border-radius: 15px;
+    overflow: hidden;
 `;
 const RowWrapper = styled.div`
     display: flex;
@@ -114,6 +121,7 @@ const RowTable = styled.ul`
     width: 100%;
     height: 40px;
 `;
+
 const ColumnTable = styled.ul`
     position: absolute;
     left: 0;
@@ -125,10 +133,10 @@ const ColumnTable = styled.ul`
     height: 90%;
     background-color: ${props => props.theme.secondaryColor};
     border-right: 1px solid ${props => props.theme.borderColor};
-    border-radius: 0px 0px 15px 25px;
+    z-index: -1;
 `;
 const DataTable = styled.div`
-    transform: translate(32px, 11px);
+    transform: translate(32px, 18px);
     padding-left: 50px;
     padding-right: 40px;
     padding-bottom: 25px;
@@ -141,6 +149,7 @@ const ItemList = styled.ul`
     align-items: center;
     justify-content: space-evenly;
     padding: 10px;
+    margin-bottom: 7px;
 `;
 const ItemContent = styled.li`
     text-align: center;
@@ -161,4 +170,9 @@ const Unit = styled.span`
     bottom: 2px;
     right: 10px;
     font-size: 12px;
+`;
+
+const NoData = styled.div`
+    color: ${props => props.theme.textColor};
+    z-index: 1;
 `;

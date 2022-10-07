@@ -21,7 +21,7 @@ const BackGround = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    display: flex;
+    display: inline-flex;
     transform: translate(-70px, -57px);
     justify-content: center;
     align-items: center;
@@ -32,16 +32,19 @@ const BackGround = styled.div`
 `;
 const ModalBox = styled.div`
     position: relative;
-    border: 3px solid skyblue;
+    padding: 30px;
+    border: 3px solid ${props => props.theme.secondaryColor};
     border-radius: 10px;
-    background-color: white;
+    background-color: ${props => props.theme.bgColor};
     width: ${props => props.width}px;
     height: ${props => props.height}px;
-    z-index: 999;
+    z-index: 998;
 `;
 
 const ExitButton = styled.div`
     position: absolute;
     color: skyblue;
-    right: 10px;
+    right: 20px;
+    top: 20px;
+    z-index: 999;
 `;
