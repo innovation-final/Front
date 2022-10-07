@@ -19,8 +19,6 @@ const useGetRelatedArticles = stockCode => {
     const invalidate = () => {
         queryClient.invalidateQueries(['relatedArticles', stockCode]);
     };
-    console.log(stockAPI.getStockArticle(stockCode));
-    console.log(data);
 
     return { data: data?.data.data, isLoading, invalidate };
 };

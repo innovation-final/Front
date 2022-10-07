@@ -27,8 +27,6 @@ function StockInfoBox({ stockData }) {
         prevPrice,
     } = stockData;
 
-    console.log('dd', doneInterest);
-
     const isDark = useRecoilValue(isDarkState);
     const dayToDay = close - prevPrice.close;
 

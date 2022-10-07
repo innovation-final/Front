@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -10,6 +10,14 @@ function SideBar() {
     const navigate = useNavigate();
     const wide = useRecoilValue(wideState);
     const setIsDark = useSetRecoilState(isDarkState);
+    const [isLogin] = useState(!!localStorage.getItem('access-token'));
+    const logOutFunction = () => {
+        localStorage.clear();
+        window.location.href = '/login';
+    };
+    const logInFunction = () => {
+        navigate('/');
+    };
 
     const menuItems = [
         {
@@ -39,12 +47,10 @@ function SideBar() {
         {
             title: '다크모드',
             onClickFn: () => setIsDark(props => !props),
-            param: '',
         },
         {
-            title: '로그인',
-            onClickFn: () => navigate('/login'),
-            param: '',
+            title: isLogin ? '로그아웃' : '로그인',
+            onClickFn: isLogin ? () => logOutFunction() : () => logInFunction(),
         },
     ];
 

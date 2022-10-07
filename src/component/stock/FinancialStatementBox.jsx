@@ -8,24 +8,15 @@ import ContentBox from '../elements/ContentBox';
 import LoadingSpinner from '../elements/LoadingSpinner';
 import { esUSNumberParser } from '../../util/parser';
 
-/*
-매출액,영업이익,당기순이익,자산,부채,자본,영업활동현금흐름이고
-
-리스트안에 내용물은 2019/12 2020/12 2021/12 2022/06 데이터입니다
-
-출처 :FnGuide
-*/
-
 const columnKeys = [
-    '매출액',
-    '영업이익',
+    '총수익',
     '당기순이익',
-    '자산',
-    '부채',
-    '자본',
-    '영업활동\n현금흐름',
+    '영업이익',
+    '총자산',
+    '총부채',
+    '영업활동현금흐름',
 ];
-const rowKeys = ['2019/12', '2020/12', '2021/12', '2022/06'];
+const rowKeys = ['2018/12', '2019/12', '2020/12', '2021/12'];
 
 function FinancialStatementBox({ isPC }) {
     const { id } = useParams();
@@ -38,6 +29,7 @@ function FinancialStatementBox({ isPC }) {
             refetchInterval: false,
         },
     );
+    console.log(data?.data.data);
     if (isLoading) return <LoadingSpinner />;
     const info = data.data.data;
 
@@ -72,7 +64,7 @@ function FinancialStatementBox({ isPC }) {
                                 ))}
                             </DataTable>
                         </ColumnWrapper>
-                        <Unit>단위: 억(원) | 출처 :FnGuide</Unit>
+                        <Unit>단위: 억(원) | 출처 :야후파이낸스</Unit>
                     </TableWrapper>
                 </ContentBox>
             </Wrapper>

@@ -1,72 +1,23 @@
 import React, { useRef, useState, useEffect } from 'react';
-import * as StompJs from '@stomp/stompjs';
 import { useRecoilState } from 'recoil';
 import { motion } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
 import { chatLogState } from '../../atoms/atoms';
+import {
+    setClient,
+    connect,
+    disconnect,
+    publish,
+    nickName,
+    token,
+} from '../../util/stomp';
 
 function ChatScreen() {
     const [chatList, setChatList] = useRecoilState(chatLogState);
     const [chat, setChat] = useState('');
     const client = useRef({});
-    const [imageUrl] = useState(localStorage.getItem('imgUrl'));
-    const [nickName] = useState(localStorage.getItem('nickName'));
-    const [token] = useState(localStorage.getItem('access-token'));
-
-    const subscribeCallback = data => {
-        setChatList(props => [...props, data]);
-        const chatScreen = document.getElementById('chatting');
-        setTimeout(() => {
-            if (chatScreen !== null)
-                chatScreen.scrollTop = chatScreen.scrollHeight;
-        }, 100);
-    };
-
-    const subscribe = () => {
-        client.current.subscribe(`/sub/chat`, body => {
-            const jsonBody = JSON.parse(body.body);
-            subscribeCallback(jsonBody);
-        });
-    };
-
-    const publish = (ch, type) => {
-        if (!client.current.connected) return;
-        client.current.publish({
-            destination: '/pub/chat',
-            body: JSON.stringify({
-                type,
-                sendTime: Date.now(),
-                imageUrl,
-                nickName,
-                userId: '',
-                message: ch,
-            }),
-        });
-        setChat('');
-    };
-
-    const connect = () => {
-        client.current = new StompJs.Client({
-            brokerURL: 'ws://hakjoonkim.shop/stomp',
-            onConnect: () => {
-                console.log('success');
-                subscribe();
-            },
-        });
-        client.current.activate();
-        setTimeout(() => {
-            publish(`${nickName}님이 입장하였습니다.`, 'ENTER');
-        }, 500);
-    };
-
-    const disconnect = () => {
-        publish(`${nickName}님이 나가셨습니다.`, 'ENTER');
-        setTimeout(() => {
-            client.current.deactivate();
-        }, 500);
-    };
 
     const handleChange = event => {
         setChat(event.target.value);
@@ -77,10 +28,14 @@ function ChatScreen() {
         event.preventDefault();
         if (ch === '') return;
         publish(ch, 'TALK');
+        setChat('');
     };
 
     useEffect(() => {
-        connect();
+        setClient(client);
+    }, []);
+    useEffect(() => {
+        connect(setChatList);
         return () => disconnect();
     }, []);
 
