@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ListIcon from '@mui/icons-material/List';
-import InterestNewsList from './InterestNewsCardList';
 import InterestStockList from './InterestStockList';
 import { stockAPI } from '../../shared/api';
+import InterestNewsList from './InterestNewsList';
+import LoadingSpinner from '../elements/LoadingSpinner';
 
 function InterestMain() {
-    const { data } = useQuery(['stock'], () => stockAPI.getLikeStock());
+    const [param, setParam] = useState('');
+    const { data, isLoading } = useQuery(['stock'], () =>
+        stockAPI.getLikeStock(),
+    );
+    if (isLoading) return <LoadingSpinner />;
+
     const interestStock = data?.data.data;
-    const interestStockNews = data?.data.data;
+    const onClick = code => {
+        setParam(code);
+    };
+    console.log(param);
 
     return (
         <CardLayout>
@@ -24,6 +33,8 @@ function InterestMain() {
                     {interestStock &&
                         interestStock.map(interestStocks => (
                             <InterestStockList
+                                key={interestStocks.name}
+                                _onClick={() => onClick(interestStocks.code)}
                                 interestStocks={interestStocks}
                             />
                         ))}
@@ -45,12 +56,7 @@ function InterestMain() {
                         <NewspaperIcon />
                         <Text>관련기사</Text>
                     </IconLayout>
-                    {interestStockNews &&
-                        interestStockNews.map(interestStocksNews => (
-                            <InterestNewsList
-                                interestStocksNews={interestStocksNews}
-                            />
-                        ))}
+                    <InterestNewsList code={param} />
                 </Card>
             </CardsLayout>
         </CardLayout>
