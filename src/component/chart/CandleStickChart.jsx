@@ -8,7 +8,7 @@ function CandleStickChart({ name, data, width, height }) {
         },
         xaxis: {
             labels: {
-                show: false,
+                show: true,
             },
         },
     };
@@ -18,7 +18,6 @@ function CandleStickChart({ name, data, width, height }) {
         },
     ];
 
-    console.log(data);
     return (
         <div>
             {data && (

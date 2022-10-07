@@ -17,7 +17,6 @@ import LoadingSpinner from '../component/elements/LoadingSpinner';
 import { useQuery } from 'react-query';
 
 function Home() {
-    const divRef = useRef(null);
     const keys = [
         '종목명',
         '현재가',
