@@ -1,23 +1,20 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { stockAPI } from '../../shared/api';
 import ContentBox from '../elements/ContentBox';
 import LoadingSpinner from '../elements/LoadingSpinner';
 import { dateParser } from '../../util/parser';
+import useGetRelatedPosts from '../../hooks/useGetRelatedPosts';
 
 const keys = ['제목', '작성자', '날짜'];
 
 function RelatedPostsBox({ isPC }) {
-    const { id } = useParams();
+    const { id: stockCode } = useParams();
     const navigate = useNavigate();
-    const { data, isLoading } = useQuery('stockPosts', () =>
-        stockAPI.getStockPosts(id),
-    );
+    const { data, isLoading } = useGetRelatedPosts(stockCode);
 
     if (isLoading) return <LoadingSpinner />;
-    const info = data.data.data.slice(0, 10);
+    const info = data.slice(0, 10);
     return (
         <StyleRelatedPostsBox isPC={isPC}>
             <Title>관련 게시글</Title>

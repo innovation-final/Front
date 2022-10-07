@@ -1,22 +1,19 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { stockAPI } from '../../shared/api';
 import ContentBox from '../elements/ContentBox';
 import LoadingSpinner from '../elements/LoadingSpinner';
 import { dateParser } from '../../util/parser';
+import useGetRelatedArticles from '../../hooks/useGetRelatedArticles';
 
 const keys = ['기사제목', '날짜'];
 
 function RelatedArticlesBox({ isPC }) {
-    const { id } = useParams();
-    const { data, isLoading } = useQuery(['articles', id], () =>
-        stockAPI.getStockArticle(id),
-    );
+    const { id: stockCode } = useParams();
+    const { data, isLoading } = useGetRelatedArticles(stockCode);
 
     if (isLoading) return <LoadingSpinner />;
-    const info = data.data.data;
+    const info = data;
 
     return (
         <StyleRelatedArticlesBox isPC={isPC}>

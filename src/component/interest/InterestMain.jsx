@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
+
 import ListIcon from '@mui/icons-material/List';
 import InterestNewsList from './InterestNewsCardList';
 import InterestStockList from './InterestStockList';
@@ -10,8 +12,8 @@ import { stockAPI } from '../../shared/api';
 
 function InterestMain() {
     const { data } = useQuery(['stock'], () => stockAPI.getLikeStock());
+    const navigate = useNavigate();
     const interestStock = data?.data.data;
-    const interestStockNews = data?.data.data;
 
     return (
         <CardLayout>
@@ -24,6 +26,8 @@ function InterestMain() {
                     {interestStock &&
                         interestStock.map(interestStocks => (
                             <InterestStockList
+                                key={interestStocks.name}
+                                onClick={() => onClick(interestStocks.code)}
                                 interestStocks={interestStocks}
                             />
                         ))}
@@ -45,9 +49,10 @@ function InterestMain() {
                         <NewspaperIcon />
                         <Text>관련기사</Text>
                     </IconLayout>
-                    {interestStockNews &&
-                        interestStockNews.map(interestStocksNews => (
+                    {interestStock &&
+                        interestStock.map(interestStocksNews => (
                             <InterestNewsList
+                                key={interestStock.name}
                                 interestStocksNews={interestStocksNews}
                             />
                         ))}

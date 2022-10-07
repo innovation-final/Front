@@ -11,18 +11,19 @@ function ChatScreen() {
     const [chatList, setChatList] = useRecoilState(chatLogState);
     const [chat, setChat] = useState('');
     const client = useRef({});
-    const imageUrl = localStorage.getItem('imgUrl');
-    const nickName = localStorage.getItem('nickName');
-    const token = localStorage.getItem('access-token');
+    const [imageUrl] = useState(localStorage.getItem('imgUrl'));
+    const [nickName] = useState(localStorage.getItem('nickName'));
+    const [token] = useState(localStorage.getItem('access-token'));
 
     const subscribeCallback = data => {
         setChatList(props => [...props, data]);
         const chatScreen = document.getElementById('chatting');
         setTimeout(() => {
-            chatScreen.scrollTop = chatScreen.scrollHeight;
+            if (chatScreen !== null)
+                chatScreen.scrollTop = chatScreen.scrollHeight;
         }, 100);
     };
-    console.log(chatList);
+
     const subscribe = () => {
         client.current.subscribe(`/sub/chat`, body => {
             const jsonBody = JSON.parse(body.body);
@@ -50,6 +51,7 @@ function ChatScreen() {
         client.current = new StompJs.Client({
             brokerURL: 'ws://hakjoonkim.shop/stomp',
             onConnect: () => {
+                console.log('success');
                 subscribe();
             },
         });
@@ -73,6 +75,7 @@ function ChatScreen() {
     const handleSubmit = (event, ch) => {
         // 보내기 버튼 눌렀을 때 publish
         event.preventDefault();
+        if (ch === '') return;
         publish(ch, 'TALK');
     };
 

@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import useWindowSize from '../../hooks/useWindowSize';
@@ -12,7 +11,7 @@ import {
     RelatedPostsBox,
     StockInfoBox,
 } from './index';
-import { stockAPI } from '../../shared/api';
+import useGetStockInfo from '../../hooks/useGetStockInfo';
 
 const responsive = {
     pc: css`
@@ -30,19 +29,12 @@ function StockDetailContainer() {
         return width >= 1024;
     }, [width]);
 
-    const { id } = useParams();
-    const stockCode = id;
+    const { id: stockCode } = useParams();
+    const { data, isLoading } = useGetStockInfo(stockCode);
 
-    const { data, isLoading } = useQuery(
-        ['stock', stockCode],
-        () => stockAPI.getStockDetail(stockCode),
-        { refetchOnWindowFocus: false },
-    );
-    console.log('dd', data);
     if (isLoading) return <LoadingSpinner />;
 
-    const { code, name, market, current, stockDetail, doneInterest } =
-        data.data.data;
+    const { code, name, market, current, stockDetail, doneInterest } = data;
     const prevPrice = stockDetail.at(-1);
     const stockData = {
         doneInterest,

@@ -34,6 +34,8 @@ function FinancialStatementBox({ isPC }) {
         () => stockAPI.getStockTable(id),
         {
             refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            refetchInterval: false,
         },
     );
     if (isLoading) return <LoadingSpinner />;

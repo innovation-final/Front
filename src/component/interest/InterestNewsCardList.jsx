@@ -12,13 +12,12 @@ function InterestNewsList({ interestStocksNews }) {
     );
     const stockNews = data?.data.data;
 
-    console.log(stockNews);
     return (
         <>
             {' '}
             {stockNews &&
                 stockNews.map(stockNewslike => (
-                    <CardContent>
+                    <CardContent key={stockNewslike.title}>
                         <InterestTitle>{stockNewslike.title}</InterestTitle>
                         <InterestContent>
                             {dateParser(stockNewslike.pubDate)}
