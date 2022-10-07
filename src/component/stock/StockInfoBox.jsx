@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
 import { useRecoilValue } from 'recoil';
 import { useMutation, useQueryClient } from 'react-query';
 import FavoritesIcon from '../elements/FavoritesIcon';
@@ -15,6 +16,7 @@ function StockInfoBox({ stockData }) {
     const {
         code,
         name,
+        doneInterest,
         date,
         isKospi,
         open,
@@ -24,6 +26,9 @@ function StockInfoBox({ stockData }) {
         change,
         prevPrice,
     } = stockData;
+
+    console.log('dd', doneInterest);
+
     const isDark = useRecoilValue(isDarkState);
     const dayToDay = close - prevPrice.close;
 
@@ -35,45 +40,41 @@ function StockInfoBox({ stockData }) {
     };
     const queryClient = useQueryClient();
     // 관심종목 등록
-    const likeStock = () => {
-        const response = stockAPI.postLikeStock();
+    const likeStock = _code => {
+        const response = stockAPI.postLikeStock(_code);
         return response;
     };
-    const likemutation = useMutation(req => likeStock(req), {
+    const likemutation = useMutation(_code => likeStock(_code), {
         onError: error => console.log(error),
         onSuccess: () => {
             queryClient.invalidateQueries();
         },
     });
 
-    const [like, setLikes] = useState();
+    const [like, setLikes] = useState(false);
 
     const likeHandler = e => {
         e.preventDefault();
-
         setLikes(!like);
-        likemutation.mutate({ like });
+        likemutation.mutate(code);
     };
 
     // 관심종목 취소
-    const deleteLikeStock = () => {
-        const response = stockAPI.deleteLikeStock();
+    const deleteLikeStock = _code => {
+        const response = stockAPI.deleteLikeStock(_code);
         return response;
     };
-    const dislikemutation = useMutation(req => deleteLikeStock(req), {
+    const dislikemutation = useMutation(_code => deleteLikeStock(_code), {
         onError: error => console.log(error),
         onSuccess: () => {
-            queryClient.invalidateQueries('post');
+            queryClient.invalidateQueries();
         },
     });
 
-    const [deleteLike, setdisLikes] = useState(false);
-
     const dislikeHandler = e => {
         e.preventDefault();
-
-        setdisLikes(!deleteLike);
-        dislikemutation.mutate({ deleteLike });
+        setLikes(!like);
+        dislikemutation.mutate(code);
     };
 
     return (
@@ -81,17 +82,17 @@ function StockInfoBox({ stockData }) {
             <StockInfoLeftBox>
                 <StockInfoTitleBox>
                     <StyleFavorite>
-                        {!like ? (
-                            <JoinBtn done={like} onClick={e => likeHandler(e)}>
-                                <FavoritesIcon />
-                            </JoinBtn>
+                        {!doneInterest ? (
+                            <LikeBtn done={like} onClick={e => likeHandler(e)}>
+                                <FavoritesIcon isFavorites={doneInterest} />
+                            </LikeBtn>
                         ) : (
-                            <JoinBtn
-                                done={deleteLike}
+                            <DeleteLikeBtn
+                                done={like}
                                 onClick={e => dislikeHandler(e)}
                             >
-                                <FavoritesIcon />
-                            </JoinBtn>
+                                <FavoritesIcon isFavorites={doneInterest} />
+                            </DeleteLikeBtn>
                         )}
 
                         <StockInfoName>{name}</StockInfoName>
@@ -195,7 +196,9 @@ const StockInfoMarketPrice = styled.div`
     margin-right: 10px;
 `;
 const StockInfoLow = styled.div``;
-const JoinBtn = styled.div`
+const LikeBtn = styled.div`
     width: 30px;
-    color: ${props => (props.done ? 'red' : props.theme.textColor)};
+`;
+const DeleteLikeBtn = styled.div`
+    width: 30px;
 `;

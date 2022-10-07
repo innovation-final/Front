@@ -14,7 +14,6 @@ function RelatedPostsBox({ isPC }) {
     const { data, isLoading } = useGetRelatedPosts(stockCode);
 
     if (isLoading) return <LoadingSpinner />;
-
     const info = data.slice(0, 10);
     return (
         <StyleRelatedPostsBox isPC={isPC}>

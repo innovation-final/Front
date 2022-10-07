@@ -34,9 +34,16 @@ function StockDetailContainer() {
 
     if (isLoading) return <LoadingSpinner />;
 
-    const { code, name, market, current, stockDetail } = data;
+    const { code, name, market, current, stockDetail, doneInterest } = data;
     const prevPrice = stockDetail.at(-1);
-    const stockData = { code, name, market, ...current, prevPrice };
+    const stockData = {
+        doneInterest,
+        code,
+        name,
+        market,
+        ...current,
+        prevPrice,
+    };
     const volumeData = stockDetail.slice(-10);
 
     return (

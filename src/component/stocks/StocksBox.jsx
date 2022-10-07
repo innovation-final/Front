@@ -37,6 +37,7 @@ function StocksBox() {
     const { data, isLoading } = useQuery('stocks', () =>
         stockAPI.getStocks('kospi_vol_extend'),
     );
+    console.log(data);
 
     if (isLoading) return <LoadingSpinner />;
 

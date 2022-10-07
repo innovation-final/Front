@@ -121,6 +121,8 @@ export const stockAPI = {
     getStockArticle: stockCode => api.get(`/stock/news/${stockCode}`),
     getStockPosts: stockCode => api.get(`/post/stock/${stockCode}`),
     getStockSearch: () => api.get(`/stock/list `),
+    getLikeStock: () => api.get(`/auth/stock/like`),
     postLikeStock: stockCode => api.post(`/auth/stock/like/${stockCode}`),
     deleteLikeStock: stockCode => api.delete(`/auth/stock/like/${stockCode}`),
+    likeNewsStock: stockCode => api.get(`/auth/stock/like/news/${stockCode}`),
 };
