@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import FavoritesIcon from '../elements/FavoritesIcon';
 import { stockAPI } from '../../shared/api';
 
-function InterestStockList({ interestStocks }) {
+function InterestStockList({ interestStocks, _onClick }) {
     const { current, name, doneInterest, code } = interestStocks;
 
     // 관심종목 등록
@@ -28,12 +28,9 @@ function InterestStockList({ interestStocks }) {
         setLikes(!like);
         dislikemutation.mutate(code);
     };
-    const news = e => {
-        e.preventDefault();
-    };
 
     return (
-        <CardContent onClick={news}>
+        <CardContent onClick={_onClick}>
             <InterestTitle>{name}</InterestTitle>
             <InterestContent>{current.open}</InterestContent>
             <InterestContent>

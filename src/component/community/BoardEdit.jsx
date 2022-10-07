@@ -8,13 +8,17 @@ import Layout from '../layout/Layout';
 import { postAPI } from '../../shared/api';
 import Button from '../elements/Button';
 import stockData from '../../data/stockData';
+import LoadingSpinner from '../elements/LoadingSpinner';
 
 function BoardEdit() {
     const ref = useRef(null);
 
     const { id } = useParams();
     // 데이터 뽑아오기
-    const { data } = useQuery(['post', id], () => postAPI.getPost(id));
+    const { data, isLoading } = useQuery(['post', id], () =>
+        postAPI.getPost(id),
+    );
+    if (isLoading) return <LoadingSpinner />;
 
     const stockName = data?.data.data.stockName;
     const title = data?.data.data.title;

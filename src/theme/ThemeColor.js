@@ -4,12 +4,14 @@ export const lightTheme = {
     bgColor: 'white',
     textColor: 'black',
     menuTextColor: '#525961',
+    withDrawTextColor: '#ea6d62',
     inputColor: '#f1fafd',
     buttonColor: 'skyblue',
     borderColor: 'skyblue',
     stockBorderColor: '#ceecff',
     hoverBorderColor: '#95d2f8',
     hoverColor: '#cef3ff',
+    withDrawBorderColor: '#ebdada',
     layoutBorderColor: 'white',
 };
 
@@ -19,12 +21,14 @@ export const darkTheme = {
     bgColor: '#2B323D',
     textColor: 'white',
     menuTextColor: 'white',
+    withDrawTextColor: '#c47865',
     inputColor: '#353C4A',
     buttonColor: '#C65526',
     borderColor: '#9F5536',
     stockBorderColor: '#E68563',
     hoverBorderColor: '#E44B0A',
     hoverColor: '#E27D56',
+    withDrawBorderColor: '#f1b6a7',
     layoutBorderColor: '#9F5536',
 };
 
@@ -33,8 +37,10 @@ export const darkTheme = {
  * color: ${(props) => props.theme.hoverBorderColor};
  * color: ${(props) => props.theme.stockBorderColor};
  * color: ${(props) => props.theme.layoutBorderColor};
+ * color: ${(props) => props.theme.withDrawBorderColor};
  * color: ${(props) => props.theme.borderColor};
  * color: ${(props) => props.theme.textColor};
+ * color: ${(props) => props.theme.withDrawTextColor};
  * background-color: ${(props) => props.theme.buttonColor};
  * background-color: ${(props) => props.theme.primaryColor};
  * background-color: ${(props) => props.theme.secondaryColor};

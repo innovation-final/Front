@@ -104,7 +104,7 @@ export const commentAPI = {
 export const mypageAPI = {
     getMypage: () => api.get(`/auth/mypage`),
     patchMypage: request =>
-        api.put(`/auth/mypage`, request, {
+        api.patch(`/auth/mypage`, request, {
             headers: {
                 'Content-Type': `multipart/form-data`,
             },
