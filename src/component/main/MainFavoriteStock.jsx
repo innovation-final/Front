@@ -12,9 +12,19 @@ function MainStockIndex() {
     const [width, height] = useResizeObserver(divRef, optionalCallback);
     return (
         <MainContentBox ref={divRef} title="코스피/코스닥">
-            <Carousel autoPlay={false} swipe={false} animation="slide">
-                <SampleChart name="카카오" width={width} height={height} />
-                <SampleChart name="삼성중공업" width={width} height={height} />
+            <Carousel autoPlay={true} swipe={false} animation="slide">
+                <SampleChart
+                    name="삼성전자"
+                    width={width}
+                    height={height}
+                    code="005930"
+                />
+                <SampleChart
+                    name="삼성전자우"
+                    width={width}
+                    height={height}
+                    code="005935"
+                />
             </Carousel>
         </MainContentBox>
     );

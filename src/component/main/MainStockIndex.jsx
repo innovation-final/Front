@@ -13,10 +13,13 @@ function MainStockIndex() {
 
     return (
         <MainContentBox ref={divRef} title="코스피/코스닥">
-            <Carousel autoPlay={false} swipe={false} animation="slide">
+            <Carousel autoPlay={true} swipe={false} animation="slide">
                 <StockIndex name="kospi" width={width} height={height} />
-
-                <StockIndex name="kosdaq" width={width} height={height} />
+                <StockIndex
+                    name="kosdaq"
+                    width={width}
+                    height={height * 0.85}
+                />
             </Carousel>
         </MainContentBox>
     );
