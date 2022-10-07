@@ -1,23 +1,23 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import CardContent from '@mui/material/CardContent';
 import PaidIcon from '@mui/icons-material/Paid';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import Typography from '@mui/material/Typography';
 import editcog from '../../static/edit.png';
 import { mypageAPI } from '../../shared/api';
+import useGetUser from '../../hooks/useGetUser';
 import ant from '../../static/ant.jpg';
 
 function MypageMain() {
     const ref = useRef(null);
-    const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
-
-    const nickname = data?.data.data.nickname;
-    const profileMsg = data?.data.data.profileMsg;
-    const email = data?.data.data.email;
-    const profileImg = data?.data.data.profileImg;
     const queryClient = useQueryClient();
+    const { data } = useGetUser();
+    const nickname = data && data.nickname;
+    const profileMsg = data && data.profileMsg;
+    const email = data && data.email;
+    const profileImg = data && data.profileImg;
     const imageInput = useRef();
     const [isEdit, setIsEdit] = React.useState(false);
 
@@ -59,7 +59,7 @@ function MypageMain() {
     const editMutation = useMutation(req => patchMypage(req), {
         onError: error => console.log(error),
         onSuccess: () => {
-            queryClient.invalidateQueries('mypage');
+            queryClient.invalidateQueries(['user']);
         },
     });
 
