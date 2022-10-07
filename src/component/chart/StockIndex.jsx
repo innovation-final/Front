@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import LineChart from './LineChart';
 import api from '../../shared/api';
-import styled from 'styled-components';
 
 function StockIndex({ name, width, height }) {
     const [data, setData] = useState([]);

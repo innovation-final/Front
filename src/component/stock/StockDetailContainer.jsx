@@ -45,6 +45,7 @@ function StockDetailContainer() {
         prevPrice,
     };
     const volumeData = stockDetail.slice(-10);
+    console.log(data);
 
     return (
         <StyleDetailContainer>

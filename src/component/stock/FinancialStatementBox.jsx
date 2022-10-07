@@ -33,10 +33,10 @@ function FinancialStatementBox({ isPC }) {
 
     const renderTable = () => {
         if (!info) {
-            return <NoData>재무재표 정보가 없습니다.</NoData>;
+            return <NoData>재무제표 정보가 없습니다.</NoData>;
         }
         return isError ? (
-            <NoData>재무재표 정보가 없습니다.</NoData>
+            <NoData>재무제표 정보가 없습니다.</NoData>
         ) : (
             <TableWrapper>
                 <RowWrapper>
@@ -71,7 +71,7 @@ function FinancialStatementBox({ isPC }) {
 
     return (
         <StyleFinancialStatementBox isPC={isPC}>
-            <Title>재무재표</Title>
+            <Title>재무제표</Title>
             <Wrapper>
                 <ContentBox>
                     {isLoading ? <LoadingSpinner /> : renderTable()}

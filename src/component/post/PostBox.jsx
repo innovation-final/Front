@@ -18,10 +18,8 @@ function PostBox() {
     const { data, isLoading } = useQuery(['post', id], () =>
         postAPI.getPost(id),
     );
-    console.log(data);
     const postInfo = data?.data.data;
     const donelike = data?.data.data.doneLike;
-
     const donedislike = data?.data.data.doneDisLike;
     const user = data?.data.data.member;
 

@@ -1,12 +1,11 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
+import styled from 'styled-components';
+import Carousel from 'react-material-ui-carousel';
 import Layout from '../component/layout/Layout';
 import MainContainer from '../component/main/MainContainer';
-import styled from 'styled-components';
 import MainContentBox from '../component/main/MainContentBox';
-import Carousel from 'react-material-ui-carousel';
 import {
-    StockIndex,
-    SampleChart,
     MainTableItem,
     MainTableName,
     MainStockIndex,
@@ -14,7 +13,6 @@ import {
 } from '../component';
 import { stockAPI } from '../shared/api';
 import LoadingSpinner from '../component/elements/LoadingSpinner';
-import { useQuery } from 'react-query';
 
 function Home() {
     const keys = [
@@ -78,12 +76,6 @@ function Home() {
 }
 
 export default Home;
-
-const StocksContainer = styled.div`
-    width: 90%;
-    border-radius: 10px;
-    padding: 30px;
-`;
 
 const DivCarousel = styled.div`
     width: 100%;

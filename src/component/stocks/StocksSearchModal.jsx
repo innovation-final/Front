@@ -49,8 +49,8 @@ const SearchContainer = styled.div`
 const ButtonBox = styled.div`
     position: absolute;
     z-index: 0;
-    bottom: 20px;
-    left: 30px;
+    right: 30px;
+    bottom: 30px;
     display: flex;
     justify-content: flex-end;
     margin-top: 30px;
