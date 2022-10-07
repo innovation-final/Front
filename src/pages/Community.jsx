@@ -10,7 +10,11 @@ import Pagination from '../component/elements/Pagination';
 import LoadingSpinner from '../component/elements/LoadingSpinner';
 import SelectBox from '../component/elements/SelectBox';
 
-const options = ['최신순', '좋아요순', '오래된순'];
+const options = [
+    { name: '최신순', value: '최신순' },
+    { name: '좋아요순', value: '좋아요순' },
+    { name: '오래된순', value: '오래된순' },
+];
 const defaultOption = '최신순';
 
 function Community() {
@@ -22,14 +26,13 @@ function Community() {
     const getOption = selected => {
         setOption(selected);
     };
-    const query = useGetPosts(option, currentPage);
+    const { data, isLoading, invalidate } = useGetPosts(option, currentPage);
     const [posts, setPosts] = useState([]);
-
-    const postData = query.data?.data.data['페이지당 게시글'];
-    const totalPosts = query.data?.data.data['총 게시글 개수'];
+    const postData = data && data['페이지당 게시글'];
+    const totalPosts = data && data['총 게시글 개수'];
     const refetchPosts = () => {
         setPosts(postData);
-        query.refetch();
+        invalidate();
     };
 
     useEffect(() => {
@@ -49,7 +52,6 @@ function Community() {
         setCurrentPage(props => props + 1);
     };
 
-    if (!query.data) return <LoadingSpinner />;
     return (
         <Layout>
             <BoardContainer>
@@ -71,7 +73,7 @@ function Community() {
                         글쓰기
                     </Button>
                 </CommunityHeader>
-                <BoardCards data={posts} />
+                {isLoading ? <LoadingSpinner /> : <BoardCards data={posts} />}
             </BoardContainer>
             <PaginationBox>
                 <Pagination

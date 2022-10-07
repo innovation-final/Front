@@ -32,6 +32,9 @@ function FinancialStatementBox({ isPC }) {
     const info = data?.data.data;
 
     const renderTable = () => {
+        if (!info) {
+            return <NoData>재무재표 정보가 없습니다.</NoData>;
+        }
         return isError ? (
             <NoData>재무재표 정보가 없습니다.</NoData>
         ) : (

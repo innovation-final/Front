@@ -14,7 +14,6 @@ const createAnimation = {
 };
 
 function BoardCards({ data }) {
-    console.log(data);
     return (
         <Container>
             <StyleBoardCards

@@ -19,6 +19,10 @@ export const searchState = atom({
     key: 'search',
     default: '',
 });
+export const stockCodeState = atom({
+    key: 'stockCode',
+    default: '',
+});
 
 export const toggleLiveChat = atom({
     key: 'chat',
