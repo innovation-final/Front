@@ -6,6 +6,7 @@ import ContentBox from '../elements/ContentBox';
 
 function GraphBox({ isPC, code, name }) {
     const divRef = useRef(null);
+    // eslint-disable-next-line no-unused-vars
     const [dimensions, setDimensions] = useState({ top: 0, left: 0 });
     const optionalCallback = entry =>
         setDimensions({ top: entry.x, left: entry.left });
@@ -27,5 +28,6 @@ function GraphBox({ isPC, code, name }) {
 export default GraphBox;
 
 const StyleGraphBox = styled.div`
-    width: ${props => (props.isPC ? '75' : '100')}%;
+    width: 100%;
+    min-height: 320px;
 `;

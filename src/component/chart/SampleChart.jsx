@@ -1,4 +1,3 @@
-import BarChart from '@mui/icons-material/BarChart';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import api from '../../shared/api';

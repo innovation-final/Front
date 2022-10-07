@@ -16,7 +16,7 @@ function LineChart({ name, data, width, height }) {
     const series = [
         {
             name: { name },
-            data: data,
+            data,
         },
     ];
 
