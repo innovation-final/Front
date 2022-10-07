@@ -11,11 +11,11 @@ import {
     disconnect,
     publish,
     nickName,
-    token,
 } from '../../util/stomp';
 
 function ChatScreen() {
     const [chatList, setChatList] = useRecoilState(chatLogState);
+    const [token, setToken] = useState(localStorage.getItem('access-token'));
     const [chat, setChat] = useState('');
     const client = useRef({});
 
@@ -33,6 +33,7 @@ function ChatScreen() {
 
     useEffect(() => {
         setClient(client);
+        setToken(localStorage.getItem('access-token'));
     }, []);
     useEffect(() => {
         connect(setChatList);

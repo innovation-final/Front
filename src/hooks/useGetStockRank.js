@@ -12,7 +12,6 @@ const useGetStockRank = criteria => {
             staleTime: 1000 * 5000,
         },
     );
-    console.log(data?.data.data);
 
     const invalidate = () => {
         queryClient.invalidateQueries('stocks');

@@ -2,7 +2,6 @@ import * as StompJs from '@stomp/stompjs';
 
 export const imageUrl = localStorage.getItem('imgUrl');
 export const nickName = localStorage.getItem('nickName');
-export const token = localStorage.getItem('access-token');
 let client = null;
 
 export const setClient = _client => {
