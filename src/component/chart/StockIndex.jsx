@@ -39,7 +39,7 @@ function StockIndex({ name, width, height }) {
                 <LineChart
                     data={data}
                     width={width}
-                    height={height}
+                    height={height * 0.85}
                     name={name}
                 />
             )}

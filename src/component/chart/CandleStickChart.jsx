@@ -1,5 +1,5 @@
 import React from 'react';
-import Chart from 'react-apexcharts';
+import ReactApexChart from 'react-apexcharts';
 
 function CandleStickChart({ name, data, width, height }) {
     const options = {
@@ -8,7 +8,7 @@ function CandleStickChart({ name, data, width, height }) {
         },
         xaxis: {
             labels: {
-                show: false,
+                show: true,
             },
         },
     };
@@ -18,15 +18,14 @@ function CandleStickChart({ name, data, width, height }) {
         },
     ];
 
-    console.log(data);
     return (
         <div>
             {data && (
-                <Chart
+                <ReactApexChart
                     options={options}
                     series={series}
                     width={width}
-                    height={height}
+                    height={height * 0.85}
                 />
             )}
         </div>
