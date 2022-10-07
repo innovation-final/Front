@@ -1,54 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useMutation, useQueryClient } from 'react-query';
+import FavoritesIcon from '../elements/FavoritesIcon';
+import { stockAPI } from '../../shared/api';
 
-function InterestStockList() {
+function InterestStockList({ interestStocks, _onClick }) {
+    const { current, name, doneInterest, code } = interestStocks;
+
+    // 관심종목 등록
+    const queryClient = useQueryClient();
+    const [like, setLikes] = useState(false);
+
+    // 관심종목 취소
+    const deleteLikeStock = _code => {
+        const response = stockAPI.deleteLikeStock(_code);
+        return response;
+    };
+    const dislikemutation = useMutation(_code => deleteLikeStock(_code), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries();
+        },
+    });
+
+    const dislikeHandler = e => {
+        e.preventDefault();
+        setLikes(!like);
+        dislikemutation.mutate(code);
+    };
+
     return (
-        <>
-            <CardContent>
-                <InterestTitle>카카오</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>DSC인베스트먼트</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>대신밸런스제10호스팩</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>삼성</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>카카오</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>DSC인베스트먼트</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>대신밸런스제10호스팩</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>삼성</InterestTitle>
-                <InterestContent>9,880</InterestContent>
-                <InterestContent>23%</InterestContent>
-            </CardContent>
-        </>
+        <CardContent onClick={_onClick}>
+            <InterestTitle>{name}</InterestTitle>
+            <InterestContent>{current.open}</InterestContent>
+            <InterestContent>
+                <DeleteLikeBtn done={like} onClick={e => dislikeHandler(e)}>
+                    <FavoritesIcon isFavorites={doneInterest} />
+                </DeleteLikeBtn>
+            </InterestContent>
+        </CardContent>
     );
 }
 
@@ -88,4 +78,8 @@ const InterestContent = styled.div`
     align-items: center;
     justify-content: space-evenly;
     padding: 10px;
+`;
+
+const DeleteLikeBtn = styled.div`
+    width: 30px;
 `;

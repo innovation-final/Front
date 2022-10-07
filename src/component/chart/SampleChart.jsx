@@ -36,8 +36,8 @@ function SampleChart({ name, width, height }) {
                 <DivChart>
                     <CandleStickChart
                         data={data[0]}
-                        width={width}
-                        height={height}
+                        width={width ?? 400}
+                        height={height * 0.8 ?? 400}
                     />
                     {/* <BarChart
                         data={data[1]}

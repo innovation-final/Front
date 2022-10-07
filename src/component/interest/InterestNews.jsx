@@ -1,42 +1,44 @@
 import React from 'react';
 import styled from 'styled-components';
+import { dateParser } from '../../util/parser';
 
-function InterestNewsList() {
+function InterestNews({ news }) {
+    console.log('dd', news);
     return (
-        <>
-            <CardContent>
-                <InterestTitle>뉴스제목</InterestTitle>
-                <InterestContent>경향</InterestContent>
-                <InterestContent>2022/09/04</InterestContent>
-            </CardContent>
-            <CardContent>
-                <InterestTitle>뉴스제목</InterestTitle>
-                <InterestContent>한국일보</InterestContent>
-                <InterestContent>2022/09/04</InterestContent>
-            </CardContent>
-        </>
+        <CardContent onClick={() => window.open(`${news.originallink}`)}>
+            <InterestTitle>
+                {`${
+                    news.title.length > 35
+                        ? `${news.title.slice(0, 35)} ...`
+                        : news.title
+                }`}
+            </InterestTitle>
+            <InterestContent>{dateParser(news.pubDate)}</InterestContent>
+        </CardContent>
     );
 }
 
-export default InterestNewsList;
+export default InterestNews;
 
 const CardContent = styled.div`
     border-bottom: 1px solid ${props => props.theme.borderColor};
     margin: 5px;
+    height: 40px;
     display: flex;
 `;
 const InterestTitle = styled.div`
-    margin: 8px;
+    margin: 10px;
+    margin-left: 30px;
     flex-grow: ${props => props.flexRatio};
     font-size: 14px;
     font-weight: 600;
-    letter-spacing: -1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     display: flex;
-
     flex-direction: row;
-    width: 100%;
+    width: 300%;
+    white-space: nowrap;
     align-items: center;
-    justify-content: space-evenly;
 `;
 
 const InterestContent = styled.div`

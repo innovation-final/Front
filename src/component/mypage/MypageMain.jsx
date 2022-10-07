@@ -7,12 +7,18 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import Typography from '@mui/material/Typography';
 import editcog from '../../static/edit.png';
 import { mypageAPI } from '../../shared/api';
+import LoadingSpinner from '../elements/LoadingSpinner';
 import ant from '../../static/ant.jpg';
 
 function MypageMain() {
     const ref = useRef(null);
-    const { data } = useQuery(['mypage'], () => mypageAPI.getMypage());
+    const { data, isLoading } = useQuery(['mypage'], () =>
+        mypageAPI.getMypage(),
+    );
+    if (isLoading) return <LoadingSpinner />;
+
     const nickname = data?.data.data.nickname;
+    const profileMsg = data?.data.data.profileMsg;
     const email = data?.data.data.email;
     const profileImg = data?.data.data.profileImg;
     const queryClient = useQueryClient();
@@ -37,11 +43,16 @@ function MypageMain() {
             setImg(uploadFile);
         }
     };
-
     // 닉네임 수정
     const [editNickName, setEditNickName] = React.useState(nickname);
     const onChangeNickName = event => {
         setEditNickName(event.target.value);
+    };
+
+    // 자기소개
+    const [editProfileMsg, setProfileMsg] = React.useState(profileMsg);
+    const onChangeProfileMsg = event => {
+        setProfileMsg(event.target.value);
     };
 
     const patchMypage = async req => {
@@ -67,9 +78,10 @@ function MypageMain() {
                     type: 'application/json',
                 }),
             );
-
-            formData.append('img', img);
+            // key값 서버랑 동일해야됨
+            formData.append('profileImg', img);
             formData.append('nickname', editNickName);
+            formData.append('profileMsg', editProfileMsg);
 
             editMutation.mutate(formData);
             alert('수정되었습니다');
@@ -77,6 +89,22 @@ function MypageMain() {
             return false;
         }
         return 0;
+    };
+
+    // 탈퇴
+
+    const deleteMypage = () => {
+        const response = mypageAPI.deleteMypage();
+        return response;
+    };
+    const deleteMutation = useMutation(deleteMypage, {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries();
+        },
+    });
+    const onDelete = () => {
+        deleteMutation.mutate();
     };
 
     return (
@@ -103,8 +131,13 @@ function MypageMain() {
                                 {email}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
-                                주식~~~~~~~~
+                                {profileMsg}
                             </Typography>
+                            <WithdrawLayout>
+                                <WithdrawButton onClick={onDelete}>
+                                    회원탈퇴
+                                </WithdrawButton>
+                            </WithdrawLayout>
                         </CardContent>
                     </ProfileCard>
                 ) : (
@@ -141,15 +174,21 @@ function MypageMain() {
                                     ref={ref}
                                 />
                             </InputBox>
-                            <Typography variant="body2" color="text.secondary">
-                                주식~~~~~~~~
-                            </Typography>
+
+                            <ProfileMsgBox>
+                                <ProfileMsgInput
+                                    onChange={onChangeProfileMsg}
+                                    value={editProfileMsg}
+                                    ref={ref}
+                                />
+                            </ProfileMsgBox>
                         </CardContent>
                     </ProfileCard>
                 )}
             </ProfileLayout>
             <CardsLayout>
                 <Card>
+                    {' '}
                     <IconLayout>
                         <PaidIcon />
                         <Text>모의투자 수익률</Text>
@@ -266,6 +305,22 @@ const Button = styled.button`
     right: 2px;
     top: 5px;
 `;
+const WithdrawLayout = styled.div`
+    height: 10%;
+    width: 100%;
+    bottom: 5px;
+    position: absolute;
+`;
+const WithdrawButton = styled.button`
+    background-color: transparent;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: ${props => props.theme.withDrawBorderColor};
+    cursor: pointer;
+    padding: 10px;
+    width: 80px;
+    position: absolute;
+`;
 const CogBtn = styled.img`
     width: 40px;
     border: 0;
@@ -277,6 +332,11 @@ const EditCogBtn = styled.img`
 
 const InputBox = styled.div`
     width: 95%;
+    margin: 10px;
+`;
+const ProfileMsgBox = styled.div`
+    width: 95%;
+    margin: 10px;
 `;
 const Input = styled.input`
     font-family: 'Pretendard-Regular';
@@ -286,6 +346,21 @@ const Input = styled.input`
     border-radius: 10px;
     background-color: ${props => props.theme.inputColor};
     width: 100%;
+    &:active,
+    &:focus,
+    &:hover {
+        outline: 2px solid ${props => props.theme.borderColor};
+    }
+`;
+const ProfileMsgInput = styled.textarea`
+    font-family: 'Pretendard-Regular';
+    color: ${props => props.theme.textColor};
+    padding: 10px;
+    border: 1px solid ${props => props.theme.borderColor};
+    border-radius: 10px;
+    background-color: ${props => props.theme.inputColor};
+    width: 100%;
+    height: 100px;
     &:active,
     &:focus,
     &:hover {

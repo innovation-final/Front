@@ -2,6 +2,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider } from 'styled-components';
+import LiveChat from './component/livechat/LiveChat';
 import Router from './Router';
 import GlobalStyles from './GlobalStyles';
 import { lightTheme, darkTheme } from './theme/ThemeColor';
@@ -15,6 +16,7 @@ function App() {
             <QueryClientProvider client={queryClient}>
                 <GlobalStyles />
                 <Router />
+                <LiveChat />
             </QueryClientProvider>
         </ThemeProvider>
     );

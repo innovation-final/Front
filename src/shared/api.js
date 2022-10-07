@@ -13,7 +13,7 @@ api.interceptors.request.use(function (config) {
     const accessToken = localStorage.getItem('access-token');
     const refreshToken = localStorage.getItem('refresh-token');
     if (!accessToken || !refreshToken) {
-        window.location.href('/login');
+        window.location.href = '/login';
     }
 
     config.headers.authorization = `${accessToken}`;
@@ -106,11 +106,12 @@ export const commentAPI = {
 export const mypageAPI = {
     getMypage: () => api.get(`/auth/mypage`),
     patchMypage: request =>
-        api.put(`/auth/mypage`, request, {
+        api.patch(`/auth/mypage`, request, {
             headers: {
                 'Content-Type': `multipart/form-data`,
             },
         }),
+    deleteMypage: () => api.delete(`/auth/mypage`),
 };
 
 export const stockAPI = {
@@ -119,4 +120,9 @@ export const stockAPI = {
     getStockTable: stockCode => api.get(`/stock/table/${stockCode}`),
     getStockArticle: stockCode => api.get(`/stock/news/${stockCode}`),
     getStockPosts: stockCode => api.get(`/post/stock/${stockCode}`),
+    getStockSearch: () => api.get(`/stock/list `),
+    getLikeStock: () => api.get(`/auth/stock/like`),
+    postLikeStock: stockCode => api.post(`/auth/stock/like/${stockCode}`),
+    deleteLikeStock: stockCode => api.delete(`/auth/stock/like/${stockCode}`),
+    likeNewsStock: stockCode => api.get(`/auth/stock/like/news/${stockCode}`),
 };
