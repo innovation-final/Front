@@ -1,26 +1,29 @@
 import React from 'react';
+import ReactApexChart from 'react-apexcharts';
 import Chart from 'react-apexcharts';
 
-function LineChart({ data, width, height }) {
+function LineChart({ name, data, width, height }) {
     const options = {
+        colors: ['#546E7A', '#E91E63'],
+        tickPlacement: 'between',
         chart: {
-            id: '코스피',
+            id: name === 'kospi' ? '코스피' : '코스닥',
         },
         xaxis: {
             labels: {
-                show: false,
+                show: true,
             },
         },
     };
     const series = [
         {
-            name: 'series-1',
-            data,
+            name: { name },
+            data: data,
         },
     ];
 
     return (
-        <Chart
+        <ReactApexChart
             options={options}
             series={series}
             type="line"
@@ -30,4 +33,4 @@ function LineChart({ data, width, height }) {
     );
 }
 
-export default LineChart;
+export default React.memo(LineChart);

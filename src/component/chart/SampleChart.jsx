@@ -1,23 +1,27 @@
+import BarChart from '@mui/icons-material/BarChart';
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import api from '../../shared/api';
 import CandleStickChart from './CandleStickChart';
 
 function SampleChart({ name, width, height }) {
     const [data, setData] = useState([]);
-    const [current, setCurrent] = useState({});
     useEffect(() => {
         async function fetchData() {
             await api.get('/stock/010140').then(res => {
-                const date = res.data.stockDetail.date.split('-');
-                const month = date[2];
-                console.log(res.data);
-                setCurrent(res.data.current);
                 setData(
-                    res.data.stockDetail.map(v => {
-                        return {
-                            x: new Date(v.date[0], v.date[1] - 1, v.date[2]),
-                            y: [v.open, v.high, v.low, v.close],
-                        };
+                    res.data.data.stockDetail.map(v => {
+                        const date = v.date.split('-');
+                        return [
+                            {
+                                x: new Date(date[0], date[1] - 1, date[2]),
+                                y: [v.open, v.high, v.low, v.close],
+                            },
+                            {
+                                x: new Date(date[0], date[1] - 1, date[2]),
+                                y: [v.volume],
+                            },
+                        ];
                     }),
                 );
             });
@@ -26,17 +30,33 @@ function SampleChart({ name, width, height }) {
     }, []);
 
     return (
-        <div>
+        <Div>
+            <h1>{name}</h1>
             {data.length > 0 && (
-                <CandleStickChart
-                    data={data}
-                    current={current}
-                    width={width}
-                    height={height}
-                />
+                <DivChart>
+                    <CandleStickChart
+                        data={data[0]}
+                        width={width}
+                        height={height}
+                    />
+                    {/* <BarChart
+                        data={data[1]}
+                        width={width / 2}
+                        height={height}
+                    /> */}
+                </DivChart>
             )}
-        </div>
+        </Div>
     );
 }
 
 export default SampleChart;
+
+const Div = styled.div``;
+
+const DivChart = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;

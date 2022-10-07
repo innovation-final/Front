@@ -17,9 +17,11 @@ const TableList = styled.ul`
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: 100%;
     align-items: center;
     justify-content: space-evenly;
-    padding: 10px;
+    background-color: orange;
+    padding: 10px 0px;
 `;
 
 const TableContent = styled.li`

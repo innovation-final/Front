@@ -14,18 +14,17 @@ function CandleStickChart({ name, data, width, height }) {
     };
     const series = [
         {
-            name: { name },
-            data,
+            data: data,
         },
     ];
 
+    console.log(data);
     return (
         <div>
             {data && (
                 <Chart
                     options={options}
                     series={series}
-                    type="candlestick"
                     width={width}
                     height={height}
                 />
