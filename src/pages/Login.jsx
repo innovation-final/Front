@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import MainPage from '../component/login/LoginPage';
-
 import Spinner from '../static/Spinner.gif';
 import useWindowSize from '../hooks/useWindowSize';
 import LoginHeader from '../component/login/LoginHeader';
@@ -20,6 +20,9 @@ function Login() {
 
     return (
         <>
+            <Helmet>
+                <title>{`Stock's talk | 로그인`}</title>
+            </Helmet>
             {isLoading && (
                 <Loading>
                     <img src={Spinner} alt="로딩중입니다" />

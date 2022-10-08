@@ -1,23 +1,15 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { motion } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
 import { chatLogState } from '../../atoms/atoms';
-import {
-    setClient,
-    connect,
-    disconnect,
-    publish,
-    nickName,
-} from '../../util/stomp';
+import { publish, getNickName, getToken } from '../../util/stomp';
 
 function ChatScreen() {
-    const [chatList, setChatList] = useRecoilState(chatLogState);
-    const [token, setToken] = useState(localStorage.getItem('access-token'));
+    const chatList = useRecoilValue(chatLogState);
     const [chat, setChat] = useState('');
-    const client = useRef({});
 
     const handleChange = event => {
         setChat(event.target.value);
@@ -31,16 +23,7 @@ function ChatScreen() {
         setChat('');
     };
 
-    useEffect(() => {
-        setClient(client);
-        setToken(localStorage.getItem('access-token'));
-    }, []);
-    useEffect(() => {
-        connect(setChatList);
-        return () => disconnect();
-    }, []);
-
-    if (token === null) {
+    if (getToken() === null) {
         return (
             <StyleChatScreen>
                 <NeedToLogin>로그인을 해주세요</NeedToLogin>
@@ -55,25 +38,25 @@ function ChatScreen() {
                         ch.type === 'TALK' ? (
                             <Wrapper
                                 key={`${uuid()} ${Date.now()}`}
-                                $isMine={ch.nickName === nickName}
+                                $isMine={ch.nickName === getNickName()}
                             >
                                 <UserInfo>
                                     <ProfileImg
                                         src={`${ch.imageUrl}`}
-                                        isMine={ch.nickName === nickName}
+                                        isMine={ch.nickName === getNickName()}
                                     />
                                     <UserName
-                                        isMine={ch.nickName === nickName}
+                                        isMine={ch.nickName === getNickName()}
                                     >{`${ch.nickName}`}</UserName>
                                 </UserInfo>
                                 <MessageContainer
-                                    isMine={ch.nickName === nickName}
+                                    isMine={ch.nickName === getNickName()}
                                 >{`${ch.message}`}</MessageContainer>
                             </Wrapper>
                         ) : (
                             <EnterMessage
                                 key={`${uuid()} ${Date.now()}`}
-                                isMine={ch.nickName === nickName}
+                                isMine={ch.nickName === getNickName()}
                             >{`${ch.message}`}</EnterMessage>
                         ),
                     )}

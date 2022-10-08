@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import { timeToToday } from '../../util/parser';
 
 const createAnimation = {
     hidden: { opacity: 0, x: -20 },
@@ -22,13 +23,8 @@ function BoardCard({ post }) {
         dislikes,
         commentNum,
     } = post;
-    const date = new Date(createdAt);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, 0);
-    const day = String(date.getDate()).padStart(2, 0);
-    const hour = String(date.getHours()).padStart(2, 0);
-    const minute = String(date.getMinutes()).padStart(2, 0);
     const navigate = useNavigate();
+    const date = new Date(createdAt);
     return (
         <Card
             variants={createAnimation}
@@ -61,7 +57,7 @@ function BoardCard({ post }) {
                     </CardLike>
                     <CardRightDown>
                         <CardWriter>written by {member.nickname}</CardWriter>
-                        <CardCreatedAt>{`${year}-${month}-${day} ${hour}:${minute}`}</CardCreatedAt>
+                        <CardCreatedAt>{timeToToday(date)}</CardCreatedAt>
                     </CardRightDown>
                 </CardDivide2>
             </CardLayout>

@@ -1,11 +1,29 @@
 import * as StompJs from '@stomp/stompjs';
 
-export const imageUrl = localStorage.getItem('imgUrl');
-export const nickName = localStorage.getItem('nickName');
+const WS_URL = 'ws://hakjoonkim.shop/stomp';
+let imageUrl = null;
+let nickName = null;
 let client = null;
+let token = null;
 
 export const setClient = _client => {
     client = _client;
+};
+export const setProfile = () => {
+    imageUrl = localStorage.getItem('imgUrl');
+    nickName = localStorage.getItem('nickName');
+    token = localStorage.getItem('access-token');
+};
+
+export const getToken = () => {
+    return token;
+};
+
+export const getImageUrl = () => {
+    return imageUrl;
+};
+export const getNickName = () => {
+    return nickName;
 };
 
 const subscribeCallback = (data, setChatList) => {
@@ -40,7 +58,7 @@ export const publish = (ch, type) => {
 
 export const connect = setChatList => {
     client.current = new StompJs.Client({
-        brokerURL: 'ws://hakjoonkim.shop/stomp',
+        brokerURL: WS_URL,
         onConnect: () => {
             console.log('success');
             subscribe(setChatList);

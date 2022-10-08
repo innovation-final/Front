@@ -50,6 +50,8 @@ function Pagination(props) {
         return 'skyblue';
     };
 
+    console.log(pageNumbers);
+
     return (
         <Container>
             <PageNavigation>
