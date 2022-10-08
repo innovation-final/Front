@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import Carousel from 'react-material-ui-carousel';
 import Layout from '../component/layout/Layout';
@@ -35,6 +36,9 @@ function Home() {
 
     return (
         <Layout header sidebar>
+            <Helmet>
+                <title>{`Stock's talk | 홈`}</title>
+            </Helmet>
             <MainContainer>
                 <MainStockIndex />
                 <MainFavoriteStock />

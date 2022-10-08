@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import useGetPosts from '../hooks/useGetPosts';
 import Layout from '../component/layout/Layout';
@@ -26,13 +27,13 @@ function Community() {
     const getOption = selected => {
         setOption(selected);
     };
-    const { data, isLoading, invalidate } = useGetPosts(option, currentPage);
+    const { data, isLoading, refetch } = useGetPosts(option, currentPage);
     const [posts, setPosts] = useState([]);
     const postData = data && data['페이지당 게시글'];
     const totalPosts = data && data['총 게시글 개수'];
     const refetchPosts = () => {
         setPosts(postData);
-        invalidate();
+        refetch();
     };
 
     useEffect(() => {
@@ -44,7 +45,7 @@ function Community() {
         window.scrollTo(0, 0);
     };
     const leftMove = () => {
-        if (currentPage) return;
+        if (currentPage < 2) return;
         setCurrentPage(props => props - 1);
     };
     const rightMove = lastPage => {
@@ -54,6 +55,9 @@ function Community() {
 
     return (
         <Layout>
+            <Helmet>
+                <title>{`Stock's talk | 커뮤니티`}</title>
+            </Helmet>
             <BoardContainer>
                 <CommunityHeader>
                     <Handlers>

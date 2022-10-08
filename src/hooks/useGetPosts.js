@@ -19,10 +19,11 @@ export default function useGetPosts(filter, page) {
         ['posts', filter],
         apiFilter(filter, page),
         {
-            refetchOnWindowFocus: false,
-            staleTime: 1000 * 5000,
+            refetchOnWindowFocus: true,
         },
     );
+
+    console.log(page);
 
     const invalidate = () => {
         queryClient.invalidateQueries(['posts', filter]);

@@ -83,10 +83,7 @@ function MypageMain() {
             alert('수정되었습니다');
             localStorage.setItem('nickName', editNickName);
             localStorage.setItem('imgUrl', userImage);
-        } else {
-            return false;
         }
-        return 0;
     };
 
     // 탈퇴

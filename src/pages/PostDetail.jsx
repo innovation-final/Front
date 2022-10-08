@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import CommentBox from '../component/comment/CommentBox';
 import CommentInput from '../component/comment/CommentInput';
 import CommentList from '../component/comment/CommentList';
@@ -38,6 +39,9 @@ function PostDetail() {
         );
     return (
         <Layout sidebar header>
+            <Helmet>
+                <title>{`Stock's talk | 게시글`}</title>
+            </Helmet>
             <PageWrapper variants={Animation} initial="start" animate="end">
                 <PostContainer>
                     <PostBox postInfo={info} />

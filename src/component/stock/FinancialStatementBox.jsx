@@ -1,12 +1,11 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { stockAPI } from '../../shared/api';
 import ContentBox from '../elements/ContentBox';
 import LoadingSpinner from '../elements/LoadingSpinner';
 import { esUSNumberParser } from '../../util/parser';
+import useGetFinancial from '../../hooks/useGetFinancial';
 
 const columnKeys = [
     '총수익',
@@ -20,16 +19,8 @@ const rowKeys = ['2018/12', '2019/12', '2020/12', '2021/12'];
 
 function FinancialStatementBox({ isPC }) {
     const { id } = useParams();
-    const { data, isLoading, isError } = useQuery(
-        ['table', id],
-        () => stockAPI.getStockTable(id),
-        {
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-            refetchInterval: false,
-        },
-    );
-    const info = data?.data.data;
+    const { data, isLoading, isError } = useGetFinancial(id);
+    const info = data;
 
     const renderTable = () => {
         if (!info) {

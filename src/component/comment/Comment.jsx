@@ -9,6 +9,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import PropTypes from 'prop-types';
 import Button from '../elements/Button';
 import { commentAPI } from '../../shared/api';
+import { timeToToday } from '../../util/parser';
 
 const commentAnimation = {
     start: { opacity: 0, y: 10 },
@@ -18,7 +19,7 @@ const commentAnimation = {
 
 function Comment(props) {
     const ref = useRef(null);
-    const { id, member, content } = props;
+    const { id, member, content, date } = props;
     const [editComment, setEditComment] = React.useState(content);
     const [isEdit, setIsEdit] = React.useState(false);
     const queryClient = useQueryClient();
@@ -61,13 +62,6 @@ function Comment(props) {
         setEditComment(event.target.value);
     };
 
-    // const dateData = new Date(date);
-    // const year = dateData.getFullYear();
-    // const month = `${dateData.getMonth() + 1}`.padStart(2, 0);
-    // const day = `${dateData.getDate()}`.padStart(2, 0);
-    // const hours = `${dateData.getHours()}`.padStart(2, 0);
-    // const minutes = `${dateData.getMinutes()}`.padStart(2, 0);
-    // const seconds = `${dateData.getSeconds()}`.padStart(2, 0);
     return (
         <WrapperContainer
             variants={commentAnimation}
@@ -79,7 +73,7 @@ function Comment(props) {
                 <WrapperUserInfo>
                     <ProfileImage src={member.profileImg} />
                     <Writer>{member.nickname}</Writer>
-                    {/* <DateBox>{`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`}</DateBox> */}
+                    <DateBox>{timeToToday(date)}</DateBox>
                 </WrapperUserInfo>
                 <Buttons>
                     <Button
@@ -150,7 +144,7 @@ export default Comment;
 Comment.propTypes = {
     id: PropTypes.number,
     content: PropTypes.string.isRequired,
-    // date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 const WrapperUserInfo = styled.div`
@@ -226,12 +220,12 @@ const Buttons = styled.div`
 
 const ButtonBox = styled.div``;
 
-// const DateBox = styled.div`
-//     width: 40%;
-//     margin-left: 10px;
-//     font-size: calc(0.2em + 0.5vw);
-//     text-align: left;
-// `;
+const DateBox = styled.div`
+    width: 40%;
+    margin-left: 10px;
+    font-size: calc(0.2em + 0.5vw);
+    text-align: left;
+`;
 
 const ProfileImage = styled.img`
     width: 30px;
