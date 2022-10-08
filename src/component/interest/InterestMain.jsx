@@ -8,6 +8,7 @@ import InterestStockList from './InterestStockList';
 import { stockAPI } from '../../shared/api';
 import InterestNewsList from './InterestNewsList';
 import LoadingSpinner from '../elements/LoadingSpinner';
+import InterestChartList from './InterestChartList';
 
 function InterestMain() {
     const [param, setParam] = useState('');
@@ -49,14 +50,15 @@ function InterestMain() {
                         <BarChartIcon />
                         <Text>관련그래프</Text>
                     </IconLayout>
+                    <InterestChartList code={param} />
                 </Card>
 
                 <Card>
                     <IconLayout>
                         <NewspaperIcon />
                         <Text>관련기사</Text>
+                        <InterestNewsList code={param} />
                     </IconLayout>
-                    <InterestNewsList code={param} />
                 </Card>
             </CardsLayout>
         </CardLayout>

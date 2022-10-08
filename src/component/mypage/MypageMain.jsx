@@ -8,12 +8,12 @@ import Typography from '@mui/material/Typography';
 import editcog from '../../static/edit.png';
 import { mypageAPI } from '../../shared/api';
 import useGetUser from '../../hooks/useGetUser';
-import ant from '../../static/ant.jpg';
 
 function MypageMain() {
     const ref = useRef(null);
     const queryClient = useQueryClient();
     const { data } = useGetUser();
+    console.log(data);
     const nickname = data && data.nickname;
     const profileMsg = data && data.profileMsg;
     const email = data && data.email;
@@ -103,6 +103,11 @@ function MypageMain() {
     });
     const onDelete = () => {
         deleteMutation.mutate();
+        window.location.replace(`/login`);
+        localStorage.clear();
+        setTimeout(() => {
+            localStorage.clear();
+        }, 500);
     };
 
     return (
@@ -115,7 +120,7 @@ function MypageMain() {
                         </Button>
 
                         <ImgCard>
-                            <CardMedia src={profileImg || ant} />
+                            <CardMedia src={profileImg} />
                         </ImgCard>
                         <CardContent>
                             <Typography

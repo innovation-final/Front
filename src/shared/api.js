@@ -124,3 +124,11 @@ export const stockAPI = {
     deleteLikeStock: stockCode => api.delete(`/auth/stock/like/${stockCode}`),
     likeNewsStock: stockCode => api.get(`/auth/stock/like/news/${stockCode}`),
 };
+export const userAPI = {
+    getNotice: () =>
+        api.get(`/auth/notifications`, {
+            headers: {
+                'Content-Type': `text/event-stream`,
+            },
+        }),
+};
