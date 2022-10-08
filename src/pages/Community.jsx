@@ -27,13 +27,13 @@ function Community() {
     const getOption = selected => {
         setOption(selected);
     };
-    const { data, isLoading, invalidate } = useGetPosts(option, currentPage);
+    const { data, isLoading, refetch } = useGetPosts(option, currentPage);
     const [posts, setPosts] = useState([]);
     const postData = data && data['페이지당 게시글'];
     const totalPosts = data && data['총 게시글 개수'];
     const refetchPosts = () => {
         setPosts(postData);
-        invalidate();
+        refetch();
     };
 
     useEffect(() => {
@@ -45,15 +45,13 @@ function Community() {
         window.scrollTo(0, 0);
     };
     const leftMove = () => {
-        if (currentPage) return;
+        if (currentPage < 2) return;
         setCurrentPage(props => props - 1);
     };
     const rightMove = lastPage => {
         if (currentPage === lastPage) return;
         setCurrentPage(props => props + 1);
     };
-
-    console.log(currentPage, postData);
 
     return (
         <Layout>

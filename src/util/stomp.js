@@ -4,11 +4,19 @@ const WS_URL = 'ws://hakjoonkim.shop/stomp';
 let imageUrl = null;
 let nickName = null;
 let client = null;
+let token = null;
 
 export const setClient = _client => {
     client = _client;
+};
+export const setProfile = () => {
     imageUrl = localStorage.getItem('imgUrl');
     nickName = localStorage.getItem('nickName');
+    token = localStorage.getItem('access-token');
+};
+
+export const getToken = () => {
+    return token;
 };
 
 export const getImageUrl = () => {
