@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import useGetPosts from '../hooks/useGetPosts';
 import Layout from '../component/layout/Layout';
@@ -52,8 +53,13 @@ function Community() {
         setCurrentPage(props => props + 1);
     };
 
+    console.log(currentPage, postData);
+
     return (
         <Layout>
+            <Helmet>
+                <title>{`Stock's talk | 커뮤니티`}</title>
+            </Helmet>
             <BoardContainer>
                 <CommunityHeader>
                     <Handlers>

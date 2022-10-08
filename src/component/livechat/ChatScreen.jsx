@@ -10,7 +10,7 @@ import {
     connect,
     disconnect,
     publish,
-    nickName,
+    getNickName,
 } from '../../util/stomp';
 
 function ChatScreen() {
@@ -55,25 +55,25 @@ function ChatScreen() {
                         ch.type === 'TALK' ? (
                             <Wrapper
                                 key={`${uuid()} ${Date.now()}`}
-                                $isMine={ch.nickName === nickName}
+                                $isMine={ch.nickName === getNickName()}
                             >
                                 <UserInfo>
                                     <ProfileImg
                                         src={`${ch.imageUrl}`}
-                                        isMine={ch.nickName === nickName}
+                                        isMine={ch.nickName === getNickName()}
                                     />
                                     <UserName
-                                        isMine={ch.nickName === nickName}
+                                        isMine={ch.nickName === getNickName()}
                                     >{`${ch.nickName}`}</UserName>
                                 </UserInfo>
                                 <MessageContainer
-                                    isMine={ch.nickName === nickName}
+                                    isMine={ch.nickName === getNickName()}
                                 >{`${ch.message}`}</MessageContainer>
                             </Wrapper>
                         ) : (
                             <EnterMessage
                                 key={`${uuid()} ${Date.now()}`}
-                                isMine={ch.nickName === nickName}
+                                isMine={ch.nickName === getNickName()}
                             >{`${ch.message}`}</EnterMessage>
                         ),
                     )}

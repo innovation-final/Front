@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://hakjoonkim.shop/api';
+const BASE_URL = 'https://hakjoonkim.shop/api/';
 
 const api = axios.create({
     baseURL: BASE_URL,
@@ -26,7 +26,6 @@ api.interceptors.response.use(
         return response;
     },
     async function (error) {
-        const baseURL = 'https://hakjoonkim.shop/api';
         const { config, response } = error;
         const originalRequest = config;
 
@@ -38,7 +37,7 @@ api.interceptors.response.use(
             header['refresh-token'] = refreshToken;
 
             await axios
-                .post(`${baseURL}/auth/reissue`, null, {
+                .post(`${BASE_URL}/auth/reissue`, null, {
                     headers: header,
                 })
                 .then(res => {
