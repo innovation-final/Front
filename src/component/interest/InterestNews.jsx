@@ -1,55 +1,33 @@
 import React from 'react';
-import styled from 'styled-components';
-import { dateParser } from '../../util/parser';
+// import styled from 'styled-components';
+import { useQuery } from 'react-query';
+import { stockAPI } from '../../shared/api';
+import InterestNewsList from './InterestNewsList';
+import LoadingSpinner from '../elements/LoadingSpinner';
 
-function InterestNews({ news }) {
-    console.log('dd', news);
+function InterestNews({ code }) {
+    const { data, isLoading } = useQuery(
+        ['stocknews', code],
+        () => stockAPI.likeNewsStock(code),
+        {
+            enabled: code !== '',
+        },
+    );
+    if (isLoading) return <LoadingSpinner />;
+
+    const interestnews = data?.data.data;
     return (
-        <CardContent onClick={() => window.open(`${news.originallink}`)}>
-            <InterestTitle>
-                {`${
-                    news.title.length > 35
-                        ? `${news.title.slice(0, 35)} ...`
-                        : news.title
-                }`}
-            </InterestTitle>
-            <InterestContent>{dateParser(news.pubDate)}</InterestContent>
-        </CardContent>
+        <div>
+            {' '}
+            {interestnews &&
+                interestnews.map(interestStocks => (
+                    <InterestNewsList
+                        key={interestStocks.title}
+                        news={interestStocks}
+                    />
+                ))}
+        </div>
     );
 }
 
 export default InterestNews;
-
-const CardContent = styled.div`
-    border-bottom: 1px solid ${props => props.theme.borderColor};
-    margin: 5px;
-    height: 40px;
-    display: flex;
-`;
-const InterestTitle = styled.div`
-    margin: 10px;
-    margin-left: 30px;
-    flex-grow: ${props => props.flexRatio};
-    font-size: 14px;
-    font-weight: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: flex;
-    flex-direction: row;
-    width: 300%;
-    white-space: nowrap;
-    align-items: center;
-`;
-
-const InterestContent = styled.div`
-    flex-grow: 1;
-    font-size: 14px;
-    letter-spacing: -1px;
-    color: #82807c;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 10px;
-`;

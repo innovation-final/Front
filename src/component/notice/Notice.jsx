@@ -1,35 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { alarmOnState, notificationListState } from '../../atoms/atoms';
-import { userAPI } from '../../shared/api';
+import { noticeAPI } from '../../shared/api';
+import useGetUser from '../../hooks/useGetUser';
 
 function Notice() {
-    const { data } = useQuery(['user'], () => userAPI.getNotice());
-    console.log('알림', data);
+    const { data } = useGetUser();
+    console.log(data);
+    const id = data && data.id;
+
+    // const notice = useQuery(['notice'], () => api.get('auth/subscribe/390'));
+    // console.log('알람 ', notice);
+
+    const temp = noticeAPI.getArams(id);
+    console.log(temp);
+
+    const notices = useQuery(['alarmNotice'], () => noticeAPI.getNotice());
+
+    console.log('댓글알람 ', notices);
+
     // eslint-disable-next-line no-unused-vars
     const [alarmList, setAlarmList] = useRecoilState(notificationListState);
     // const queryClient = useQueryClient();
+
     // eslint-disable-next-line no-unused-vars
     const [alarmOn, setAlarmOn] = useRecoilState(alarmOnState);
 
-    // 알림페이지 API
-
     // eslint-disable-next-line no-unused-vars
-    // const getAlarmReadQuery = useQuery('alarmReadLists', userAPI, {
-    //     //     // 여기서 리코일에 저장
-    //     onSuccess: data => {
-    //         queryClient.invalidateQueries('alarmLists');
-    //         setAlarmOn(false);
-    //         console.log(data.data);
-    //     },
-    // });
-
-    const eventSource = new EventSource(
-        `https://hakjoonkim.shop/api/subscribe`,
-    );
-    console.log('숭어', eventSource);
+    const [meventSource, msetEventSource] = useState(undefined);
+    // const eventSource = new EventSource(
+    //     `https://hakjoonkim.shop/api/auth/subscribe/${Id}`,
+    // );
+    // console.log('숭어', eventSource);
 
     // 시간 변환
     function alarmTime(altime) {

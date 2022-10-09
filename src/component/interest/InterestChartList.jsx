@@ -1,48 +1,48 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
-import styled, { css } from 'styled-components';
-import useWindowSize from '../../hooks/useWindowSize';
+import styled from 'styled-components';
+// import useWindowSize from '../../hooks/useWindowSize';
 
-import {
-    GraphBox,
-    TradingVolumeBox,
-    FinancialStatementBox,
-    RelatedArticlesBox,
-    RelatedPostsBox,
-    StockInfoBox,
-} from '../stock/index';
+// import {
+//     GraphBox,
+//     TradingVolumeBox,
+//     FinancialStatementBox,
+//     RelatedArticlesBox,
+//     RelatedPostsBox,
+//     StockInfoBox,
+// } from '../stock/index';
 
-const responsive = {
-    pc: css`
-        flex-direction: row;
-        justify-content: space-between;
-    `,
-    phone: css`
-        flex-direction: column;
-    `,
-};
+// const responsive = {
+//     pc: css`
+//         flex-direction: row;
+//         justify-content: space-between;
+//     `,
+//     phone: css`
+//         flex-direction: column;
+//     `,
+// };
 
-function InterestChartList({ chart }) {
-    const { width } = useWindowSize();
-    const isPC = useMemo(() => {
-        return width >= 1024;
-    }, [width]);
+function InterestChartList() {
+    // const { width } = useWindowSize();
+    // const isPC = useMemo(() => {
+    //     return width >= 1024;
+    // }, [width]);
 
-    const { code, name, market, current, stockDetail, doneInterest } = chart;
-    const prevPrice = stockDetail.at(-1);
-    const stockData = {
-        doneInterest,
-        code,
-        name,
-        market,
-        ...current,
-        prevPrice,
-    };
-    const volumeData = stockDetail.slice(-10);
+    // const { code, name, market, current, stockDetail, doneInterest } = chart;
+    // const prevPrice = stockDetail.at(-1);
+    // const stockData = {
+    //     doneInterest,
+    //     code,
+    //     name,
+    //     market,
+    //     ...current,
+    //     prevPrice,
+    // };
+    // const volumeData = stockDetail.slice(-10);
 
     return (
         <StyleDetailContainer>
-            <ContainerTop isPC={isPC}>
+            {/* <ContainerTop isPC={isPC}>
                 <StockInfoWrapper>
                     <StockInfoBox stockData={stockData} isPC={isPC} />
                     <GraphBox isPC={isPC} code={code} name={name} />
@@ -53,7 +53,7 @@ function InterestChartList({ chart }) {
                 <FinancialStatementBox isPC={isPC} />
                 <RelatedArticlesBox isPC={isPC} />
                 <RelatedPostsBox isPC={isPC} />
-            </ContainerBottom>
+            </ContainerBottom> */}
         </StyleDetailContainer>
     );
 }
@@ -68,23 +68,23 @@ const StyleDetailContainer = styled.div`
     width: 100%;
 `;
 
-const StockInfoWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 75%;
-`;
+// const StockInfoWrapper = styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     width: 75%;
+// `;
 
-const ContainerTop = styled.div`
-    position: relative;
-    ${props => (props.isPC ? responsive.pc : responsive.phone)};
-    width: 100%;
-    height: 50%;
-    display: flex;
-`;
-const ContainerBottom = styled.div`
-    position: relative;
-    ${props => (props.isPC ? responsive.pc : responsive.phone)};
-    width: 100%;
-    height: 50%;
-    display: flex;
-`;
+// const ContainerTop = styled.div`
+//     position: relative;
+//     ${props => (props.isPC ? responsive.pc : responsive.phone)};
+//     width: 100%;
+//     height: 50%;
+//     display: flex;
+// `;
+// const ContainerBottom = styled.div`
+//     position: relative;
+//     ${props => (props.isPC ? responsive.pc : responsive.phone)};
+//     width: 100%;
+//     height: 50%;
+//     display: flex;
+// `;

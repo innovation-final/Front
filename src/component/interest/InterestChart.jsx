@@ -7,7 +7,7 @@ function InterestChart({ code }) {
     if (isLoading) return <LoadingSpinner />;
 
     const { data, isLoading } = useGetStockInfo(code);
-    const interestChart = data;
+    const interestChart = data && data;
     console.log(interestChart);
 
     return (

@@ -6,7 +6,7 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ListIcon from '@mui/icons-material/List';
 import InterestStockList from './InterestStockList';
 import { stockAPI } from '../../shared/api';
-import InterestNewsList from './InterestNewsList';
+import InterestNewsList from './InterestNews';
 import LoadingSpinner from '../elements/LoadingSpinner';
 import InterestChartList from './InterestChartList';
 
@@ -53,13 +53,13 @@ function InterestMain() {
                     <InterestChartList code={param} />
                 </Card>
 
-                <Card>
+                <NewsCard>
                     <IconLayout>
                         <NewspaperIcon />
                         <Text>관련기사</Text>
-                        <InterestNewsList code={param} />
                     </IconLayout>
-                </Card>
+                    <InterestNewsList code={param} />
+                </NewsCard>
             </CardsLayout>
         </CardLayout>
     );
@@ -96,6 +96,14 @@ const Card = styled.div`
     height: 363px;
     border-radius: 15px;
     overflow: scroll;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+`;
+const NewsCard = styled.div`
+    border: 2px solid ${props => props.theme.borderColor};
+    margin: 20px;
+    height: 363px;
+    border-radius: 15px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;

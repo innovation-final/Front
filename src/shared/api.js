@@ -87,8 +87,7 @@ export const postAPI = {
     getLatestPostsTopFive: () => api.get(`/post/main`),
     deletePost: postId => api.delete(`/auth/post/${postId}`),
     putPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
-    likePost: (postId, request) =>
-        api.post(`/auth/post/like/${postId}`, request),
+    likePost: postId => api.post(`/auth/post/like/${postId}`),
     dislikePost: (postId, request) =>
         api.post(`/auth/post/dislike/${postId}`, request),
 };
@@ -123,11 +122,7 @@ export const stockAPI = {
     deleteLikeStock: stockCode => api.delete(`/auth/stock/like/${stockCode}`),
     likeNewsStock: stockCode => api.get(`/auth/stock/like/news/${stockCode}`),
 };
-export const userAPI = {
-    getNotice: () =>
-        api.get(`/auth/notifications`, {
-            headers: {
-                'Content-Type': `text/event-stream`,
-            },
-        }),
+export const noticeAPI = {
+    getNotice: () => api.get(`/auth/notifications`),
+    getArams: id => api.get(`/auth/subscribe/${id}`),
 };
