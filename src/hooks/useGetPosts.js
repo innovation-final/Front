@@ -23,8 +23,6 @@ export default function useGetPosts(filter, page) {
         },
     );
 
-    console.log(page);
-
     const invalidate = () => {
         queryClient.invalidateQueries(['posts', filter]);
     };

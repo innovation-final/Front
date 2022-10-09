@@ -19,8 +19,10 @@ function TableItem({ values }) {
         volume,
         stockCode,
     } = values;
+
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const [done, setDone] = useState(doneInterest);
     // 관심종목 등록
     const likeStock = _code => {
         const response = stockAPI.postLikeStock(_code);
@@ -33,12 +35,10 @@ function TableItem({ values }) {
         },
     });
 
-    const [like, setLikes] = useState(false);
-
     const likeHandler = e => {
         e.preventDefault();
-        setLikes(!like);
         likemutation.mutate(stockCode);
+        setDone(true);
     };
 
     // 관심종목 취소
@@ -55,8 +55,8 @@ function TableItem({ values }) {
 
     const dislikeHandler = e => {
         e.preventDefault();
-        setLikes(!like);
         dislikemutation.mutate(stockCode);
+        setDone(false);
     };
 
     return (
@@ -78,15 +78,13 @@ function TableItem({ values }) {
                 </ItemContent>
             </ItemList>
             <Favorites>
-                {!doneInterest ? (
-                    <LikeBtn done={like} onClick={e => likeHandler(e)}>
-                        <FavoritesIcon isFavorites={doneInterest} />
-                    </LikeBtn>
-                ) : (
-                    <DeleteLikeBtn done={like} onClick={e => dislikeHandler(e)}>
-                        <FavoritesIcon isFavorites={doneInterest} />
-                    </DeleteLikeBtn>
-                )}
+                <LikeBtn
+                    onClick={
+                        !done ? e => likeHandler(e) : e => dislikeHandler(e)
+                    }
+                >
+                    <FavoritesIcon isFavorites={done} />
+                </LikeBtn>
             </Favorites>
         </StyleTableItem>
     );
@@ -135,8 +133,5 @@ const Favorites = styled.div`
     cursor: pointer;
 `;
 const LikeBtn = styled.div`
-    width: 30px;
-`;
-const DeleteLikeBtn = styled.div`
     width: 30px;
 `;
