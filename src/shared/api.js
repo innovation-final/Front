@@ -87,10 +87,8 @@ export const postAPI = {
     getLatestPostsTopFive: () => api.get(`/post/main`),
     deletePost: postId => api.delete(`/auth/post/${postId}`),
     putPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
-    likePost: (postId, request) =>
-        api.post(`/auth/post/like/${postId}`, request),
-    dislikePost: (postId, request) =>
-        api.post(`/auth/post/dislike/${postId}`, request),
+    likePost: postId => api.post(`/auth/post/like/${postId}`),
+    dislikePost: postId => api.post(`/auth/post/dislike/${postId}`),
 };
 
 export const commentAPI = {
@@ -122,4 +120,8 @@ export const stockAPI = {
     postLikeStock: stockCode => api.post(`/auth/stock/like/${stockCode}`),
     deleteLikeStock: stockCode => api.delete(`/auth/stock/like/${stockCode}`),
     likeNewsStock: stockCode => api.get(`/auth/stock/like/news/${stockCode}`),
+};
+export const noticeAPI = {
+    getNotice: () => api.get(`/auth/notifications`),
+    getArams: id => api.get(`/subscribe/${id}`),
 };

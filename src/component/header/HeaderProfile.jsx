@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useGetUser from '../../hooks/useGetUser';
+import Notice from '../notice/Notice';
 
 function HeaderProfile() {
     const navigate = useNavigate();
@@ -16,6 +17,13 @@ function HeaderProfile() {
             localStorage.setItem('imgUrl', profileImg);
         }
     }, [data]);
+    // 모달창 노출 여부 state
+    const [modalOpen, setModalOpen] = useState(false);
+
+    // 모달창 노출
+    const showModal = () => {
+        setModalOpen(props => !props);
+    };
 
     return (
         <StyleProfile>
@@ -36,8 +44,9 @@ function HeaderProfile() {
             <IconBox>
                 <KeyboardArrowDownIcon />
             </IconBox>
-            <NotiBox>
+            <NotiBox onClick={showModal}>
                 <NotificationsIcon />
+                {modalOpen && <Notice setModalOpen={setModalOpen} />}
             </NotiBox>
         </StyleProfile>
     );

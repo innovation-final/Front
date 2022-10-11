@@ -34,7 +34,7 @@ function StockSearch() {
             setIsHaveInputValue(false);
             setDropDownList([]);
         } else {
-            const choosenTextList = wholeTextArray.filter(textItem =>
+            const choosenTextList = wholeTextArray?.filter(textItem =>
                 textItem.includes(inputValue),
             );
             setDropDownList(choosenTextList);

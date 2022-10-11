@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import ClearIcon from '@mui/icons-material/Clear';
 import Layout from '../layout/Layout';
 import Button from '../elements/Button';
-import useInput from '../../hooks/useInput';
 import { postAPI } from '../../shared/api';
 import writeIcon from '../../static/write.png';
 import StockSearch from '../elements/StockSearch';
 import { searchState } from '../../atoms/atoms';
 
-function BoardWrite() {
-    const [title, onChangeTitleHandler] = useInput();
-    const [content, onChangeContentHandler] = useInput();
+function BoardWrite({ isEdit, originData }) {
+    const { id } = useParams();
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
     const [inputValue, setInputValue] = useRecoilState(searchState);
 
+    const onChangeTitleHandler = e => {
+        setTitle(e.target.value);
+    };
+    const onChangeContentHandler = e => {
+        setContent(e.target.value);
+    };
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
@@ -28,16 +34,43 @@ function BoardWrite() {
     const mutation = useMutation(req => addWrite(req), {
         onError: error => console.log(error),
         onSuccess: () => {
-            queryClient.invalidateQueries(['posts', '최신순']);
+            queryClient.invalidateQueries(['posts']);
+        },
+    });
+
+    // 일기 수정
+    const putPost = async req => {
+        const response = await postAPI.putPost(id, req);
+        return response;
+    };
+
+    const editMutation = useMutation(req => putPost(req), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['post']);
         },
     });
 
     const submitHandler = () => {
-        if (window.confirm('작성하겠습니까?')) {
-            mutation.mutate({ content, title, stockName: inputValue });
-            setInputValue('');
-            alert('작성되었습니다');
-            navigate('/community');
+        if (window.confirm(isEdit ? '수정하겠습니까?' : '하겠습니까?')) {
+            if (!isEdit) {
+                mutation.mutate({
+                    content,
+                    title,
+                    stockName: inputValue,
+                });
+                setInputValue('');
+                alert('작성되었습니다');
+                navigate('/community');
+            } else {
+                editMutation.mutate({
+                    content,
+                    title,
+                    stockName: inputValue,
+                });
+                alert('수정되었습니다');
+                navigate(`/post/${id}`);
+            }
         } else {
             return false;
         }
@@ -48,11 +81,19 @@ function BoardWrite() {
         navigate('/community');
     };
 
+    useEffect(() => {
+        if (isEdit) {
+            setInputValue(originData?.stockName);
+            setTitle(originData.title);
+            setContent(originData.content);
+        }
+    }, [isEdit, originData]);
+
     return (
         <Layout>
             <WriteTitle>
                 <Icon src={writeIcon} />
-                <Text>글쓰기</Text>
+                <Text> {isEdit ? '글수정' : '글쓰기'}</Text>
             </WriteTitle>
             <Card className="card">
                 <ButtonBox>
@@ -72,6 +113,7 @@ function BoardWrite() {
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="제목"
+                            value={title}
                             onChange={onChangeTitleHandler}
                         />
                     </CardDiv>
@@ -86,13 +128,14 @@ function BoardWrite() {
                             className="form-control form-control-lg"
                             type="text"
                             placeholder="내용"
+                            value={content}
                             onChange={onChangeContentHandler}
                         />
                     </ContentDiv>
                 </CardLayout>
                 <ButtonLayout>
                     <Button size="md" _onClick={submitHandler}>
-                        완료
+                        {isEdit ? '수정완료' : '작성완료'}
                     </Button>
                 </ButtonLayout>
             </Card>

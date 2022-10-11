@@ -18,13 +18,16 @@ function PostBox() {
     const { data, isLoading } = useQuery(['post', id], () =>
         postAPI.getPost(id),
     );
+
     const postInfo = data?.data.data;
-    const donelike = data?.data.data.doneLike;
-    const donedislike = data?.data.data.doneDisLike;
     const user = data?.data.data.member;
 
-    const navigate = useNavigate();
+    const [likes, setLikes] = useState(postInfo.likes);
+    const [dislikes, setDislikes] = useState(postInfo.dislikes);
+    const [doneLike, setDoneLike] = useState(postInfo.doneLike);
+    const [doneDisLike, setDoneDisLike] = useState(postInfo.doneDisLike);
 
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
 
     const deletePost = async postId => {
@@ -45,51 +48,51 @@ function PostBox() {
             mutation.mutate(id);
             alert('삭제되었습니다');
         } else {
-            return false;
+            alert('취소되었습니다.');
         }
-        return 0;
     };
     // 좋아요
-    const likeposts = async req => {
-        const response = await postAPI.likePost(id, req);
-
+    const likeposts = async () => {
+        const response = await postAPI.likePost(id);
         return response;
     };
-    const likemutation = useMutation(req => likeposts(req), {
+
+    const likemutation = useMutation(() => likeposts(), {
         onError: error => console.log(error),
         onSuccess: () => {
             queryClient.invalidateQueries('post');
         },
     });
 
-    const [doneLike, setLikes] = useState();
+    // 싫어요
+    const dislikeposts = async () => {
+        const response = await postAPI.dislikePost(id);
+        return response;
+    };
+
+    const dislikemutation = useMutation(() => dislikeposts(), {
+        onError: error => console.log(error),
+        onSuccess: () => {
+            queryClient.invalidateQueries('post');
+        },
+    });
 
     const likeHandler = e => {
         e.preventDefault();
-
-        setLikes(!doneLike);
-        likemutation.mutate({ doneLike });
+        setLikes(props => (doneLike ? props - 1 : props + 1));
+        setDislikes(props => (doneDisLike ? props - 1 : props));
+        setDoneLike(props => !props);
+        setDoneDisLike(false);
+        likemutation.mutate();
     };
-
-    // 싫어요
-    const dislikeposts = async req => {
-        const response = await postAPI.dislikePost(id, req);
-        return response;
-    };
-    const dislikemutation = useMutation(req => dislikeposts(req), {
-        onError: error => console.log(error),
-        onSuccess: () => {
-            queryClient.invalidateQueries('post');
-        },
-    });
-
-    const [doneDisLike, setdisLikes] = useState(false);
 
     const dislikeHandler = e => {
         e.preventDefault();
-
-        setdisLikes(!doneDisLike);
-        dislikemutation.mutate({ doneDisLike });
+        setLikes(props => (doneLike ? props - 1 : props));
+        setDislikes(props => (doneDisLike ? props - 1 : props + 1));
+        setDoneLike(false);
+        setDoneDisLike(props => !props);
+        dislikemutation.mutate();
     };
 
     if (isLoading) return <LoadingSpinner />;
@@ -144,19 +147,19 @@ function PostBox() {
             </ContentWrapper>
             <LikeToggleBox>
                 <Buttons>
-                    <JoinBtn done={donelike} onClick={e => likeHandler(e)}>
+                    <JoinBtn done={doneLike} onClick={e => likeHandler(e)}>
                         <ThumbUpOffAltIcon />
                     </JoinBtn>
 
-                    <LikeCount>{postInfo.likes}</LikeCount>
+                    <LikeCount>{likes}</LikeCount>
                     <JoinBtn2
-                        done={donedislike}
+                        done={doneDisLike}
                         onClick={e => dislikeHandler(e)}
                     >
                         <ThumbDownOffAltIcon />
                     </JoinBtn2>
 
-                    <LikeCount>{postInfo.dislikes}</LikeCount>
+                    <LikeCount>{dislikes}</LikeCount>
                 </Buttons>
             </LikeToggleBox>
         </StylePostBox>
