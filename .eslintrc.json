@@ -11,11 +11,12 @@
         "react/require-default-props": "off",
         "no-console": "off",
         "react/prop-types": "off",
+        "react/jsx-props-no-spreading": "off",
         "no-param-reassign": [
             "error",
             {
                 "props": true,
-                "ignorePropertyModificationsFor": ["state", "config"]
+                "ignorePropertyModificationsFor": ["state", "config", "ref"]
             }
         ]
     },

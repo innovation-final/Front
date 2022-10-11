@@ -1,5 +1,7 @@
 import * as StompJs from '@stomp/stompjs';
 
+// Header "Authorization" token 보내기
+
 const WS_URL = 'ws://hakjoonkim.shop/stomp';
 let imageUrl = null;
 let nickName = null;
