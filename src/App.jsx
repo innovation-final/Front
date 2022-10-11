@@ -7,6 +7,7 @@ import Router from './Router';
 import GlobalStyles from './GlobalStyles';
 import { lightTheme, darkTheme } from './theme/ThemeColor';
 import { isDarkState } from './atoms/atoms';
+// import NoticePage from './component/notice/NoticePage';
 
 function App() {
     const isDark = useRecoilValue(isDarkState);
@@ -16,6 +17,7 @@ function App() {
             <QueryClientProvider client={queryClient}>
                 <GlobalStyles />
                 <Router />
+                {/* <NoticePage /> */}
                 <LiveChat />
             </QueryClientProvider>
         </ThemeProvider>

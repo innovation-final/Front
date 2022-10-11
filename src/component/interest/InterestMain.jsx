@@ -6,8 +6,9 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ListIcon from '@mui/icons-material/List';
 import InterestStockList from './InterestStockList';
 import { stockAPI } from '../../shared/api';
-import InterestNewsList from './InterestNewsList';
+import InterestNewsList from './InterestNews';
 import LoadingSpinner from '../elements/LoadingSpinner';
+import InterestChartList from './InterestChartList';
 
 function InterestMain() {
     const [param, setParam] = useState('');
@@ -49,15 +50,16 @@ function InterestMain() {
                         <BarChartIcon />
                         <Text>관련그래프</Text>
                     </IconLayout>
+                    <InterestChartList code={param} />
                 </Card>
 
-                <Card>
+                <NewsCard>
                     <IconLayout>
                         <NewspaperIcon />
                         <Text>관련기사</Text>
                     </IconLayout>
                     <InterestNewsList code={param} />
-                </Card>
+                </NewsCard>
             </CardsLayout>
         </CardLayout>
     );
@@ -97,6 +99,14 @@ const Card = styled.div`
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
+const NewsCard = styled.div`
+    border: 2px solid ${props => props.theme.borderColor};
+    margin: 20px;
+    height: 363px;
+    border-radius: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+`;
 const CardsLayout = styled.div`
     width: 56%;
     object-fit: cover;
@@ -112,16 +122,3 @@ const IconLayout = styled.div`
     align-items: center;
     margin: 5px;
 `;
-// const Button = styled.button`
-//     background-color: transparent;
-//     border: 0;
-//     cursor: pointer;
-//     position: absolute;
-//     right: 2px;
-//     top: 5px;
-// `;
-
-// const EditCogBtn = styled.img`
-//     width: 22px;
-//     border: 0;
-// `;

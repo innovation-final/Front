@@ -121,3 +121,7 @@ export const stockAPI = {
     deleteLikeStock: stockCode => api.delete(`/auth/stock/like/${stockCode}`),
     likeNewsStock: stockCode => api.get(`/auth/stock/like/news/${stockCode}`),
 };
+export const noticeAPI = {
+    getNotice: () => api.get(`/auth/notifications`),
+    getArams: id => api.get(`/subscribe/${id}`),
+};

@@ -45,3 +45,17 @@ export const slideSelector = selector({
         set(slideState, newIndex);
     },
 });
+
+export const modalGatherState = atom({
+    key: 'modalGatherState',
+    default: {
+        levelUpModal: false,
+        stepUpModal: false,
+        editNicknameModal: false,
+        editPhotoModal: false,
+        profileMenuModal: false,
+        friendAddModal: false,
+        explainModal: false,
+        researchPopup: false,
+    },
+});

@@ -6,7 +6,7 @@ import Comment from './Comment';
 function CommentList({ comments }) {
     if (!comments.length)
         return <NoComments>댓글이 없습니다 .댓글을 작성해주세요</NoComments>;
-    console.log(comments);
+
     return (
         <StyledCommentList>
             {comments.map(comment => (

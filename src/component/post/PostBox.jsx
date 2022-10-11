@@ -18,6 +18,7 @@ function PostBox() {
     const { data, isLoading } = useQuery(['post', id], () =>
         postAPI.getPost(id),
     );
+
     const postInfo = data?.data.data;
     const user = data?.data.data.member;
 
