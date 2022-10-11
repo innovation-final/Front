@@ -88,8 +88,7 @@ export const postAPI = {
     deletePost: postId => api.delete(`/auth/post/${postId}`),
     putPost: (postId, request) => api.put(`/auth/post/${postId}`, request),
     likePost: postId => api.post(`/auth/post/like/${postId}`),
-    dislikePost: (postId, request) =>
-        api.post(`/auth/post/dislike/${postId}`, request),
+    dislikePost: postId => api.post(`/auth/post/dislike/${postId}`),
 };
 
 export const commentAPI = {
