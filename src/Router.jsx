@@ -9,6 +9,7 @@ import {
     Mypage,
     StockWhole,
     StockDetail,
+    Investment,
 } from './pages';
 
 import { Google, Kakao } from './server';
@@ -33,6 +34,7 @@ function Router() {
                 <Route path="/stock" element={<StockWhole />} />
                 <Route path="/stock/:id" element={<StockDetail />} />
                 <Route path="/interest" element={<Interest />} />
+                <Route path="/investment" element={<Investment />} />
             </Routes>
         </BrowserRouter>
     );

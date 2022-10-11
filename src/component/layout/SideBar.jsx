@@ -30,7 +30,7 @@ function SideBar() {
             onClickFn: () => navigate('/community'),
             param: '/community',
         },
-        { title: '모의투자', onClickFn: () => navigate('/') },
+        { title: '모의투자', onClickFn: () => navigate('/investment') },
         { title: '랭킹보드', onClickFn: () => navigate('/') },
         {
             title: '관심종목 관리',

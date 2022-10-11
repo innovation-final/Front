@@ -7,3 +7,4 @@ export { default as PostDetail } from './PostDetail';
 export { default as Redirect } from './Redirect';
 export { default as StockDetail } from './StockDetail';
 export { default as StockWhole } from './StockWhole';
+export { default as Investment } from './Investment';

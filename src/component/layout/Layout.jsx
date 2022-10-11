@@ -9,8 +9,8 @@ import { wideState } from '../../atoms/atoms';
 
 const responsive = {
     pc: css`
-        transform: translate(${props => (props.$wide ? 290 : 70)}px, 57px);
-        width: calc(100vw - ${props => (props.$wide ? 290 : 70)}px);
+        transform: translate(${props => (props.$wide ? 270 : 70)}px, 57px);
+        width: calc(100vw - ${props => (props.$wide ? 270 : 70)}px);
         padding: 30px;
         padding-left: 60px;
     `,
