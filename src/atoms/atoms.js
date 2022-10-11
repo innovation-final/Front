@@ -46,13 +46,6 @@ export const slideSelector = selector({
     },
 });
 
-export const notificationListState = atom({
-    key: 'notificationListState',
-    default: [],
-});
-
-export const alarmOnState = atom({ key: 'alarmOnState', default: false });
-
 export const modalGatherState = atom({
     key: 'modalGatherState',
     default: {

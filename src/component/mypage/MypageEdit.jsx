@@ -9,6 +9,7 @@ import { mypageAPI } from '../../shared/api';
 
 function MypageEdit() {
     const { data } = useGetUser();
+    console.log(data);
     const queryClient = useQueryClient();
     const nickname = data && data.nickname;
     const profileMsg = data && data.profileMsg;
@@ -36,17 +37,6 @@ function MypageEdit() {
             setImg(uploadFile);
         }
     };
-    // 닉네임 수정
-    const [editNickName, setEditNickName] = React.useState('');
-    const onChangeNickName = event => {
-        setEditNickName(event.target.value);
-    };
-
-    // 자기소개
-    const [editProfileMsg, setProfileMsg] = React.useState('');
-    const onChangeProfileMsg = event => {
-        setProfileMsg(event.target.value);
-    };
 
     const patchMypage = async req => {
         const response = await mypageAPI.patchMypage(req);
@@ -59,6 +49,20 @@ function MypageEdit() {
             queryClient.invalidateQueries(['user']);
         },
     });
+    // 닉네임 수정
+    const [editNickName, setEditNickName] = React.useState(nickname);
+    const onChangeNickName = event => {
+        setEditNickName(event.target.value);
+        editMutation.mutate(editNickName);
+    };
+
+    // 자기소개
+    const [editProfileMsg, setProfileMsg] = React.useState(profileMsg);
+    const onChangeProfileMsg = event => {
+        setProfileMsg(event.target.value);
+        editMutation.mutate(editProfileMsg);
+    };
+
     // 탈퇴
 
     const deleteMypage = () => {
@@ -105,6 +109,7 @@ function MypageEdit() {
             editMutation.mutate(formData);
             alert('수정되었습니다');
             localStorage.setItem('nickName', editNickName);
+
             localStorage.setItem('imgUrl', userImage);
         }
     };

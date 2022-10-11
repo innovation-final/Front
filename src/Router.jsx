@@ -15,7 +15,6 @@ import { Google, Kakao } from './server';
 import Interest from './pages/Interest';
 import BoardWrite from './component/community/BoardWrite';
 import BoardEdit from './component/community/BoardEdit';
-import NoticePage from './pages/NoticePage';
 
 function Router() {
     return (
@@ -34,7 +33,6 @@ function Router() {
                 <Route path="/stock" element={<StockWhole />} />
                 <Route path="/stock/:id" element={<StockDetail />} />
                 <Route path="/interest" element={<Interest />} />
-                <Route path="/notice" element={<NoticePage />} />
             </Routes>
         </BrowserRouter>
     );

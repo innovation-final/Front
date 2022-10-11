@@ -1,212 +1,176 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { alarmOnState, notificationListState } from '../../atoms/atoms';
-import { noticeAPI } from '../../shared/api';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import ClearIcon from '@mui/icons-material/Clear';
 import useGetUser from '../../hooks/useGetUser';
+import useAlarm from '../../hooks/useAlarm';
+import NoticeList from './NoticeList';
 
-function Notice() {
+function Notice({ setModalOpen }) {
     const { data } = useGetUser();
-    console.log(data);
+
     const id = data && data.id;
+    const notices = useAlarm();
+    const notice = notices.data;
+    console.log(notice);
+    useEffect(() => {}, [notice]);
 
-    // const notice = useQuery(['notice'], () => api.get('auth/subscribe/390'));
-    // console.log('알람 ', notice);
+    const closeModal = () => {
+        setModalOpen();
+    };
 
-    const temp = noticeAPI.getArams(id);
-    console.log(temp);
-
-    const notices = useQuery(['alarmNotice'], () => noticeAPI.getNotice());
-
-    console.log('댓글알람 ', notices);
-
+    const [listening, setListening] = useState(false);
     // eslint-disable-next-line no-unused-vars
-    const [alarmList, setAlarmList] = useRecoilState(notificationListState);
-    // const queryClient = useQueryClient();
-
+    const [alarmData, setAlarmData] = useState([]);
     // eslint-disable-next-line no-unused-vars
-    const [alarmOn, setAlarmOn] = useRecoilState(alarmOnState);
-
+    const [value, setValue] = useState(null);
     // eslint-disable-next-line no-unused-vars
     const [meventSource, msetEventSource] = useState(undefined);
-    // const eventSource = new EventSource(
-    //     `https://hakjoonkim.shop/api/auth/subscribe/${Id}`,
-    // );
-    // console.log('숭어', eventSource);
+    // console.log(eventSource.url.slice(-3));
+    // eventSource.onmessage = event => {
+    //     console.log('성공', event.data);
+    // };
+    // eventSource.onerror = error => {
+    //     eventSource.close();
+    //     console.log(error.data);
+    // };
 
-    // 시간 변환
-    function alarmTime(altime) {
-        const alarmDate = altime.split('T')[0];
-        const divide = altime.split('T')[1];
-        const divideHour = Number(divide.split(':')[0]);
-        const divideMin = divide.split(':')[1];
+    useEffect(() => {
+        console.log('매번 실행되는지');
+        console.log('listening', listening);
 
-        if (divideHour > 12) {
-            return `${alarmDate}  오후 ${divideHour - 12} : ${divideMin}`;
-        }
-        if (divideHour === 12) {
-            return `${alarmDate}  오후 ${divideHour} : ${divideMin}`;
-        }
-        if (divideHour === 0) {
-            return `${alarmDate}  오전 ${divideHour + 12} : ${divideMin}`;
-        }
-        return `${alarmDate}  오전 ${divideHour} : ${divideMin}`;
-    }
-    return (
-        <AlarmBoxWrap>
-            {alarmList.map(alarmcontent => {
-                if (alarmcontent.type !== '채팅') {
-                    return (
-                        <AlarmBox>
-                            <AlarmTextBox>
-                                <EvRowBox
-                                    style={{
-                                        justifyContent: 'flex-start',
-                                    }}
-                                >
-                                    <EvImgBox
-                                        height="0.625"
-                                        url="url(/assets/yellowdot.svg)"
-                                        margin="0.4375rem 0.625rem auto 0"
-                                    />
-                                    <AlarmFontBox>
-                                        <AlarmFont>
-                                            <span>[{alarmcontent.type}]</span>{' '}
-                                            {alarmcontent.message}
-                                        </AlarmFont>
+        if (!listening) {
+            const eventSource = new EventSource(
+                `https://hakjoonkim.shop/api/subscribe/${id}`,
+            );
 
-                                        <AlarmDateFont>
-                                            {alarmTime(
-                                                alarmcontent.createdDate,
-                                            )}
-                                        </AlarmDateFont>
-                                    </AlarmFontBox>
-                                </EvRowBox>
-                            </AlarmTextBox>
-                        </AlarmBox>
+            msetEventSource(eventSource);
+
+            console.log('eventSource', eventSource);
+
+            eventSource.onopen = () => {
+                console.log('connection opened');
+            };
+
+            eventSource.onmessage = event => {
+                console.log('result', event.data);
+                setAlarmData(old => [...old, event.data]);
+                setValue(event.data);
+            };
+
+            eventSource.onerror = event => {
+                console.log(event.target.readyState);
+                if (event.target.readyState === EventSource.CLOSED) {
+                    console.log(
+                        'eventsource closed ( + event.target.readyState + )',
                     );
                 }
-                return false;
-            })}
-        </AlarmBoxWrap>
+                eventSource.close();
+            };
+
+            setListening(true);
+        }
+        const eventSource = undefined;
+        return () => {
+            eventSource?.close();
+            console.log('eventsource closed');
+        };
+    }, []);
+
+    useEffect(() => {
+        console.log('data: ', alarmData);
+    }, [alarmData]);
+
+    // const checkData = () => {
+    //     console.log(alarmData);
+    // };
+    // console.log(checkData);
+    const eventSource = new EventSource(
+        `https://hakjoonkim.shop/api/subscribe/${id}`,
+    );
+    eventSource.addEventListener('sse', function (event) {
+        console.log(event.data);
+
+        const datas = JSON.parse(event.data);
+
+        (async () => {
+            // 브라우저 알림
+            const showNotification = () => {
+                const notification = new Notification('코드 봐줘', {
+                    body: datas.content,
+                });
+
+                setTimeout(() => {
+                    notification.close();
+                }, 10 * 1000);
+
+                notification.addEventListener('click', () => {
+                    window.open(datas.url, '_blank');
+                });
+            };
+
+            // 브라우저 알림 허용 권한
+            let granted = false;
+
+            if (Notification.permission === 'granted') {
+                granted = true;
+            } else if (Notification.permission !== 'denied') {
+                const permission = await Notification.requestPermission();
+                granted = permission === 'granted';
+            }
+
+            // 알림 보여주기
+            if (granted) {
+                showNotification();
+            }
+        })();
+    });
+
+    return (
+        <Container>
+            <ClearButton>
+                <ClearIcon onClick={closeModal} />
+            </ClearButton>
+            <IconLayout>
+                <NotificationsNoneIcon />
+                <Text>알람</Text>
+            </IconLayout>
+
+            {notice && notice.map(alarm => <NoticeList alarms={alarm} />)}
+        </Container>
     );
 }
 
 export default Notice;
+const ClearButton = styled.div`
+    position: absolute;
+    right: 10px;
+    top: 10px;
 
-const EvColumnBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: ${props => (props.isAlignSide ? '' : 'center')};
-    justify-content: ${props => (props.isContentSide ? '' : 'center')};
-    width: ${props => props.width};
-    height: ${props => props.height}rem;
-    margin: ${props => props.margin};
-    border: ${props => props.border};
-    border-radius: ${props => props.borderRadius};
-    cursor: ${props => (props.isCursor ? 'pointer' : '')};
-    background-image: ${props => props.url};
-    background-repeat: no-repeat;
-    background-size: ${props =>
-        props.backgroundsize ? props.backgroundsize : 'cover'};
-    background-position: center;
-    background-color: ${props =>
-        props.backgroundColor ? props.backgroundColor : ''};
-`;
-
-const EvRowBox = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: ${props => (props.isAlignSide ? '' : 'center')};
-    justify-content: ${props => (props.isContentSide ? '' : 'center')};
-    width: ${props => props.width};
-    height: ${props => props.height}rem;
-    margin: ${props => props.margin};
-    border: ${props => props.border};
-    border-radius: ${props => props.borderRadius};
-    cursor: ${props => (props.isCursor ? 'pointer' : '')};
-    background-image: ${props => props.url};
-    background-repeat: no-repeat;
-    background-size: ${props =>
-        props.backgroundsize ? props.backgroundsize : 'cover'};
-    background-position: center;
-    background-color: ${props =>
-        props.backgroundColor ? props.backgroundColor : ''};
-`;
-const EvEnglishFont = styled.p`
-    font-size: ${props => props.size}rem;
-    font-family: ${props => (props.isBold ? 'OpensansBold' : 'OpensansMed')};
-    color: ${props => (props.color ? props.color : '#1A1A1A')};
-    display: flex;
-    font-weight: ${props => (props.weight ? props.weight : 400)};
-    text-align: ${props => (props.align ? props.align : '')};
-    margin: 0;
-    line-height: ${props => (props.lineHeight ? props.lineHeight : '')};
-`;
-const EvImgBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: ${props => (props.isAlignSide ? '' : 'center')};
-    justify-content: ${props => (props.isContentSide ? '' : 'center')};
-    width: ${props => props.width};
-    height: ${props => props.height}rem;
-    margin: ${props => props.margin};
-    cursor: ${props => (props.isCursor ? 'pointer' : '')};
-    background-image: ${props => props.url};
-    background-repeat: no-repeat;
-    background-size: ${props =>
-        props.backgroundsize ? props.backgroundsize : 'cover'};
-    background-position: center;
-    background-color: ${props =>
-        props.backgroundColor ? props.backgroundColor : ''};
-    border: ${props => props.border};
-`;
-const AlarmBoxWrap = styled(EvColumnBox)`
-    margin: 1.875rem auto;
-    row-gap: 0.9375rem;
-    width: 89%;
-    /* background-color: pink; */
-`;
-
-const AlarmBox = styled(EvColumnBox)`
-    background-color: #fffbe9;
-    border-radius: 6px;
-    padding: 1.5625rem 2.8125rem 1.5625rem 1.25rem;
-    width: 100%;
-    min-height: 5.75rem;
-`;
-
-const AlarmTextBox = styled(EvColumnBox)`
-    /* background-color: #a3d7a3; */
-    border-radius: 6px;
-    width: 100%;
-`;
-
-const AlarmFontBox = styled(EvColumnBox)`
-    /* background-color: white; */
-    width: 80%;
-    justify-content: flex-start;
-    /* align-items: left;
-  align-content: flex-start; */
-`;
-
-const AlarmFont = styled.p`
-    font-size: 1rem;
-    text-align: left;
-    line-height: 24px;
-    margin: auto auto auto 0;
-    & > span:nth-of-type(1) {
-        font-weight: 700;
-        font-weight: 700;
-        min-width: 50px;
-        max-height: 15px;
+    color: #c7c7c7;
+    &:hover {
+        color: #a3a1a1;
     }
 `;
+const Container = styled.div`
+    width: 300px;
+    height: 300px;
+    position: fixed;
+    left: 72%;
+    transform: translate(50%, 5%);
+    background-color: #ffffff;
+    border: 2px solid ${props => props.theme.borderColor};
+    border-radius: 8px;
+    z-index: 30;
+    overflow: scroll;
+`;
+const Text = styled.p`
+    font-weight: bold;
+    margin: 5px;
+`;
 
-const AlarmDateFont = styled(EvEnglishFont)`
-    color: #989898;
-    font-size: 0.75rem;
-    line-height: 19px;
-    margin: auto auto auto 0;
+const IconLayout = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 5px;
 `;

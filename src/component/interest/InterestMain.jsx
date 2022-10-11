@@ -122,16 +122,3 @@ const IconLayout = styled.div`
     align-items: center;
     margin: 5px;
 `;
-// const Button = styled.button`
-//     background-color: transparent;
-//     border: 0;
-//     cursor: pointer;
-//     position: absolute;
-//     right: 2px;
-//     top: 5px;
-// `;
-
-// const EditCogBtn = styled.img`
-//     width: 22px;
-//     border: 0;
-// `;
