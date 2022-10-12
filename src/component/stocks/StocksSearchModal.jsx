@@ -7,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Modal from '../elements/Modal';
 import StockSearch from '../elements/StockSearch';
 import Button from '../elements/Button';
-import { searchState } from '../../atoms/atoms';
+import { searchState } from '../../atoms/search/searchState';
 
 function StocksSearchModal({ setIsOpen }) {
     const client = useQueryClient();

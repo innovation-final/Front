@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import useWindowSize from '../../hooks/useWindowSize';
 import Header from './Header';
 import SideBar from './SideBar';
-import { wideState } from '../../atoms/atoms';
+import { wideState } from '../../atoms/common/commonState';
 
 const responsive = {
     pc: css`

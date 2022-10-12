@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { postAPI } from '../../shared/api';
-import { slideSelector } from '../../atoms/atoms';
+import { slideSelector } from '../../atoms/common/commonState';
 
 function LatestPost() {
     const navigate = useNavigate();

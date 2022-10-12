@@ -10,7 +10,6 @@ import { mypageAPI } from '../../shared/api';
 
 function MypageEdit() {
     const { data } = useGetUser();
-
     const queryClient = useQueryClient();
     const nickname = data && data.nickname;
     const profileMsg = data && data.profileMsg;
@@ -77,13 +76,15 @@ function MypageEdit() {
         },
     });
     const onDelete = () => {
+        function removeLocalStorage() {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve();
+                }, 500);
+            });
+        }
         deleteMutation.mutate();
-
-        // localStorage.clear();
-
-        // setTimeout(() => {
-        //     localStorage.clear();
-        // }, 500);
+        removeLocalStorage().then(localStorage.clear());
         window.location.replace(`/login`);
     };
     const onClickSetEdit = () => {

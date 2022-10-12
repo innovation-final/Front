@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import MenuIcon from '@mui/icons-material/Menu';
 import Logo from '../elements/Logo';
-import { wideState } from '../../atoms/atoms';
+import { wideState } from '../../atoms/common/commonState';
 
 function SideBarHeader() {
     const [wide, setWide] = useRecoilState(wideState);

@@ -37,10 +37,14 @@ const subscribeCallback = (data, setChatList) => {
 };
 
 export const subscribe = setChatList => {
-    client.current.subscribe(`/sub/chat`, body => {
-        const jsonBody = JSON.parse(body.body);
-        subscribeCallback(jsonBody, setChatList);
-    });
+    client.current.subscribe(
+        `/sub/chat`,
+        body => {
+            const jsonBody = JSON.parse(body.body);
+            subscribeCallback(jsonBody, setChatList);
+        },
+        { token },
+    );
 };
 
 export const publish = (ch, type) => {

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import Messenger from './Messenger';
-import { toggleLiveChat, chatLogState } from '../../atoms/atoms';
+import { toggleLiveChat, chatLogState } from '../../atoms/chat/chatState';
 import { setClient, setProfile, connect, disconnect } from '../../util/stomp';
 
 function LiveChat() {

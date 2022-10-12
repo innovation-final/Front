@@ -9,7 +9,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import { wideState } from '../../atoms/atoms';
+import { wideState } from '../../atoms/common/commonState';
 
 function SideBarItem({ title, onClickFn, param }) {
     const [wide, setWide] = useRecoilState(wideState);

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { isDarkState } from '../../atoms/atoms';
+import { isDarkState } from '../../atoms/common/commonState';
 
 function Pagination(props) {
     const {

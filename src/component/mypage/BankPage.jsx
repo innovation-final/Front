@@ -9,7 +9,7 @@ import {
     despositState,
     openTargetState,
     openExpireAtState,
-} from '../../atoms/atoms';
+} from '../../atoms/account/accountState';
 import useAccount from '../../hooks/useAccount';
 
 function BankPage() {

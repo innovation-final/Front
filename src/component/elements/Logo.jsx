@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../static/image.png';
 import darkLogo from '../../static/image_dark.png';
-import { isDarkState } from '../../atoms/atoms';
+import { isDarkState } from '../../atoms/common/commonState';
 
 // 나중에 이미지로 바꿀 예정
 function Logo() {

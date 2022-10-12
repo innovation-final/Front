@@ -1,36 +1,26 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import StockInfo from '../stock/StockInfoBox';
 import SampleChart from '../chart/SampleChart';
+import LoadingSpinner from '../elements/LoadingSpinner';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
-
-const data = {
-    doneInterest: false,
-    code: '047400',
-    name: '유니온머티리얼',
-    market: 'KOSPI',
-    date: '2022-10-11',
-    open: 2905,
-    high: 3100,
-    low: 2830,
-    close: 2895,
-    volume: 17123628,
-    tradingValue: 50738275375,
-    change: 0.1265,
-    prevPrice: {
-        date: '2022-10-07',
-        open: 2595,
-        high: 2680,
-        low: 2550,
-        close: 2570,
-        volume: 1820777,
-        tradingValue: null,
-        change: 0.007843138,
-    },
-};
+import { currentStockSelector } from '../../atoms/investment/stockState';
 
 function InvestmentInfoBox() {
     const ref = useRef(null);
+    const { code, name, market, current, stockDetail, doneInterest } =
+        useRecoilValue(currentStockSelector);
+    const prevPrice = stockDetail && stockDetail.at(-1);
+    const stockData = {
+        doneInterest,
+        code,
+        name,
+        market,
+        ...current,
+        prevPrice,
+    };
+
     // eslint-disable-next-line no-unused-vars
     const [dimensions, setDimensions] = useState({ top: 0, left: 0 });
     const optionalCallback = entry =>
@@ -38,19 +28,21 @@ function InvestmentInfoBox() {
     const [width, height] = useResizeObserver(ref, optionalCallback);
 
     return (
-        <StyleContainer>
-            <TopContainer>
-                <StockInfo stockData={data} />
-            </TopContainer>
-            <BottomContainer ref={ref}>
-                <SampleChart
-                    name=""
-                    code="047400"
-                    width={width}
-                    height={height}
-                />
-            </BottomContainer>
-        </StyleContainer>
+        <React.Suspense fallback={<LoadingSpinner />}>
+            <StyleContainer>
+                <TopContainer>
+                    <StockInfo stockData={stockData} />
+                </TopContainer>
+                <BottomContainer ref={ref}>
+                    <SampleChart
+                        name=""
+                        code={code}
+                        width={width}
+                        height={height}
+                    />
+                </BottomContainer>
+            </StyleContainer>
+        </React.Suspense>
     );
 }
 
@@ -62,7 +54,7 @@ const StyleContainer = styled.div`
     border-radius: 20px;
     padding: 1rem;
     margin-bottom: 10px;
-    min-height: 30rem;
+    min-height: 25rem;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;

@@ -5,7 +5,7 @@ import {
     despositState,
     openTargetState,
     openExpireAtState,
-} from '../../../atoms/atoms';
+} from '../../../atoms/account/accountState';
 
 function BankOpen() {
     const depositList = [
