@@ -44,9 +44,9 @@ function HeaderProfile() {
             <IconBox>
                 <KeyboardArrowDownIcon />
             </IconBox>
-            <NotiBox onClick={showModal}>
-                <NotificationsIcon />
-                {modalOpen && <Notice setModalOpen={setModalOpen} />}
+            <NotiBox>
+                <NotificationsIcon onClick={showModal} />
+                {modalOpen && <Notice setModalOpen={showModal} />}
             </NotiBox>
         </StyleProfile>
     );

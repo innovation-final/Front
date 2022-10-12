@@ -17,7 +17,7 @@ api.interceptors.request.use(function (config) {
     }
 
     config.headers.authorization = `${accessToken}`;
-    // config.headers['refresh-token'] = `${refreshToken}`;
+    config.headers['refresh-token'] = `${refreshToken}`;
     return config;
 });
 
@@ -124,4 +124,8 @@ export const stockAPI = {
 export const noticeAPI = {
     getNotice: () => api.get(`/auth/notifications`),
     getArams: id => api.get(`/subscribe/${id}`),
+};
+export const bankAPI = {
+    postBankOpen: request => api.post(`/auth/account`, request),
+    getBankAccount: () => api.get(`/auth/account`),
 };
