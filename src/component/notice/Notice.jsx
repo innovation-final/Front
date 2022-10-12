@@ -15,10 +15,6 @@ function Notice({ setModalOpen }) {
     console.log(notice);
     useEffect(() => {}, [notice]);
 
-    const closeModal = () => {
-        setModalOpen();
-    };
-
     const [listening, setListening] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [alarmData, setAlarmData] = useState([]);
@@ -26,14 +22,6 @@ function Notice({ setModalOpen }) {
     const [value, setValue] = useState(null);
     // eslint-disable-next-line no-unused-vars
     const [meventSource, msetEventSource] = useState(undefined);
-    // console.log(eventSource.url.slice(-3));
-    // eventSource.onmessage = event => {
-    //     console.log('성공', event.data);
-    // };
-    // eventSource.onerror = error => {
-    //     eventSource.close();
-    //     console.log(error.data);
-    // };
 
     useEffect(() => {
         console.log('매번 실행되는지');
@@ -85,51 +73,51 @@ function Notice({ setModalOpen }) {
     //     console.log(alarmData);
     // };
     // console.log(checkData);
-    const eventSource = new EventSource(
-        `https://hakjoonkim.shop/api/subscribe/${id}`,
-    );
-    eventSource.addEventListener('sse', function (event) {
-        console.log(event.data);
+    // const eventSource = new EventSource(
+    //     `https://hakjoonkim.shop/api/subscribe/${id}`,
+    // );
+    // eventSource.addEventListener('sse', function (event) {
+    //     console.log(event.data);
 
-        const datas = JSON.parse(event.data);
+    //     const datas = JSON.parse(event.data);
 
-        (async () => {
-            // 브라우저 알림
-            const showNotification = () => {
-                const notification = new Notification('코드 봐줘', {
-                    body: datas.content,
-                });
+    //     (async () => {
+    //         // 브라우저 알림
+    //         const showNotification = () => {
+    //             const notification = new Notification('코드 봐줘', {
+    //                 body: datas.content,
+    //             });
 
-                setTimeout(() => {
-                    notification.close();
-                }, 10 * 1000);
+    //             setTimeout(() => {
+    //                 notification.close();
+    //             }, 10 * 1000);
 
-                notification.addEventListener('click', () => {
-                    window.open(datas.url, '_blank');
-                });
-            };
+    //             notification.addEventListener('click', () => {
+    //                 window.open(datas.url, '_blank');
+    //             });
+    //         };
 
-            // 브라우저 알림 허용 권한
-            let granted = false;
+    //         // 브라우저 알림 허용 권한
+    //         let granted = false;
 
-            if (Notification.permission === 'granted') {
-                granted = true;
-            } else if (Notification.permission !== 'denied') {
-                const permission = await Notification.requestPermission();
-                granted = permission === 'granted';
-            }
+    //         if (Notification.permission === 'granted') {
+    //             granted = true;
+    //         } else if (Notification.permission !== 'denied') {
+    //             const permission = await Notification.requestPermission();
+    //             granted = permission === 'granted';
+    //         }
 
-            // 알림 보여주기
-            if (granted) {
-                showNotification();
-            }
-        })();
-    });
+    //         // 알림 보여주기
+    //         if (granted) {
+    //             showNotification();
+    //         }
+    //     })();
+    // });
 
     return (
         <Container>
-            <ClearButton>
-                <ClearIcon onClick={closeModal} />
+            <ClearButton onClick={setModalOpen}>
+                <ClearIcon />
             </ClearButton>
             <IconLayout>
                 <NotificationsNoneIcon />
@@ -146,7 +134,7 @@ const ClearButton = styled.div`
     position: absolute;
     right: 10px;
     top: 10px;
-
+    background-color: #a3a1a1;
     color: #c7c7c7;
     &:hover {
         color: #a3a1a1;

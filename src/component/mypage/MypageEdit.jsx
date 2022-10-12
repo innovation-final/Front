@@ -3,6 +3,7 @@ import { useQueryClient, useMutation } from 'react-query';
 import styled from 'styled-components';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import editcog from '../../static/edit.png';
 import useGetUser from '../../hooks/useGetUser';
 import { mypageAPI } from '../../shared/api';
@@ -120,75 +121,94 @@ function MypageEdit() {
     return (
         <div>
             {' '}
-            {!isEdit ? (
-                <ProfileCard>
-                    <Button onClick={onClickSetEdit}>
-                        <EditCogBtn src={editcog} />
-                    </Button>
+            <ProfileCard>
+                {!isEdit ? (
+                    <>
+                        <Button onClick={onClickSetEdit}>
+                            <EditCogBtn src={editcog} />
+                        </Button>
+                        <ImgCard>
+                            <CardMedia src={profileImg} />
+                        </ImgCard>
+                        <CardContent style={{ display: 'flex' }}>
+                            <ContentLayout>
+                                <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="div"
+                                >
+                                    {nickname}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    {email}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    {profileMsg}
+                                </Typography>
+                            </ContentLayout>
+                            <WithdrawLayout>
+                                <WithdrawButton onClick={onDelete}>
+                                    회원탈퇴
+                                </WithdrawButton>
+                            </WithdrawLayout>
+                        </CardContent>
+                    </>
+                ) : (
+                    <>
+                        <Button onClick={onClickEdit}>수정완료</Button>
+                        <ImgCard>
+                            {profileImg && (
+                                <CardMedia
+                                    src={userImage || profileImg}
+                                    alt="preview-img"
+                                />
+                            )}
+                            <CogLayout>
+                                <input
+                                    type="file"
+                                    id="profile-upload"
+                                    accept="image/*"
+                                    ref={imageInput}
+                                    style={{ display: 'none' }}
+                                    onChange={onChangeImg}
+                                />
 
-                    <ImgCard>
-                        <CardMedia src={profileImg} />
-                    </ImgCard>
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {nickname}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {email}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {profileMsg}
-                        </Typography>
-                        <WithdrawLayout>
-                            <WithdrawButton onClick={onDelete}>
-                                회원탈퇴
-                            </WithdrawButton>
-                        </WithdrawLayout>
-                    </CardContent>
-                </ProfileCard>
-            ) : (
-                <ProfileCard>
-                    <Button onClick={onClickEdit}>수정완료</Button>
+                                <Button onClick={onChangeImg}>
+                                    <CogBtn src={editcog} />
+                                </Button>
+                            </CogLayout>
+                        </ImgCard>
+                        <CardContent>
+                            <InputBox>
+                                <Input
+                                    onChange={onChangeNickName}
+                                    value={editNickName}
+                                />
+                            </InputBox>
 
-                    <ImgCard>
-                        {profileImg && (
-                            <CardMedia
-                                src={userImage || profileImg}
-                                alt="preview-img"
-                            />
-                        )}
-                        <CogLayout>
-                            <input
-                                type="file"
-                                id="profile-upload"
-                                accept="image/*"
-                                ref={imageInput}
-                                style={{ display: 'none' }}
-                                onChange={onChangeImg}
-                            />
-
-                            <Button onClick={onChangeImg}>
-                                <CogBtn src={editcog} />
-                            </Button>
-                        </CogLayout>
-                    </ImgCard>
-                    <CardContent>
-                        <InputBox>
-                            <Input
-                                onChange={onChangeNickName}
-                                value={editNickName}
-                            />
-                        </InputBox>
-
-                        <ProfileMsgBox>
-                            <ProfileMsgInput
-                                onChange={onChangeProfileMsg}
-                                value={editProfileMsg}
-                            />
-                        </ProfileMsgBox>
-                    </CardContent>
-                </ProfileCard>
-            )}
+                            <ProfileMsgBox>
+                                <ProfileMsgInput
+                                    onChange={onChangeProfileMsg}
+                                    value={editProfileMsg}
+                                />
+                            </ProfileMsgBox>
+                        </CardContent>
+                    </>
+                )}{' '}
+                <Card>
+                    <IconLayout>
+                        <EmojiEventsIcon />
+                        <Text>뱃지/업적</Text>
+                    </IconLayout>
+                    <CardContent />
+                </Card>
+            </ProfileCard>
         </div>
     );
 }
@@ -210,8 +230,8 @@ const CardMedia = styled.img`
     justify-content: center;
     object-fit: cover;
     /* margin: 5% 30% 1% 20%; */
-    width: 400px;
-    height: 400px;
+    width: 250px;
+    height: 250px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
@@ -234,21 +254,27 @@ const Button = styled.button`
     right: 2px;
     top: 5px;
 `;
-const WithdrawLayout = styled.div`
-    height: 10%;
+const ContentLayout = styled.div`
     width: 100%;
-    bottom: 5px;
-    position: absolute;
+`;
+
+const WithdrawLayout = styled.div`
+    width: 20%;
+    margin-top: 15px;
 `;
 const WithdrawButton = styled.button`
     background-color: transparent;
-    border: 1px solid red;
+    border: 1px solid #e64343;
     border-radius: 5px;
-    color: ${props => props.theme.withDrawBorderColor};
+    color: ${props => props.theme.withDrawTextColor};
     cursor: pointer;
     padding: 10px;
+    background-color: rgba(254, 112, 112, 0.13);
     width: 80px;
     position: absolute;
+    &:hover {
+        background-color: #ff5858;
+    }
 `;
 const CogBtn = styled.img`
     width: 40px;
@@ -298,6 +324,27 @@ const ProfileMsgInput = styled.textarea`
 `;
 const CogLayout = styled.div`
     position: absolute;
-    top: 24em;
+    top: 15em;
     right: 33%;
+`;
+
+const Card = styled.div`
+    border: 2px solid ${props => props.theme.borderColor};
+    margin: 20px;
+    height: 280px;
+    border-radius: 15px;
+    overflow: scroll;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+`;
+
+const Text = styled.p`
+    font-weight: bold;
+    margin: 5px;
+    color: ${props => props.theme.textColor};
+`;
+const IconLayout = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 5px;
 `;

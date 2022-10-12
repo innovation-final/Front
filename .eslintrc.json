@@ -18,12 +18,12 @@
                 "props": true,
                 "ignorePropertyModificationsFor": ["state", "config", "ref"]
             }
-        ]
-    },
-    "parser": "@babel/eslint-parser",
-    "requireConfigFile": false,
-    "ecmaVersion": 2020,
-    "sourceType": "module",
-    "babelOptions": { "configFile": "./.babelrc" },
-    "parserOptions": { "requireConfigFile": "false" }
+        ],
+        "parser": "@babel/eslint-parser",
+        "requireConfigFile": false,
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "babelOptions": { "configFile": "./.babelrc" },
+        "parserOptions": { "requireConfigFile": "false" }
+    }
 }
