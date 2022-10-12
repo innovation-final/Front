@@ -9,7 +9,7 @@ import Button from '../elements/Button';
 import { postAPI } from '../../shared/api';
 import writeIcon from '../../static/write.png';
 import StockSearch from '../elements/StockSearch';
-import { searchState } from '../../atoms/atoms';
+import { searchState } from '../../atoms/search/searchState';
 
 function BoardWrite({ isEdit, originData }) {
     const { id } = useParams();
@@ -106,9 +106,7 @@ function BoardWrite({ isEdit, originData }) {
                 </ButtonBox>
                 <CardLayout className="card-body">
                     <CardDiv>
-                        <WriteText className="card-text">
-                            제목: &nbsp;
-                        </WriteText>
+                        <WriteText className="card-text">제목</WriteText>
                         <TitleInput
                             className="form-control form-control-lg"
                             type="text"
@@ -118,12 +116,11 @@ function BoardWrite({ isEdit, originData }) {
                         />
                     </CardDiv>
                     <CardDiv>
+                        <WriteText>종목</WriteText>
                         <StockSearch />
                     </CardDiv>
                     <ContentDiv>
-                        <WriteText className="card-text">
-                            내용: &nbsp;
-                        </WriteText>
+                        <WriteText className="card-text">내용</WriteText>
                         <TextareaContent
                             className="form-control form-control-lg"
                             type="text"
@@ -183,6 +180,7 @@ const Card = styled.div`
 
 const WriteText = styled.div`
     margin-top: 10px;
+    min-width: 50px;
 `;
 
 const TextareaContent = styled.textarea`
@@ -192,7 +190,7 @@ const TextareaContent = styled.textarea`
     color: ${props => props.theme.textColor};
     border: 1px solid ${props => props.theme.borderColor};
     background-color: ${props => props.theme.inputColor};
-    border-radius: 5px;
+    border-radius: 15px;
     &:focus {
         outline: 1px solid ${props => props.theme.hoverColor};
     }
@@ -226,7 +224,7 @@ const TitleInput = styled.input`
     width: 95%;
     color: ${props => props.theme.textColor};
     border: 1px solid ${props => props.theme.borderColor};
-    border-radius: 5px;
+    border-radius: 15px;
     background-color: ${props => props.theme.inputColor};
     &:focus {
         outline: 1px solid ${props => props.theme.hoverColor};

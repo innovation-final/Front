@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import SideBarHeader from '../sidebar/SideBarHeader';
 import SideBarItem from '../sidebar/SideBarItem';
-import { wideState, isDarkState } from '../../atoms/atoms';
+import { wideState, isDarkState } from '../../atoms/common/commonState';
 
 function SideBar() {
     const navigate = useNavigate();
@@ -30,7 +30,11 @@ function SideBar() {
             onClickFn: () => navigate('/community'),
             param: '/community',
         },
-        { title: '모의투자', onClickFn: () => navigate('/investment') },
+        {
+            title: '모의투자',
+            onClickFn: () => navigate('/investment'),
+            param: '/investment',
+        },
         { title: '랭킹보드', onClickFn: () => navigate('/') },
         {
             title: '관심종목 관리',

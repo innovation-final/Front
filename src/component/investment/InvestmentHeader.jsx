@@ -1,13 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useQueryClient } from 'react-query';
+import SearchIcon from '@mui/icons-material/Search';
 import StockSearch from '../elements/StockSearch';
+import Button from '../elements/Button';
+import { searchState } from '../../atoms/search/searchState';
+import { currentStockCode } from '../../atoms/investment/stockState';
 
 function InvestmentHeader() {
+    const client = useQueryClient();
+    const stocksQuery = client.getQueryData('stockSearch');
+    const stocksData = stocksQuery?.data.data;
+    const setCurrentState = useSetRecoilState(currentStockCode);
+    const search = useRecoilValue(searchState);
+    const onClick = () => {
+        if (!stocksData) return;
+        const stockCode = stocksData?.find(stock => stock.name === search).code;
+        setCurrentState(stockCode);
+    };
+
     return (
         <StyleHeader>
             <StyleContainer>
                 <SearchBox>
                     <StockSearch />
+                    <Button _onClick={onClick}>
+                        <SearchIcon />
+                    </Button>
                 </SearchBox>
                 <MyInfo>
                     <MyBalance>

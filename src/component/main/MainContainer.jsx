@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { wideState } from '../../atoms/atoms';
+import { wideState } from '../../atoms/common/commonState';
 
 function MainContainer({ children }) {
     const wide = useRecoilState(wideState);

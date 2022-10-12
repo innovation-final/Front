@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
 import { useRecoilValue } from 'recoil';
 import { useMutation, useQueryClient } from 'react-query';
 import FavoritesIcon from '../elements/FavoritesIcon';
@@ -9,7 +8,7 @@ import {
     toFixTwoPoint,
     arrowParser,
 } from '../../util/parser';
-import { isDarkState } from '../../atoms/atoms';
+import { isDarkState } from '../../atoms/common/commonState';
 import { stockAPI } from '../../shared/api';
 
 function StockInfoBox({ stockData }) {

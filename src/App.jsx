@@ -6,7 +6,8 @@ import LiveChat from './component/livechat/LiveChat';
 import Router from './Router';
 import GlobalStyles from './GlobalStyles';
 import { lightTheme, darkTheme } from './theme/ThemeColor';
-import { isDarkState } from './atoms/atoms';
+import { isDarkState } from './atoms/common/commonState';
+import LoadingSpinner from './component/elements/LoadingSpinner';
 // import NoticePage from './component/notice/NoticePage';
 
 function App() {
@@ -16,9 +17,11 @@ function App() {
         <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
             <QueryClientProvider client={queryClient}>
                 <GlobalStyles />
-                <Router />
-                {/* <NoticePage /> */}
-                <LiveChat />
+                <React.Suspense fallback={<LoadingSpinner />}>
+                    <Router />
+                    {/* <NoticePage /> */}
+                    <LiveChat />
+                </React.Suspense>
             </QueryClientProvider>
         </ThemeProvider>
     );

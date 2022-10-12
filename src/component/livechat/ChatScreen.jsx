@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
-import { chatLogState } from '../../atoms/atoms';
+import { chatLogState } from '../../atoms/chat/chatState';
 import { publish, getNickName, getToken } from '../../util/stomp';
 
 function ChatScreen() {

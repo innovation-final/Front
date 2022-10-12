@@ -16,9 +16,9 @@ function InvestmentLayout() {
                     <InvestmentInfoBox />
                     <InvestmentMyStock />
                 </StyleLeftSide>
-                <StyledightSide>
+                <StyledRightSide>
                     <InvestmentTrade />
-                </StyledightSide>
+                </StyledRightSide>
             </StyleWrapper>
         </StyleContainer>
     );
@@ -42,7 +42,7 @@ const StyleLeftSide = styled.div`
     width: 70%;
     margin-right: 21px;
 `;
-const StyledightSide = styled.div`
+const StyledRightSide = styled.div`
     width: 25%;
     margin-left: 21px;
 `;

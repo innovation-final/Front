@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { useQuery } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 import { stockAPI } from '../../shared/api';
-import { searchState } from '../../atoms/atoms';
+import { searchState } from '../../atoms/search/searchState';
 
 function StockSearch() {
     const { data } = useQuery('stockSearch', () => stockAPI.getStockSearch());
@@ -73,8 +73,6 @@ function StockSearch() {
     return (
         <WholeBox>
             <StockInputLayout>
-                <WriteText className="card-text">종목: &nbsp;</WriteText>
-
                 <InputBox isHaveInputValue={isHaveInputValue}>
                     <StockInput
                         type="text"
@@ -88,38 +86,40 @@ function StockSearch() {
                     </DeleteButton>
                 </InputBox>
             </StockInputLayout>
-            <StockDropInputLayout>
-                {isHaveInputValue && (
-                    <DropDownBox>
-                        {dropDownList.length === 0 && (
-                            <DropDownItem>
-                                해당하는 단어가 없습니다
-                            </DropDownItem>
-                        )}
-                        {dropDownList.map((dropDownItem, dropDownIndex) => {
-                            return (
-                                <DropDownItem
-                                    key={uuidv4()}
-                                    dropDownList={dropDownIndex}
-                                    onClick={() =>
-                                        clickDropDownItem(dropDownItem)
-                                    }
-                                    onMouseOver={() =>
-                                        setDropDownItemIndex(dropDownIndex)
-                                    }
-                                    className={
-                                        dropDownItemIndex === dropDownIndex
-                                            ? 'selected'
-                                            : ''
-                                    }
-                                >
-                                    {dropDownItem}
+            <DropDownWrapper>
+                <StockDropInputLayout>
+                    {isHaveInputValue && (
+                        <DropDownBox>
+                            {dropDownList.length === 0 && (
+                                <DropDownItem>
+                                    해당하는 단어가 없습니다
                                 </DropDownItem>
-                            );
-                        })}
-                    </DropDownBox>
-                )}
-            </StockDropInputLayout>
+                            )}
+                            {dropDownList.map((dropDownItem, dropDownIndex) => {
+                                return (
+                                    <DropDownItem
+                                        key={uuidv4()}
+                                        dropDownList={dropDownIndex}
+                                        onClick={() =>
+                                            clickDropDownItem(dropDownItem)
+                                        }
+                                        onMouseOver={() =>
+                                            setDropDownItemIndex(dropDownIndex)
+                                        }
+                                        className={
+                                            dropDownItemIndex === dropDownIndex
+                                                ? 'selected'
+                                                : ''
+                                        }
+                                    >
+                                        {dropDownItem}
+                                    </DropDownItem>
+                                );
+                            })}
+                        </DropDownBox>
+                    )}
+                </StockDropInputLayout>
+            </DropDownWrapper>
         </WholeBox>
     );
 }
@@ -130,16 +130,17 @@ const inactiveBorderRadius = '16px 16px 16px 16px';
 
 const WholeBox = styled.div`
     width: 100%;
+    position: relative;
 `;
 
-const WriteText = styled.div`
-    margin-top: 10px;
-`;
+// const WriteText = styled.div`
+//     margin-top: 10px;
+// `;
 
 const InputBox = styled.div`
     display: flex;
     flex-direction: row;
-    padding: 10px;
+    padding: 15px;
     width: 100%;
     color: ${props => props.theme.textColor};
     background-color: ${props => props.theme.inputColor};
@@ -158,7 +159,6 @@ const StockInputLayout = styled.div`
     display: flex;
 `;
 const StockDropInputLayout = styled.div`
-    position: relative;
     width: 100%;
     justify-content: center;
 `;
@@ -178,20 +178,28 @@ const DeleteButton = styled.div`
     cursor: pointer;
 `;
 
+const DropDownWrapper = styled.div`
+    width: 100%;
+`;
+
 const DropDownBox = styled.ul`
     display: block;
+    position: absolute;
+    width: 100%;
     margin: 0 auto;
-    padding: 10px;
-    margin-left: 38px;
     background-color: ${props => props.theme.inputColor};
     border: 1px solid ${props => props.theme.borderColor};
     border-top: none;
     border-radius: 0 0 16px 16px;
     box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);
     list-style-type: none;
+    max-height: 20rem;
+    overflow: scroll;
+    z-index: 999;
 `;
 
 const DropDownItem = styled.li`
+    padding: 15px;
     &.selected {
         color: #10a3ff;
     }

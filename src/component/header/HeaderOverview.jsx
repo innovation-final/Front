@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import LatestPost from './LatestPost';
-import { wideState } from '../../atoms/atoms';
+import { wideState } from '../../atoms/common/commonState';
 
 function HeaderOverview() {
     const wide = useRecoilValue(wideState);

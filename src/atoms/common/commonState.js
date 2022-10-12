@@ -15,37 +15,6 @@ export const isDarkState = atom({
     default: false,
 });
 
-export const searchState = atom({
-    key: 'search',
-    default: '',
-});
-export const stockCodeState = atom({
-    key: 'stockCode',
-    default: '',
-});
-
-export const toggleLiveChat = atom({
-    key: 'chat',
-    default: false,
-});
-
-export const chatLogState = atom({
-    key: 'chatlog',
-    default: [],
-});
-
-export const slideSelector = selector({
-    key: 'slideSelector',
-    get: ({ get }) => {
-        const index = get(slideState);
-        return index;
-    },
-    set: ({ set }, newValue) => {
-        const newIndex = (newValue + 1) % 5;
-        set(slideState, newIndex);
-    },
-});
-
 export const modalGatherState = atom({
     key: 'modalGatherState',
     default: {
@@ -57,5 +26,17 @@ export const modalGatherState = atom({
         friendAddModal: false,
         explainModal: false,
         researchPopup: false,
+    },
+});
+
+export const slideSelector = selector({
+    key: 'slideSelector',
+    get: ({ get }) => {
+        const index = get(slideState);
+        return index;
+    },
+    set: ({ set }, newValue) => {
+        const newIndex = (newValue + 1) % 5;
+        set(slideState, newIndex);
     },
 });
