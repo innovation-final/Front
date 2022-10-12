@@ -5,9 +5,8 @@ import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
 import { chatLogState } from '../../atoms/chat/chatState';
-import { publish, getNickName, getToken } from '../../util/stomp';
 
-function ChatScreen() {
+function ChatScreen({ publish, nickName, token }) {
     const chatList = useRecoilValue(chatLogState);
     const [chat, setChat] = useState('');
 
@@ -23,7 +22,7 @@ function ChatScreen() {
         setChat('');
     };
 
-    if (getToken() === null) {
+    if (token === null) {
         return (
             <StyleChatScreen>
                 <NeedToLogin>로그인을 해주세요</NeedToLogin>
@@ -38,25 +37,25 @@ function ChatScreen() {
                         ch.type === 'TALK' ? (
                             <Wrapper
                                 key={`${uuid()} ${Date.now()}`}
-                                $isMine={ch.nickName === getNickName()}
+                                $isMine={ch.nickName === nickName}
                             >
                                 <UserInfo>
                                     <ProfileImg
                                         src={`${ch.imageUrl}`}
-                                        isMine={ch.nickName === getNickName()}
+                                        isMine={ch.nickName === nickName}
                                     />
                                     <UserName
-                                        isMine={ch.nickName === getNickName()}
+                                        isMine={ch.nickName === nickName}
                                     >{`${ch.nickName}`}</UserName>
                                 </UserInfo>
                                 <MessageContainer
-                                    isMine={ch.nickName === getNickName()}
+                                    isMine={ch.nickName === nickName}
                                 >{`${ch.message}`}</MessageContainer>
                             </Wrapper>
                         ) : (
                             <EnterMessage
                                 key={`${uuid()} ${Date.now()}`}
-                                isMine={ch.nickName === getNickName()}
+                                isMine={ch.nickName === nickName}
                             >{`${ch.message}`}</EnterMessage>
                         ),
                     )}
