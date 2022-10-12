@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import CardContent from '@mui/material/CardContent';
 import PaidIcon from '@mui/icons-material/Paid';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import MyPageProfit from './MyPageProfit';
 import MyPageBage from './MyPageBage';
 import MypageEdit from './MypageEdit';
+import BankPage from './BankPage';
 
 function MypageMain() {
     return (
@@ -15,19 +14,15 @@ function MypageMain() {
             </ProfileLayout>
             <CardsLayout>
                 <Card>
-                    <IconLayout>
-                        <PaidIcon />
-                        <Text>모의투자 수익률</Text>
-                    </IconLayout>
                     <CardContent>
-                        <MyPageProfit />
+                        <BankPage />
                     </CardContent>
                 </Card>
 
                 <Card>
                     <IconLayout>
-                        <EmojiEventsIcon />
-                        <Text>뱃지/업적</Text>
+                        <PaidIcon />
+                        <Text>모의투자 수익률</Text>
                     </IconLayout>
                     <CardContent>
                         <MyPageBage />
@@ -46,7 +41,7 @@ const CardLayout = styled.div`
     height: 750px;
 `;
 const ProfileLayout = styled.div`
-    width: 100%;
+    width: 50%;
     height: 100%;
     height: 750px;
 `;
@@ -61,7 +56,7 @@ const Card = styled.div`
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 const CardsLayout = styled.div`
-    width: 40%;
+    width: 50%;
     object-fit: cover;
 `;
 
@@ -70,11 +65,6 @@ const Text = styled.p`
     margin: 5px;
     color: ${props => props.theme.textColor};
 `;
-// const CogLayout = styled.div`
-//     position: absolute;
-//     top: 24em;
-//     right: 33%;
-// `;
 
 const IconLayout = styled.div`
     display: flex;

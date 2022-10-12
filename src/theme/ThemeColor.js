@@ -4,7 +4,7 @@ export const lightTheme = {
     bgColor: 'white',
     textColor: 'black',
     menuTextColor: '#525961',
-    withDrawTextColor: '#ea6d62',
+    withDrawTextColor: '#e93c3c',
     inputColor: '#f1fafd',
     buttonColor: 'skyblue',
     borderColor: 'skyblue',
