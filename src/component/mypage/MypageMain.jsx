@@ -13,11 +13,11 @@ function MypageMain() {
                 <MypageEdit />
             </ProfileLayout>
             <CardsLayout>
-                <Card>
+                <BankCard>
                     <CardContent>
                         <BankPage />
                     </CardContent>
-                </Card>
+                </BankCard>
 
                 <Card>
                     <IconLayout>
@@ -55,6 +55,17 @@ const Card = styled.div`
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
+const BankCard = styled.div`
+    border: 2px solid ${props => props.theme.borderColor};
+    border-bottom: 20px double ${props => props.theme.borderColor};
+
+    margin: 20px;
+    height: 343px;
+    border-radius: 15px;
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+`;
 const CardsLayout = styled.div`
     width: 50%;
     object-fit: cover;
@@ -69,5 +80,5 @@ const Text = styled.p`
 const IconLayout = styled.div`
     display: flex;
     align-items: center;
-    margin: 5px;
+    padding: 16px;
 `;

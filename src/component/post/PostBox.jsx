@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -44,12 +45,26 @@ function PostBox() {
     });
 
     const onPostDelete = () => {
-        if (window.confirm('정말 삭제하겠습니까?')) {
-            mutation.mutate(id);
-            alert('삭제되었습니다');
-        } else {
-            alert('취소되었습니다.');
-        }
+        Swal.fire({
+            title: '삭제하겠습니까?',
+            text: '다시 되돌릴 수 없습니다.',
+            imageUrl:
+                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#ff6026',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then(result => {
+            if (result.isConfirmed) {
+                mutation.mutate(id);
+                Swal.fire('삭제되었습니다.');
+            }
+        });
     };
     // 좋아요
     const likeposts = async () => {
