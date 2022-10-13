@@ -1,4 +1,6 @@
 import * as StompJs from '@stomp/stompjs';
+import { useRecoilState } from 'recoil';
+import { userState } from '../atoms/user/userState';
 
 // Header "Authorization" token 보내기
 
@@ -12,15 +14,14 @@ export const setClient = _client => {
     client = _client;
 };
 export const setProfile = () => {
-    imageUrl = localStorage.getItem('imgUrl');
-    nickName = localStorage.getItem('nickName');
-    token = localStorage.getItem('access-token');
+    const user = useRecoilState(userState);
+    imageUrl = user.imageUrl;
+    nickName = user.nickName;
+    token = user.token;
 };
-
 export const getToken = () => {
     return token;
 };
-
 export const getImageUrl = () => {
     return imageUrl;
 };
@@ -37,29 +38,29 @@ const subscribeCallback = (data, setChatList) => {
 };
 
 export const subscribe = setChatList => {
-    client.current.subscribe(
-        `/sub/chat`,
-        body => {
-            const jsonBody = JSON.parse(body.body);
-            subscribeCallback(jsonBody, setChatList);
-        },
-        { token },
-    );
+    console.log(token);
+    client.current.subscribe(`/sub/chat`, body => {
+        const jsonBody = JSON.parse(body.body);
+        subscribeCallback(jsonBody, setChatList);
+    });
 };
 
 export const publish = (ch, type) => {
     if (!client.current.connected) return;
-    client.current.publish({
-        destination: '/pub/chat',
-        body: JSON.stringify({
-            type,
-            sendTime: Date.now(),
-            imageUrl,
-            nickName,
-            userId: '',
-            message: ch,
-        }),
-    });
+    client.current.publish(
+        {
+            destination: '/pub/chat',
+            body: JSON.stringify({
+                type,
+                sendTime: Date.now(),
+                imageUrl,
+                nickName,
+                userId: '',
+                message: ch,
+            }),
+        },
+        { Authorization: token },
+    );
 };
 
 export const connect = setChatList => {

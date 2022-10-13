@@ -1,33 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import Messenger from './Messenger';
-import { toggleLiveChat, chatLogState } from '../../atoms/chat/chatState';
-import { setClient, setProfile, connect, disconnect } from '../../util/stomp';
+import { toggleLiveChat } from '../../atoms/chat/chatState';
 
 function LiveChat() {
     const [onLiveChat, setOnLiveChat] = useRecoilState(toggleLiveChat);
-    const setChatList = useSetRecoilState(chatLogState);
-    const [delay, setDelay] = useState(false);
-    const client = useRef({});
-    const onClick = async () => {
-        if (delay) return;
-        setDelay(true);
+    const onClick = () => {
         setOnLiveChat(props => !props);
-        setTimeout(() => {
-            setDelay(false);
-        }, 500);
-        if (!onLiveChat) connect(setChatList);
-        else {
-            disconnect();
-        }
     };
-
-    useEffect(() => {
-        setClient(client);
-        setProfile();
-    }, []);
 
     return (
         <StyleCircle>

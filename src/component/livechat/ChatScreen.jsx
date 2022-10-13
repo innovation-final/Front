@@ -5,12 +5,11 @@ import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
 import { chatLogState } from '../../atoms/chat/chatState';
-import { publish, getNickName, getToken } from '../../util/stomp';
 
-function ChatScreen() {
+function ChatScreen({ publish, user }) {
     const chatList = useRecoilValue(chatLogState);
+    const { id, isLogin } = user;
     const [chat, setChat] = useState('');
-
     const handleChange = event => {
         setChat(event.target.value);
     };
@@ -23,7 +22,7 @@ function ChatScreen() {
         setChat('');
     };
 
-    if (getToken() === null) {
+    if (!isLogin) {
         return (
             <StyleChatScreen>
                 <NeedToLogin>로그인을 해주세요</NeedToLogin>
@@ -38,25 +37,25 @@ function ChatScreen() {
                         ch.type === 'TALK' ? (
                             <Wrapper
                                 key={`${uuid()} ${Date.now()}`}
-                                $isMine={ch.nickName === getNickName()}
+                                $isMine={ch.userId === id}
                             >
                                 <UserInfo>
                                     <ProfileImg
                                         src={`${ch.imageUrl}`}
-                                        isMine={ch.nickName === getNickName()}
+                                        isMine={ch.userId === id}
                                     />
                                     <UserName
-                                        isMine={ch.nickName === getNickName()}
-                                    >{`${ch.nickName}`}</UserName>
+                                        isMine={ch.userId === id}
+                                    >{`${ch.userId}`}</UserName>
                                 </UserInfo>
                                 <MessageContainer
-                                    isMine={ch.nickName === getNickName()}
+                                    isMine={ch.userId === id}
                                 >{`${ch.message}`}</MessageContainer>
                             </Wrapper>
                         ) : (
                             <EnterMessage
                                 key={`${uuid()} ${Date.now()}`}
-                                isMine={ch.nickName === getNickName()}
+                                isMine={ch.userId === id}
                             >{`${ch.message}`}</EnterMessage>
                         ),
                     )}
