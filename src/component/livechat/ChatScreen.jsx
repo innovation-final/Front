@@ -14,6 +14,8 @@ function ChatScreen({ publish, user }) {
         setChat(event.target.value);
     };
 
+    console.log(user);
+
     const handleSubmit = (event, ch) => {
         // 보내기 버튼 눌렀을 때 publish
         event.preventDefault();
@@ -46,7 +48,7 @@ function ChatScreen({ publish, user }) {
                                     />
                                     <UserName
                                         isMine={ch.userId === id}
-                                    >{`${ch.userId}`}</UserName>
+                                    >{`${ch.nickName}`}</UserName>
                                 </UserInfo>
                                 <MessageContainer
                                     isMine={ch.userId === id}
