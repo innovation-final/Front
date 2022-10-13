@@ -19,6 +19,8 @@ function Messenger() {
     const user = useRecoilValue(userState);
     const client = useRef({});
 
+    console.log(user);
+
     const subscribeCallback = data => {
         setChatList(props => [...props, data]);
         const chatScreen = document.getElementById('chatting');
@@ -41,7 +43,7 @@ function Messenger() {
             body: JSON.stringify({
                 type,
                 sendTime: Date.now(),
-                imageUrl: user.imageUrl,
+                imageUrl: user.profileImg,
                 nickName: user.nickname,
                 userId: user.id,
                 message: ch,
