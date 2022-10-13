@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useGetUser from '../../hooks/useGetUser';
+import { userState } from '../../atoms/user/userState';
 import Notice from '../notice/Notice';
 
 function HeaderProfile() {
     const navigate = useNavigate();
-    const { data } = useGetUser();
-    const nickname = data?.nickname;
-    const profileImg = data?.profileImg;
+    const { data, isLoading } = useGetUser();
+    const [user, setUser] = useRecoilState(userState);
     useEffect(() => {
-        if (data) {
-            localStorage.setItem('nickName', nickname);
-            localStorage.setItem('imgUrl', profileImg);
+        if (!isLoading && user) {
+            setUser({
+                ...data,
+                token: localStorage.getItem('access-token'),
+                isLogin: true,
+            });
         }
-    }, [data]);
+    }, [isLoading]);
     // 모달창 노출 여부 state
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -32,13 +36,13 @@ function HeaderProfile() {
                     onClick={() => {
                         navigate('/mypage');
                     }}
-                    src={profileImg}
+                    src={user.profileImg}
                 />
             </ImageBox>
             <InfoBox>
                 <ProfileInfo>
                     <Hello>어서오세요</Hello>
-                    <UserName>{nickname}님!</UserName>
+                    <UserName>{user.nickname}님!</UserName>
                 </ProfileInfo>
             </InfoBox>
             <IconBox>
