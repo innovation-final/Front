@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
-export const despositState = atom({
-    key: 'deposit',
+export const seedMoneyState = atom({
+    key: 'seedMoney',
     default: 5000000,
 });
 export const openTargetState = atom({

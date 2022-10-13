@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import ClearIcon from '@mui/icons-material/Clear';
+import Swal from 'sweetalert2';
 import Layout from '../layout/Layout';
 import Button from '../elements/Button';
 import { postAPI } from '../../shared/api';
@@ -52,29 +53,46 @@ function BoardWrite({ isEdit, originData }) {
     });
 
     const submitHandler = () => {
-        if (window.confirm(isEdit ? '수정하겠습니까?' : '하겠습니까?')) {
-            if (!isEdit) {
-                mutation.mutate({
-                    content,
-                    title,
-                    stockName: inputValue,
-                });
-                setInputValue('');
-                alert('작성되었습니다');
-                navigate('/community');
+        Swal.fire({
+            title: isEdit ? '수정하겠습니까?' : '작성하겠습니까?',
+            imageUrl:
+                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#ff6026',
+            confirmButtonText: isEdit ? '수정' : '작성',
+            cancelButtonText: '취소',
+
+            reverseButtons: true, // 버튼 순서 거꾸로
+        }).then(result => {
+            if (result.isConfirmed) {
+                if (!isEdit) {
+                    mutation.mutate({
+                        content,
+                        title,
+                        stockName: inputValue,
+                    });
+                    setInputValue('');
+                    Swal.fire('작성되었습니다.');
+                    navigate('/community');
+                } else {
+                    editMutation.mutate({
+                        content,
+                        title,
+                        stockName: inputValue,
+                    });
+                    Swal.fire('수정되었습니다.');
+                    navigate(`/post/${id}`);
+                }
             } else {
-                editMutation.mutate({
-                    content,
-                    title,
-                    stockName: inputValue,
-                });
-                alert('수정되었습니다');
-                navigate(`/post/${id}`);
+                return false;
             }
-        } else {
-            return false;
-        }
-        return 0;
+            return 0;
+        });
     };
     const cancelHandler = () => {
         setInputValue('');

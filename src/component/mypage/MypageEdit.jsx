@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { useQueryClient, useMutation } from 'react-query';
 import styled from 'styled-components';
-import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import Swal from 'sweetalert2';
 import editcog from '../../static/edit.png';
 import useGetUser from '../../hooks/useGetUser';
 import { mypageAPI } from '../../shared/api';
@@ -76,16 +76,17 @@ function MypageEdit() {
         },
     });
     const onDelete = () => {
-        function removeLocalStorage() {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    resolve();
-                }, 500);
-            });
-        }
+        // function removeLocalStorage() {
+        //     return new Promise(resolve => {
+        //         setTimeout(() => {
+        //             resolve();
+        //         }, 800);
+        //     });
+        // }
         deleteMutation.mutate();
-        removeLocalStorage().then(localStorage.clear());
+
         window.location.replace(`/login`);
+        // removeLocalStorage().then(localStorage.clear());
     };
     const onClickSetEdit = () => {
         setEditNickName(nickname);
@@ -95,27 +96,41 @@ function MypageEdit() {
 
     const onClickEdit = event => {
         event.preventDefault();
+        Swal.fire({
+            title: '수정하겠습니까?',
+            imageUrl:
+                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#ff6026',
+            confirmButtonText: '수정',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then(result => {
+            if (result.isConfirmed) {
+                setIsEdit(false);
+                const formData = new FormData();
+                formData.append(
+                    'mypage',
+                    new Blob([JSON.stringify()], {
+                        type: 'application/json',
+                    }),
+                );
+                // key값 서버랑 동일해야됨
+                formData.append('profileImg', img);
+                formData.append('nickname', editNickName);
+                formData.append('profileMsg', editProfileMsg);
 
-        if (window.confirm('수정하겠습니까?')) {
-            setIsEdit(false);
-            const formData = new FormData();
-            formData.append(
-                'mypage',
-                new Blob([JSON.stringify()], {
-                    type: 'application/json',
-                }),
-            );
-            // key값 서버랑 동일해야됨
-            formData.append('profileImg', img);
-            formData.append('nickname', editNickName);
-            formData.append('profileMsg', editProfileMsg);
+                editMutation.mutate(formData);
+                Swal.fire('수정되었습니다.');
+                localStorage.setItem('nickName', editNickName);
 
-            editMutation.mutate(formData);
-            alert('수정되었습니다');
-            localStorage.setItem('nickName', editNickName);
-
-            localStorage.setItem('imgUrl', userImage);
-        }
+                localStorage.setItem('imgUrl', userImage);
+            }
+        });
     };
 
     return (
@@ -132,13 +147,13 @@ function MypageEdit() {
                         </ImgCard>
                         <CardContent style={{ display: 'flex' }}>
                             <ContentLayout>
-                                <Typography
+                                <NickNameTypography
                                     gutterBottom
                                     variant="h5"
                                     component="div"
                                 >
                                     {nickname}
-                                </Typography>
+                                </NickNameTypography>
                                 <Typography
                                     variant="body2"
                                     color="text.secondary"
@@ -158,6 +173,13 @@ function MypageEdit() {
                                 </WithdrawButton>
                             </WithdrawLayout>
                         </CardContent>
+                        <Card>
+                            <IconLayout>
+                                <EmojiEventsIcon />
+                                <Text>뱃지/업적</Text>
+                            </IconLayout>
+                            <CardContent />
+                        </Card>
                     </>
                 ) : (
                     <>
@@ -184,10 +206,11 @@ function MypageEdit() {
                                 </Button>
                             </CogLayout>
                         </ImgCard>
-                        <CardContent>
+                        <InputContent>
                             <InputBox>
                                 <Input
                                     onChange={onChangeNickName}
+                                    placeholder="닉네임"
                                     value={editNickName}
                                 />
                             </InputBox>
@@ -195,26 +218,29 @@ function MypageEdit() {
                             <ProfileMsgBox>
                                 <ProfileMsgInput
                                     onChange={onChangeProfileMsg}
+                                    placeholder="소개글"
                                     value={editProfileMsg}
                                 />
                             </ProfileMsgBox>
-                        </CardContent>
+                        </InputContent>
                     </>
                 )}{' '}
-                <Card>
-                    <IconLayout>
-                        <EmojiEventsIcon />
-                        <Text>뱃지/업적</Text>
-                    </IconLayout>
-                    <CardContent />
-                </Card>
             </ProfileCard>
         </div>
     );
 }
 
 export default MypageEdit;
-
+const NickNameTypography = styled.p`
+    font-weight: bold;
+    margin: 5px;
+    font-size: 25px;
+    color: ${props => props.theme.textColor};
+`;
+const Typography = styled.p`
+    margin: 5px;
+    color: ${props => props.theme.textColor};
+`;
 const ImgCard = styled.div`
     border-radius: 500px;
     position: relative;
@@ -225,7 +251,7 @@ const ImgCard = styled.div`
 
 const CardMedia = styled.img`
     border-radius: 50%;
-    margin: 40px 0px;
+    margin: 30px 0px;
     align-items: center;
     justify-content: center;
     object-fit: cover;
@@ -254,10 +280,13 @@ const Button = styled.button`
     right: 2px;
     top: 5px;
 `;
+const InputContent = styled.div`
+    padding: 60px;
+`;
 const ContentLayout = styled.div`
     width: 100%;
+    height: 100px;
 `;
-
 const WithdrawLayout = styled.div`
     width: 20%;
     margin-top: 15px;
@@ -291,6 +320,7 @@ const InputBox = styled.div`
 `;
 const ProfileMsgBox = styled.div`
     width: 95%;
+    height: 10px;
     margin: 10px;
 `;
 const Input = styled.input`
@@ -315,7 +345,7 @@ const ProfileMsgInput = styled.textarea`
     border-radius: 10px;
     background-color: ${props => props.theme.inputColor};
     width: 100%;
-    height: 100px;
+    height: 150px;
     &:active,
     &:focus,
     &:hover {
@@ -330,8 +360,9 @@ const CogLayout = styled.div`
 
 const Card = styled.div`
     border: 2px solid ${props => props.theme.borderColor};
-    margin: 20px;
-    height: 280px;
+    padding: 5px;
+    margin: 0 20px 0 20px;
+    height: 250px;
     border-radius: 15px;
     overflow: scroll;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
@@ -346,5 +377,5 @@ const Text = styled.p`
 const IconLayout = styled.div`
     display: flex;
     align-items: center;
-    margin: 5px;
+    padding: 16px;
 `;
