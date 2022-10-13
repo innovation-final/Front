@@ -11,5 +11,6 @@ export const userState = atom({
         totalReturnRate: 0.0,
         achievements: [],
         token: '',
+        isLogin: false,
     },
 });

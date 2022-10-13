@@ -17,12 +17,12 @@ function HeaderProfile() {
             setUser({
                 ...data,
                 token: localStorage.getItem('access-token'),
+                isLogin: true,
             });
         }
     }, [isLoading]);
     // 모달창 노출 여부 state
     const [modalOpen, setModalOpen] = useState(false);
-    console.log(user);
 
     // 모달창 노출
     const showModal = () => {

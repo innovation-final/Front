@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { useSetRecoilState, useRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import * as StompJs from '@stomp/stompjs';
 import ChatScreen from './ChatScreen';
 import { userState } from '../../atoms/user/userState';
-import { chatLogState } from '../../atoms/chat/chatState';
+import { chatLogState, toggleLiveChat } from '../../atoms/chat/chatState';
 
 const UpAnimation = {
     start: { opacity: 0, y: 50 },
@@ -15,7 +15,8 @@ const WS_URL = 'ws://hakjoonkim.shop/stomp';
 
 function Messenger() {
     const setChatList = useSetRecoilState(chatLogState);
-    const user = useRecoilState(userState);
+    const onChat = useRecoilValue(toggleLiveChat);
+    const user = useRecoilValue(userState);
     const client = useRef({});
 
     const subscribeCallback = data => {
@@ -41,8 +42,8 @@ function Messenger() {
                 type,
                 sendTime: Date.now(),
                 imageUrl: user.imageUrl,
-                nickName: user.nickName,
-                userId: '',
+                nickName: user.nickname,
+                userId: user.id,
                 message: ch,
             }),
         });
@@ -57,29 +58,23 @@ function Messenger() {
         });
         client.current.activate();
         setTimeout(() => {
-            publish(`${user.nickName}님이 입장하였습니다.`, 'ENTER');
+            publish(`${user.nickname}님이 입장하였습니다.`, 'ENTER');
         }, 500);
     };
     const disconnect = () => {
-        publish(`${user.nickName}님이 나가셨습니다.`, 'ENTER');
-        setTimeout(() => {
-            client.current.deactivate();
-        }, 500);
+        publish(`${user.nickname}님이 나가셨습니다.`, 'ENTER');
+        client.current.deactivate();
     };
 
     useEffect(() => {
-        connect();
+        if (onChat) connect();
         return () => disconnect();
-    }, []);
+    }, [onChat]);
     return (
         <StyleMessenger variants={UpAnimation} initial="start" animate="end">
             <Speaker />
             <CameraLens />
-            <ChatScreen
-                publish={publish}
-                nickName={user.nickName}
-                token={user.token}
-            />
+            <ChatScreen publish={publish} user={user} />
             <HomeButton />
         </StyleMessenger>
     );
