@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import {
-    despositState,
+    seedMoneyState,
     openTargetState,
     openExpireAtState,
 } from '../../../atoms/account/accountState';
 
 function BankOpen() {
-    const depositList = [
+    const seedMoneyList = [
         { value: 5000000, name: ` 500 만원` },
         { value: 10000000, name: ` 1000 만원` },
         { value: 25000000, name: ` 2500 만원` },
@@ -21,9 +21,9 @@ function BankOpen() {
         { value: 180, name: '180일' },
     ];
     // eslint-disable-next-line no-unused-vars
-    const [deposit, setDeposit] = useRecoilState(despositState);
-    const depositChangeHandler = e => {
-        setDeposit(e.target.value);
+    const [seedMoney, setSeedMoney] = useRecoilState(seedMoneyState);
+    const seedMoneyChangeHandler = e => {
+        setSeedMoney(e.target.value);
     };
     const [targetReturnRate, setTargetReturnRate] =
         useRecoilState(openTargetState);
@@ -41,6 +41,17 @@ function BankOpen() {
                 <RateInput
                     className="form-control form-control-lg"
                     type="number"
+                    min="0"
+                    max="100"
+                    onInput={e => {
+                        if (e.target.value >= 0) {
+                            if (e.target.value.length > 3) {
+                                if (e.target.value > 100) {
+                                    alert('최대 100까지 입력가능');
+                                }
+                            }
+                        }
+                    }}
                     placeholder="수익률"
                     onChange={targetChangeHandler}
                     value={targetReturnRate}
@@ -54,10 +65,10 @@ function BankOpen() {
                         <Select
                             name="city"
                             className="select"
-                            onChange={depositChangeHandler}
-                            value={deposit}
+                            onChange={seedMoneyChangeHandler}
+                            value={seedMoney}
                         >
-                            {depositList.map(money => (
+                            {seedMoneyList.map(money => (
                                 <Option value={money.value} key={money.value}>
                                     {money.name}
                                 </Option>
@@ -95,13 +106,13 @@ function BankOpen() {
 export default BankOpen;
 const CardContent = styled.div`
     align-items: center;
-    margin: 70px;
+    margin: 25px;
 `;
 const ContentLayout = styled.div`
     display: flex;
     align-items: center;
     margin-top: 10px;
-    padding: 5px;
+    padding: 10px;
 `;
 const RateInput = styled.input`
     padding: 10px;
@@ -118,9 +129,9 @@ const WriteText = styled.div`
     font-weight: bold;
     padding: 7px;
 `;
+
 const Select = styled.select`
     padding: 10px;
-
     color: ${props => props.theme.textColor};
     border: 1px solid ${props => props.theme.borderColor};
     border-radius: 5px;

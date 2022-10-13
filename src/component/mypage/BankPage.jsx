@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import SavingsIcon from '@mui/icons-material/Savings';
 import BankAccount from './Bank/BankAccount';
 import BankOpen from './Bank/BankOpen';
 import { bankAPI } from '../../shared/api';
 import {
-    despositState,
+    seedMoneyState,
     openTargetState,
     openExpireAtState,
 } from '../../atoms/account/accountState';
+
 import useAccount from '../../hooks/useAccount';
 
 function BankPage() {
@@ -18,7 +21,7 @@ function BankPage() {
     const [isEdit, setIsEdit] = React.useState(false);
     const [page, setPage] = useState('account');
 
-    const [deposit, setDeposit] = useRecoilState(despositState);
+    const [seedMoney, setSeedMoney] = useRecoilState(seedMoneyState);
     const [expireAt, setOpenExpireAt] = useRecoilState(openExpireAtState);
     const [targetReturnRate, setTargetReturnRate] =
         useRecoilState(openTargetState);
@@ -40,12 +43,28 @@ function BankPage() {
         setIsEdit(props => !props);
     };
     const OpenBankOnClick = event => {
-        setPage(event.target.value);
-        setIsEdit(props => !props);
-        mutation.mutate({ deposit, targetReturnRate, expireAt });
-        setDeposit('5000000');
-        setTargetReturnRate(0);
-        setOpenExpireAt(30);
+        Swal.fire({
+            title: '계좌 개설하겠습니까?',
+            imageUrl:
+                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#ff6026',
+            confirmButtonText: '개설',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then(result => {
+            if (result.isConfirmed) setPage(event.target.value);
+            setIsEdit(props => !props);
+            mutation.mutate({ seedMoney, targetReturnRate, expireAt });
+            setSeedMoney(5000000);
+            setTargetReturnRate(0);
+            setOpenExpireAt(30);
+            Swal.fire('개설되었습니다.');
+        });
     };
 
     const { data } = useAccount();
@@ -55,6 +74,10 @@ function BankPage() {
     return (
         <>
             <ContentLayout>
+                <IconLayout>
+                    <SavingsIcon />
+                    <IconText>모의투자 계좌</IconText>
+                </IconLayout>
                 {!isEdit ? (
                     <Button
                         value="open"
@@ -89,12 +112,18 @@ export default BankPage;
 
 const ContentLayout = styled.div`
     display: flex;
-    align-items: center;
+`;
+const IconText = styled.p`
+    font-weight: bold;
+    margin: 5px;
+    color: ${props => props.theme.textColor};
 `;
 const Button = styled.button`
     color: #ff5900;
     background-color: #fcce37;
     border: 0;
+    float: right;
+    margin-left: 24em;
     border-radius: 10px;
     cursor: pointer;
     &:hover {
@@ -125,3 +154,8 @@ const ButtonLayout = styled.div`
     align-items: center;
 `;
 const PageLayer = styled.div``;
+const IconLayout = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 5px;
+`;
