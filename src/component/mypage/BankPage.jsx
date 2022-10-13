@@ -57,13 +57,15 @@ function BankPage() {
             cancelButtonText: '취소',
             reverseButtons: true,
         }).then(result => {
-            if (result.isConfirmed) setPage(event.target.value);
-            setIsEdit(props => !props);
-            mutation.mutate({ seedMoney, targetReturnRate, expireAt });
-            setSeedMoney(5000000);
-            setTargetReturnRate(0);
-            setOpenExpireAt(30);
-            Swal.fire('개설되었습니다.');
+            if (result.isConfirmed) {
+                setPage(event.target.value);
+                setIsEdit(props => !props);
+                mutation.mutate({ seedMoney, targetReturnRate, expireAt });
+                setSeedMoney(5000000);
+                setTargetReturnRate(0);
+                setOpenExpireAt(30);
+                Swal.fire('개설되었습니다.');
+            }
         });
     };
 
