@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
@@ -13,16 +14,17 @@ import { postAPI } from '../../shared/api';
 import ProfileCard from './ProfileCard';
 import { dateParser } from '../../util/parser';
 import LoadingSpinner from '../elements/LoadingSpinner';
+import { userState } from '../../atoms/user/userState';
 
 function PostBox() {
     const { id } = useParams();
     const { data, isLoading } = useQuery(['post', id], () =>
         postAPI.getPost(id),
     );
+    const member = useRecoilValue(userState);
 
     const postInfo = data?.data.data;
     const user = data?.data.data.member;
-
     const [likes, setLikes] = useState(postInfo.likes);
     const [dislikes, setDislikes] = useState(postInfo.dislikes);
     const [doneLike, setDoneLike] = useState(postInfo.doneLike);
@@ -115,7 +117,7 @@ function PostBox() {
         <StylePostBox>
             <div>
                 <ButtonBox>
-                    {user.id && (
+                    {user.id === member.id && (
                         <>
                             <DeleteOutlineIcon
                                 name="postDeleteButton"

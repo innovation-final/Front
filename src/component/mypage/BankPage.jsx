@@ -42,6 +42,7 @@ function BankPage() {
         setPage(event.target.value);
         setIsEdit(props => !props);
     };
+
     const OpenBankOnClick = event => {
         Swal.fire({
             title: '계좌 개설하겠습니까?',
@@ -57,13 +58,15 @@ function BankPage() {
             cancelButtonText: '취소',
             reverseButtons: true,
         }).then(result => {
-            if (result.isConfirmed) setPage(event.target.value);
-            setIsEdit(props => !props);
-            mutation.mutate({ seedMoney, targetReturnRate, expireAt });
-            setSeedMoney(5000000);
-            setTargetReturnRate(0);
-            setOpenExpireAt(30);
-            Swal.fire('개설되었습니다.');
+            if (result.isConfirmed) {
+                setPage(event.target.value);
+                setIsEdit(props => !props);
+                mutation.mutate({ seedMoney, targetReturnRate, expireAt });
+                setSeedMoney(5000000);
+                setTargetReturnRate(0);
+                setOpenExpireAt(30);
+                Swal.fire('개설되었습니다.');
+            }
         });
     };
 
@@ -112,18 +115,23 @@ export default BankPage;
 
 const ContentLayout = styled.div`
     display: flex;
+    position: relative;
+    overflow: ${props => (props.isOpen ? 'hidden' : 'visible')};
+    justify-content: space-between;
+    height: 20px;
 `;
 const IconText = styled.p`
     font-weight: bold;
     margin: 5px;
+    width: 100px;
     color: ${props => props.theme.textColor};
 `;
 const Button = styled.button`
     color: #ff5900;
     background-color: #fcce37;
     border: 0;
-    float: right;
-    margin-left: 24em;
+    height: 30px;
+    width: 100px;
     border-radius: 10px;
     cursor: pointer;
     &:hover {
@@ -134,8 +142,8 @@ const OpenButton = styled.button`
     color: #ff6200;
     background-color: #fcce37;
     border: 0;
-    height: 40px;
-    width: 120px;
+    height: 30px;
+    width: 80px;
     border-radius: 5px;
     margin-left: 155px;
     cursor: pointer;
@@ -143,12 +151,10 @@ const OpenButton = styled.button`
         background-color: #ff870e;
     }
     bottom: 20px;
-    position: relative;
 `;
 
 const ButtonLayout = styled.div`
     display: flex;
-    position: absolute;
     top: 23em;
     right: 25%;
     align-items: center;

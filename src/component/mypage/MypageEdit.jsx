@@ -83,10 +83,28 @@ function MypageEdit() {
         //         }, 800);
         //     });
         // }
-        deleteMutation.mutate();
+        Swal.fire({
+            title: '탈퇴하겠습니까?',
+            text: '모든 정보가 삭제됩니다',
+            imageUrl:
+                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#ff6026',
+            confirmButtonText: '탈퇴',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then(result => {
+            if (result.isConfirmed) {
+                deleteMutation.mutate();
 
-        window.location.replace(`/login`);
-        // removeLocalStorage().then(localStorage.clear());
+                window.location.replace(`/login`);
+            }
+            // removeLocalStorage().then(localStorage.clear());
+        });
     };
     const onClickSetEdit = () => {
         setEditNickName(nickname);

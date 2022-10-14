@@ -38,7 +38,7 @@ const CardLayout = styled.div`
     display: flex;
     margin: 30px;
     width: 92%;
-    height: 750px;
+    height: 100%;
 `;
 const ProfileLayout = styled.div`
     width: 50%;
