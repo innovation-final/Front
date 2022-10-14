@@ -4,6 +4,7 @@ import { atom } from 'recoil';
 export const userState = atom({
     key: 'user',
     default: {
+        id: 0,
         nickname: '닉네임',
         profileImg:
             'https://stockstock.s3.ap-northeast-2.amazonaws.com/b4e01caa.png',

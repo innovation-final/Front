@@ -60,36 +60,43 @@ function BankAccount() {
 export default BankAccount;
 
 const ContentLayout = styled.div`
-    padding: 10px;
-    margin: 15px;
+    padding-left: 20px;
+    margin: 20px;
+    padding-top: 10%;
     overflow: hidden;
 `;
 const TextLayout = styled.div`
     padding: 5px;
+
     display: flex;
 `;
 const Text = styled.p`
     font-weight: bold;
-
+    font-size: 2vmin;
+    overflow: hidden; // 을 사용해 영역을 감출 것
+    text-overflow: ellipsis; // 로 ... 을 만들기
+    white-space: nowrap;
+    margin-left: 20px;
+    line-height: 2vmin;
     color: ${props => props.theme.textColor};
-
+    word-break: break-all;
+    width: 300px;
     flex-grow: ${props => props.flexRatio};
-
+    justify-content: space-between;
     overflow: hidden;
     text-overflow: ellipsis;
     display: flex;
     flex-direction: row;
-    width: 70%;
-    margin-left: 70px;
-    white-space: nowrap;
     align-items: center;
 `;
 const Content = styled.p`
     font-weight: bold;
-    margin: 10px;
+    margin-left: 20px;
+    width: 400px;
+    font-size: 2vmin;
+    line-height: 2vmin;
     color: ${props => props.theme.textColor};
     display: flex;
     flex-direction: row;
-    width: 120%;
     padding: 5px;
 `;

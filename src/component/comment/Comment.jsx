@@ -7,9 +7,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PropTypes from 'prop-types';
+import { useRecoilValue } from 'recoil';
 import Button from '../elements/Button';
 import { commentAPI } from '../../shared/api';
 import { timeToToday } from '../../util/parser';
+import { userState } from '../../atoms/user/userState';
 
 const commentAnimation = {
     start: { opacity: 0, y: 10 },
@@ -20,9 +22,12 @@ const commentAnimation = {
 function Comment(props) {
     const ref = useRef(null);
     const { id, member, content, date } = props;
+
     const [editComment, setEditComment] = React.useState(content);
     const [isEdit, setIsEdit] = React.useState(false);
     const queryClient = useQueryClient();
+
+    const user = useRecoilValue(userState);
 
     const deleteComment = async _id => {
         const response = await commentAPI.deleteComment(_id);
@@ -75,44 +80,49 @@ function Comment(props) {
                     <Writer>{member.nickname}</Writer>
                     <DateBox>{timeToToday(date)}</DateBox>
                 </WrapperUserInfo>
-                <Buttons>
-                    <Button
-                        size="sm"
-                        variant="transparent"
-                        disabled={false}
-                        name="commentButton"
-                    >
+                {member.id === user.id && (
+                    <Buttons>
+                        <Button
+                            size="sm"
+                            variant="transparent"
+                            disabled={false}
+                            name="commentButton"
+                        >
+                            {!isEdit ? (
+                                <EditIcon
+                                    fontSize="small"
+                                    onClick={() => setIsEdit(true)}
+                                />
+                            ) : (
+                                <CancelIcon
+                                    fontSize="small"
+                                    onClick={onCancel}
+                                />
+                            )}
+                        </Button>
                         {!isEdit ? (
-                            <EditIcon
-                                fontSize="small"
-                                onClick={() => setIsEdit(true)}
-                            />
+                            <ButtonBox onClick={onDelete}>
+                                <Button
+                                    variant="transparent"
+                                    disabled={false}
+                                    name="commentButton"
+                                >
+                                    <DeleteOutlineIcon fontSize="small" />
+                                </Button>
+                            </ButtonBox>
                         ) : (
-                            <CancelIcon fontSize="small" onClick={onCancel} />
+                            <ButtonBox onClick={onClickEdit}>
+                                <Button
+                                    variant="transparent"
+                                    disabled={false}
+                                    name="commentButton"
+                                >
+                                    <SaveIcon fontSize="small" />
+                                </Button>
+                            </ButtonBox>
                         )}
-                    </Button>
-                    {!isEdit ? (
-                        <ButtonBox onClick={onDelete}>
-                            <Button
-                                variant="transparent"
-                                disabled={false}
-                                name="commentButton"
-                            >
-                                <DeleteOutlineIcon fontSize="small" />
-                            </Button>
-                        </ButtonBox>
-                    ) : (
-                        <ButtonBox onClick={onClickEdit}>
-                            <Button
-                                variant="transparent"
-                                disabled={false}
-                                name="commentButton"
-                            >
-                                <SaveIcon fontSize="small" />
-                            </Button>
-                        </ButtonBox>
-                    )}
-                </Buttons>
+                    </Buttons>
+                )}
             </WriterBox>
             <StyleComment>
                 <Wrapper>
