@@ -29,6 +29,7 @@ const CardContent = styled.div`
 const InterestTitle = styled.div`
     margin: 10px;
     margin-left: 30px;
+    cursor: pointer;
     flex-grow: ${props => props.flexRatio};
     font-size: 14px;
     font-weight: 600;

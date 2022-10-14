@@ -35,7 +35,11 @@ function SideBar() {
             onClickFn: () => navigate('/investment'),
             param: '/investment',
         },
-        { title: '랭킹보드', onClickFn: () => navigate('/') },
+        {
+            title: '랭킹보드',
+            onClickFn: () => navigate('/ranking'),
+            param: '/ranking',
+        },
         {
             title: '관심종목 관리',
             onClickFn: () => navigate('/interest'),

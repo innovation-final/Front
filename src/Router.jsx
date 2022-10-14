@@ -16,6 +16,7 @@ import { Google, Kakao } from './server';
 import Interest from './pages/Interest';
 import BoardWrite from './component/community/BoardWrite';
 import BoardEdit from './component/community/BoardEdit';
+import Ranking from './pages/Ranking';
 
 function Router() {
     return (
@@ -35,6 +36,7 @@ function Router() {
                 <Route path="/stock/:id" element={<StockDetail />} />
                 <Route path="/interest" element={<Interest />} />
                 <Route path="/investment" element={<Investment />} />
+                <Route path="/ranking" element={<Ranking />} />
             </Routes>
         </BrowserRouter>
     );
