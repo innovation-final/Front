@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
-import { chatLogState } from '../../atoms/chat/chatState';
+import { chatLogState } from 'atoms/chat/chatState';
 
 function ChatScreen({ publish, user }) {
     const chatList = useRecoilValue(chatLogState);

@@ -7,10 +7,13 @@ import StockSearch from '../elements/StockSearch';
 import Button from '../elements/Button';
 import { searchState } from '../../atoms/search/searchState';
 import { currentStockCode } from '../../atoms/investment/stockState';
+import useAccount from '../../hooks/useAccount';
+import { esUSNumberParser } from '../../util/parser';
 
 function InvestmentHeader() {
     const client = useQueryClient();
     const stocksQuery = client.getQueryData('stockSearch');
+    const myAccount = useAccount();
     const stocksData = stocksQuery?.data.data;
     const setCurrentState = useSetRecoilState(currentStockCode);
     const search = useRecoilValue(searchState);
@@ -30,18 +33,29 @@ function InvestmentHeader() {
                     </Button>
                 </SearchBox>
                 <MyInfo>
-                    <MyBalance>
-                        <Title>내 잔고</Title>
-                        <Money>
-                            0<Unit>KRW</Unit>
-                        </Money>
-                    </MyBalance>
-                    <MyBalance>
-                        <Title>내 수익률</Title>
-                        <Money>
-                            0<Unit>KRW</Unit>
-                        </Money>
-                    </MyBalance>
+                    {!myAccount.data?.balance ? (
+                        <MyInfoContainer>계좌를 만들어 주세요</MyInfoContainer>
+                    ) : (
+                        <>
+                            <MyBalance>
+                                <Title>내 잔고</Title>
+                                <Money>
+                                    {myAccount.data &&
+                                        esUSNumberParser(
+                                            myAccount.data?.balance,
+                                        )}
+                                    <Unit>KRW</Unit>
+                                </Money>
+                            </MyBalance>
+                            <MyBalance>
+                                <Title>내 수익률</Title>
+                                <Money>
+                                    {myAccount.data?.totalReturnRate}
+                                    <Unit>%</Unit>
+                                </Money>
+                            </MyBalance>
+                        </>
+                    )}
                 </MyInfo>
             </StyleContainer>
         </StyleHeader>
@@ -75,6 +89,11 @@ const MyInfo = styled.div`
     justify-content: space-around;
     width: 50%;
 `;
+const MyInfoContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
 const MyBalance = styled.div`
     background-color: ${props => props.theme.secondaryColor};
     padding: 12px;
