@@ -4,13 +4,15 @@ import { mypageAPI } from '../shared/api';
 const useGetUser = () => {
     const queryClient = useQueryClient();
 
-    const { data, isLoading } = useQuery(['user'], () => mypageAPI.getMypage());
+    const { data, isLoading, refetch } = useQuery(['user'], () =>
+        mypageAPI.getMypage(),
+    );
 
     const invalidate = () => {
         queryClient.invalidateQueries(['user']);
     };
 
-    return { data: data?.data.data, isLoading, invalidate };
+    return { data: data?.data.data, isLoading, invalidate, refetch };
 };
 
 export default useGetUser;

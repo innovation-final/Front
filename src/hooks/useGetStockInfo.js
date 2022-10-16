@@ -9,9 +9,9 @@ const useGetStockInfo = stockCode => {
         () => stockAPI.getStockDetail(stockCode),
         {
             refetchOnWindowFocus: false,
-            refetchInterval: false,
-            staleTime: 1000 * 30,
-            cacheTime: 1000 * 50,
+            refetchInterval: true,
+            staleTime: 1000 * 120,
+            cacheTime: 1000 * 120,
         },
     );
 

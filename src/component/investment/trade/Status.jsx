@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import Calendar from '../../elements/Calendar/Calendar';
 
 function Status() {
+    const [currentDate, setCurrentDate] = useState(new Date());
+
+    const getCurrentDate = date => {
+        setCurrentDate(date);
+    };
+    console.log(currentDate);
+
     return (
         <Container>
+            <Wrapper>
+                <Calendar getCurrentDate={getCurrentDate} />
+            </Wrapper>
             <Header>
                 <Table>
                     <Item>종목명</Item>
@@ -39,6 +50,10 @@ const Container = styled.div`
     position: relative;
     flex-direction: column;
     justify-content: flex-start;
+`;
+const Wrapper = styled.div`
+    margin-bottom: 10px;
+    padding: 5px 0px;
 `;
 
 const Header = styled.div`
