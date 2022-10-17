@@ -151,7 +151,6 @@ function MypageEdit() {
                 editMutation.mutate(formData);
                 Swal.fire('수정되었습니다.');
                 localStorage.setItem('nickName', editNickName);
-
                 localStorage.setItem('imgUrl', userImage);
             }
         });
@@ -159,7 +158,6 @@ function MypageEdit() {
 
     return (
         <div>
-            {' '}
             <ProfileCard>
                 {!isEdit ? (
                     <>

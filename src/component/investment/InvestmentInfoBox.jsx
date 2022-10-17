@@ -3,46 +3,57 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import StockInfo from '../stock/StockInfoBox';
 import SampleChart from '../chart/SampleChart';
-import LoadingSpinner from '../elements/LoadingSpinner';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
-import { currentStockSelector } from '../../atoms/investment/stockState';
+import currentStockCode from '../../atoms/investment/stockState';
+import useGetStockInfo from '../../hooks/useGetStockInfo';
+import LoadingSpinner from '../elements/LoadingSpinner';
 
 function InvestmentInfoBox() {
     const ref = useRef(null);
-    const { code, name, market, current, stockDetail, doneInterest } =
-        useRecoilValue(currentStockSelector);
-    const prevPrice = stockDetail && stockDetail.at(-1);
-    const stockData = {
-        doneInterest,
-        code,
-        name,
-        market,
-        ...current,
-        prevPrice,
-    };
-
     // eslint-disable-next-line no-unused-vars
     const [dimensions, setDimensions] = useState({ top: 0, left: 0 });
     const optionalCallback = entry =>
         setDimensions({ top: entry.x, left: entry.left });
     const [width, height] = useResizeObserver(ref, optionalCallback);
 
+    const code = useRecoilValue(currentStockCode);
+    const { data, isLoading } = useGetStockInfo(code);
+
+    const renderChart = (_code, _width, _height) => {
+        return (
+            <SampleChart name="" code={_code} width={_width} height={_height} />
+        );
+    };
+
+    const prevPrice = data && data.stockDetail.at(-1);
+    const stockData = data && {
+        code: data.code,
+        doneInterest: data.doneInterest,
+        name: data.name,
+        market: data.market,
+        ...data.current,
+        prevPrice,
+    };
+
     return (
-        <React.Suspense fallback={<LoadingSpinner />}>
-            <StyleContainer>
-                <TopContainer>
-                    <StockInfo stockData={stockData} />
-                </TopContainer>
-                <BottomContainer ref={ref}>
-                    <SampleChart
-                        name=""
-                        code={code}
-                        width={width}
-                        height={height}
-                    />
-                </BottomContainer>
-            </StyleContainer>
-        </React.Suspense>
+        <StyleContainer>
+            {isLoading ? (
+                <LoadingSpinner />
+            ) : (
+                <>
+                    <TopContainer>
+                        <StockInfo stockData={stockData} />
+                    </TopContainer>
+                    <BottomContainer ref={ref}>
+                        {code ? (
+                            renderChart(code, width, height)
+                        ) : (
+                            <LoadingSpinner />
+                        )}
+                    </BottomContainer>
+                </>
+            )}
+        </StyleContainer>
     );
 }
 

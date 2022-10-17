@@ -12,7 +12,28 @@ export const slideState = atom({
 
 export const isDarkState = atom({
     key: 'darkmode',
-    default: false,
+    default:
+        localStorage.getItem('app_theme') === null ||
+        localStorage.getItem('app_theme') === 'lightMode'
+            ? 'lightMode'
+            : 'darkMode',
+});
+
+export const isDarkSelector = selector({
+    key: 'darkModeSelector',
+    get: ({ get }) => {
+        const isDark = get(isDarkState);
+        return isDark;
+    },
+
+    set: ({ set }) => {
+        const currentTheme = localStorage.getItem('app_theme');
+
+        set(
+            isDarkState,
+            currentTheme === 'lightMode' ? 'lightMode' : 'darkMode',
+        );
+    },
 });
 
 export const modalGatherState = atom({

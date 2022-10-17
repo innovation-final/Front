@@ -4,16 +4,16 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../static/image.png';
 import darkLogo from '../../static/image_dark.png';
-import { isDarkState } from '../../atoms/common/commonState';
+import { isDarkSelector } from '../../atoms/common/commonState';
 
 // 나중에 이미지로 바꿀 예정
 function Logo() {
     const navigate = useNavigate();
-    const isDark = useRecoilValue(isDarkState);
+    const isDark = useRecoilValue(isDarkSelector);
 
     return (
         <StyleLogo
-            src={isDark ? darkLogo : logo}
+            src={isDark === 'darkMode' ? darkLogo : logo}
             onClick={() => navigate('/')}
         />
     );

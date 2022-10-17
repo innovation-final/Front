@@ -30,7 +30,7 @@ function StockInfoBox({ stockData }) {
     const dayToDay = close - prevPrice.close;
 
     const colorParser = value => {
-        if (value === 0) return isDark ? 'white' : 'black';
+        if (value === 0) return isDark === 'darkMode' ? 'white' : 'black';
         if (value < 0) return '#2980b9';
         if (value > 0) return '#e74c3c';
         return 'black';

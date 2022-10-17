@@ -19,8 +19,6 @@ function Messenger() {
     const user = useRecoilValue(userState);
     const client = useRef({});
 
-    console.log(user);
-
     const subscribeCallback = data => {
         setChatList(props => [...props, data]);
         const chatScreen = document.getElementById('chatting');

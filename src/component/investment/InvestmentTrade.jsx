@@ -69,10 +69,13 @@ const Button = styled.button`
     background-color: ${props =>
         props.current ? props.theme.secondaryColor : null};
     color: ${props => (props.current ? 'white' : props.theme.secondaryColor)};
-    padding: 0.5rem 0rem;
-    width: 7rem;
+    padding: 10px;
+    width: 30%;
     border-radius: 15px;
     transition: background-color ease-in-out 0.1s;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
 `;
 
 const PageLayer = styled.div``;

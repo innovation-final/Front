@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import currentStockCode from '../../../atoms/investment/stockState';
+import useInvestmentSell from '../../../hooks/useInvestmentSell';
+import useGetStockInfo from '../../../hooks/useGetStockInfo';
 
 function Sold() {
     const [isMarket, setIsMarket] = useState(false);
+    const stockCode = useRecoilValue(currentStockCode);
 
     const [total, setTotal] = useState(0);
 
@@ -11,6 +17,9 @@ function Sold() {
 
     const [price, setPrice] = useState(0);
     const priceRef = useRef(null);
+
+    const { selectPriceSellMutation } = useInvestmentSell(stockCode);
+    const currentStockInfo = useGetStockInfo(stockCode);
 
     useEffect(() => {
         setTotal(quantity * price);
@@ -27,12 +36,42 @@ function Sold() {
 
     const onCheck = () => {
         setIsMarket(props => !props);
+        if (!isMarket) {
+            setPrice(currentStockInfo?.data?.current?.close);
+            /* eslint-disable no-param-reassign */
+            priceRef.current.disabled = true;
+        } else {
+            priceRef.current.disabled = false;
+        }
     };
 
     const onSubmit = event => {
-        const data = { isMarket, quantity, price, total };
         event.preventDefault();
-        console.log(data);
+        Swal.fire({
+            title: '매도하시겠습니까?',
+            text:
+                `${currentStockInfo?.data?.name}을(를) ${quantity}주 매도합니다.` +
+                `\n` +
+                `(주문총액 : ${total}KRW)`,
+            imageUrl:
+                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+            imageWidth: 200,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            showCancelButton: true,
+            cancelButtonColor: '#ff6026',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '매도하기',
+            cancelButtonText: '취소하기',
+            reverseButtons: true,
+        }).then(
+            selectPriceSellMutation.mutate({
+                amount: quantity,
+                orderCategory: isMarket ? '시장가' : '지정가',
+                price,
+            }),
+        );
+        console.log(quantity, price);
     };
 
     return (

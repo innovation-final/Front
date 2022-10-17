@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import SideBarHeader from '../sidebar/SideBarHeader';
 import SideBarItem from '../sidebar/SideBarItem';
-import { wideState, isDarkState } from '../../atoms/common/commonState';
+import { wideState, isDarkSelector } from '../../atoms/common/commonState';
 
 function SideBar() {
     const navigate = useNavigate();
     const wide = useRecoilValue(wideState);
-    const setIsDark = useSetRecoilState(isDarkState);
+    const [isDark, setDarkMode] = useRecoilState(isDarkSelector);
+    // const setIsDark = useSetRecoilState(isDarkState);
     const [isLogin] = useState(!!localStorage.getItem('access-token'));
     const logOutFunction = () => {
         localStorage.clear();
@@ -17,6 +18,14 @@ function SideBar() {
     };
     const logInFunction = () => {
         navigate('/');
+    };
+    const setIsDark = () => {
+        if (isDark === 'lightMode') {
+            localStorage.setItem('app_theme', 'darkMode');
+        } else {
+            localStorage.setItem('app_theme', 'lightMode');
+        }
+        setDarkMode();
     };
 
     const menuItems = [
@@ -54,7 +63,7 @@ function SideBar() {
     const menuBottomItems = [
         {
             title: '다크모드',
-            onClickFn: () => setIsDark(props => !props),
+            onClickFn: () => setIsDark(),
         },
         {
             title: isLogin ? '로그아웃' : '로그인',
