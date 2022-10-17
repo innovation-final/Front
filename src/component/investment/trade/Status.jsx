@@ -7,11 +7,9 @@ import Calendar from '../../elements/Calendar';
 function Status() {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const getStartDate = date => {
-        setStartDate(date);
-    };
-    const getEndDate = date => {
-        setEndDate(date);
+    const getStartDate = (start, end) => {
+        setStartDate(start);
+        setEndDate(end);
     };
 
     const { data } = useQuery('mystock', () => api.get('/auth/buy'));
@@ -22,8 +20,6 @@ function Status() {
         <Container>
             <Wrapper>
                 <Calendar getCurrentDate={getStartDate} />
-                <Center>{' ~ '}</Center>
-                <Calendar getCurrentDate={getEndDate} />
             </Wrapper>
             <Header>
                 <Table>
@@ -67,10 +63,6 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`;
-
-const Center = styled.div`
-    padding: 10px;
 `;
 
 const Header = styled.div`

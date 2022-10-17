@@ -8,16 +8,20 @@ import styled from 'styled-components';
 
 function Calendar({ getCurrentDate }) {
     const [startDate, setStartDate] = useState(new Date());
-    const onChange = date => {
-        getCurrentDate(date);
-        setStartDate(date);
+    const [endDate, setEndDate] = useState(new Date());
+    const onChange = dates => {
+        const [start, end] = dates;
+        setStartDate(start);
+        setEndDate(end);
+        getCurrentDate(startDate, endDate);
     };
     return (
         <StyledDatePicker
             dateFormat="yyyy/MM/dd"
-            selected={startDate}
-            onChange={date => onChange(date)}
-            placeholderText="날짜를 선택해주세요."
+            startDate={startDate}
+            endDate={endDate}
+            onChange={onChange}
+            selectsRange
         />
     );
 }

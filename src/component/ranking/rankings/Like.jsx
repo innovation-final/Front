@@ -17,7 +17,6 @@ const RankText = styled.p`
     width: 30%;
     text-align: center;
     margin: 10px 10px 10px 5px;
-
     color: ${props => props.theme.textColor};
 `;
 const Text = styled.p`
