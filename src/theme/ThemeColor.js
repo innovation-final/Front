@@ -7,6 +7,7 @@ export const lightTheme = {
     withDrawTextColor: '#e93c3c',
     inputColor: '#f1fafd',
     buttonColor: 'skyblue',
+    transparentButtonColor: 'transparent',
     borderColor: 'skyblue',
     stockBorderColor: '#ceecff',
     hoverBorderColor: '#95d2f8',
@@ -24,6 +25,7 @@ export const darkTheme = {
     withDrawTextColor: '#c47865',
     inputColor: '#353C4A',
     buttonColor: '#C65526',
+    transparentButtonColor: 'transparent',
     borderColor: '#9F5536',
     stockBorderColor: '#E68563',
     hoverBorderColor: '#E44B0A',
@@ -42,6 +44,7 @@ export const darkTheme = {
  * color: ${(props) => props.theme.textColor};
  * color: ${(props) => props.theme.withDrawTextColor};
  * background-color: ${(props) => props.theme.buttonColor};
+ * background-color: ${(props) => props.theme.transparentButtonColor};
  * background-color: ${(props) => props.theme.primaryColor};
  * background-color: ${(props) => props.theme.secondaryColor};
  * background-color: ${(props) => props.theme.bgColor};
