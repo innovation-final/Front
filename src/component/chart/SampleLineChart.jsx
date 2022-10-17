@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 
-const XAXIS_PADDING = 10;
+// const XAXIS_PADDING = 10;
 const YAXIS_PADDING = 25;
-const DURATION = 1000 * 60 * 30; // 30m
+// const DURATION = 1000 * 60 * 30; // 30m
 const MAX_VALUE = 100;
 const Y_TICK_COUNT = 5;
 
@@ -39,31 +39,31 @@ function SampleLineChart({ width, height }) {
             ctx.beginPath();
             ctx.moveTo(YAXIS_PADDING, 0);
 
-            //draw Y축
+            // draw Y축
             ctx.lineTo(YAXIS_PADDING, chartHeight);
             const yInterval = MAX_VALUE / (Y_TICK_COUNT - 1);
             ctx.textAlign = 'right';
-            for (let i = 0; i < Y_TICK_COUNT; i++) {
+            for (let i = 0; i < Y_TICK_COUNT; i === 0) {
                 const value = i * yInterval;
                 const yPoint =
                     chartHeight * 1.05 - (value / MAX_VALUE) * chartHeight;
                 ctx.fillText(value, YAXIS_PADDING - 3, yPoint);
             }
 
-            //draw X축
+            // draw X축
             ctx.lineTo(width, chartHeight);
             ctx.stroke();
         }
     }, [ctx, chartWidth, chartHeight]);
 
-    const drawChart = () => {};
+    // const drawChart = () => {};
 
-    const updateData = () => {};
+    // const updateData = () => {};
 
     console.log('ctx :', ctx);
     return (
         <div className="canvas_wrap">
-            <canvas ref={canvasRef}></canvas>
+            <canvas ref={canvasRef} />
         </div>
     );
 }

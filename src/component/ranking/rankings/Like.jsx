@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Rankings() {
+function Like() {
     return (
         <StyleTableName>
             <RankText>1</RankText>
             <Text>숭어ㅇㄴㄹㄴㅇㄹㄴㅇ </Text>
-            <Text>35%</Text>
+            <Text>35개</Text>
         </StyleTableName>
     );
 }
 
-export default Rankings;
+export default Like;
 const RankText = styled.p`
     font-weight: bold;
     width: 30%;
