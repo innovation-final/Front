@@ -10,12 +10,13 @@ import { mypageAPI } from '../../shared/api';
 
 function MypageEdit() {
     const { data } = useGetUser();
+
     const queryClient = useQueryClient();
+
     const nickname = data && data.nickname;
     const profileMsg = data && data.profileMsg;
     const email = data && data.email;
     const profileImg = data && data.profileImg;
-
     const imageInput = useRef();
     const [isEdit, setIsEdit] = React.useState(false);
 
@@ -29,15 +30,20 @@ function MypageEdit() {
         const file = e.target.files[0];
         reader.readAsDataURL(file);
         reader.onloadend = () => {
+            if (file.size > 0.5 * 1024 * 1024) {
+                alert('파일 사이즈가 1mb를 넘습니다');
+                return;
+            }
             const resultImage = reader.result;
             setUserImage(resultImage);
         };
+
         if (e.target.files) {
             const uploadFile = e.target.files[0];
             setImg(uploadFile);
         }
     };
-
+    console.log(userImage);
     const patchMypage = async req => {
         const response = await mypageAPI.patchMypage(req);
         return response;
@@ -83,9 +89,10 @@ function MypageEdit() {
         //         }, 800);
         //     });
         // }
+
         Swal.fire({
             title: '탈퇴하겠습니까?',
-            text: '모든 정보가 삭제됩니다',
+            text: '모든 정보가 삭제됩니다 ',
             imageUrl:
                 'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
             imageWidth: 200,
@@ -100,10 +107,9 @@ function MypageEdit() {
         }).then(result => {
             if (result.isConfirmed) {
                 deleteMutation.mutate();
-
                 window.location.replace(`/login`);
+                // removeLocalStorage().then(localStorage.clear());
             }
-            // removeLocalStorage().then(localStorage.clear());
         });
     };
     const onClickSetEdit = () => {
