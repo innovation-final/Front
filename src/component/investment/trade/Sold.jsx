@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import currentStockCode from '../../../atoms/investment/stockState';
 import useInvestmentSell from '../../../hooks/useInvestmentSell';
 import useGetStockInfo from '../../../hooks/useGetStockInfo';
+import { esUSNumberParser } from '../../../util/parser';
 
 function Sold() {
     const [isMarket, setIsMarket] = useState(false);
@@ -113,6 +114,7 @@ function Sold() {
                     ref={qunatityRef}
                 />
                 <Unit>주</Unit>
+                <View>{`${esUSNumberParser(Number(quantity))} 주`}</View>
             </InputBox>
             <InputBox>
                 <div>매도가격</div>
@@ -126,6 +128,7 @@ function Sold() {
                     ref={priceRef}
                 />
                 <Unit>KRW</Unit>
+                <View>{`${esUSNumberParser(Number(price))} KRW`}</View>
             </InputBox>
             <InputBox>
                 <div>주문총액</div>
@@ -137,6 +140,7 @@ function Sold() {
                     readOnly
                 />
                 <Unit>KRW</Unit>
+                <View>{`${esUSNumberParser(Number(total))} KRW`}</View>
             </InputBox>
             <InputBox>
                 <label htmlFor="selected">
@@ -218,6 +222,14 @@ const Unit = styled.span`
     right: 1rem;
     letter-spacing: -1px;
     font-size: 13px;
+    color: black;
+`;
+
+const View = styled.span`
+    position: absolute;
+    right: 1rem;
+    bottom: -1.3rem;
+    font-size: 15px;
     color: black;
 `;
 

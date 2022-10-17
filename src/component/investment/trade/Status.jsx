@@ -5,19 +5,25 @@ import api from '../../../shared/api';
 import Calendar from '../../elements/Calendar';
 
 function Status() {
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const getCurrentDate = date => {
-        setCurrentDate(date);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const getStartDate = date => {
+        setStartDate(date);
+    };
+    const getEndDate = date => {
+        setEndDate(date);
     };
 
     const { data } = useQuery('mystock', () => api.get('/auth/buy'));
     console.log(data);
-    console.log(currentDate);
+    console.log(startDate, endDate);
 
     return (
         <Container>
             <Wrapper>
-                <Calendar getCurrentDate={getCurrentDate} />
+                <Calendar getCurrentDate={getStartDate} />
+                <Center>{' ~ '}</Center>
+                <Calendar getCurrentDate={getEndDate} />
             </Wrapper>
             <Header>
                 <Table>
@@ -57,7 +63,14 @@ const Container = styled.div`
 `;
 const Wrapper = styled.div`
     margin-bottom: 10px;
-    padding: 5px 0px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Center = styled.div`
+    padding: 10px;
 `;
 
 const Header = styled.div`

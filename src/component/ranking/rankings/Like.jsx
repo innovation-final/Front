@@ -5,7 +5,7 @@ function Like() {
     return (
         <StyleTableName>
             <RankText>1</RankText>
-            <Text>숭어ㅇㄴㄹㄴㅇㄹㄴㅇ </Text>
+            <Text>준수</Text>
             <Text>35개</Text>
         </StyleTableName>
     );

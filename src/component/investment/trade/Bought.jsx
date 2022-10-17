@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
-// import { useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import currentStockCode from '../../../atoms/investment/stockState';
 import useInvestmentBuy from '../../../hooks/useInvestmentBuy';
 import useGetStockInfo from '../../../hooks/useGetStockInfo';
+import { esUSNumberParser } from '../../../util/parser';
 
 function Bought() {
     // const client = useQueryClient();
@@ -111,6 +111,7 @@ function Bought() {
                     ref={qunatityRef}
                 />
                 <Unit>주</Unit>
+                <View>{`${esUSNumberParser(Number(quantity))} 주`}</View>
             </InputBox>
             <InputBox>
                 <div>매수가격</div>
@@ -124,6 +125,7 @@ function Bought() {
                     ref={priceRef}
                 />
                 <Unit>KRW</Unit>
+                <View>{`${esUSNumberParser(Number(price))} KRW`}</View>
             </InputBox>
             <InputBox>
                 <div>주문총액</div>
@@ -135,6 +137,7 @@ function Bought() {
                     readOnly
                 />
                 <Unit>KRW</Unit>
+                <View>{`${esUSNumberParser(Number(total))} KRW`}</View>
             </InputBox>
             <InputBox>
                 <label htmlFor="selected">
@@ -178,6 +181,7 @@ const InputBox = styled.div`
         }
     }
 `;
+
 const Radios = styled.div`
     display: flex;
     justify-content: space-between;
@@ -216,6 +220,14 @@ const Unit = styled.span`
     right: 1rem;
     letter-spacing: -1px;
     font-size: 13px;
+    color: black;
+`;
+
+const View = styled.span`
+    position: absolute;
+    right: 1rem;
+    bottom: -1.3rem;
+    font-size: 15px;
     color: black;
 `;
 
