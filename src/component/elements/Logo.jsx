@@ -10,7 +10,6 @@ import { isDarkSelector } from '../../atoms/common/commonState';
 function Logo() {
     const navigate = useNavigate();
     const isDark = useRecoilValue(isDarkSelector);
-    console.log(isDark);
 
     return (
         <StyleLogo

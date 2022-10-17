@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
-import Calendar from '../../elements/Calendar/Calendar';
+import api from '../../../shared/api';
+import Calendar from '../../elements/Calendar';
 
 function Status() {
     const [currentDate, setCurrentDate] = useState(new Date());
-
     const getCurrentDate = date => {
         setCurrentDate(date);
     };
+
+    const { data } = useQuery('mystock', () => api.get('/auth/buy'));
+    console.log(data);
     console.log(currentDate);
 
     return (

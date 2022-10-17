@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import StockSearch from '../elements/StockSearch';
 import Button from '../elements/Button';
 import { searchState } from '../../atoms/search/searchState';
-import { currentStockCode } from '../../atoms/investment/stockState';
+import currentStockCode from '../../atoms/investment/stockState';
 import useAccount from '../../hooks/useAccount';
 import { esUSNumberParser } from '../../util/parser';
 

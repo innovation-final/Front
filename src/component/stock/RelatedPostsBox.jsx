@@ -14,7 +14,7 @@ function RelatedPostsBox({ isPC }) {
     const { data, isLoading } = useGetRelatedPosts(stockCode);
 
     if (isLoading) return <LoadingSpinner />;
-    const info = data.slice(0, 10);
+
     return (
         <StyleRelatedPostsBox isPC={isPC}>
             <Title>관련 게시글</Title>
@@ -25,11 +25,11 @@ function RelatedPostsBox({ isPC }) {
                             <TableName key={key}>{key}</TableName>
                         ))}
                     </TableNames>
-                    {info.length === 0 ? (
+                    {!data ? (
                         <NoArticle>관련 게시글이 없습니다.</NoArticle>
                     ) : (
                         <TableData>
-                            {info.map(post => (
+                            {data.map(post => (
                                 <ArticleInfo
                                     key={post.title}
                                     onClick={() => navigate(`/post/${post.id}`)}

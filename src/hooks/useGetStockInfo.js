@@ -9,7 +9,6 @@ const useGetStockInfo = stockCode => {
         () => stockAPI.getStockDetail(stockCode),
         {
             refetchOnWindowFocus: false,
-            refetchInterval: true,
             staleTime: 1000 * 120,
             cacheTime: 1000 * 120,
         },
@@ -19,7 +18,7 @@ const useGetStockInfo = stockCode => {
         queryClient.invalidateQueries(['stockInfo', stockCode]);
     };
 
-    return { data: data?.data.data, isLoading, invalidate };
+    return { data: data?.data?.data, isLoading, invalidate };
 };
 
 export default useGetStockInfo;
