@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 16px;
     }
     body{
-        font-size: 2vmin;
+        font-size: 1.8vmin;
      -ms-overflow-style: none;
      background-color:${props => props.theme.bgColor};
      color:${props => props.theme.textColor};
