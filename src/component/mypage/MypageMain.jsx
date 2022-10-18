@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import CardContent from '@mui/material/CardContent';
-import PaidIcon from '@mui/icons-material/Paid';
-import MyPageBage from './MyPageBage';
 import MypageEdit from './MypageEdit';
 import BankPage from './BankPage';
+// import MyInvestment from './MyInvestment';
+import InvestmentMyStock from '../investment/InvestmentMyStock';
 
 function MypageMain() {
     return (
@@ -18,15 +18,8 @@ function MypageMain() {
                         <BankPage />
                     </CardContent>
                 </BankCard>
-
                 <Card>
-                    <IconLayout>
-                        <PaidIcon />
-                        <Text>모의투자 수익률</Text>
-                    </IconLayout>
-                    <CardContent>
-                        <MyPageBage />
-                    </CardContent>
+                    <InvestmentMyStock />
                 </Card>
             </CardsLayout>
         </CardLayout>
@@ -49,8 +42,9 @@ const ProfileLayout = styled.div`
 const Card = styled.div`
     border: 2px solid ${props => props.theme.borderColor};
     margin: 20px;
-    height: 363px;
+    min-height: 335px;
     border-radius: 15px;
+    padding: 16px;
     overflow: scroll;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
@@ -69,16 +63,4 @@ const BankCard = styled.div`
 const CardsLayout = styled.div`
     width: 50%;
     object-fit: cover;
-`;
-
-const Text = styled.p`
-    font-weight: bold;
-    margin: 5px;
-    color: ${props => props.theme.textColor};
-`;
-
-const IconLayout = styled.div`
-    display: flex;
-    align-items: center;
-    padding: 16px;
 `;

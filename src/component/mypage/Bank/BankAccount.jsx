@@ -18,6 +18,7 @@ function BankAccount() {
     const createdAt = data && data.createdAt.substr(0, 10);
     const expireAt = data && data.expireAt.substr(0, 10);
     const seedMoney = data && data.seedMoney.toLocaleString();
+    const balance = data && data.balance.toLocaleString();
     const targetReturnRate = data && data.targetReturnRate;
 
     // const particles = [];
@@ -88,6 +89,10 @@ function BankAccount() {
                 <Content>{seedMoney}</Content>
             </TextLayout>
             <TextLayout>
+                <Text>현재머니</Text>
+                <Content>{balance}</Content>
+            </TextLayout>
+            <TextLayout>
                 <Text gutterBottom variant="h5" component="div">
                     목표 수익률
                 </Text>
@@ -102,12 +107,11 @@ export default BankAccount;
 const ContentLayout = styled.div`
     padding-left: 20px;
     margin: 20px;
-    padding-top: 10%;
+    padding-top: 5%;
     overflow: hidden;
 `;
 const TextLayout = styled.div`
-    padding: 5px;
-
+    padding: 3px;
     display: flex;
 `;
 const Text = styled.p`

@@ -1,18 +1,68 @@
 import React from 'react';
 import styled from 'styled-components';
+import CardContent from '@mui/material/CardContent';
+import PaidIcon from '@mui/icons-material/Paid';
+import MyPageBage from './MyStocks';
+import useStocksAccount from '../../hooks/useStocksAccount';
 
 function InvestmentMyStock() {
-    return <StyleContainer>InvestmentMyStock</StyleContainer>;
+    const { data } = useStocksAccount();
+    console.log(data);
+
+    return (
+        <>
+            <IconLayout>
+                <PaidIcon />
+                <Text>내 주식잔고</Text>
+            </IconLayout>
+            <StyleTableName>
+                <TextLayout>종목</TextLayout>
+                <TextLayout>평가손익</TextLayout>
+                <TextLayout>수익률</TextLayout>
+                <TextLayout>잔고수량</TextLayout>
+            </StyleTableName>
+            <CardContent>
+                {data &&
+                    data.map(stock => (
+                        <MyPageBage key={stock.id} stock={stock} />
+                    ))}
+            </CardContent>
+        </>
+    );
 }
 
 export default InvestmentMyStock;
 
-const StyleContainer = styled.div`
+const Text = styled.p`
+    font-weight: bold;
+    margin: 5px;
+    color: ${props => props.theme.textColor};
+`;
+
+const IconLayout = styled.div`
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+`;
+const TextLayout = styled.p`
+    font-weight: bold;
+    flex-direction: row;
     width: 100%;
-    padding: 1rem;
-    border: 2px solid ${props => props.theme.borderColor};
-    border-radius: 20px;
-    min-height: 15rem;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    color: ${props => props.theme.textColor};
+`;
+const StyleTableName = styled.div`
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    justify-content: space-around;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: ${props => props.theme.secondaryColor};
 `;
