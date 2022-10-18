@@ -134,8 +134,11 @@ const Item = styled.div`
 `;
 
 const Contents = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
+    overflow: scroll;
+    height: 29rem;
 `;
 
 const Content = styled.div`
@@ -148,5 +151,4 @@ const Content = styled.div`
     border: 1px solid ${props => props.theme.secondaryColor};
     border-radius: 15px;
     padding: 5px 0px;
-    overflow: scroll;
 `;

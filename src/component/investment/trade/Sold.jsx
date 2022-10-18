@@ -46,6 +46,9 @@ function Sold() {
     };
     const onSubmit = event => {
         event.preventDefault();
+        if (!total) {
+            return;
+        }
         Swal.fire({
             title: '매도하시겠습니까?',
             text:
@@ -63,15 +66,24 @@ function Sold() {
             confirmButtonText: '매도하기',
             cancelButtonText: '취소하기',
             reverseButtons: true,
-        }).then(
-            selectPriceSellMutation.mutate({
-                stockName: currentStockInfo?.data?.name,
-                amount: quantity,
-                orderCategory: isMarket ? '시장가' : '지정가',
-                price,
-            }),
-        );
-        console.log(quantity, price);
+        }).then(result => {
+            if (result.isConfirmed) {
+                selectPriceSellMutation.mutate({
+                    stockName: currentStockInfo?.data?.name,
+                    amount: quantity,
+                    orderCategory: isMarket ? '시장가' : '지정가',
+                    price,
+                });
+                Swal.fire('매도하였습니다.');
+                setQuantity(0);
+                setPrice(0);
+                setIsMarket(false);
+                /* eslint-disable no-param-reassign */
+                priceRef.current.disabled = true;
+            } else {
+                Swal.fire('취소하였습니다.');
+            }
+        });
     };
 
     useEffect(() => {

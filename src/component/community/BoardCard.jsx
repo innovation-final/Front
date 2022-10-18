@@ -107,10 +107,11 @@ const CardDivide2 = styled.div`
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
-    width: 40%;
+    width: 100%;
 `;
 const CardTitle = styled.div`
-    font-size: 25px;
+    font-size: 3vmin;
+    line-height: 1.5;
     overflow: hidden;
     margin-left: 40px;
     letter-spacing: -1px;
@@ -121,14 +122,17 @@ const CardCommentCount = styled.div`
     margin-left: 10px;
     margin-top: 1.5%;
     font-weight: 600;
+    line-height: 1.5;
     color: ${props => props.theme.borderColor};
 `;
 const CardStockName = styled.div`
-    font-size: 15px;
+    font-size: 1.5vmin;
+    line-height: 1.5vmin;
     overflow: hidden;
     letter-spacing: -1px;
     min-width: 12%;
     margin-top: 2%;
+    line-height: 1.5;
 `;
 
 const CardRightDown = styled.div`
@@ -136,19 +140,19 @@ const CardRightDown = styled.div`
     flex-direction: row;
 `;
 const CardWriter = styled.div`
-    font-size: 13px;
+    font-size: 1.5vmin;
 `;
 const CardLike = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 13px;
+    font-size: 1.5vmin;
 `;
 const CardIconBox = styled.div`
     margin: 0px 10px;
     color: ${props => (!props.thumbUp ? '#4a69bd' : '#e55039')};
 `;
 const CardCreatedAt = styled.div`
-    font-size: 13px;
+    font-size: 1.5vmin;
     margin-left: 20px;
 `;

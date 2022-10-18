@@ -25,7 +25,7 @@ function RelatedPostsBox({ isPC }) {
                             <TableName key={key}>{key}</TableName>
                         ))}
                     </TableNames>
-                    {!data ? (
+                    {!data || data.length === 0 ? (
                         <NoArticle>관련 게시글이 없습니다.</NoArticle>
                     ) : (
                         <TableData>

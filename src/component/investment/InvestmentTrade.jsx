@@ -51,7 +51,7 @@ const StyleContainer = styled.div`
     padding: 2rem;
     border: 2px solid ${props => props.theme.borderColor};
     border-radius: 20px;
-    min-height: 40.7rem;
+    height: 40.7rem;
     display: flex;
     flex-direction: column;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,

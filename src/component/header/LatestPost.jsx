@@ -67,7 +67,7 @@ const PostBox = styled.div`
     display: flex;
     margin: 20px 0px;
     height: 60px;
-    transform: translateY(${props => 200 - props.count * 100}px);
+    transform: translateY(${props => 50 - props.count * 100}px);
     transition: all ease-in-out 0.5s;
     cursor: pointer;
 `;

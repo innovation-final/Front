@@ -45,6 +45,9 @@ function Bought() {
     };
     const onSubmit = event => {
         event.preventDefault();
+        if (!total) {
+            return;
+        }
         Swal.fire({
             title: '매수하시겠습니까?',
             text:
@@ -62,15 +65,24 @@ function Bought() {
             confirmButtonText: '매수하기',
             cancelButtonText: '취소하기',
             reverseButtons: true,
-        }).then(
-            selectPriceBuyMutation.mutate({
-                stockName: currentStockInfo?.data?.name,
-                amount: quantity,
-                orderCategory: isMarket ? '시장가' : '지정가',
-                price,
-            }),
-        );
-        console.log(quantity, price);
+        }).then(result => {
+            if (result.isConfirmed) {
+                selectPriceBuyMutation.mutate({
+                    stockName: currentStockInfo?.data?.name,
+                    amount: quantity,
+                    orderCategory: isMarket ? '시장가' : '지정가',
+                    price,
+                });
+                Swal.fire('매수하였습니다.');
+                setQuantity(0);
+                setPrice(0);
+                setIsMarket(false);
+                /* eslint-disable no-param-reassign */
+                priceRef.current.disabled = true;
+            } else {
+                Swal.fire('취소하였습니다.');
+            }
+        });
     };
 
     useEffect(() => {
@@ -245,4 +257,7 @@ const Button = styled.input`
     border-radius: 15px;
     background-color: ${props => props.theme.buttonColor};
     color: ${props => props.theme.bgColor};
+    &:hover {
+        background-color: ${props => props.theme.hoverBorderColor};
+    }
 `;

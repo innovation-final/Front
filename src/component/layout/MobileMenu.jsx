@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import SideBarHeader from '../sidebar/SideBarHeader';
-import SideBarItem from '../sidebar/SideBarItem';
+import MobileMenuHeader from '../mobile/MobileMenuHeader';
+import MobileMenuItem from '../mobile/MobileMenuItem';
 import { wideState, isDarkSelector } from '../../atoms/common/commonState';
 
-function SideBar() {
+function MobileMenu() {
     const navigate = useNavigate();
     const wide = useRecoilValue(wideState);
     const [isDark, setDarkMode] = useRecoilState(isDarkSelector);
@@ -75,10 +75,10 @@ function SideBar() {
     return (
         <StyleSideBar $wide={wide}>
             <Container>
+                <MobileMenuHeader $wide={wide} />
                 <TopCotainer>
-                    <SideBarHeader $wide={wide} />
                     {menuItems.map(item => (
-                        <SideBarItem
+                        <MobileMenuItem
                             key={item.title}
                             title={item.title}
                             subItems={item.subItems}
@@ -89,7 +89,7 @@ function SideBar() {
                 </TopCotainer>
                 <BottomContainer>
                     {menuBottomItems.map(item => (
-                        <SideBarItem
+                        <MobileMenuItem
                             key={item.title}
                             title={item.title}
                             subItems={item.subItems}
@@ -103,32 +103,36 @@ function SideBar() {
     );
 }
 
-export default SideBar;
+export default MobileMenu;
 
 const StyleSideBar = styled.div`
     position: fixed;
     z-index: 999;
     left: 0;
     top: 0;
-    width: ${props => (props.$wide ? 290 : 74)}px;
-    height: 100vh;
+    width: 100%;
+    height: 5.5vh;
     background-color: ${props => props.theme.primaryColor};
     color: ${props => props.theme.textColor};
-    border-right: 1px solid ${props => props.theme.layoutBorderColor};
-    transition: width ease-in-out 0.3s;
+    border-bottom: 1px solid ${props => props.theme.layoutBorderColor};
+    transition: all ease-in-out 0.3s;
+    overflow: ${props => (props.$wide ? 'visible' : 'hidden')};
 `;
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 `;
 
 const TopCotainer = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%;
 `;
 const BottomContainer = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%;
 `;

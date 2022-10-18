@@ -83,8 +83,6 @@ export default StocksBox;
 
 const StyleStocksBox = styled.div`
     width: 100%;
-    margin-left: 2%;
-    margin-top: 1%;
     overflow: ${props => (props.isOpen ? 'hidden' : 'visible')};
     height: ${props => (props.isOpen ? '85vh' : '100%')};
 `;
@@ -102,6 +100,10 @@ const StocksContainer = styled.div`
     width: 90%;
     border-radius: 10px;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `;
 const SearchBox = styled.div`
     margin-left: 20px;
