@@ -64,6 +64,7 @@ function Bought() {
             reverseButtons: true,
         }).then(
             selectPriceBuyMutation.mutate({
+                stockName: currentStockInfo?.data?.name,
                 amount: quantity,
                 orderCategory: isMarket ? '시장가' : '지정가',
                 price,
@@ -71,6 +72,12 @@ function Bought() {
         );
         console.log(quantity, price);
     };
+
+    useEffect(() => {
+        setIsMarket(false);
+        /* eslint-disable no-param-reassign */
+        priceRef.current.disabled = false;
+    }, [stockCode]);
 
     return (
         <StyleBought onSubmit={onSubmit}>

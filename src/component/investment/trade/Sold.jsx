@@ -34,7 +34,6 @@ function Sold() {
         /* eslint-disable no-param-reassign */
         ref.current.value = Number(event.target.value.replace(/(^0+)/, ''));
     };
-
     const onCheck = () => {
         setIsMarket(props => !props);
         if (!isMarket) {
@@ -45,7 +44,6 @@ function Sold() {
             priceRef.current.disabled = false;
         }
     };
-
     const onSubmit = event => {
         event.preventDefault();
         Swal.fire({
@@ -67,6 +65,7 @@ function Sold() {
             reverseButtons: true,
         }).then(
             selectPriceSellMutation.mutate({
+                stockName: currentStockInfo?.data?.name,
                 amount: quantity,
                 orderCategory: isMarket ? '시장가' : '지정가',
                 price,
@@ -74,6 +73,12 @@ function Sold() {
         );
         console.log(quantity, price);
     };
+
+    useEffect(() => {
+        setIsMarket(false);
+        /* eslint-disable no-param-reassign */
+        priceRef.current.disabled = false;
+    }, [stockCode]);
 
     return (
         <StyleBought onSubmit={onSubmit}>

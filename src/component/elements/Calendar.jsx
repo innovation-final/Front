@@ -13,8 +13,9 @@ function Calendar({ getCurrentDate }) {
         const [start, end] = dates;
         setStartDate(start);
         setEndDate(end);
-        getCurrentDate(startDate, endDate);
+        getCurrentDate(start, end);
     };
+
     return (
         <StyledDatePicker
             dateFormat="yyyy/MM/dd"
