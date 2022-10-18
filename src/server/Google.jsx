@@ -10,11 +10,8 @@ function Google() {
         const getToken = async () => {
             try {
                 const res = await axios
-                    .get(
-                        `https://hakjoonkim.shop/api/member/login/google?code=${code}`,
-                    )
+                    .get(`https://hakjoonkim.shop/api/member/login/google`)
                     .then(response => {
-                        console.log('응답 확인', response);
                         const accessToken = response.headers.authorization;
                         const refreshToken = response.headers['refresh-token'];
                         window.localStorage.setItem(
