@@ -16,6 +16,8 @@ function SideBar() {
         localStorage.clear();
         window.location.href = '/login';
     };
+    const [pushStatus, setPushStatus] = useState(null);
+
     const logInFunction = () => {
         navigate('/');
     };
@@ -26,6 +28,23 @@ function SideBar() {
             localStorage.setItem('app_theme', 'lightMode');
         }
         setDarkMode();
+    };
+    const onChangeToggle = e => {
+        setPushStatus(!pushStatus); // toggle 기능
+        // const params = { userId: userInfo.userId, pushOn: e.target.checked };
+        `https://hakjoonkim.shop/api/subscribe/`('xxx')
+            .then(res => {
+                if (res.data.ok) {
+                    if (e.target.checked) {
+                        // checked시 알람 발송(기본값)
+                        alert('푸쉬 알람 설정이 저장되었습니다.');
+                    } else {
+                        // unchecked시 알람 미발송
+                        alert('푸쉬 알람 미발송 처리 되었습니다.');
+                    }
+                }
+            })
+            .catch(err => console.log(err));
     };
 
     const menuItems = [
@@ -85,8 +104,50 @@ function SideBar() {
                             onClickFn={item.onClickFn}
                         />
                     ))}
+
+                    {/* <ToggleContainer>
+                        <ToggleLayout className="relative inline-block w-12 mr-2 align-middle">
+                            <input
+                                type="checkbox"
+                                name="toggle"
+                                id="toggle"
+                                onChange={onChangeToggle}
+                                checked={pushStatus}
+                                className={
+                                    pushStatus ? (
+                                        <Toggle />
+                                    ) : (
+                                        ' left-0 bg-white absolute block w-7 h-7 rounded-full border-4 appearance-none cursor-pointer'
+                                    )
+                                }
+                            /> */}
+                    {/* <label
+                                htmlFor="toggle"
+                                className="block overflow-hidden h-7 rounded-full bg-gray-300 cursor-pointer"
+                            ></label> */}
+                    {/* </ToggleLayout>
+                        <p>{pushStatus ? '설정' : '미설정'}</p>
+                    </ToggleContainer> */}
                 </TopCotainer>
+
                 <BottomContainer>
+                    <StyleItem>
+                        {' '}
+                        <TitleBox>
+                            <PushText>푸쉬알림</PushText>
+                        </TitleBox>
+                        <input
+                            type="checkbox"
+                            id="toggle"
+                            hidden
+                            onChange={onChangeToggle}
+                        />
+                        <ToggleSwitch for="toggle">
+                            <ToggleButton for="toggle" />
+                        </ToggleSwitch>{' '}
+                        <p>{pushStatus ? '설정' : '미설정'}</p>
+                    </StyleItem>
+
                     {menuBottomItems.map(item => (
                         <SideBarItem
                             key={item.title}
@@ -132,4 +193,94 @@ const TopCotainer = styled.div`
 const BottomContainer = styled.div`
     display: flex;
     flex-direction: column;
+`;
+
+const StyleItem = styled.div`
+    position: relative;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+const TitleBox = styled.div`
+    display: flex;
+    padding: 10px;
+    margin-left: 20px;
+    flex-direction: row;
+    align-items: center;
+`;
+const PushText = styled.div`
+    display: inline-block;
+    padding: 5px;
+    font-weight: 600;
+    color: ${props => props.theme.menuTextColor};
+    letter-spacing: -1px;
+    font-size: 17px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    cursor: pointer;
+`;
+// const ToggleContainer = styled.div`
+//     display: flex;
+//     gap: 10px;
+//     align-items: center;
+// `;
+// const ToggleLayout = styled.div`
+//     position: relative;
+//     display: inline-block;
+//     width: 100px;
+//     vertical-align: middle;
+// `;
+
+// const Toggle = styled.div`
+//     right: 0;
+//     transition-duration: 200s;
+//     transition: ease-in;
+//     display: block;
+//     border-radius: 100%;
+//     background-color: yellow;
+//     position: absolute;
+//     width: 80px;
+//     height: 50px;
+//     border: 4px;
+//     outline: none;
+//     appearance: none;
+// `;
+
+const ToggleSwitch = styled.label`
+    width: 80px;
+    margin: 10px;
+    height: 40px;
+    display: block;
+    position: relative;
+    border-radius: 32px;
+    background-color: #fff;
+    box-shadow: 0 0 1rem 3px rgba(0 0 0 / 15%);
+    cursor: pointer;
+
+    &:toggle {
+        background-color: #f03d3d;
+        left: calc(100% - 2.8rem);
+    }
+    transition: all 0.2s ease-in;
+`;
+
+const ToggleButton = styled.span`
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 50%;
+    left: 0.2rem;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #0082a6;
+    left: calc(100% - 2.8rem);
+    &:toggle {
+        background-color: #f03d3d;
+        left: calc(100% - 2.8rem);
+    }
+
+    transition: all 0.2s ease-in;
 `;
