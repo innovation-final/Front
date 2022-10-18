@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { postAPI } from '../../shared/api';
-import { slideSelector } from '../../atoms/common/commonState';
+import { slideState } from '../../atoms/common/commonState';
 
 function LatestPost() {
     const navigate = useNavigate();
@@ -15,15 +15,17 @@ function LatestPost() {
     );
     const info = data?.data.data;
     const [posts, setPosts] = useState([]);
-    const [count, setCount] = useRecoilState(slideSelector);
+    const [count, setCount] = useRecoilState(slideState);
     useEffect(() => {
         if (info) setPosts(info);
     }, [info]);
     useEffect(() => {
         setTimeout(() => {
-            setCount(count);
-        }, 5000);
-        if (count === 4) refetch();
+            setCount(props => (props + 1) % 4);
+        }, 10000);
+        if (count === 4) {
+            refetch();
+        }
     }, [count]);
 
     return (
@@ -60,14 +62,14 @@ const StyleLatestPost = styled.div`
     line-height: 60px;
     justify-content: center;
     height: 60px;
-    overflow-y: hidden;
+    overflow: hidden;
 `;
 
 const PostBox = styled.div`
     display: flex;
     margin: 20px 0px;
     height: 60px;
-    transform: translateY(${props => 50 - props.count * 100}px);
+    transform: translateY(${props => 200 - props.count * 100}px);
     transition: all ease-in-out 0.5s;
     cursor: pointer;
 `;

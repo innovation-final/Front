@@ -126,8 +126,7 @@ const CardCommentCount = styled.div`
     color: ${props => props.theme.borderColor};
 `;
 const CardStockName = styled.div`
-    font-size: 1.5vmin;
-    line-height: 1.5vmin;
+    font-size: 1.7vmin;
     overflow: hidden;
     letter-spacing: -1px;
     min-width: 12%;

@@ -82,10 +82,11 @@ function RankingMain() {
 export default RankingMain;
 const Layout = styled.div`
     display: flex;
+    flex-direction: row;
 `;
 
 const Container = styled.div`
-    width: 50%;
+    width: 100%;
     padding: 10px;
     border: 2px solid ${props => props.theme.borderColor};
     border-radius: 20px;
@@ -96,7 +97,7 @@ const Container = styled.div`
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 const BadgeContainer = styled.div`
-    width: 50%;
+    width: 100%;
     padding: 2rem;
     border-radius: 20px;
     min-height: 40.7rem;
