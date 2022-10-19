@@ -13,6 +13,7 @@ const useInvestmentSell = stockCode => {
         onError: error => console.log(error),
         onSuccess: () => {
             queryClient.invalidateQueries('mystock');
+            queryClient.invalidateQueries(['account']);
         },
     });
 

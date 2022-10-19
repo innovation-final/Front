@@ -20,7 +20,11 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     };
 
+    html {
+        font-size: 16px;
+    }
     body{
+        font-size: 1.8vmin;
      -ms-overflow-style: none;
      background-color:${props => props.theme.bgColor};
      color:${props => props.theme.textColor};

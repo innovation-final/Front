@@ -4,8 +4,12 @@ import { mypageAPI } from '../shared/api';
 const useGetUser = () => {
     const queryClient = useQueryClient();
 
-    const { data, isLoading, refetch } = useQuery(['user'], () =>
-        mypageAPI.getMypage(),
+    const { data, isLoading, refetch } = useQuery(
+        ['user'],
+        () => mypageAPI.getMypage(),
+        {
+            refetchOnWindowFocus: false,
+        },
     );
 
     const invalidate = () => {

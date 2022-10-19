@@ -10,6 +10,11 @@ export const slideState = atom({
     default: 0,
 });
 
+export const slideStockState = atom({
+    key: 'slide/stock',
+    default: 0,
+});
+
 export const isDarkState = atom({
     key: 'darkmode',
     default:
@@ -57,7 +62,7 @@ export const slideSelector = selector({
         return index;
     },
     set: ({ set }, newValue) => {
-        const newIndex = (newValue + 1) % 5;
+        const newIndex = newValue + 1;
         set(slideState, newIndex);
     },
 });

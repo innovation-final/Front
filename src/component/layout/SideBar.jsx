@@ -12,6 +12,7 @@ function SideBar() {
     const [isDark, setDarkMode] = useRecoilState(isDarkSelector);
     // const setIsDark = useSetRecoilState(isDarkState);
     const [isLogin] = useState(!!localStorage.getItem('access-token'));
+
     const logOutFunction = () => {
         localStorage.clear();
         window.location.href = '/login';
@@ -174,9 +175,7 @@ const StyleSideBar = styled.div`
     height: 100vh;
     background-color: ${props => props.theme.primaryColor};
     color: ${props => props.theme.textColor};
-
     border-right: 1px solid ${props => props.theme.layoutBorderColor};
-
     transition: width ease-in-out 0.3s;
 `;
 const Container = styled.div`

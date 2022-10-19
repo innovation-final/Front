@@ -5,7 +5,7 @@ function Like() {
     return (
         <StyleTableName>
             <RankText>1</RankText>
-            <Text>숭어ㅇㄴㄹㄴㅇㄹㄴㅇ </Text>
+            <Text>준수</Text>
             <Text>35개</Text>
         </StyleTableName>
     );
@@ -17,7 +17,6 @@ const RankText = styled.p`
     width: 30%;
     text-align: center;
     margin: 10px 10px 10px 5px;
-
     color: ${props => props.theme.textColor};
 `;
 const Text = styled.p`
