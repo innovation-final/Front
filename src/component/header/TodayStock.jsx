@@ -19,7 +19,6 @@ function TodayStock() {
     const info = data?.data.data;
 
     const isDark = useRecoilValue(isDarkState);
-    console.log(info);
 
     const [stocks, setStocks] = useState([]);
     const [count, setCount] = useRecoilState(slideStockState);
