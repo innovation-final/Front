@@ -47,15 +47,18 @@ const StyleContainer = styled.div`
 `;
 const StyleWrapper = styled.div`
     display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 1400px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 70px;
+    }
 `;
 
 const StyleLeftSide = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    margin-right: 21px;
+    grid-column: 1/3;
 `;
 const StyledRightSide = styled.div`
-    width: 25%;
-    margin-left: 21px;
+    grid-column: 3/4;
 `;

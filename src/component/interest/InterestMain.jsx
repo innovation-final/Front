@@ -21,7 +21,6 @@ function InterestMain() {
     const onClick = code => {
         setParam(code);
     };
-    console.log(param);
 
     return (
         <CardLayout>

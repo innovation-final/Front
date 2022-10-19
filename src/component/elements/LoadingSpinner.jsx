@@ -3,22 +3,10 @@ import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 
 function LoadingSpinner() {
-    return (
-        <Wrapper>
-            <Spinner />
-        </Wrapper>
-    );
+    return <Spinner />;
 }
 
 export default LoadingSpinner;
-
-const Wrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-`;
 
 const LoadingAnimation = keyframes`
     from {

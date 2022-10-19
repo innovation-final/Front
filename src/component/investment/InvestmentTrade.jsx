@@ -47,7 +47,6 @@ function InvestmentTrade() {
 export default InvestmentTrade;
 
 const StyleContainer = styled.div`
-    width: 100%;
     padding: 2rem;
     border: 2px solid ${props => props.theme.borderColor};
     border-radius: 20px;

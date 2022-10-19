@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Slider from 'react-slick';
 import { postAPI } from '../../shared/api';
 import { slideState } from '../../atoms/common/commonState';
 
@@ -30,24 +31,35 @@ function LatestPost() {
 
     return (
         <StyleLatestPost>
-            {posts.map(post => {
-                return (
-                    <PostBox
-                        key={post.id}
-                        count={count}
-                        onClick={() => navigate(`/post/${post.id}`)}
-                    >
-                        <Title>
-                            {`최신글 - ${
-                                post.title.length > 30
-                                    ? `${post.title.slice(0, 30)} ...`
-                                    : post.title
-                            }`}
-                        </Title>
-                        <Author>{`written by ${post.member.nickname}`}</Author>
-                    </PostBox>
-                );
-            })}
+            <StyleSlider
+                dots={false}
+                arrows={false}
+                infinite
+                autoplay
+                autoplaySpeed={7000}
+                slidesToShow={1}
+                slidesToScroll={1}
+                vertical
+                verticalSwiping
+            >
+                {posts.map(post => {
+                    return (
+                        <PostBox
+                            key={post.id}
+                            count={count}
+                            onClick={() => navigate(`/post/${post.id}`)}
+                        >
+                            <Title>
+                                {`최신글 - ${
+                                    post.title.length > 30
+                                        ? `${post.title.slice(0, 30)} ...`
+                                        : post.title
+                                } written by ${post.member.nickname}`}
+                            </Title>
+                        </PostBox>
+                    );
+                })}
+            </StyleSlider>
         </StyleLatestPost>
     );
 }
@@ -62,18 +74,16 @@ const StyleLatestPost = styled.div`
     line-height: 60px;
     justify-content: center;
     height: 60px;
-    overflow: hidden;
 `;
 
 const PostBox = styled.div`
     display: flex;
-    margin: 20px 0px;
-    height: 60px;
-    transform: translateY(${props => 200 - props.count * 100}px);
-    transition: all ease-in-out 0.5s;
+    flex-direction: row;
     cursor: pointer;
 `;
-const Title = styled.div`
+const Title = styled.h3`
     margin-right: 10px;
+    width: 300px;
 `;
-const Author = styled.div``;
+
+const StyleSlider = styled(Slider)``;

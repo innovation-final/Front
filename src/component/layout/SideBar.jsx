@@ -132,8 +132,7 @@ function SideBar() {
                 </TopCotainer>
 
                 <BottomContainer>
-                    <StyleItem>
-                        {' '}
+                    <StyleItem $wide={wide}>
                         <TitleBox>
                             <PushText>푸쉬알림</PushText>
                         </TitleBox>
@@ -201,6 +200,7 @@ const StyleItem = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    visibility: ${props => (props.$wide ? 'none' : 'hidden')};
 `;
 
 const TitleBox = styled.div`
@@ -221,32 +221,6 @@ const PushText = styled.div`
     box-sizing: border-box;
     cursor: pointer;
 `;
-// const ToggleContainer = styled.div`
-//     display: flex;
-//     gap: 10px;
-//     align-items: center;
-// `;
-// const ToggleLayout = styled.div`
-//     position: relative;
-//     display: inline-block;
-//     width: 100px;
-//     vertical-align: middle;
-// `;
-
-// const Toggle = styled.div`
-//     right: 0;
-//     transition-duration: 200s;
-//     transition: ease-in;
-//     display: block;
-//     border-radius: 100%;
-//     background-color: yellow;
-//     position: absolute;
-//     width: 80px;
-//     height: 50px;
-//     border: 4px;
-//     outline: none;
-//     appearance: none;
-// `;
 
 const ToggleSwitch = styled.label`
     width: 80px;
@@ -258,7 +232,6 @@ const ToggleSwitch = styled.label`
     background-color: #fff;
     box-shadow: 0 0 1rem 3px rgba(0 0 0 / 15%);
     cursor: pointer;
-    transition: all 0.2s ease-in;
 `;
 
 const ToggleButton = styled.span`

@@ -159,12 +159,6 @@ function Sold() {
                 <Unit>KRW</Unit>
                 <View>{`${esUSNumberParser(Number(total))} KRW`}</View>
             </InputBox>
-            <InputBox>
-                <label htmlFor="selected">
-                    주문가능/매도가능
-                    <input type="checkbox" value id="selected" />
-                </label>
-            </InputBox>
             <Button type="submit" value="매도하기" />
         </StyleBought>
     );
@@ -186,6 +180,7 @@ const InputBox = styled.div`
     align-items: center;
     position: relative;
     label {
+        margin-left: 20px;
         [type='radio'] {
             appearance: none;
             border: max(2px, 0.1em) solid gray;
@@ -203,17 +198,15 @@ const InputBox = styled.div`
 `;
 const Radios = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    width: 50%;
+    width: 60%;
 
     label {
         [type='radio'] {
             appearance: none;
             border: max(2px, 0.1em) solid gray;
             border-radius: 50%;
-            width: 1.2em;
-            height: 1.2em;
             transition: all ease-in-out 0.1s;
             margin: 0px 10px;
         }
