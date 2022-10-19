@@ -27,4 +27,5 @@ const StyleHeader = styled.div`
     justify-content: space-between;
     z-index: 999;
     background-color: ${props => props.theme.primaryColor};
+    overflow-y: hidden;
 `;
