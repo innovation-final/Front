@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import editcog from '../../static/edit.png';
 import useGetUser from '../../hooks/useGetUser';
 import { mypageAPI } from '../../shared/api';
+import MypageBadge from './MyPageBadge';
 
 function MypageEdit() {
     const { data } = useGetUser();
@@ -199,8 +200,8 @@ function MypageEdit() {
                             <IconLayout>
                                 <EmojiEventsIcon />
                                 <Text>뱃지/업적</Text>
-                            </IconLayout>
-                            <CardContent />
+                            </IconLayout>{' '}
+                            <MypageBadge />
                         </Card>
                     </>
                 ) : (
@@ -223,9 +224,9 @@ function MypageEdit() {
                                     onChange={onChangeImg}
                                 />
 
-                                <Button onClick={onChangeImg}>
+                                <CogButton onClick={onChangeImg}>
                                     <CogBtn src={editcog} />
-                                </Button>
+                                </CogButton>
                             </CogLayout>
                         </ImgCard>
                         <InputContent>
@@ -273,24 +274,23 @@ const ImgCard = styled.div`
 
 const CardMedia = styled.img`
     border-radius: 50%;
-    margin: 30px 0px;
+    padding: 10px;
     align-items: center;
     justify-content: center;
     object-fit: cover;
     /* margin: 5% 30% 1% 20%; */
-    width: 250px;
-    height: 250px;
+    width: 50%;
+    height: 50%;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 
 const ProfileCard = styled.div`
     position: relative;
+    height: 750px;
     border: 2px solid ${props => props.theme.borderColor};
     margin: 20px;
     border-radius: 15px;
-    overflow: scroll;
-    height: 750px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
@@ -304,6 +304,7 @@ const Button = styled.button`
 `;
 const InputContent = styled.div`
     padding: 60px;
+    height: 270px;
 `;
 const ContentLayout = styled.div`
     width: 100%;
@@ -330,6 +331,19 @@ const WithdrawButton = styled.button`
 const CogBtn = styled.img`
     width: 40px;
     border: 0;
+`;
+const CogLayout = styled.div`
+    position: absolute;
+    top: 78%;
+    right: 33%;
+`;
+const CogButton = styled.button`
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 2px;
+    top: 5px;
 `;
 const EditCogBtn = styled.img`
     width: 22px;
@@ -374,17 +388,12 @@ const ProfileMsgInput = styled.textarea`
         outline: 2px solid ${props => props.theme.borderColor};
     }
 `;
-const CogLayout = styled.div`
-    position: absolute;
-    top: 15em;
-    right: 33%;
-`;
 
 const Card = styled.div`
     border: 2px solid ${props => props.theme.borderColor};
     padding: 5px;
     margin: 0 20px 0 20px;
-    height: 250px;
+    height: 285px;
     border-radius: 15px;
     overflow: scroll;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,

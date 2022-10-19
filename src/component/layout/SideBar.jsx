@@ -136,16 +136,16 @@ function SideBar() {
                         <TitleBox>
                             <PushText>푸쉬알림</PushText>
                         </TitleBox>
-                        <input
+                        <ToggleInput
                             type="checkbox"
                             id="toggle"
                             hidden
                             onChange={onChangeToggle}
                         />
-                        <ToggleSwitch for="toggle">
-                            <ToggleButton for="toggle" />
+                        <ToggleSwitch htmlFor="toggle">
+                            <ToggleButton htmlFor="toggle" />
                         </ToggleSwitch>{' '}
-                        <p>{pushStatus ? '설정' : '미설정'}</p>
+                        <p>{pushStatus ? 'On' : 'Off'}</p>
                     </StyleItem>
 
                     {menuBottomItems.map(item => (
@@ -252,35 +252,33 @@ const PushText = styled.div`
 const ToggleSwitch = styled.label`
     width: 80px;
     margin: 10px;
-    height: 40px;
+    height: 45px;
     display: block;
     position: relative;
     border-radius: 32px;
     background-color: #fff;
     box-shadow: 0 0 1rem 3px rgba(0 0 0 / 15%);
     cursor: pointer;
-
-    &:toggle {
-        background-color: #f03d3d;
-        left: calc(100% - 2.8rem);
-    }
     transition: all 0.2s ease-in;
 `;
 
 const ToggleButton = styled.span`
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     position: absolute;
     top: 50%;
     left: 0.2rem;
     transform: translateY(-50%);
     border-radius: 50%;
-    background: #0082a6;
-    left: calc(100% - 2.8rem);
-    &:toggle {
-        background-color: #f03d3d;
+    background: #42a8c7;
+    transition: all 0.2s ease-in;
+`;
+const ToggleInput = styled.input`
+    &:checked ~ ${ToggleSwitch} {
+        background: rgb(240, 154, 78);
+    }
+    &:checked ~ ${ToggleSwitch} ${ToggleButton} {
+        background-color: #004565;
         left: calc(100% - 2.8rem);
     }
-
-    transition: all 0.2s ease-in;
 `;
