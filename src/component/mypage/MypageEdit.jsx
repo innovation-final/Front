@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import editcog from '../../static/edit.png';
 import useGetUser from '../../hooks/useGetUser';
 import { mypageAPI } from '../../shared/api';
+import MypageBadge from './MyPageBadge';
 
 function MypageEdit() {
     const { data } = useGetUser();
@@ -94,7 +95,7 @@ function MypageEdit() {
             title: '탈퇴하겠습니까?',
             text: '모든 정보가 삭제됩니다 ',
             imageUrl:
-                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+                'https://velog.velcdn.com/images/soonger3306/post/c9fc9802-cc28-4aaf-9951-8c0bdc06b812/image.png',
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -123,7 +124,7 @@ function MypageEdit() {
         Swal.fire({
             title: '수정하겠습니까?',
             imageUrl:
-                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+                'https://velog.velcdn.com/images/soonger3306/post/c9fc9802-cc28-4aaf-9951-8c0bdc06b812/image.png',
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -199,8 +200,8 @@ function MypageEdit() {
                             <IconLayout>
                                 <EmojiEventsIcon />
                                 <Text>뱃지/업적</Text>
-                            </IconLayout>
-                            <CardContent />
+                            </IconLayout>{' '}
+                            <MypageBadge />
                         </Card>
                     </>
                 ) : (
@@ -223,9 +224,9 @@ function MypageEdit() {
                                     onChange={onChangeImg}
                                 />
 
-                                <Button onClick={onChangeImg}>
+                                <CogButton onClick={onChangeImg}>
                                     <CogBtn src={editcog} />
-                                </Button>
+                                </CogButton>
                             </CogLayout>
                         </ImgCard>
                         <InputContent>
@@ -273,24 +274,24 @@ const ImgCard = styled.div`
 
 const CardMedia = styled.img`
     border-radius: 50%;
-    margin: 30px 0px;
+    padding: 10px;
+    margin-top: 5px;
     align-items: center;
     justify-content: center;
     object-fit: cover;
     /* margin: 5% 30% 1% 20%; */
-    width: 250px;
-    height: 250px;
+    width: 30%;
+
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 
 const ProfileCard = styled.div`
     position: relative;
+    height: 750px;
     border: 2px solid ${props => props.theme.borderColor};
     margin: 20px;
     border-radius: 15px;
-    overflow: scroll;
-    height: 750px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
@@ -304,6 +305,7 @@ const Button = styled.button`
 `;
 const InputContent = styled.div`
     padding: 60px;
+    height: 270px;
 `;
 const ContentLayout = styled.div`
     width: 100%;
@@ -330,6 +332,19 @@ const WithdrawButton = styled.button`
 const CogBtn = styled.img`
     width: 40px;
     border: 0;
+`;
+const CogLayout = styled.div`
+    position: absolute;
+    top: 78%;
+    right: 33%;
+`;
+const CogButton = styled.button`
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 2px;
+    top: 5px;
 `;
 const EditCogBtn = styled.img`
     width: 22px;
@@ -374,19 +389,14 @@ const ProfileMsgInput = styled.textarea`
         outline: 2px solid ${props => props.theme.borderColor};
     }
 `;
-const CogLayout = styled.div`
-    position: absolute;
-    top: 15em;
-    right: 33%;
-`;
 
 const Card = styled.div`
     border: 2px solid ${props => props.theme.borderColor};
     padding: 5px;
-    margin: 0 20px 0 20px;
-    height: 250px;
-    border-radius: 15px;
     overflow: scroll;
+    margin: 10px 20px 0 20px;
+    border-radius: 15px;
+    height: 350px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;

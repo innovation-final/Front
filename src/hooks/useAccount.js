@@ -3,8 +3,12 @@ import { bankAPI } from '../shared/api';
 
 function useAccount() {
     const queryClient = useQueryClient();
-    const { data, isLoading } = useQuery(['account'], () =>
-        bankAPI.getBankAccount(),
+    const { data, isLoading } = useQuery(
+        ['account'],
+        () => bankAPI.getBankAccount(),
+        {
+            refetchOnWindowFocus: false,
+        },
     );
 
     const invalidate = () => {

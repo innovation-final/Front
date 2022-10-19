@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import currentStockCode from '../../../atoms/investment/stockState';
 import useInvestmentSell from '../../../hooks/useInvestmentSell';
 import useGetStockInfo from '../../../hooks/useGetStockInfo';
+import { esUSNumberParser } from '../../../util/parser';
 
 function Sold() {
     const [isMarket, setIsMarket] = useState(false);
@@ -33,7 +34,6 @@ function Sold() {
         /* eslint-disable no-param-reassign */
         ref.current.value = Number(event.target.value.replace(/(^0+)/, ''));
     };
-
     const onCheck = () => {
         setIsMarket(props => !props);
         if (!isMarket) {
@@ -44,9 +44,11 @@ function Sold() {
             priceRef.current.disabled = false;
         }
     };
-
     const onSubmit = event => {
         event.preventDefault();
+        if (!total) {
+            return;
+        }
         Swal.fire({
             title: '매도하시겠습니까?',
             text:
@@ -54,7 +56,7 @@ function Sold() {
                 `\n` +
                 `(주문총액 : ${total}KRW)`,
             imageUrl:
-                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+                'https://velog.velcdn.com/images/soonger3306/post/c9fc9802-cc28-4aaf-9951-8c0bdc06b812/image.png',
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -64,15 +66,31 @@ function Sold() {
             confirmButtonText: '매도하기',
             cancelButtonText: '취소하기',
             reverseButtons: true,
-        }).then(
-            selectPriceSellMutation.mutate({
-                amount: quantity,
-                orderCategory: isMarket ? '시장가' : '지정가',
-                price,
-            }),
-        );
-        console.log(quantity, price);
+        }).then(result => {
+            if (result.isConfirmed) {
+                selectPriceSellMutation.mutate({
+                    stockName: currentStockInfo?.data?.name,
+                    amount: quantity,
+                    orderCategory: isMarket ? '시장가' : '지정가',
+                    price,
+                });
+                Swal.fire('매도하였습니다.');
+                setQuantity(0);
+                setPrice(0);
+                setIsMarket(false);
+                /* eslint-disable no-param-reassign */
+                priceRef.current.disabled = true;
+            } else {
+                Swal.fire('취소하였습니다.');
+            }
+        });
     };
+
+    useEffect(() => {
+        setIsMarket(false);
+        /* eslint-disable no-param-reassign */
+        priceRef.current.disabled = false;
+    }, [stockCode]);
 
     return (
         <StyleBought onSubmit={onSubmit}>
@@ -113,6 +131,7 @@ function Sold() {
                     ref={qunatityRef}
                 />
                 <Unit>주</Unit>
+                <View>{`${esUSNumberParser(Number(quantity))} 주`}</View>
             </InputBox>
             <InputBox>
                 <div>매도가격</div>
@@ -126,6 +145,7 @@ function Sold() {
                     ref={priceRef}
                 />
                 <Unit>KRW</Unit>
+                <View>{`${esUSNumberParser(Number(price))} KRW`}</View>
             </InputBox>
             <InputBox>
                 <div>주문총액</div>
@@ -137,6 +157,7 @@ function Sold() {
                     readOnly
                 />
                 <Unit>KRW</Unit>
+                <View>{`${esUSNumberParser(Number(total))} KRW`}</View>
             </InputBox>
             <InputBox>
                 <label htmlFor="selected">
@@ -218,6 +239,14 @@ const Unit = styled.span`
     right: 1rem;
     letter-spacing: -1px;
     font-size: 13px;
+    color: black;
+`;
+
+const View = styled.span`
+    position: absolute;
+    right: 1rem;
+    bottom: -1.3rem;
+    font-size: 15px;
     color: black;
 `;
 

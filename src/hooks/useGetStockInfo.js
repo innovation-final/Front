@@ -10,7 +10,8 @@ const useGetStockInfo = stockCode => {
         {
             refetchOnWindowFocus: false,
             staleTime: 1000 * 120,
-            cacheTime: 1000 * 120,
+            refetchInterval: 1000 * 120,
+            refetchIntervalInBackground: true,
         },
     );
 

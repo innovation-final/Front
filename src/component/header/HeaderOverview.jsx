@@ -2,13 +2,14 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import LatestPost from './LatestPost';
+import TodayStock from './TodayStock';
 import { wideState } from '../../atoms/common/commonState';
 
 function HeaderOverview() {
     const wide = useRecoilValue(wideState);
     return (
         <StyleOverview wide={wide}>
-            <StockInfo>오늘의 주식현황 - 삼성전자 21.08 ▲</StockInfo>
+            <TodayStock />
             <LatestPost />
         </StyleOverview>
     );
@@ -23,9 +24,4 @@ const StyleOverview = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-`;
-
-const StockInfo = styled.div`
-    letter-spacing: -1px;
-    margin-right: 10%;
 `;

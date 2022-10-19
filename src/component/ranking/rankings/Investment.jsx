@@ -5,7 +5,7 @@ function Investment() {
     return (
         <StyleTableName>
             <RankText>1</RankText>
-            <Text>숭어</Text>
+            <Text>준수</Text>
             <Text>45%</Text>
         </StyleTableName>
     );

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
-// import { useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import currentStockCode from '../../../atoms/investment/stockState';
 import useInvestmentBuy from '../../../hooks/useInvestmentBuy';
 import useGetStockInfo from '../../../hooks/useGetStockInfo';
+import { esUSNumberParser } from '../../../util/parser';
 
 function Bought() {
     // const client = useQueryClient();
@@ -45,6 +45,9 @@ function Bought() {
     };
     const onSubmit = event => {
         event.preventDefault();
+        if (!total) {
+            return;
+        }
         Swal.fire({
             title: '매수하시겠습니까?',
             text:
@@ -52,7 +55,7 @@ function Bought() {
                 `\n` +
                 `(주문총액 : ${total}KRW)`,
             imageUrl:
-                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+                'https://velog.velcdn.com/images/soonger3306/post/c9fc9802-cc28-4aaf-9951-8c0bdc06b812/image.png',
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -62,15 +65,31 @@ function Bought() {
             confirmButtonText: '매수하기',
             cancelButtonText: '취소하기',
             reverseButtons: true,
-        }).then(
-            selectPriceBuyMutation.mutate({
-                amount: quantity,
-                orderCategory: isMarket ? '시장가' : '지정가',
-                price,
-            }),
-        );
-        console.log(quantity, price);
+        }).then(result => {
+            if (result.isConfirmed) {
+                selectPriceBuyMutation.mutate({
+                    stockName: currentStockInfo?.data?.name,
+                    amount: quantity,
+                    orderCategory: isMarket ? '시장가' : '지정가',
+                    price,
+                });
+                Swal.fire('매수하였습니다.');
+                setQuantity(0);
+                setPrice(0);
+                setIsMarket(false);
+                /* eslint-disable no-param-reassign */
+                priceRef.current.disabled = true;
+            } else {
+                Swal.fire('취소하였습니다.');
+            }
+        });
     };
+
+    useEffect(() => {
+        setIsMarket(false);
+        /* eslint-disable no-param-reassign */
+        priceRef.current.disabled = false;
+    }, [stockCode]);
 
     return (
         <StyleBought onSubmit={onSubmit}>
@@ -111,6 +130,7 @@ function Bought() {
                     ref={qunatityRef}
                 />
                 <Unit>주</Unit>
+                <View>{`${esUSNumberParser(Number(quantity))} 주`}</View>
             </InputBox>
             <InputBox>
                 <div>매수가격</div>
@@ -124,6 +144,7 @@ function Bought() {
                     ref={priceRef}
                 />
                 <Unit>KRW</Unit>
+                <View>{`${esUSNumberParser(Number(price))} KRW`}</View>
             </InputBox>
             <InputBox>
                 <div>주문총액</div>
@@ -135,6 +156,7 @@ function Bought() {
                     readOnly
                 />
                 <Unit>KRW</Unit>
+                <View>{`${esUSNumberParser(Number(total))} KRW`}</View>
             </InputBox>
             <InputBox>
                 <label htmlFor="selected">
@@ -178,6 +200,7 @@ const InputBox = styled.div`
         }
     }
 `;
+
 const Radios = styled.div`
     display: flex;
     justify-content: space-between;
@@ -219,6 +242,14 @@ const Unit = styled.span`
     color: black;
 `;
 
+const View = styled.span`
+    position: absolute;
+    right: 1rem;
+    bottom: -1.3rem;
+    font-size: 15px;
+    color: black;
+`;
+
 const Button = styled.input`
     padding: 1rem;
     font-size: 1rem;
@@ -226,4 +257,7 @@ const Button = styled.input`
     border-radius: 15px;
     background-color: ${props => props.theme.buttonColor};
     color: ${props => props.theme.bgColor};
+    &:hover {
+        background-color: ${props => props.theme.hoverBorderColor};
+    }
 `;

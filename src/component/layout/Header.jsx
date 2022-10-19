@@ -26,6 +26,5 @@ const StyleHeader = styled.div`
     align-items: center;
     justify-content: space-between;
     z-index: 999;
-
     background-color: ${props => props.theme.primaryColor};
 `;

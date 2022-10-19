@@ -6,6 +6,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 import Header from './Header';
 import SideBar from './SideBar';
 import { wideState } from '../../atoms/common/commonState';
+import MobileMenu from './MobileMenu';
 
 const responsive = {
     pc: css`
@@ -15,9 +16,9 @@ const responsive = {
         padding-left: 60px;
     `,
     phone: css`
-        transform: translate(70px);
-        width: calc(100% - 70px);
+        transform: translate(0px, 57px);
         flex-direction: column;
+        width: 100%;
         padding: 10px;
     `,
 };
@@ -28,10 +29,19 @@ function Layout({ children, sidebar = true, header = true }) {
     const isPC = useMemo(() => {
         return width >= 1024;
     }, [width]);
+    const menuRender = () => {
+        if (sidebar) {
+            if (isPC) {
+                return <SideBar />;
+            }
+            return <MobileMenu />;
+        }
+        return null;
+    };
     return (
         <StyleLayout>
             {header && isPC ? <Header /> : null}
-            {sidebar ? <SideBar /> : null}
+            {sidebar && menuRender()}
             <Main $wide={wide} isPC={isPC}>
                 {children}
             </Main>
@@ -52,6 +62,7 @@ const Main = styled.div`
     display: flex;
     flex-direction: column;
     max-width: 100%;
+    min-width: 480px;
     box-sizing: border-box;
     z-index: 11;
     transition: all ease-in-out 0.3s;
