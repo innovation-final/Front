@@ -33,9 +33,14 @@ const StyleContainer = styled.div`
     padding-right: 1.3rem;
 `;
 const StyleWrapper = styled.div`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 70px;
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 1400px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 70px;
+    }
 `;
 
 const StyleLeftSide = styled.div`
