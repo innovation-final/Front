@@ -128,4 +128,5 @@ export const noticeAPI = {
 export const bankAPI = {
     postBankOpen: request => api.post(`/auth/account`, request),
     getBankAccount: () => api.get(`/auth/account`),
+    getStocksAccount: () => api.get(`/auth/account/stocks`),
 };

@@ -14,7 +14,9 @@ function InvestmentLayout() {
             <StyleWrapper>
                 <StyleLeftSide>
                     <InvestmentInfoBox />
-                    <InvestmentMyStock />
+                    <StyleMyStock>
+                        <InvestmentMyStock />
+                    </StyleMyStock>
                 </StyleLeftSide>
                 <StyledRightSide>
                     <InvestmentTrade />
@@ -25,6 +27,17 @@ function InvestmentLayout() {
 }
 
 export default InvestmentLayout;
+
+const StyleMyStock = styled.div`
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid ${props => props.theme.borderColor};
+    border-radius: 20px;
+    height: 15rem;
+    overflow: scroll;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+`;
 
 const StyleContainer = styled.div`
     display: flex;
