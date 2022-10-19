@@ -40,26 +40,35 @@ function TodayStock() {
     };
 
     return (
-        <StyleLatestPost>
-            {stocks.map(stock => {
-                return (
-                    <PostBox
-                        key={stock.stockCode}
-                        count={count}
-                        onClick={() => navigate(`/stock/${stock.stockCode}`)}
-                    >
-                        <Title>{`오늘의 주식현황 - ${stock.stockName}`}</Title>
-                        <Author
-                            colorParser={colorParser(stock.fluctuationRate)}
-                        >{`${stock.fluctuationRate}%`}</Author>
-                    </PostBox>
-                );
-            })}
-        </StyleLatestPost>
+        <Wrapper>
+            <Today>오늘의 주식현황 -</Today>
+            <StyleLatestPost>
+                {stocks.map(stock => {
+                    return (
+                        <PostBox
+                            key={stock.stockCode}
+                            count={count}
+                            onClick={() =>
+                                navigate(`/stock/${stock.stockCode}`)
+                            }
+                        >
+                            <Title>{`${stock.stockName}`}</Title>
+                            <Author
+                                colorParser={colorParser(stock.fluctuationRate)}
+                            >{`${stock.fluctuationRate}%`}</Author>
+                        </PostBox>
+                    );
+                })}
+            </StyleLatestPost>
+        </Wrapper>
     );
 }
 
 export default TodayStock;
+
+const Wrapper = styled.div`
+    display: flex;
+`;
 
 const StyleLatestPost = styled.div`
     letter-spacing: -1px;
@@ -76,13 +85,21 @@ const PostBox = styled.div`
     display: flex;
     margin: 20px 0px;
     height: 60px;
-    transform: translateY(${props => 450 - props.count * 100}px);
+    transform: translateY(${props => 453 - props.count * 100}px);
     transition: all ease-in-out 0.5s;
     cursor: pointer;
 `;
 const Title = styled.div`
     margin-right: 10px;
+    letter-spacing: -1px;
 `;
+
+const Today = styled.div`
+    margin-right: 10px;
+    letter-spacing: -1px;
+    line-height: 4;
+`;
+
 const Author = styled.div`
     color: ${props => props.colorParser};
 `;
