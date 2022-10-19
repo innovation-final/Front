@@ -95,7 +95,7 @@ function MypageEdit() {
             title: '탈퇴하겠습니까?',
             text: '모든 정보가 삭제됩니다 ',
             imageUrl:
-                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+                'https://velog.velcdn.com/images/soonger3306/post/c9fc9802-cc28-4aaf-9951-8c0bdc06b812/image.png',
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -124,7 +124,7 @@ function MypageEdit() {
         Swal.fire({
             title: '수정하겠습니까?',
             imageUrl:
-                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+                'https://velog.velcdn.com/images/soonger3306/post/c9fc9802-cc28-4aaf-9951-8c0bdc06b812/image.png',
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',
@@ -275,12 +275,13 @@ const ImgCard = styled.div`
 const CardMedia = styled.img`
     border-radius: 50%;
     padding: 10px;
+    margin-top: 5px;
     align-items: center;
     justify-content: center;
     object-fit: cover;
     /* margin: 5% 30% 1% 20%; */
-    width: 50%;
-    height: 50%;
+    width: 30%;
+
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
@@ -392,10 +393,10 @@ const ProfileMsgInput = styled.textarea`
 const Card = styled.div`
     border: 2px solid ${props => props.theme.borderColor};
     padding: 5px;
-    margin: 0 20px 0 20px;
-    height: 285px;
-    border-radius: 15px;
     overflow: scroll;
+    margin: 10px 20px 0 20px;
+    border-radius: 15px;
+    height: 350px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;

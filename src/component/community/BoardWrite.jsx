@@ -56,7 +56,7 @@ function BoardWrite({ isEdit, originData }) {
         Swal.fire({
             title: isEdit ? '수정하겠습니까?' : '작성하겠습니까?',
             imageUrl:
-                'https://velog.velcdn.com/images/soonger3306/post/1f89fb6c-f5b6-47b1-9788-4bc6faa6875a/image.png',
+                'https://velog.velcdn.com/images/soonger3306/post/c9fc9802-cc28-4aaf-9951-8c0bdc06b812/image.png',
             imageWidth: 200,
             imageHeight: 200,
             imageAlt: 'Custom image',
