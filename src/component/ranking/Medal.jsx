@@ -4,29 +4,37 @@ import top1 from '../../static/1.png';
 import top2 from '../../static/2.png';
 import top3 from '../../static/3.png';
 
-function Medal() {
+function Medal({ ranks }) {
+    const nickname1 = ranks && ranks[0].nickname;
+    const returnRate1 = ranks && ranks[0].returnRate;
+
+    const nickname2 = ranks && ranks[1].nickname;
+    const returnRate2 = ranks && ranks[1].returnRate;
+
+    const nickname3 = ranks && ranks[2].nickname;
+    const returnRate3 = ranks && ranks[2].returnRate;
     return (
         <Layout>
             <MedalLayout>
                 <MedalImg src={top1} />
             </MedalLayout>
             <TextLayout>
-                <Text>닉네임:숭어</Text>
+                <Text>닉네임:{nickname1}</Text>
             </TextLayout>
             <TextLayout>
-                <Text>수익률:30%</Text>
+                <Text>수익률:{returnRate1}%</Text>
             </TextLayout>
             <MedalLayout>
                 <MedalImg src={top2} />
                 <MedalImg src={top3} />
             </MedalLayout>
             <TextLayout>
-                <Text>닉네임:숭어2</Text>
-                <Text>닉네임:숭어3</Text>
+                <Text>닉네임:{nickname2}</Text>
+                <Text>닉네임:{nickname3}</Text>
             </TextLayout>
             <TextLayout>
-                <Text>수익률:20%</Text>
-                <Text>수익률:10%</Text>
+                <Text>수익률:{returnRate2}%</Text>
+                <Text>수익률:{returnRate3}%</Text>
             </TextLayout>
         </Layout>
     );

@@ -8,12 +8,15 @@ import like from '../../static/likeBadge.png';
 import manyStock from '../../static/manyStockBadge.png';
 import post from '../../static/postBadge.png';
 
-function MypageBadge() {
+function MypageBadge({ badge }) {
+    console.log(badge);
+    const postBadge = badge && badge[2].name;
+    console.log(postBadge, 'D');
     return (
         <Layout>
             <BadgeGrid>
                 <BadgeContainer>
-                    <BadgeImg src={post} />
+                    {!postBadge ? <BadgeImg src={post} /> : '없음'}
                     <BadgeTitle>활발한 주식박사</BadgeTitle>
                 </BadgeContainer>
                 <BadgeContainer>

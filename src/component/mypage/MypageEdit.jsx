@@ -11,13 +11,13 @@ import MypageBadge from './MyPageBadge';
 
 function MypageEdit() {
     const { data } = useGetUser();
-
     const queryClient = useQueryClient();
 
     const nickname = data && data.nickname;
     const profileMsg = data && data.profileMsg;
     const email = data && data.email;
     const profileImg = data && data.profileImg;
+    const badge = data && data.achievements;
     const imageInput = useRef();
     const [isEdit, setIsEdit] = React.useState(false);
 
@@ -201,7 +201,7 @@ function MypageEdit() {
                                 <EmojiEventsIcon />
                                 <Text>뱃지/업적</Text>
                             </IconLayout>{' '}
-                            <MypageBadge />
+                            <MypageBadge badge={badge} />
                         </Card>
                     </>
                 ) : (

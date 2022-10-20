@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import Medal from './Medal';
-
 import SelectBox from '../elements/SelectBox';
 import Like from './rankings/Like';
 import Investment from './rankings/Investment';
+import useRank from '../../hooks/useRank';
 
 function RankingMain() {
     const options = [
@@ -23,6 +23,9 @@ function RankingMain() {
     const onClick = event => {
         setPage(event.target.value);
     };
+    const { data } = useRank();
+    const ranks = data;
+
     return (
         <>
             <IconLayout>
@@ -64,15 +67,18 @@ function RankingMain() {
                         ) : (
                             <Text>좋아요</Text>
                         )}
+                        {page === 'investment' ? <Text>손익(원)</Text> : null}
                     </StyleTableName>{' '}
                     <PageLayer>
-                        {page === 'investment' ? <Investment /> : null}
+                        {page === 'investment' ? (
+                            <Investment ranks={ranks} />
+                        ) : null}
                         {page === 'like' ? <Like /> : null}
                     </PageLayer>
                 </Container>
 
                 <BadgeContainer>
-                    <Medal />
+                    <Medal ranks={ranks?.slice(0, 3)} />
                 </BadgeContainer>
             </Layout>
         </>

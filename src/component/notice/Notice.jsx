@@ -11,9 +11,7 @@ import usePushNotification from '../../hooks/usePushNotification ';
 
 function Notice({ setModalOpen }) {
     const { fireNotificationWithTimeout } = usePushNotification();
-
     const { data } = useGetUser();
-
     const id = data && data.id;
     const notices = useAlarm();
     const notice = notices.data;

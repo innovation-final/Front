@@ -4,7 +4,6 @@ import { timeToToday } from '../../util/parser';
 
 function NoticeList({ alarms }) {
     const { message, createdAt } = alarms;
-
     return (
         <CardContent>
             <NoticeTitle>{message}</NoticeTitle>
