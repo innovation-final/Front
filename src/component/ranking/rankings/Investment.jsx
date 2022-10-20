@@ -1,13 +1,51 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Investment() {
+function Investment({ ranks }) {
     return (
-        <StyleTableName>
-            <RankText>1</RankText>
-            <Text>준수</Text>
-            <Text>45%</Text>
-        </StyleTableName>
+        <div>
+            {ranks &&
+                ranks.map((rank, index) => {
+                    if (index + 1 === 1) {
+                        return (
+                            <StyleTableName key={rank.nickname} ranking={rank}>
+                                <RankText>🥇 {index + 1}등</RankText>
+                                <Text>{rank.nickname}</Text>
+                                <Text>{rank.returnRate}</Text>
+                                <Text>{rank.profit.toLocaleString()}</Text>
+                            </StyleTableName>
+                        );
+                    }
+                    if (index + 1 === 2) {
+                        return (
+                            <StyleTableName key={rank.nickname} ranking={rank}>
+                                <RankText>🥈 {index + 1}등</RankText>
+                                <Text>{rank.nickname}</Text>
+                                <Text>{rank.returnRate}</Text>
+                                <Text>{rank.profit.toLocaleString()}</Text>
+                            </StyleTableName>
+                        );
+                    }
+                    if (index + 1 === 3) {
+                        return (
+                            <StyleTableName key={rank.nickname} ranking={rank}>
+                                <RankText>🥉 {index + 1}등</RankText>
+                                <Text>{rank.nickname}</Text>
+                                <Text>{rank.returnRate}</Text>
+                                <Text>{rank.profit.toLocaleString()}</Text>
+                            </StyleTableName>
+                        );
+                    }
+                    return (
+                        <StyleTableName key={rank.nickname} ranking={rank}>
+                            <RankText>{index + 1}등</RankText>
+                            <Text>{rank.nickname}</Text>
+                            <Text>{rank.returnRate}</Text>
+                            <Text>{rank.profit.toLocaleString()}</Text>
+                        </StyleTableName>
+                    );
+                })}
+        </div>
     );
 }
 
@@ -25,7 +63,7 @@ const Text = styled.p`
     font-weight: bold;
     width: 31%;
     text-align: center;
-    margin: 10px;
+    margin: 17px;
     color: ${props => props.theme.textColor};
 `;
 const StyleTableName = styled.div`
