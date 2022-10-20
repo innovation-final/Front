@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { useRecoilValue, useRecoilState } from 'recoil';
+import useGetUser from '../../hooks/useGetUser';
 import SideBarHeader from '../sidebar/SideBarHeader';
 import SideBarItem from '../sidebar/SideBarItem';
-import { wideState, isDarkSelector } from '../../atoms/common/commonState';
+import {
+    wideState,
+    isDarkSelector,
+    isPushSelector,
+} from '../../atoms/common/commonState';
+import usePushNotification from '../../hooks/usePushNotification ';
 
 function SideBar() {
+    const { fireNotificationWithTimeout } = usePushNotification();
     const navigate = useNavigate();
     const wide = useRecoilValue(wideState);
     const [isDark, setDarkMode] = useRecoilState(isDarkSelector);
@@ -17,7 +25,8 @@ function SideBar() {
         localStorage.clear();
         window.location.href = '/login';
     };
-    const [pushStatus, setPushStatus] = useState(null);
+    const { data } = useGetUser();
+    const id = data && data.id;
 
     const logInFunction = () => {
         navigate('/');
@@ -30,24 +39,41 @@ function SideBar() {
         }
         setDarkMode();
     };
+    const [isPush, setPush] = useRecoilState(isPushSelector);
+    const [pushStatus, setPushStatus] = useState(null);
+    // eslint-disable-next-line no-unused-vars
+    const [alarmData, setAlarmData] = useState([]);
     const onChangeToggle = e => {
         setPushStatus(!pushStatus); // toggle 기능
         // const params = { userId: userInfo.userId, pushOn: e.target.checked };
-        `https://hakjoonkim.shop/api/subscribe/`('xxx')
+        `https://hakjoonkim.shop/api/subscribe/${id}`('xxx')
             .then(res => {
                 if (res.data.ok) {
-                    if (e.target.checked) {
+                    if ((e.target.checked, isPush === 'noPush')) {
                         // checked시 알람 발송(기본값)
                         alert('푸쉬 알람 설정이 저장되었습니다.');
+                        localStorage.setItem('pushAlarm', 'push');
                     } else {
                         // unchecked시 알람 미발송
                         alert('푸쉬 알람 미발송 처리 되었습니다.');
+                        localStorage.setItem('pushAlarm', 'noPush');
                     }
+                    setPush();
                 }
             })
+
             .catch(err => console.log(err));
     };
-
+    useEffect(() => {
+        const shiftData = alarmData.slice(1);
+        if (shiftData.length === 0) return;
+        const newAlarmData = JSON.parse(shiftData.at(-1));
+        fireNotificationWithTimeout('Stocks talk', 5000, {
+            body: newAlarmData.message,
+        });
+        console.log('dd', shiftData);
+        console.log('dd', newAlarmData);
+    }, [alarmData]);
     const menuItems = [
         {
             title: '주식보기',

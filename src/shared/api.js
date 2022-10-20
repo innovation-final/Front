@@ -123,10 +123,15 @@ export const stockAPI = {
 };
 export const noticeAPI = {
     getNotice: () => api.get(`/auth/notifications`),
+    deleteNotice: () => api.delete(`/auth/notifications`),
     getArams: id => api.get(`/subscribe/${id}`),
+    getStockArams: () => api.get(`/auth/tracelikestock`),
 };
 export const bankAPI = {
     postBankOpen: request => api.post(`/auth/account`, request),
     getBankAccount: () => api.get(`/auth/account`),
     getStocksAccount: () => api.get(`/auth/account/stocks`),
+};
+export const rankAPI = {
+    getRank: () => api.get(`/rank`),
 };

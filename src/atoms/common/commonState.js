@@ -32,12 +32,35 @@ export const isDarkSelector = selector({
     },
 
     set: ({ set }) => {
-        const currentTheme = localStorage.getItem('app_theme');
+        const currentTheme = localStorage.getItem('pushAlarm');
 
         set(
             isDarkState,
             currentTheme === 'lightMode' ? 'lightMode' : 'darkMode',
         );
+    },
+});
+
+export const isPushState = atom({
+    key: 'push',
+    default:
+        localStorage.getItem('pushAlarm') === null ||
+        localStorage.getItem('pushAlarm') === 'noPush'
+            ? 'noPush'
+            : 'push',
+});
+
+export const isPushSelector = selector({
+    key: 'pushSelector',
+    get: ({ get }) => {
+        const isPush = get(isPushState);
+        return isPush;
+    },
+
+    set: ({ set }) => {
+        const currentPush = localStorage.getItem('pushAlarm');
+
+        set(isPushState, currentPush === 'noPush' ? 'noPush' : 'push');
     },
 });
 
