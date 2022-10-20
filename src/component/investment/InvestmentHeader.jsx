@@ -50,7 +50,12 @@ function InvestmentHeader() {
                             <MyBalance>
                                 <Title>내 수익률</Title>
                                 <Money>
-                                    {myAccount.data?.totalReturnRate}
+                                    {!myAccount.data
+                                        ? 0
+                                        : (
+                                              myAccount.data.totalReturnRate *
+                                              100
+                                          ).toFixed(3)}
                                     <Unit>%</Unit>
                                 </Money>
                             </MyBalance>

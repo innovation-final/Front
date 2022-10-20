@@ -111,7 +111,7 @@ const StyleSideBar = styled.div`
     left: 0;
     top: 0;
     width: 100%;
-    height: 5.5vh;
+    height: 50px;
     background-color: ${props => props.theme.primaryColor};
     color: ${props => props.theme.textColor};
     border-bottom: 1px solid ${props => props.theme.layoutBorderColor};

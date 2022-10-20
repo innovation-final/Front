@@ -73,7 +73,6 @@ function Messenger() {
     return (
         <StyleMessenger variants={UpAnimation} initial="start" animate="end">
             <Speaker />
-            <CameraLens />
             <ChatScreen publish={publish} user={user} />
             <HomeButton />
         </StyleMessenger>
@@ -88,13 +87,28 @@ const StyleMessenger = styled(motion.div)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 420px;
-    height: 720px;
+    width: 320px;
+    height: 620px;
     background-color: ${props => props.theme.primaryColor};
     border-radius: 30px;
     bottom: 40px;
     right: -50px;
     box-shadow: 4px 4px 4px 4px gray;
+
+    @media screen and (min-width: 1400px) and (min-height: 720px) {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 420px;
+        height: 720px;
+        background-color: ${props => props.theme.primaryColor};
+        border-radius: 30px;
+        bottom: 40px;
+        right: -50px;
+        box-shadow: 4px 4px 4px 4px gray;
+    }
 `;
 
 const HomeButton = styled.span`
@@ -118,14 +132,4 @@ const Speaker = styled.span`
     border-radius: 10px;
     top: 25px;
     background-color: gray;
-`;
-
-const CameraLens = styled.span`
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    top: 25px;
-    right: 150px;
-    background-color: black;
 `;

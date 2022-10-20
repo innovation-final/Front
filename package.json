@@ -32,6 +32,7 @@
         "react-helmet": "^6.1.0",
         "react-hook-form": "^7.37.0",
         "react-material-ui-carousel": "^3.4.2",
+        "react-modal": "^3.16.1",
         "react-query": "^3.39.2",
         "react-redux": "^8.0.2",
         "react-resize-aware": "^3.1.1",

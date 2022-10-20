@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ant from '../../static/ant.jpg';
 import Button from '../elements/Button';
+import ProfileOtherUser from './ProfileOtherUser';
 
 function ProfileCard({ user }) {
     const { nickname, profileImg, profileMsg } = user;
+    const [isOpen, setIsOpen] = useState(false);
 
+    const openModal = () => {
+        setIsOpen(true);
+    };
+    const closeModal = () => {
+        setIsOpen(false);
+    };
     return (
         <StyleProfileCard>
             <Wrapper>
@@ -19,8 +27,17 @@ function ProfileCard({ user }) {
                 </ContentBox>
             </Wrapper>
             <ButtonBox>
-                <Button variant="success">프로필 보기</Button>
+                <Button _onClick={openModal} variant="success">
+                    프로필 보기
+                </Button>
             </ButtonBox>
+            {isOpen ? (
+                <ProfileOtherUser
+                    isOpen={isOpen}
+                    closeModal={closeModal}
+                    userId={user.id}
+                />
+            ) : null}
         </StyleProfileCard>
     );
 }

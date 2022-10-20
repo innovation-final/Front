@@ -14,6 +14,7 @@ const useInvestmentSell = stockCode => {
         onSuccess: () => {
             queryClient.invalidateQueries('mystock');
             queryClient.invalidateQueries(['account']);
+            queryClient.invalidateQueries(['stocksAccount']);
         },
     });
 

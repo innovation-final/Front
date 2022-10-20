@@ -43,7 +43,6 @@ const StyleContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
-    padding-right: 1.3rem;
 `;
 const StyleWrapper = styled.div`
     display: flex;
@@ -52,13 +51,20 @@ const StyleWrapper = styled.div`
     @media screen and (min-width: 1400px) {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 70px;
+        gap: 60px;
     }
 `;
 
 const StyleLeftSide = styled.div`
-    grid-column: 1/3;
+    margin-bottom: 20px;
+    width: 92%;
+    @media screen and (min-width: 1400px) {
+        grid-column: 1/3;
+        width: 100%;
+    }
 `;
 const StyledRightSide = styled.div`
-    grid-column: 3/4;
+    @media screen and (min-width: 1400px) {
+        grid-column: 3/4;
+    }
 `;
