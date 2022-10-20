@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 function MyStocks({ stock }) {
     const { stockName, profit, returnRate, amount } = stock;
-    console.log(stockName, profit, returnRate, amount);
     return (
         <StyleTableName>
             <TextLayout>{stockName}</TextLayout>

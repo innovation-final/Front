@@ -44,7 +44,7 @@ function MypageEdit() {
             setImg(uploadFile);
         }
     };
-    console.log(userImage);
+
     const patchMypage = async req => {
         const response = await mypageAPI.patchMypage(req);
         return response;

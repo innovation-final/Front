@@ -86,36 +86,67 @@ export default ChatScreen;
 
 const StyleChatScreen = styled.div`
     position: relative;
-    width: 380px;
-    height: 600px;
+    width: 280px;
+    height: 500px;
     border-radius: 15px;
     background-color: #d1e8ed;
     z-index: 1;
+    @media screen and (min-width: 1400px) and (min-height: 720px) {
+        position: relative;
+        width: 380px;
+        height: 600px;
+        border-radius: 15px;
+        background-color: #d1e8ed;
+        z-index: 1;
+    }
 `;
 const Container = styled.div`
     width: 100%;
-    padding: 15px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    @media screen and (min-width: 1400px) and (min-height: 720px) {
+        width: 100%;
+        height: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
 `;
 
 const MessageBox = styled.div`
     display: flex;
     flex-direction: column;
     width: 90%;
-    height: 490px;
+    height: 400px;
     padding: 20px;
-    margin-right: 30px;
     overflow: scroll;
+
+    @media screen and (min-width: 1400px) and (min-height: 720px) {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        height: 490px;
+        padding: 20px;
+        overflow: scroll;
+    }
 `;
 
 const Form = styled.form`
     width: 100%;
-    margin-right: 30px;
+    margin-right: 7px;
     position: relative;
-    margin-top: -10px;
+    margin-top: -110px;
+
+    @media screen and (min-width: 1400px) and (min-height: 720px) {
+        width: 100%;
+        margin-right: -7px;
+        position: relative;
+        margin-top: -10px;
+    }
 `;
 
 const InputBox = styled.div`
@@ -123,6 +154,7 @@ const InputBox = styled.div`
     padding: 10px;
     background-color: transparent;
 `;
+
 const Input = styled.input`
     width: 100%;
     height: 25px;

@@ -59,9 +59,11 @@ function TodayStock() {
                 {stocks.map(stock => {
                     return (
                         <PostBox
-                            key={stock.id}
+                            key={stock.stockCode}
                             count={count}
-                            onClick={() => navigate(`/stock/${stock.id}`)}
+                            onClick={() =>
+                                navigate(`/stock/${stock.stockCode}`)
+                            }
                         >
                             <Div>
                                 <Title>{`${stock.stockName}`}</Title>
