@@ -66,6 +66,13 @@ const Text = styled.p`
     margin: 17px;
     color: ${props => props.theme.textColor};
 `;
+// const Text = styled.p`
+//     font-weight: bold;
+//     width: 31%;
+//     text-align: center;
+//     margin: 17px;
+//     color: ${props => props.theme.textColor};
+// `;
 const StyleTableName = styled.div`
     display: flex;
     flex-direction: row;

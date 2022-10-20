@@ -42,11 +42,11 @@ function Pagination(props) {
     }
 
     const color = () => {
-        if (isDark) return 'white';
+        if (isDark === 'darkMode') return 'white';
         return 'black';
     };
     const focusColor = () => {
-        if (isDark) return '#DE6B3E';
+        if (isDark === 'darkMode') return '#DE6B3E';
         return 'skyblue';
     };
 
