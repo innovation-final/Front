@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useGetUser from '../../hooks/useGetUser';
 import { userState } from '../../atoms/user/userState';
 import Notice from '../notice/Notice';
 import usePushNotification from '../../hooks/usePushNotification ';
+import alarmState from '../../atoms/alarms/alarmState';
 
 function HeaderProfile() {
     const { fireNotificationWithTimeout } = usePushNotification();
@@ -33,9 +33,10 @@ function HeaderProfile() {
     const [value, setValue] = useState(null);
     // eslint-disable-next-line no-unused-vars
     const [meventSource, msetEventSource] = useState(undefined);
-
-    const isLogin = useRecoilState(userState);
-    console.log('wpq', isLogin[0].isLogin);
+    // eslint-disable-next-line no-unused-vars
+    const count = useRecoilValue(alarmState);
+    // eslint-disable-next-line no-unused-vars
+    const [alarmCount, setAlarmCount] = useState(0);
 
     // 알림
     useEffect(() => {
@@ -45,8 +46,6 @@ function HeaderProfile() {
             );
 
             msetEventSource(eventSource);
-
-            console.log('eventSource', eventSource);
 
             eventSource.onopen = () => {
                 console.log('connection opened');
@@ -82,18 +81,17 @@ function HeaderProfile() {
         fireNotificationWithTimeout('Stocks talk', 5000, {
             body: newAlarmData.message,
         });
+        setAlarmCount(props => props + 1);
+
         console.log('dd', shiftData);
         console.log('dd', newAlarmData);
     }, [alarmData]);
-    const shiftData = alarmData;
+
     useEffect(() => {
         if (!localStorage.getItem('newNoti')) {
             localStorage.setItem('newNoti', 0);
         }
     }, []);
-    console.log('d', shiftData);
-
-    const notiCount = localStorage.getItem('newNoti');
 
     // 모달창 노출 여부 state
     const [modalOpen, setModalOpen] = useState(false);
@@ -101,7 +99,7 @@ function HeaderProfile() {
     // 모달창 노출
     const showModal = () => {
         setModalOpen(props => !props);
-        localStorage.setItem('newNoti', 0);
+        setAlarmCount(0);
     };
 
     return (
@@ -121,10 +119,7 @@ function HeaderProfile() {
                 </ProfileInfo>
             </InfoBox>
             <NotiBox>
-                {Number(notiCount) > 0 && (
-                    <Badge badgeContent={notiCount} color="primary" />
-                )}
-                <Badge badgeContent={notiCount} color="primary">
+                <Badge badgeContent={alarmCount} color="primary">
                     <NotificationsIcon onClick={showModal} />
                     {modalOpen && <Notice setModalOpen={showModal} />}
                 </Badge>

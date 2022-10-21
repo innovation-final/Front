@@ -65,13 +65,13 @@ function RankingMain() {
                 <Container>
                     <StyleTableName>
                         <Text>순위</Text>
-                        <Text>닉네임</Text>
+                        <Profile>닉네임</Profile>
                         {page === 'investment' ? (
                             <Text>수익률</Text>
                         ) : (
                             <Text>좋아요</Text>
                         )}
-                        {page === 'investment' ? <Text>손익(원)</Text> : null}
+                        {/* {page === 'investment' ? <Text>손익(원)</Text> : null} */}
                     </StyleTableName>{' '}
                     <PageLayer>
                         {page === 'investment' ? (
@@ -155,6 +155,15 @@ const IconButton = styled.button`
 const Text = styled.p`
     font-weight: bold;
     margin: 5px;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    color: ${props => props.theme.textColor};
+`;
+const Profile = styled.p`
+    font-weight: bold;
+    margin: 5px;
+    margin-left: 15px;
     display: flex;
     align-items: center;
     color: ${props => props.theme.textColor};

@@ -11,7 +11,6 @@ import MypageBadge from './MyPageBadge';
 
 function MypageEdit() {
     const { data } = useGetUser();
-    console.log(data, 'dd');
     const queryClient = useQueryClient();
 
     const nickname = data && data.nickname;
@@ -281,7 +280,8 @@ const CardMedia = styled.img`
     justify-content: center;
     object-fit: cover;
     /* margin: 5% 30% 1% 20%; */
-    width: 30%;
+    height: 200px;
+    width: 200px;
 
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;

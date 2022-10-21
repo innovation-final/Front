@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 function Investment({ ranks }) {
+    console.log(ranks);
     return (
         <div>
             {ranks &&
@@ -10,9 +11,9 @@ function Investment({ ranks }) {
                         return (
                             <StyleTableName key={rank.nickname} ranking={rank}>
                                 <RankText>🥇 {index + 1}등</RankText>
-                                <Text>{rank.nickname}</Text>
+                                <Profile src={rank.profileImg} />
+                                <NickNameText>{rank.nickname}</NickNameText>
                                 <Text>{rank.returnRate * 100}</Text>
-                                <Text>{rank.profit.toLocaleString()}</Text>
                             </StyleTableName>
                         );
                     }
@@ -20,9 +21,9 @@ function Investment({ ranks }) {
                         return (
                             <StyleTableName key={rank.nickname} ranking={rank}>
                                 <RankText>🥈 {index + 1}등</RankText>
-                                <Text>{rank.nickname}</Text>
-                                <Text>{rank.returnRate}</Text>
-                                <Text>{rank.profit.toLocaleString()}</Text>
+                                <Profile src={rank.profileImg} />
+                                <NickNameText>{rank.nickname}</NickNameText>
+                                <Text>{rank.returnRate * 100}</Text>
                             </StyleTableName>
                         );
                     }
@@ -30,18 +31,18 @@ function Investment({ ranks }) {
                         return (
                             <StyleTableName key={rank.nickname} ranking={rank}>
                                 <RankText>🥉 {index + 1}등</RankText>
-                                <Text>{rank.nickname}</Text>
-                                <Text>{rank.returnRate}</Text>
-                                <Text>{rank.profit.toLocaleString()}</Text>
+                                <Profile src={rank.profileImg} />
+                                <NickNameText>{rank.nickname}</NickNameText>
+                                <Text>{rank.returnRate * 100}</Text>
                             </StyleTableName>
                         );
                     }
                     return (
                         <StyleTableName key={rank.nickname} ranking={rank}>
                             <RankText>{index + 1}등</RankText>
-                            <Text>{rank.nickname}</Text>
-                            <Text>{rank.returnRate}</Text>
-                            <Text>{rank.profit.toLocaleString()}</Text>
+                            <Profile src={rank.profileImg} />
+                            <NickNameText>{rank.nickname}</NickNameText>
+                            <Text>{rank.returnRate * 100}</Text>
                         </StyleTableName>
                     );
                 })}
@@ -66,13 +67,21 @@ const Text = styled.p`
     margin: 17px;
     color: ${props => props.theme.textColor};
 `;
-// const Text = styled.p`
-//     font-weight: bold;
-//     width: 31%;
-//     text-align: center;
-//     margin: 17px;
-//     color: ${props => props.theme.textColor};
-// `;
+const NickNameText = styled.p`
+    font-weight: bold;
+    width: 31%;
+    text-align: center;
+    margin: 17px;
+
+    color: ${props => props.theme.textColor};
+`;
+const Profile = styled.img`
+    width: 30px;
+    height: 30px;
+    margin-left: 45px;
+    border-radius: 50%;
+`;
+
 const StyleTableName = styled.div`
     display: flex;
     flex-direction: row;
