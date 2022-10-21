@@ -11,7 +11,7 @@ function Investment({ ranks }) {
                             <StyleTableName key={rank.nickname} ranking={rank}>
                                 <RankText>🥇 {index + 1}등</RankText>
                                 <Text>{rank.nickname}</Text>
-                                <Text>{rank.returnRate}</Text>
+                                <Text>{rank.returnRate * 100}</Text>
                                 <Text>{rank.profit.toLocaleString()}</Text>
                             </StyleTableName>
                         );

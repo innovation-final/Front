@@ -11,6 +11,7 @@ import MypageBadge from './MyPageBadge';
 
 function MypageEdit() {
     const { data } = useGetUser();
+    console.log(data, 'dd');
     const queryClient = useQueryClient();
 
     const nickname = data && data.nickname;
