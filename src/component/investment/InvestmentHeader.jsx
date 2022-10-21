@@ -28,9 +28,11 @@ function InvestmentHeader() {
             <StyleContainer>
                 <SearchBox>
                     <StockSearch />
-                    <Button _onClick={onClick}>
-                        <SearchIcon />
-                    </Button>
+                    <ButtonBox>
+                        <Button _onClick={onClick}>
+                            <SearchIcon />
+                        </Button>
+                    </ButtonBox>
                 </SearchBox>
                 <MyInfo>
                     {!myAccount.data?.balance ? (
@@ -102,10 +104,15 @@ const SearchBox = styled.div`
         width: 40%;
     }
 `;
+
+const ButtonBox = styled.div`
+    margin-left: 20px;
+`;
 const MyInfo = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-around;
     width: 100%;
 
     @media screen and (min-width: 1400px) {
@@ -118,6 +125,7 @@ const MyInfo = styled.div`
 const MyInfoContainer = styled.div`
     display: flex;
     justify-content: space-between;
+    width: 100%;
 
     @media screen and (min-width: 1400px) {
         display: flex;
@@ -131,7 +139,7 @@ const MyBalance = styled.div`
     background-color: ${props => props.theme.secondaryColor};
     padding: 12px;
     border-radius: 15px;
-    min-width: 140px;
+    width: 40%;
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -144,7 +152,7 @@ const MyBalance = styled.div`
         background-color: ${props => props.theme.secondaryColor};
         padding: 12px;
         border-radius: 15px;
-        min-width: 230px;
+        width: 30%;
         position: relative;
         display: flex;
         justify-content: space-between;

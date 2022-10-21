@@ -17,11 +17,7 @@ export const slideStockState = atom({
 
 export const isDarkState = atom({
     key: 'darkmode',
-    default:
-        localStorage.getItem('app_theme') === null ||
-        localStorage.getItem('app_theme') === 'lightMode'
-            ? 'lightMode'
-            : 'darkMode',
+    default: localStorage.getItem('app_theme'),
 });
 
 export const isDarkSelector = selector({

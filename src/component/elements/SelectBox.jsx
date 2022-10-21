@@ -40,9 +40,10 @@ const StyleSelectBox = styled.div`
     select {
         border: none;
         border-radius: 8px;
-        padding: 5px;
+        padding: 10px;
         height: 100%;
         color: ${props => props.theme.textColor};
         background-color: ${props => props.theme.inputColor};
+        font-family: 'Pretendard-Regular';
     }
 `;

@@ -6,8 +6,10 @@ import HeaderProfile from '../header/HeaderProfile';
 function Header() {
     return (
         <StyleHeader>
-            <HeaderOverview />
-            <HeaderProfile />
+            <Wrapper>
+                <HeaderOverview />
+                <HeaderProfile />
+            </Wrapper>
         </StyleHeader>
     );
 }
@@ -21,11 +23,15 @@ const StyleHeader = styled.div`
     width: 100%;
     height: 60px;
     border-bottom: 2px solid ${props => props.theme.layoutBorderColor};
+    z-index: 999;
+`;
+
+const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    z-index: 999;
     background-color: ${props => props.theme.primaryColor};
     overflow-y: hidden;
+    width: 100%;
 `;

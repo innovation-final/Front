@@ -12,34 +12,36 @@ function InvestmentTrade() {
 
     return (
         <StyleContainer>
-            <Buttons>
-                <Button
-                    value="bought"
-                    onClick={onClick}
-                    current={page === 'bought'}
-                >
-                    매수
-                </Button>
-                <Button
-                    value="sold"
-                    onClick={onClick}
-                    current={page === 'sold'}
-                >
-                    매도
-                </Button>
-                <Button
-                    value="status"
-                    onClick={onClick}
-                    current={page === 'status'}
-                >
-                    체결현황
-                </Button>
-            </Buttons>
-            <PageLayer>
-                {page === 'bought' ? <Bought /> : null}
-                {page === 'sold' ? <Sold /> : null}
-                {page === 'status' ? <Status /> : null}
-            </PageLayer>
+            <Wrapper>
+                <Buttons>
+                    <Button
+                        value="bought"
+                        onClick={onClick}
+                        current={page === 'bought'}
+                    >
+                        매수
+                    </Button>
+                    <Button
+                        value="sold"
+                        onClick={onClick}
+                        current={page === 'sold'}
+                    >
+                        매도
+                    </Button>
+                    <Button
+                        value="status"
+                        onClick={onClick}
+                        current={page === 'status'}
+                    >
+                        체결현황
+                    </Button>
+                </Buttons>
+                <PageLayer>
+                    {page === 'bought' ? <Bought /> : null}
+                    {page === 'sold' ? <Sold /> : null}
+                    {page === 'status' ? <Status /> : null}
+                </PageLayer>
+            </Wrapper>
         </StyleContainer>
     );
 }
@@ -47,14 +49,17 @@ function InvestmentTrade() {
 export default InvestmentTrade;
 
 const StyleContainer = styled.div`
-    padding: 2rem;
     border: 2px solid ${props => props.theme.borderColor};
     border-radius: 20px;
-    height: 40.7rem;
     display: flex;
     flex-direction: column;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    height: 97%;
+`;
+
+const Wrapper = styled.div`
+    padding: 1rem;
 `;
 
 const Buttons = styled.div`

@@ -181,6 +181,7 @@ const InputBox = styled.div`
     position: relative;
     label {
         margin-left: 20px;
+        white-space: nowrap;
         [type='radio'] {
             appearance: none;
             border: max(2px, 0.1em) solid gray;
@@ -195,7 +196,12 @@ const InputBox = styled.div`
             border: 0.4em solid ${props => props.theme.buttonColor};
         }
     }
+    div {
+        font-size: 0.8vw;
+        white-space: nowrap;
+    }
 `;
+
 const Radios = styled.div`
     display: flex;
     justify-content: flex-end;
@@ -221,6 +227,7 @@ const Input = styled.input`
     border: 1px solid ${props => props.theme.buttonColor};
     border-radius: 5px;
     padding-right: 3rem;
+    width: 50%;
 
     &:focus {
         outline: 2px solid ${props => props.theme.buttonColor};
@@ -250,4 +257,7 @@ const Button = styled.input`
     border-radius: 15px;
     background-color: ${props => props.theme.buttonColor};
     color: ${props => props.theme.bgColor};
+    &:hover {
+        background-color: ${props => props.theme.hoverBorderColor};
+    }
 `;

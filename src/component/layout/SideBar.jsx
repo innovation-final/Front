@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
 import { useRecoilValue, useRecoilState } from 'recoil';
 import useGetUser from '../../hooks/useGetUser';
 import SideBarHeader from '../sidebar/SideBarHeader';
 import SideBarItem from '../sidebar/SideBarItem';
 import {
     wideState,
-    isDarkSelector,
     isPushSelector,
+    isDarkState,
 } from '../../atoms/common/commonState';
 import usePushNotification from '../../hooks/usePushNotification ';
 
@@ -17,7 +16,7 @@ function SideBar() {
     const { fireNotificationWithTimeout } = usePushNotification();
     const navigate = useNavigate();
     const wide = useRecoilValue(wideState);
-    const [isDark, setDarkMode] = useRecoilState(isDarkSelector);
+    const [isDark, setDarkMode] = useRecoilState(isDarkState);
     // const setIsDark = useSetRecoilState(isDarkState);
     const [isLogin] = useState(!!localStorage.getItem('access-token'));
 
@@ -37,7 +36,7 @@ function SideBar() {
         } else {
             localStorage.setItem('app_theme', 'lightMode');
         }
-        setDarkMode();
+        setDarkMode(localStorage.getItem('app_theme'));
     };
     const [isPush, setPush] = useRecoilState(isPushSelector);
     const [pushStatus, setPushStatus] = useState(null);

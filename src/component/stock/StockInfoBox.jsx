@@ -146,30 +146,36 @@ const StyleFavorite = styled.div`
     display: flex;
 `;
 const StockInfoName = styled.div`
-    font-size: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 1.7vw;
     font-weight: 700;
     margin-right: 10px;
 `;
 const StockInfoCode = styled.div`
-    line-height: 30px;
+    display: flex;
+    align-items: center;
     margin-right: 10px;
 `;
 const StockInfoType = styled.div`
-    line-height: 30px;
+    display: flex;
+    align-items: center;
     margin-right: 10px;
 `;
 const StockDate = styled.div`
-    line-height: 30px;
+    display: flex;
+    align-items: center;
     margin-right: 10px;
-    font-size: 13px;
+    font-size: 1vw;
     color: gray;
 `;
 const StockInfoPrice = styled.div`
-    font-size: 25px;
+    font-size: 1.3vw;
     margin-right: 20px;
 `;
 const StockInfoRate = styled.div`
-    line-height: 30px;
+    display: flex;
+    align-items: center;
     color: ${props => props.colorParser};
 `;
 const StockInfoRightBox = styled.div`

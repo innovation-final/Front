@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useGetUser from '../../hooks/useGetUser';
 import { userState } from '../../atoms/user/userState';
 import Notice from '../notice/Notice';
@@ -45,9 +44,6 @@ function HeaderProfile() {
                     <UserName>{user.nickname}님!</UserName>
                 </ProfileInfo>
             </InfoBox>
-            <IconBox>
-                <KeyboardArrowDownIcon />
-            </IconBox>
             <NotiBox>
                 <NotificationsIcon onClick={showModal} />
                 {modalOpen && <Notice setModalOpen={showModal} />}
@@ -89,17 +85,14 @@ const ProfileInfo = styled.div`
     justify-content: space-evenly;
     margin-right: 30px;
 `;
-const IconBox = styled.div`
-    padding-top: 10px;
-    margin-right: 20px;
-`;
+
 const Hello = styled.div`
-    font-size: 13px;
+    font-size: 0.7vw;
 `;
 const UserName = styled.div`
-    font-size: 13px;
+    font-size: 0.7vw;
 `;
 
 const NotiBox = styled.div`
-    padding-top: 10px;
+    padding-top: 0.7vw;
 `;

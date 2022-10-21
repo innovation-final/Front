@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -7,12 +7,19 @@ import LiveChat from './component/livechat/LiveChat';
 import Router from './Router';
 import GlobalStyles from './GlobalStyles';
 import { lightTheme, darkTheme } from './theme/ThemeColor';
-import { isDarkSelector } from './atoms/common/commonState';
+import { isDarkState } from './atoms/common/commonState';
 import LoadingSpinner from './component/elements/LoadingSpinner';
 
 function App() {
-    const isDark = useRecoilValue(isDarkSelector);
+    let DARK_MODE = localStorage.getItem('app_theme');
+    const isDark = useRecoilValue(isDarkState);
     const queryClient = new QueryClient();
+
+    useEffect(() => {
+        if (!DARK_MODE) localStorage.setItem('app_theme', 'lightMode');
+        DARK_MODE = localStorage.getItem('app_theme');
+        console.log(isDark);
+    }, [DARK_MODE]);
 
     return (
         <QueryClientProvider client={queryClient}>
