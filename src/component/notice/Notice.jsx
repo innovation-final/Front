@@ -1,80 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { useRecoilState } from 'recoil';
 import ClearIcon from '@mui/icons-material/Clear';
+import { v4 as uuid } from 'uuid';
 import useGetUser from '../../hooks/useGetUser';
 import useAlarm from '../../hooks/useAlarm';
 import NoticeList from './NoticeList';
-import { userState } from '../../atoms/user/userState';
-import usePushNotification from '../../hooks/usePushNotification ';
+import sse from '../../util/sse';
 
 function Notice({ setModalOpen }) {
-    const { fireNotificationWithTimeout } = usePushNotification();
     const { data } = useGetUser();
     const id = data && data.id;
     const notices = useAlarm();
     const notice = notices.data;
-    useEffect(() => {}, [notice]);
-
-    const [listening, setListening] = useState(false);
-    // eslint-disable-next-line no-unused-vars
-    const [alarmData, setAlarmData] = useState([]);
-    // eslint-disable-next-line no-unused-vars
-    const [value, setValue] = useState(null);
-    // eslint-disable-next-line no-unused-vars
-    const [meventSource, msetEventSource] = useState(undefined);
-
-    const isLogin = useRecoilState(userState);
-    console.log('wpq', isLogin[0].isLogin);
-
+    const SSE = sse(id);
     useEffect(() => {
-        if (!listening) {
-            const eventSource = new EventSource(
-                `https://hakjoonkim.shop/api/subscribe/${id}`,
-            );
-
-            msetEventSource(eventSource);
-
-            console.log('eventSource', eventSource);
-
-            eventSource.onopen = () => {
-                console.log('connection opened');
-            };
-
-            eventSource.onmessage = event => {
-                setAlarmData(old => [...old, event.data]);
-                setValue(event.data);
-            };
-
-            eventSource.onerror = event => {
-                if (event.target.readyState === EventSource.CLOSED) {
-                    console.log(
-                        'eventsource closed ( + event.target.readyState + )',
-                    );
-                }
-                eventSource.close();
-            };
-
-            setListening(true);
-        }
-        const eventSource = undefined;
-        return () => {
-            eventSource?.close();
-            console.log('eventsource closed');
-        };
+        SSE.connectSSE();
+        return () => SSE.disconnectSSE();
     }, []);
 
     useEffect(() => {
-        const shiftData = alarmData.slice(1);
-        if (shiftData.length === 0) return;
-        const newAlarmData = JSON.parse(shiftData.at(-1));
-        fireNotificationWithTimeout('Stocks talk', 5000, {
-            body: newAlarmData.message,
-        });
-        console.log('dd', shiftData);
-        console.log('dd', newAlarmData);
-    }, [alarmData]);
+        if (SSE.getAlarmData().length === 0) {
+            console.log(SSE.getAlarmData());
+            return;
+        }
+        SSE.pushAlarm();
+    }, [notice, SSE]);
 
     return (
         <Container>
@@ -86,7 +37,8 @@ function Notice({ setModalOpen }) {
                 <Text>알람</Text>
             </IconLayout>
 
-            {notice && notice.map(alarm => <NoticeList alarms={alarm} />)}
+            {notice &&
+                notice.map(alarm => <NoticeList key={uuid()} alarms={alarm} />)}
         </Container>
     );
 }

@@ -12,7 +12,6 @@ import Store, { DarkModeContext } from './contexts/Store';
 function App() {
     const { isDark, setIsDark } = useContext(DarkModeContext);
     const queryClient = new QueryClient();
-    console.log(isDark);
 
     useEffect(() => {
         if (isDark === null) {

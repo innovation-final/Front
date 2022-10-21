@@ -5,7 +5,6 @@ import CandleStickChart from './CandleStickChart';
 
 function SampleChart({ name, width, height, code }) {
     const [data, setData] = useState([]);
-    console.log(code);
     useEffect(() => {
         async function fetchData() {
             await api.get(`/stock/${code}`).then(res => {
@@ -28,8 +27,8 @@ function SampleChart({ name, width, height, code }) {
                 <DivChart>
                     <CandleStickChart
                         data={data}
-                        width={width * 0.9}
-                        height={height * 0.8}
+                        width={width}
+                        height={height}
                     />
                 </DivChart>
             )}
