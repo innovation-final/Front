@@ -18,10 +18,9 @@ function HeaderOverview() {
 export default HeaderOverview;
 
 const StyleOverview = styled.div`
-    width: 60%;
-    transform: translateX(${props => (props.wide ? 290 : 70)}px);
+    transform: translateX(${props => (props.wide ? 140 : 0)}px);
     transition: all ease-in-out 0.3s;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
 `;

@@ -91,9 +91,8 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    line-height: 60px;
     justify-content: center;
-    height: 60px;
+    min-width: 500px;
 `;
 
 const StyleSlider = styled(Slider)``;
@@ -101,21 +100,37 @@ const StyleSlider = styled(Slider)``;
 const PostBox = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 `;
 const Title = styled.p`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-right: 10px;
+    font-size: 0.9vw;
+    height: 60px;
 `;
 const Div = styled.div`
     display: flex;
     flex-direction: row;
-    width: 170px;
+    align-items: center;
+    width: 180px;
+    font-size: 0.9vw;
+    white-space: nowrap;
+    height: 60px;
 `;
 
 const Today = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-right: 10px;
-    letter-spacing: -1px;
-    line-height: 3.6;
+    font-size: 0.9vw;
+
+    white-space: nowrap;
+    height: 60px;
 `;
 
 const Author = styled.p`

@@ -9,7 +9,7 @@ function InvestmentMyStock() {
     const { data } = useStocksAccount();
 
     return (
-        <>
+        <Wrapper>
             <IconLayout>
                 <PaidIcon />
                 <Text>내 주식잔고</Text>
@@ -26,11 +26,16 @@ function InvestmentMyStock() {
                         <MyPageBage key={stock.id} stock={stock} />
                     ))}
             </CardContent>
-        </>
+        </Wrapper>
     );
 }
 
 export default InvestmentMyStock;
+
+const Wrapper = styled.div`
+    padding: 1rem;
+    min-height: 240px;
+`;
 
 const Text = styled.p`
     font-weight: bold;

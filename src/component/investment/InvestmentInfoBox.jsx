@@ -40,7 +40,7 @@ function InvestmentInfoBox() {
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
-                <>
+                <Wrapper>
                     <TopContainer>
                         <StockInfo stockData={stockData} />
                     </TopContainer>
@@ -51,7 +51,7 @@ function InvestmentInfoBox() {
                             <LoadingSpinner />
                         )}
                     </BottomContainer>
-                </>
+                </Wrapper>
             )}
         </StyleContainer>
     );
@@ -63,7 +63,6 @@ const StyleContainer = styled.div`
     width: 100%;
     border: 2px solid ${props => props.theme.borderColor};
     border-radius: 20px;
-    padding: 1rem;
     margin-bottom: 10px;
     min-height: 25rem;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
@@ -76,4 +75,8 @@ const TopContainer = styled.div`
 const BottomContainer = styled.div`
     width: 100%;
     height: 100%;
+`;
+
+const Wrapper = styled.div`
+    padding: 2rem;
 `;

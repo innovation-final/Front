@@ -63,6 +63,7 @@ const Main = styled.div`
     flex-direction: column;
     max-width: 100%;
     min-width: 480px;
+    height: 90vh;
     box-sizing: border-box;
     z-index: 11;
     transition: all ease-in-out 0.3s;

@@ -46,7 +46,7 @@ function StocksBox() {
     return (
         <StyleStocksBox isOpen={open}>
             <StyleHeader>
-                <Title>주식전체</Title>
+                <Title>주식랭킹</Title>
                 <SelectBox
                     options={options}
                     selectedOption={option}
@@ -107,5 +107,4 @@ const StocksContainer = styled.div`
 `;
 const SearchBox = styled.div`
     margin-left: 20px;
-    margin-top: 10px;
 `;

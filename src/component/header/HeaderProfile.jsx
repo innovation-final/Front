@@ -120,9 +120,6 @@ function HeaderProfile() {
                     <UserName>{user.nickname}님!</UserName>
                 </ProfileInfo>
             </InfoBox>
-            <IconBox>
-                <KeyboardArrowDownIcon />
-            </IconBox>
             <NotiBox>
                 {Number(notiCount) > 0 && (
                     <Badge badgeContent={notiCount} color="primary" />
@@ -169,17 +166,14 @@ const ProfileInfo = styled.div`
     justify-content: space-evenly;
     margin-right: 30px;
 `;
-const IconBox = styled.div`
-    padding-top: 10px;
-    margin-right: 20px;
-`;
+
 const Hello = styled.div`
-    font-size: 13px;
+    font-size: 0.7vw;
 `;
 const UserName = styled.div`
-    font-size: 13px;
+    font-size: 0.7vw;
 `;
 
 const NotiBox = styled.div`
-    padding-top: 10px;
+    padding-top: 0.7vw;
 `;
