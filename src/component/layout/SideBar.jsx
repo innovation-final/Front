@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import useGetUser from '../../hooks/useGetUser';
 import SideBarHeader from '../sidebar/SideBarHeader';
 import SideBarItem from '../sidebar/SideBarItem';
-import {
-    wideState,
-    isPushSelector,
-    isDarkState,
-} from '../../atoms/common/commonState';
+import { wideState, isPushSelector } from '../../atoms/common/commonState';
 import usePushNotification from '../../hooks/usePushNotification ';
+import { DarkModeContext } from '../../contexts/Store';
 
 function SideBar() {
     const { fireNotificationWithTimeout } = usePushNotification();
     const navigate = useNavigate();
     const wide = useRecoilValue(wideState);
-    const [isDark, setDarkMode] = useRecoilState(isDarkState);
+    const { handler } = useContext(DarkModeContext);
     // const setIsDark = useSetRecoilState(isDarkState);
     const [isLogin] = useState(!!localStorage.getItem('access-token'));
 
@@ -29,14 +26,6 @@ function SideBar() {
 
     const logInFunction = () => {
         navigate('/');
-    };
-    const setIsDark = () => {
-        if (isDark === 'lightMode') {
-            localStorage.setItem('app_theme', 'darkMode');
-        } else {
-            localStorage.setItem('app_theme', 'lightMode');
-        }
-        setDarkMode(localStorage.getItem('app_theme'));
     };
     const [isPush, setPush] = useRecoilState(isPushSelector);
     const [pushStatus, setPushStatus] = useState(null);
@@ -108,7 +97,7 @@ function SideBar() {
     const menuBottomItems = [
         {
             title: '다크모드',
-            onClickFn: () => setIsDark(),
+            onClickFn: () => handler(),
         },
         {
             title: isLogin ? '로그아웃' : '로그인',
