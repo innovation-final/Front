@@ -2,60 +2,32 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ClearIcon from '@mui/icons-material/Clear';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { useRecoilState } from 'recoil';
-import { useMutation, useQueryClient } from 'react-query';
-import Swal from 'sweetalert2';
+import { v4 as uuid } from 'uuid';
+import useGetUser from '../../hooks/useGetUser';
 import useAlarm from '../../hooks/useAlarm';
 import NoticeList from './NoticeList';
-import alarmState from '../../atoms/alarms/alarmState';
-import useAlarmRead from '../../hooks/useAlarmRead';
-import { noticeAPI } from '../../shared/api';
+import sse from '../../util/sse';
 
 function Notice({ setModalOpen }) {
-    const [alarmCount, setAlarmCount] = useRecoilState(alarmState);
+    const { data } = useGetUser();
+    const id = data && data.id;
     const notices = useAlarm();
     const read = useAlarmRead();
     const notice = notices.data;
+    const SSE = sse(id);
     useEffect(() => {
-        setAlarmCount(notice && notice.length);
-    }, [notice, alarmCount, setAlarmCount]);
+        SSE.connectSSE();
+        return () => SSE.disconnectSSE();
+    }, []);
 
-    const queryClient = useQueryClient();
-    const deleteAlarm = () => {
-        const response = noticeAPI.deleteNotice();
-        return response;
-    };
+    useEffect(() => {
+        if (SSE.getAlarmData().length === 0) {
+            console.log(SSE.getAlarmData());
+            return;
+        }
+        SSE.pushAlarm();
+    }, [notice, SSE]);
 
-    const mutation = useMutation(() => deleteAlarm(), {
-        onError: error => console.log(error),
-        onSuccess: () => {
-            queryClient.invalidateQueries('alarmNotice');
-        },
-    });
-
-    const onPostDelete = () => {
-        Swal.fire({
-            title: '알림 비우시겠습니까?',
-            text: '다시 되돌릴 수 없습니다.',
-            imageUrl:
-                'https://velog.velcdn.com/images/soonger3306/post/c9fc9802-cc28-4aaf-9951-8c0bdc06b812/image.png',
-            imageWidth: 200,
-            imageHeight: 200,
-            imageAlt: 'Custom image',
-            showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#ff6026',
-            confirmButtonText: '삭제',
-            cancelButtonText: '취소',
-            reverseButtons: true,
-        }).then(result => {
-            if (result.isConfirmed) {
-                mutation.mutate();
-                Swal.fire('삭제되었습니다.');
-            }
-        });
-    };
     return (
         <Container>
             <DeleletButton onClick={onPostDelete}>
@@ -68,8 +40,9 @@ function Notice({ setModalOpen }) {
                 <NotificationsNoneIcon />
                 <Text>알람</Text>
             </IconLayout>
+
             {notice &&
-                notice.map(alarm => <NoticeList read={read} alarms={alarm} />)}
+                notice.map(alarm => <NoticeList key={uuid()} alarms={alarm} />)}
         </Container>
     );
 }

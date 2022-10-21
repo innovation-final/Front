@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
@@ -6,12 +6,8 @@ import Carousel from 'react-material-ui-carousel';
 import Layout from '../component/layout/Layout';
 import MainContainer from '../component/main/MainContainer';
 import MainContentBox from '../component/main/MainContentBox';
-import {
-    MainTableItem,
-    MainTableName,
-    MainStockIndex,
-    MainFavoriteStock,
-} from '../component';
+import { MainTableItem, MainTableName, MainStockIndex } from '../component';
+import MainFavoriteStock from '../component/main/MainFavoriteStock';
 import { stockAPI } from '../shared/api';
 import LoadingSpinner from '../component/elements/LoadingSpinner';
 
@@ -26,10 +22,18 @@ function Home() {
         '매수총잔량',
         '매도총잔량',
     ];
-
+    useEffect(() => {
+        window.dispatchEvent(new Event('resize'));
+    }, []);
     const { data, isLoading } = useQuery('stocks', () =>
         stockAPI.getStocks('kospi_vol'),
     );
+
+    const { data: myStockData, isLoading: myStockIsLoading } = useQuery(
+        ['stock'],
+        () => stockAPI.getLikeStock(),
+    );
+    const myStock = myStockData?.data?.data;
 
     if (isLoading) return <LoadingSpinner />;
     const values = data.data.data;
@@ -41,7 +45,10 @@ function Home() {
             </Helmet>
             <MainContainer>
                 <MainStockIndex />
-                <MainFavoriteStock />
+                <MainFavoriteStock
+                    myStock={myStock}
+                    isLoading={myStockIsLoading}
+                />
                 <MainContentBox title="인기종목">
                     <Carousel indicators={false}>
                         <DivCarousel>

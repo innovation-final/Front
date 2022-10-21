@@ -9,10 +9,11 @@ function GraphBox({ isPC, code }) {
     const [dimensions, setDimensions] = useState({ top: 0, left: 0 });
     const optionalCallback = entry =>
         setDimensions({ top: entry.x, left: entry.left });
+    // eslint-disable-next-line no-unused-vars
     const [width, height] = useResizeObserver(divRef, optionalCallback);
     return (
         <StyleGraphBox isPC={isPC} ref={divRef}>
-            <SampleChart name="" code={code} width={width} height={height} />
+            <SampleChart name="" code={code} width={width} height={350} />
         </StyleGraphBox>
     );
 }

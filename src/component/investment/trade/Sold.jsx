@@ -123,6 +123,7 @@ function Sold() {
                 <div>주문수량</div>
                 <Input
                     type="number"
+                    min="0"
                     value={Number(quantity)}
                     onChange={event => onChange(event, setQuantity)}
                     onBlur={event => onBlur(event, setQuantity, qunatityRef)}
@@ -137,6 +138,7 @@ function Sold() {
                 <div>매도가격</div>
                 <Input
                     type="number"
+                    min="0"
                     value={Number(price)}
                     onChange={event => onChange(event, setPrice)}
                     onBlur={event => onBlur(event, setPrice, priceRef)}

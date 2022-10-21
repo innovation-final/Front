@@ -38,7 +38,6 @@ const subscribeCallback = (data, setChatList) => {
 };
 
 export const subscribe = setChatList => {
-    console.log(token);
     client.current.subscribe(`/sub/chat`, body => {
         const jsonBody = JSON.parse(body.body);
         subscribeCallback(jsonBody, setChatList);
