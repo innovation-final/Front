@@ -12,6 +12,7 @@ export const lightTheme = {
     stockBorderColor: '#ceecff',
     hoverBorderColor: '#95d2f8',
     hoverColor: '#cef3ff',
+    hoverSecondaryColor: '#e67e22',
     withDrawBorderColor: '#ebdada',
     layoutBorderColor: 'white',
 };
@@ -30,6 +31,7 @@ export const darkTheme = {
     stockBorderColor: '#E68563',
     hoverBorderColor: '#E44B0A',
     hoverColor: '#E27D56',
+    hoverSecondaryColor: '#e67e22',
     withDrawBorderColor: '#f1b6a7',
     layoutBorderColor: '#9F5536',
 };

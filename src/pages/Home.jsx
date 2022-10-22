@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import Carousel from 'react-material-ui-carousel';
+import { v4 as uuid } from 'uuid';
 import Layout from '../component/layout/Layout';
 import MainContainer from '../component/main/MainContainer';
 import MainContentBox from '../component/main/MainContentBox';
@@ -12,21 +13,16 @@ import { stockAPI } from '../shared/api';
 import LoadingSpinner from '../component/elements/LoadingSpinner';
 
 function Home() {
-    const keys = [
-        '종목명',
-        '현재가',
-        '전일비',
-        '등락률',
-        '매수호가',
-        '매도호가',
-        '매수총잔량',
-        '매도총잔량',
-    ];
+    const keys = ['랭킹', '종목명', '현재가', '등락률', '저가', '고가'];
     useEffect(() => {
         window.dispatchEvent(new Event('resize'));
     }, []);
     const { data, isLoading } = useQuery('stocks', () =>
         stockAPI.getStocks('kospi_vol'),
+    );
+    const { data: rateData, isLoading: rateIsLoading } = useQuery(
+        ['stocks', 'kospi_rate'],
+        () => stockAPI.getStocks('kospi_rate'),
     );
 
     const { data: myStockData, isLoading: myStockIsLoading } = useQuery(
@@ -35,8 +31,9 @@ function Home() {
     );
     const myStock = myStockData?.data?.data;
 
-    if (isLoading) return <LoadingSpinner />;
+    if (isLoading || rateIsLoading) return <LoadingSpinner />;
     const values = data.data.data;
+    const rateValues = rateData.data.data;
 
     return (
         <Layout header sidebar>
@@ -54,13 +51,13 @@ function Home() {
                         <DivCarousel>
                             <MainTableName keys={keys} />
                             {values.slice(0, 5).map(value => (
-                                <MainTableItem key={value[0]} values={value} />
+                                <MainTableItem key={uuid()} values={value} />
                             ))}
                         </DivCarousel>
                         <DivCarousel>
                             <MainTableName keys={keys} />
                             {values.slice(5).map(value => (
-                                <MainTableItem key={value[0]} values={value} />
+                                <MainTableItem key={uuid()} values={value} />
                             ))}
                         </DivCarousel>
                     </Carousel>
@@ -69,14 +66,14 @@ function Home() {
                     <Carousel indicators={false}>
                         <div>
                             <MainTableName keys={keys} />
-                            {values.slice(0, 5).map(value => (
-                                <MainTableItem key={value[0]} values={value} />
+                            {rateValues.slice(0, 5).map(value => (
+                                <MainTableItem key={uuid()} values={value} />
                             ))}
                         </div>
                         <div>
                             <MainTableName keys={keys} />
-                            {values.slice(5).map(value => (
-                                <MainTableItem key={value[0]} values={value} />
+                            {rateValues.slice(5).map(value => (
+                                <MainTableItem key={uuid()} values={value} />
                             ))}
                         </div>
                     </Carousel>

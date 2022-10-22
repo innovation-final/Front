@@ -5,22 +5,20 @@ import dayjs from 'dayjs';
 import api from '../../shared/api';
 import LoadingSpinner from '../elements/LoadingSpinner';
 
-function ChartCandleStick({ name, width, code, height }) {
+function ChartArea({ name, width, code, height }) {
     const [isLoading, setIsLoading] = useState(true);
     const [series, setData] = useState([]);
 
     useEffect(() => {
         const getValueData = async () => {
             const newValue = [];
-            const reqData = await api.get(`/stock/${code}`);
-            const resData = reqData.data.data.stockDetail
-                .slice(-30, -1)
-                .map(v => {
-                    return {
-                        x: v.date,
-                        y: [v.open, v.high, v.low, v.close],
-                    };
-                });
+            const reqData = await api.get(`/stock/year/${code}`);
+            const resData = reqData.data.data.map(v => {
+                return {
+                    x: v.date,
+                    y: v.price,
+                };
+            });
             for (let i = 0; i < resData.length; i += 1) {
                 newValue.push(resData[i]);
             }
@@ -42,7 +40,7 @@ function ChartCandleStick({ name, width, code, height }) {
             ) : (
                 <ChartContainer>
                     <ApexChart
-                        type="candlestick"
+                        type="area"
                         series={series && [{ data: series }]}
                         options={{
                             title: {
@@ -53,6 +51,7 @@ function ChartCandleStick({ name, width, code, height }) {
                                     fontFamily: 'Pretendard-Regular',
                                 },
                             },
+                            tickPlacement: 'between',
                             chart: {
                                 toolbar: {
                                     show: false,
@@ -61,17 +60,18 @@ function ChartCandleStick({ name, width, code, height }) {
                                     enabled: false,
                                 },
                             },
-                            events: {
-                                mounted: chart => {
-                                    chart.windowResizeHandler();
-                                },
+                            dataLabels: {
+                                enabled: false,
+                            },
+                            stroke: {
+                                curve: 'smooth',
                             },
                             xaxis: {
                                 type: 'category',
-                                tickAmount: 10,
+                                tickAmount: 12,
                                 labels: {
                                     formatter: function (val) {
-                                        return dayjs(val).format('MM/DD');
+                                        return dayjs(val).format('YY`MMM');
                                     },
                                     rotate: 0,
                                 },
@@ -111,4 +111,4 @@ const ChartContainer = styled.div`
     width: 100%;
 `;
 
-export default React.memo(ChartCandleStick);
+export default React.memo(ChartArea);

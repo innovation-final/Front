@@ -1,49 +1,114 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import ApexChart from 'react-apexcharts';
 import styled from 'styled-components';
-import LineChart from './LineChart';
+import dayjs from 'dayjs';
 import api from '../../shared/api';
+import LoadingSpinner from '../elements/LoadingSpinner';
 
-function StockIndex({ name, width }) {
-    const [data, setData] = useState([]);
-    const [index, setIndex] = useState([]);
+function ChartAreaIndex({ name, width, height }) {
+    const [isLoading, setIsLoading] = useState(true);
+    const [series, setData] = useState([]);
+
     useEffect(() => {
-        async function fetchData() {
-            await api.get(`/stock/index/${name}`).then(res => {
-                setData(
-                    res.data.data.map(v => {
-                        return {
-                            x: v[0],
-                            y: v[1],
-                        };
-                    }),
-                );
+        const getValueData = async () => {
+            const newValue = [];
+            const reqData = await api.get(`/stock/index/${name}`);
+            const resData = reqData.data.data.map(v => {
+                return {
+                    x: v[0],
+                    y: v[1],
+                };
             });
-        }
-
-        async function fetchIndex() {
-            await api.get(`/stock/index/main/${name}`).then(res => {
-                setIndex(res.data.data);
-            });
-        }
-
-        fetchIndex();
-        fetchData();
+            for (let i = 0; i < resData.length; i += 1) {
+                newValue.push(resData[i]);
+            }
+            setData(newValue);
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 500);
+        };
+        setTimeout(() => {
+            getValueData();
+        }, 1);
     }, []);
-
     return (
-        <Div>
-            <h1>
-                {name === 'kospi' ? '코스피' : '코스닥'} : {index}
-            </h1>
-            {data.length > 0 && (
-                <LineChart data={data} width={width} height={350} name={name} />
+        <Wrapper>
+            {isLoading ? (
+                <LoadingContainer>
+                    <LoadingSpinner />
+                </LoadingContainer>
+            ) : (
+                <ChartContainer>
+                    <ApexChart
+                        type="area"
+                        series={series && [{ data: series }]}
+                        options={{
+                            title: {
+                                text: name === 'kospi' ? '코스피' : '코스닥',
+                                style: {
+                                    fontSize: '17px',
+                                    fontWeight: 'bold',
+                                    fontFamily: 'Pretendard-Regular',
+                                },
+                            },
+                            tickPlacement: 'between',
+                            chart: {
+                                toolbar: {
+                                    show: false,
+                                },
+                                zoom: {
+                                    enabled: false,
+                                },
+                            },
+                            dataLabels: {
+                                enabled: false,
+                            },
+                            stroke: {
+                                curve: 'smooth',
+                            },
+                            xaxis: {
+                                type: 'category',
+                                tickAmount: 10,
+                                labels: {
+                                    formatter: function (val) {
+                                        return dayjs(val).format('YYYY');
+                                    },
+                                    rotate: 0,
+                                },
+                            },
+                            noData: {
+                                text: 'Loading..',
+                            },
+                        }}
+                        width={width}
+                        height={height}
+                    />
+                </ChartContainer>
             )}
-        </Div>
+        </Wrapper>
     );
 }
 
-export default StockIndex;
-
-const Div = styled.div`
-    height: max-content;
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 `;
+
+const LoadingContainer = styled.div`
+    height: 100%;
+    min-height: 375px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const ChartContainer = styled.div`
+    padding: 30px;
+    width: 100%;
+`;
+
+export default React.memo(ChartAreaIndex);

@@ -75,7 +75,6 @@ const StyleHeader = styled.div`
     padding: 0.9rem;
     width: 100%;
     min-height: 2rem;
-    margin-bottom: 10px;
     /* border: 1px solid ${props => props.theme.borderColor}; */
 `;
 
@@ -139,7 +138,7 @@ const MyBalance = styled.div`
     background-color: ${props => props.theme.secondaryColor};
     padding: 12px;
     border-radius: 15px;
-    width: 40%;
+    width: 100%;
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -147,12 +146,13 @@ const MyBalance = styled.div`
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     margin-bottom: 10px;
+    white-space: nowrap;
 
     @media screen and (min-width: 1400px) {
         background-color: ${props => props.theme.secondaryColor};
         padding: 12px;
         border-radius: 15px;
-        width: 30%;
+        width: 40%;
         position: relative;
         display: flex;
         justify-content: space-between;

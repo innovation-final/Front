@@ -48,18 +48,20 @@ function StockDetailContainer() {
 
     return (
         <StyleDetailContainer>
-            <ContainerTop isPC={isPC}>
-                <StockInfoWrapper>
-                    <StockInfoBox stockData={stockData} isPC={isPC} />
-                    <GraphBox isPC={isPC} code={code} name={name} />
-                </StockInfoWrapper>
-                <TradingVolumeBox volumeData={volumeData} isPC={isPC} />
-            </ContainerTop>
-            <ContainerBottom isPC={isPC}>
-                <FinancialStatementBox isPC={isPC} />
-                <RelatedArticlesBox isPC={isPC} />
-                <RelatedPostsBox isPC={isPC} />
-            </ContainerBottom>
+            <Wrapper>
+                <ContainerTop isPC={isPC}>
+                    <StockInfoWrapper>
+                        <StockInfoBox stockData={stockData} isPC={isPC} />
+                        <GraphBox isPC={isPC} code={code} name={name} />
+                    </StockInfoWrapper>
+                    <TradingVolumeBox volumeData={volumeData} isPC={isPC} />
+                </ContainerTop>
+                <ContainerBottom isPC={isPC}>
+                    <FinancialStatementBox isPC={isPC} />
+                    <RelatedArticlesBox isPC={isPC} />
+                    <RelatedPostsBox isPC={isPC} />
+                </ContainerBottom>
+            </Wrapper>
         </StyleDetailContainer>
     );
 }
@@ -72,6 +74,10 @@ const StyleDetailContainer = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: flex-start;
+`;
+
+const Wrapper = styled.div`
+    padding-top: 20px;
     width: 100%;
 `;
 
@@ -97,4 +103,5 @@ const ContainerBottom = styled.div`
     ${props => (props.isPC ? responsive.pc : responsive.phone)};
     width: 100%;
     display: flex;
+    margin-top: -30px;
 `;
