@@ -22,12 +22,17 @@ function InterestStockList({ interestStocks, _onClick }) {
             queryClient.invalidateQueries();
         },
     });
+    // const [color, setColor] = useState('red');
 
     const dislikeHandler = e => {
         e.preventDefault();
         setLikes(!like);
+
         dislikemutation.mutate(code);
     };
+    // const onClick = () => {
+    //     color === 'red' ? setColor('yellow') : setColor('red');
+    // };
 
     return (
         <CardContent onClick={_onClick}>
@@ -54,6 +59,12 @@ const CardContent = styled.div`
     &:hover {
         border: 2px solid ${props => props.theme.hoverBorderColor};
         background-color: ${props => props.theme.hoverColor};
+    }
+    &:checked {
+        background-color: ${props => props.theme.hoverColor};
+    }
+    .clicked {
+        color: gold;
     }
 `;
 const InterestTitle = styled.div`

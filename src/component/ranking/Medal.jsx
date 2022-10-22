@@ -7,7 +7,7 @@ import top3 from '../../static/3.png';
 function Medal({ ranks }) {
     const nickname1 = ranks && ranks[0].nickname;
     const returnRate1 = ranks && ranks[0].returnRate;
-
+    //    d
     const nickname2 = ranks && ranks[1].nickname;
     const returnRate2 = ranks && ranks[1].returnRate;
 
