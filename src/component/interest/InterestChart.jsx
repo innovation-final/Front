@@ -6,7 +6,6 @@ import useWindowSize from '../../hooks/useWindowSize';
 import { StockInfoBox } from '../stock/index';
 
 function InterestChart({ code }) {
-    console.log(code, 'd');
     const { data } = useGetStockInfo(code);
 
     const name = data && data.name;
