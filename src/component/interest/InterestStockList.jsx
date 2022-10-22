@@ -34,6 +34,8 @@ function InterestStockList({ interestStocks, _onClick }) {
     //     color === 'red' ? setColor('yellow') : setColor('red');
     // };
 
+    console.log(interestStocks);
+
     return (
         <CardContent onClick={_onClick}>
             <InterestTitle>{name}</InterestTitle>

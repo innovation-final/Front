@@ -262,9 +262,9 @@ const SubHeader = styled.div`
 const PostInfoBox = styled.div`
     display: flex;
     flex-direction: row;
-    width: 9%;
-
+    width: 10%;
     justify-content: space-evenly;
+    white-space: nowrap;
 `;
 const ViewCount = styled.div`
     font-size: 13px;

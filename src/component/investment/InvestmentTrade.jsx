@@ -56,6 +56,7 @@ const StyleContainer = styled.div`
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     height: 97%;
+    background-color: ${props => props.theme.calculatorColor};
 `;
 
 const Wrapper = styled.div`

@@ -13,7 +13,7 @@ import { stockAPI } from '../shared/api';
 import LoadingSpinner from '../component/elements/LoadingSpinner';
 
 function Home() {
-    const keys = ['랭킹', '종목명', '현재가', '등락률', '저가', '고가'];
+    const keys = ['랭킹', '종목명', '현재가', '등락률', '거래량'];
     useEffect(() => {
         window.dispatchEvent(new Event('resize'));
     }, []);
@@ -46,7 +46,7 @@ function Home() {
                     myStock={myStock}
                     isLoading={myStockIsLoading}
                 />
-                <MainContentBox title="인기종목">
+                <MainContentBox title="인기종목 TOP 10">
                     <Carousel indicators={false}>
                         <DivCarousel>
                             <MainTableName keys={keys} />
@@ -62,7 +62,7 @@ function Home() {
                         </DivCarousel>
                     </Carousel>
                 </MainContentBox>
-                <MainContentBox title="수익률 높은 종목">
+                <MainContentBox title="등락률 TOP 10">
                     <Carousel indicators={false}>
                         <div>
                             <MainTableName keys={keys} />

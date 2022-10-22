@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const SIZES = {
     sm: css`
-        --button-font-size: 0.875rem;
+        --button-font-size: 0.8rem;
         --button-padding: 8px 12px;
         --button-radius: 4px;
     `,
@@ -77,6 +77,7 @@ const StyleButton = styled.button`
     border-radius: var(--button-radius, 8px);
     background-color: var(--button-bg-color, #0d6efd);
     color: var(--button-color, #ffffff);
+    white-space: nowrap;
     cursor: pointer;
 
     &:active,

@@ -10,6 +10,9 @@ function MainStockIndex({ myStock, isLoading }) {
     return (
         <React.Suspense>
             <MainContentBox ref={divRef} title="관심종목 차트">
+                {myStock && myStock.length === 0 ? (
+                    <NoData>관심 종목을 등록해주세요.</NoData>
+                ) : null}
                 {isLoading ? (
                     <Wrapper>
                         <LoadingSpinner />
@@ -47,4 +50,13 @@ const Wrapper = styled.div`
 
 const Div = styled.div`
     padding-top: 60px;
+`;
+
+const NoData = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: ${props => props.theme.textColor};
 `;

@@ -37,7 +37,7 @@ api.interceptors.response.use(
             header['refresh-token'] = refreshToken;
 
             await axios
-                .post(`${BASE_URL}/auth/reissue`, null, {
+                .post(`${BASE_URL}auth/reissue`, null, {
                     headers: header,
                 })
                 .then(res => {
@@ -57,14 +57,13 @@ api.interceptors.response.use(
                     return Promise.reject(error);
                 })
                 .catch(err => {
-                    console.log('에러!!', err);
                     if (
                         err.response.data.error.code === 'REFRESH_TOKEN_EXPIRED'
                     ) {
                         console.log(err.response.data.error.code);
                         localStorage.removeItem('access-token');
                         localStorage.removeItem('refresh-token');
-                        window.location.href = '../login';
+                        window.location.replace = '/login';
                     }
                 });
         }

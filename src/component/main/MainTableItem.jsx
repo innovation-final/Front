@@ -4,15 +4,8 @@ import styled from 'styled-components';
 import { esUSNumberParser } from '../../util/parser';
 
 function TableItem({ values }) {
-    const {
-        rank,
-        stockName,
-        lastPrice,
-        fluctuationRate,
-        lowPrice,
-        highPrice,
-        stockCode,
-    } = values;
+    const { rank, stockName, lastPrice, fluctuationRate, stockCode, volume } =
+        values;
     const navigate = useNavigate();
     return (
         <StyleTableItem>
@@ -23,8 +16,7 @@ function TableItem({ values }) {
                 <ItemMutateContent
                     isMinus={fluctuationRate < 0}
                 >{`${fluctuationRate}%`}</ItemMutateContent>
-                <ItemContent>{esUSNumberParser(lowPrice)}</ItemContent>
-                <ItemContent>{esUSNumberParser(highPrice)}</ItemContent>
+                <ItemContent>{esUSNumberParser(volume)}</ItemContent>
             </ItemList>
         </StyleTableItem>
     );

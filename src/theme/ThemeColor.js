@@ -15,6 +15,7 @@ export const lightTheme = {
     hoverSecondaryColor: '#e67e22',
     withDrawBorderColor: '#ebdada',
     layoutBorderColor: 'white',
+    calculatorColor: 'aliceblue',
 };
 
 export const darkTheme = {
@@ -34,6 +35,7 @@ export const darkTheme = {
     hoverSecondaryColor: '#e67e22',
     withDrawBorderColor: '#f1b6a7',
     layoutBorderColor: '#9F5536',
+    calculatorColor: 'gray',
 };
 
 /**
