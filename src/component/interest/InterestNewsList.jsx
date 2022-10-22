@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { dateParser } from '../../util/parser';
 
 function InterestNewsList({ news }) {
-    console.log('dd', news);
     return (
         <CardContent onClick={() => window.open(`${news.originallink}`)}>
             <InterestTitle>

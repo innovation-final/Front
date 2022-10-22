@@ -18,7 +18,6 @@ function InterestNews({ code }) {
     const interestnews = data?.data.data;
     return (
         <div>
-            {' '}
             {interestnews &&
                 interestnews.map(interestStocks => (
                     <InterestNewsList

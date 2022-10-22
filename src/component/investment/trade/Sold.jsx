@@ -255,11 +255,11 @@ const View = styled.span`
 const Button = styled.input`
     padding: 1rem;
     font-size: 1rem;
-    border: 1px solid ${props => props.theme.buttonColor};
+    border: 1px solid ${props => props.theme.secondaryColor};
     border-radius: 15px;
-    background-color: ${props => props.theme.buttonColor};
+    background-color: ${props => props.theme.secondaryColor};
     color: ${props => props.theme.bgColor};
     &:hover {
-        background-color: ${props => props.theme.hoverBorderColor};
+        background-color: ${props => props.theme.hoverSecondaryColor};
     }
 `;

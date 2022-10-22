@@ -34,7 +34,7 @@ export default InvestmentMyStock;
 
 const Wrapper = styled.div`
     padding: 1rem;
-    min-height: 240px;
+    min-height: 230px;
 `;
 
 const Text = styled.p`

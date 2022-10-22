@@ -19,7 +19,8 @@
                 "props": true,
                 "ignorePropertyModificationsFor": ["state", "config", "ref"]
             }
-        ]
+        ],
+        "object-shorthand": 0
     },
     "parser": "@babel/eslint-parser",
     "requireConfigFile": false,

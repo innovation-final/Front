@@ -4,3 +4,4 @@ export { default as StockIndex } from './StockIndex';
 export { default as SampleChart } from './SampleChart';
 export { default as SampleLineChart } from './SampleLineChart';
 export { default as ChartCandleStick } from './ChartCandleStick';
+export { default as ChartArea } from './ChartArea';

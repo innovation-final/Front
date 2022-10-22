@@ -1,59 +1,12 @@
 import React from 'react';
-
 import styled from 'styled-components';
-// import useWindowSize from '../../hooks/useWindowSize';
+import { ChartCandleStick } from '../chart';
 
-// import {
-//     GraphBox,
-//     TradingVolumeBox,
-//     FinancialStatementBox,
-//     RelatedArticlesBox,
-//     RelatedPostsBox,
-//     StockInfoBox,
-// } from '../stock/index';
-
-// const responsive = {
-//     pc: css`
-//         flex-direction: row;
-//         justify-content: space-between;
-//     `,
-//     phone: css`
-//         flex-direction: column;
-//     `,
-// };
-
-function InterestChartList() {
-    // const { width } = useWindowSize();
-    // const isPC = useMemo(() => {
-    //     return width >= 1024;
-    // }, [width]);
-
-    // const { code, name, market, current, stockDetail, doneInterest } = chart;
-    // const prevPrice = stockDetail.at(-1);
-    // const stockData = {
-    //     doneInterest,
-    //     code,
-    //     name,
-    //     market,
-    //     ...current,
-    //     prevPrice,
-    // };
-    // const volumeData = stockDetail.slice(-10);
-
+function InterestChartList({ code }) {
+    console.log(code);
     return (
         <StyleDetailContainer>
-            {/* <ContainerTop isPC={isPC}>
-                <StockInfoWrapper>
-                    <StockInfoBox stockData={stockData} isPC={isPC} />
-                    <GraphBox isPC={isPC} code={code} name={name} />
-                </StockInfoWrapper>
-                <TradingVolumeBox volumeData={volumeData} isPC={isPC} />
-            </ContainerTop>
-            <ContainerBottom isPC={isPC}>
-                <FinancialStatementBox isPC={isPC} />
-                <RelatedArticlesBox isPC={isPC} />
-                <RelatedPostsBox isPC={isPC} />
-            </ContainerBottom> */}
+            <ChartCandleStick code={code} />
         </StyleDetailContainer>
     );
 }

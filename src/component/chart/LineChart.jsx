@@ -11,11 +11,12 @@ function LineChart({ name, data, width, height }) {
     const options = {
         tickPlacement: 'between',
         chart: {
-            id: name === 'kospi' ? '코스피' : '코스닥',
-        },
-        height: 350,
-        zoom: {
-            enabled: false,
+            toolbar: {
+                show: false,
+            },
+            zoom: {
+                enabled: false,
+            },
         },
         dataLabels: {
             enabled: false,
