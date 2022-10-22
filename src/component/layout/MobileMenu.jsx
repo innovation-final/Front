@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import MobileMenuHeader from '../mobile/MobileMenuHeader';
 import MobileMenuItem from '../mobile/MobileMenuItem';
 import { wideState } from '../../atoms/common/commonState';
@@ -10,7 +10,7 @@ import { DarkModeContext } from '../../contexts/Store';
 function MobileMenu() {
     const navigate = useNavigate();
     const { handler } = useContext(DarkModeContext);
-    const wide = useRecoilValue(wideState);
+    const [wide, setWide] = useRecoilState(wideState);
     // const setIsDark = useSetRecoilState(isDarkState);
     const [isLogin] = useState(!!localStorage.getItem('access-token'));
 
@@ -27,32 +27,50 @@ function MobileMenu() {
     const menuItems = [
         {
             title: '주식보기',
-            onClickFn: () => navigate('/stock'),
+            onClickFn: () => {
+                navigate('/stock');
+                setWide(props => !props);
+            },
             param: '/stock',
         },
         {
             title: '커뮤니티',
-            onClickFn: () => navigate('/community'),
+            onClickFn: () => {
+                navigate('/community');
+                setWide(props => !props);
+            },
             param: '/community',
         },
         {
             title: '모의투자',
-            onClickFn: () => navigate('/investment'),
+            onClickFn: () => {
+                navigate('/investment');
+                setWide(props => !props);
+            },
             param: '/investment',
         },
         {
             title: '랭킹보드',
-            onClickFn: () => navigate('/ranking'),
+            onClickFn: () => {
+                navigate('/ranking');
+                setWide(props => !props);
+            },
             param: '/ranking',
         },
         {
             title: '관심종목 관리',
-            onClickFn: () => navigate('/interest'),
+            onClickFn: () => {
+                navigate('/interest');
+                setWide(props => !props);
+            },
             param: '/interest',
         },
         {
             title: '마이페이지',
-            onClickFn: () => navigate('/mypage'),
+            onClickFn: () => {
+                navigate('/mypage');
+                setWide(props => !props);
+            },
             param: '/mypage',
         },
     ];

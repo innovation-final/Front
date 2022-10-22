@@ -72,8 +72,10 @@ const Input = styled.input`
 `;
 
 const InputBox = styled.div`
-    max-width: 1500px;
-    width: 90%;
+    width: 78%;
+    @media screen and (min-width: 1400px) {
+        width: 93%;
+    }
 `;
 
 const ButtonBox = styled.div``;

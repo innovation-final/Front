@@ -67,16 +67,34 @@ function Bought() {
             reverseButtons: true,
         }).then(result => {
             if (result.isConfirmed) {
-                selectPriceBuyMutation.mutate({
-                    stockName: currentStockInfo?.data?.name,
-                    amount: quantity,
-                    orderCategory: isMarket ? '시장가' : '지정가',
-                    price,
-                });
-                Swal.fire('매수하였습니다.');
-                setQuantity(0);
-                setPrice(0);
-                setIsMarket(false);
+                selectPriceBuyMutation.mutate(
+                    {
+                        stockName: currentStockInfo?.data?.name,
+                        amount: quantity,
+                        orderCategory: isMarket ? '시장가' : '지정가',
+                        price,
+                    },
+                    {
+                        onError: error => {
+                            if (
+                                error.response.data.error.code === 'ORDER_FAIL'
+                            ) {
+                                Swal.fire('주문 수량을 확인해주세요.');
+                                setQuantity(0);
+                                setPrice(0);
+                                setIsMarket(false);
+                            } else {
+                                Swal.fire('서버 오류입니다.');
+                            }
+                        },
+                        onSuccess: () => {
+                            Swal.fire('매수하였습니다.');
+                            setQuantity(0);
+                            setPrice(0);
+                            setIsMarket(false);
+                        },
+                    },
+                );
                 /* eslint-disable no-param-reassign */
                 priceRef.current.disabled = true;
             } else {
