@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import MainContentBox from './MainContentBox';
 import { StockIndex } from '../chart';
-import { useResizeObserver } from '../../hooks/useResizeObserver';
+import useResizeObserver from '../../hooks/useResizeObserver';
 
 function MainStockIndex() {
     const divRef = useRef(null);

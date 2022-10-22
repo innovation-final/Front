@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import StockInfo from '../stock/StockInfoBox';
 // import { ChartCandleStick } from '../chart';
-import { useResizeObserver } from '../../hooks/useResizeObserver';
+import useResizeObserver from '../../hooks/useResizeObserver';
 import currentStockCode from '../../atoms/investment/stockState';
 import useGetStockInfo from '../../hooks/useGetStockInfo';
 import LoadingSpinner from '../elements/LoadingSpinner';
