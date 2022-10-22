@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const SIZES = {
     sm: css`
-        --button-font-size: 0.875rem;
+        --button-font-size: 0.8rem;
         --button-padding: 8px 12px;
         --button-radius: 4px;
     `,

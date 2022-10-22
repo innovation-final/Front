@@ -13,7 +13,7 @@ import { stockAPI } from '../shared/api';
 import LoadingSpinner from '../component/elements/LoadingSpinner';
 
 function Home() {
-    const keys = ['랭킹', '종목명', '현재가', '등락률', '저가', '고가'];
+    const keys = ['랭킹', '종목명', '현재가', '등락률', '거래량'];
     useEffect(() => {
         window.dispatchEvent(new Event('resize'));
     }, []);

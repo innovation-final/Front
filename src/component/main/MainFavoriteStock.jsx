@@ -7,7 +7,6 @@ import LoadingSpinner from '../elements/LoadingSpinner';
 
 function MainStockIndex({ myStock, isLoading }) {
     const divRef = useRef(null);
-    console.log(myStock);
     return (
         <React.Suspense>
             <MainContentBox ref={divRef} title="관심종목 차트">

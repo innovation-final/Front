@@ -28,7 +28,6 @@ api.interceptors.response.use(
     async function (error) {
         const { config, response } = error;
         const originalRequest = config;
-        console.log(config);
 
         if (response && response.data.error.code === 'ACCESS_TOKEN_EXPIRED') {
             const refreshToken = localStorage.getItem('refresh-token');
@@ -58,7 +57,6 @@ api.interceptors.response.use(
                     return Promise.reject(error);
                 })
                 .catch(err => {
-                    console.log('에러!!', err);
                     if (
                         err.response.data.error.code === 'REFRESH_TOKEN_EXPIRED'
                     ) {
