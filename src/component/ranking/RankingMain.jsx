@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import Medal from './Medal';
-import SelectBox from '../elements/SelectBox';
+// import SelectBox from '../elements/SelectBox';
 import Like from './rankings/Like';
 import Investment from './rankings/Investment';
 import useRank from '../../hooks/useRank';
+import MainContainer from '../main/MainContainer';
+import { wideState } from '../../atoms/common/commonState';
 
 function RankingMain() {
-    const options = [
-        { name: '실시간 순위', value: '실시간순위' },
-        { name: '일주일 순위', value: '일주일순위' },
-        { name: '한달 순위', value: '한달순위' },
-    ];
-    const defaultOption = '실시간순위';
-    const [option, setOption] = useState(defaultOption);
-    const getOption = selected => {
-        setOption(selected);
-    };
+    const wide = useRecoilState(wideState);
+    // const options = [
+    //     { name: '실시간 순위', value: '실시간순위' },
+    //     { name: '일주일 순위', value: '일주일순위' },
+    //     { name: '한달 순위', value: '한달순위' },
+    // ];
+    // const defaultOption = '실시간순위';
+    // const [option, setOption] = useState(defaultOption);
+    // const getOption = selected => {
+    //     setOption(selected);
+    // };
     const [page, setPage] = useState('investment');
 
     const onClick = event => {
@@ -28,7 +32,7 @@ function RankingMain() {
 
     return (
         <>
-            <IconLayout>
+            <IconLayout $wide={wide}>
                 <IconButton
                     onClick={onClick}
                     value="investment"
@@ -49,25 +53,25 @@ function RankingMain() {
                     </Icon>
                     커뮤니티 좋아요 랭킹
                 </IconButton>
-                <SelectLayout>
+                {/* <SelectLayout>
                     <SelectBox
                         options={options}
                         selectedOption={option}
                         _getOption={getOption}
                     />
-                </SelectLayout>
+                </SelectLayout> */}
             </IconLayout>
-            <Layout>
+            <MainContainer>
                 <Container>
                     <StyleTableName>
                         <Text>순위</Text>
-                        <Text>닉네임</Text>
+                        <Profile>닉네임</Profile>
                         {page === 'investment' ? (
                             <Text>수익률</Text>
                         ) : (
                             <Text>좋아요</Text>
                         )}
-                        {page === 'investment' ? <Text>손익(원)</Text> : null}
+                        {/* {page === 'investment' ? <Text>손익(원)</Text> : null} */}
                     </StyleTableName>{' '}
                     <PageLayer>
                         {page === 'investment' ? (
@@ -80,16 +84,16 @@ function RankingMain() {
                 <BadgeContainer>
                     <Medal ranks={ranks?.slice(0, 3)} />
                 </BadgeContainer>
-            </Layout>
+            </MainContainer>
         </>
     );
 }
 
 export default RankingMain;
-const Layout = styled.div`
-    display: flex;
-    flex-direction: row;
-`;
+// const Layout = styled.div`
+//     display: flex;
+//     flex-direction: row;
+// `;
 
 const Container = styled.div`
     width: 100%;
@@ -111,10 +115,14 @@ const BadgeContainer = styled.div`
     flex-direction: column;
 `;
 const IconLayout = styled.div`
-    width: 48%;
-    height: 35px;
     display: flex;
-    align-items: center;
+    height: 20px;
+    margin-left: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+
+    @media screen and (min-width: 1400px) {
+        grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    }
 `;
 const Icon = styled.div`
     align-items: center;
@@ -137,16 +145,25 @@ const IconButton = styled.button`
             : props.theme.transparentButtonColor};
     transition: background-color ease-in-out 0.1s;
 `;
-const SelectLayout = styled.div`
-    height: 35px;
-    margin-bottom: 17px;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-`;
+// const SelectLayout = styled.div`
+//     height: 35px;
+//     margin-bottom: 17px;
+//     margin-left: auto;
+//     display: flex;
+//     align-items: center;
+// `;
 const Text = styled.p`
     font-weight: bold;
     margin: 5px;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    color: ${props => props.theme.textColor};
+`;
+const Profile = styled.p`
+    font-weight: bold;
+    margin: 5px;
+    margin-left: 15px;
     display: flex;
     align-items: center;
     color: ${props => props.theme.textColor};

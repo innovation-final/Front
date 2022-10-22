@@ -39,11 +39,7 @@ export const isDarkSelector = selector({
 
 export const isPushState = atom({
     key: 'push',
-    default:
-        localStorage.getItem('pushAlarm') === null ||
-        localStorage.getItem('pushAlarm') === 'noPush'
-            ? 'noPush'
-            : 'push',
+    default: localStorage.getItem('pushAlarm'),
 });
 
 export const isPushSelector = selector({

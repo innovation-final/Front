@@ -2,10 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 function MyStocks({ stock }) {
-    const { stockName, profit, returnRate, amount } = stock;
+    console.log(stock);
+    const { stockName, profit, returnRate, amount, avgBuying } = stock;
     return (
         <StyleTableName>
-            <TextLayout>{stockName}</TextLayout>
+            <TextLayout>{stockName}</TextLayout>{' '}
+            <TextLayout>{avgBuying}원</TextLayout>
             <StockContent isMinus={profit < 0}>{`${profit}원`}</StockContent>
             <StockContent
                 isMinus={returnRate < 0}

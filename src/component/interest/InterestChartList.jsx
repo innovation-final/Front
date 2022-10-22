@@ -11,33 +11,11 @@ function InterestChartList({ code }) {
     );
 }
 
-export default InterestChartList;
-const StyleDetailContainer = styled.div`
-    display: inline-flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: flex-start;
-    width: 100%;
+export default GraphBox;
+
+const StyleGraphBox = styled.div`
+    background-color: #c78e43;
+    margin-top: 40px;
+    width: 90%;
+    height: 100%;
 `;
-
-// const StockInfoWrapper = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     width: 75%;
-// `;
-
-// const ContainerTop = styled.div`
-//     position: relative;
-//     ${props => (props.isPC ? responsive.pc : responsive.phone)};
-//     width: 100%;
-//     height: 50%;
-//     display: flex;
-// `;
-// const ContainerBottom = styled.div`
-//     position: relative;
-//     ${props => (props.isPC ? responsive.pc : responsive.phone)};
-//     width: 100%;
-//     height: 50%;
-//     display: flex;
-// `;

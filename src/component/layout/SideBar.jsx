@@ -8,6 +8,7 @@ import SideBarItem from '../sidebar/SideBarItem';
 import { wideState, isPushSelector } from '../../atoms/common/commonState';
 import usePushNotification from '../../hooks/usePushNotification ';
 import { DarkModeContext } from '../../contexts/Store';
+import alarmState from '../../atoms/alarms/alarmState';
 
 function SideBar() {
     const { fireNotificationWithTimeout } = usePushNotification();
@@ -21,8 +22,6 @@ function SideBar() {
         localStorage.clear();
         window.location.href = '/login';
     };
-    const { data } = useGetUser();
-    const id = data && data.id;
 
     const logInFunction = () => {
         navigate('/');
@@ -31,26 +30,70 @@ function SideBar() {
     const [pushStatus, setPushStatus] = useState(null);
     // eslint-disable-next-line no-unused-vars
     const [alarmData, setAlarmData] = useState([]);
+    const [listening, setListening] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [value, setValue] = useState(null);
+    // eslint-disable-next-line no-unused-vars
+    const [meventSource, msetEventSource] = useState(undefined);
+    // eslint-disable-next-line no-unused-vars
+    const count = useRecoilValue(alarmState);
+    // eslint-disable-next-line no-unused-vars
+    const [alarmCount, setAlarmCount] = useState(0);
+    const { data } = useGetUser();
+    const id = data && data.id;
     const onChangeToggle = e => {
         setPushStatus(!pushStatus); // toggle 기능
         // const params = { userId: userInfo.userId, pushOn: e.target.checked };
-        `https://hakjoonkim.shop/api/subscribe/${id}`('xxx')
-            .then(res => {
-                if (res.data.ok) {
-                    if ((e.target.checked, isPush === 'noPush')) {
-                        // checked시 알람 발송(기본값)
-                        alert('푸쉬 알람 설정이 저장되었습니다.');
-                        localStorage.setItem('pushAlarm', 'push');
-                    } else {
-                        // unchecked시 알람 미발송
-                        alert('푸쉬 알람 미발송 처리 되었습니다.');
-                        localStorage.setItem('pushAlarm', 'noPush');
-                    }
-                    setPush();
-                }
-            })
 
-            .catch(err => console.log(err));
+        if (data.ok) {
+            if ((e.target.checked, isPush === 'noPush')) {
+                useEffect(() => {
+                    if (!listening) {
+                        const eventSource = new EventSource(
+                            `https://hakjoonkim.shop/api/subscribe/${id}`,
+                        );
+
+                        msetEventSource(eventSource);
+
+                        eventSource.onopen = () => {
+                            console.log('connection opened');
+                        };
+
+                        eventSource.onmessage = event => {
+                            setAlarmData(old => [...old, event.data]);
+                            setValue(event.data);
+                        };
+
+                        eventSource.onerror = event => {
+                            if (
+                                event.target.readyState === EventSource.CLOSED
+                            ) {
+                                console.log(
+                                    'eventsource closed ( + event.target.readyState + )',
+                                );
+                            }
+                            eventSource.close();
+                        };
+
+                        setListening(true);
+                    }
+                    const eventSource = undefined;
+                    return () => {
+                        eventSource?.close();
+                        console.log('eventsource closed');
+                    };
+                }, []);
+
+                // checked시 알람 발송(기본값)
+                alert('푸쉬 알람 설정이 저장되었습니다.');
+                localStorage.setItem('pushAlarm', 'push');
+            } else {
+                // unchecked시 알람 미발송
+                alert('푸쉬 알람 미발송 처리 되었습니다.');
+                localStorage.setItem('pushAlarm', 'noPush');
+            }
+            setPush();
+        }
     };
     useEffect(() => {
         const shiftData = alarmData.slice(1);
@@ -119,30 +162,6 @@ function SideBar() {
                             onClickFn={item.onClickFn}
                         />
                     ))}
-
-                    {/* <ToggleContainer>
-                        <ToggleLayout className="relative inline-block w-12 mr-2 align-middle">
-                            <input
-                                type="checkbox"
-                                name="toggle"
-                                id="toggle"
-                                onChange={onChangeToggle}
-                                checked={pushStatus}
-                                className={
-                                    pushStatus ? (
-                                        <Toggle />
-                                    ) : (
-                                        ' left-0 bg-white absolute block w-7 h-7 rounded-full border-4 appearance-none cursor-pointer'
-                                    )
-                                }
-                            /> */}
-                    {/* <label
-                                htmlFor="toggle"
-                                className="block overflow-hidden h-7 rounded-full bg-gray-300 cursor-pointer"
-                            ></label> */}
-                    {/* </ToggleLayout>
-                        <p>{pushStatus ? '설정' : '미설정'}</p>
-                    </ToggleContainer> */}
                 </TopCotainer>
 
                 <BottomContainer>
@@ -154,6 +173,7 @@ function SideBar() {
                             type="checkbox"
                             id="toggle"
                             hidden
+                            checked={pushStatus}
                             onChange={onChangeToggle}
                         />
                         <ToggleSwitch htmlFor="toggle">
