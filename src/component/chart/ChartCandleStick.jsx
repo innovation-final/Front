@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import ApexChart from 'react-apexcharts';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import { useRecoilValue } from 'recoil';
 import api from '../../shared/api';
 import LoadingSpinner from '../elements/LoadingSpinner';
+import { isDarkState } from '../../atoms/common/commonState';
 
 function ChartCandleStick({ name, width, code, height }) {
+    const isDark = useRecoilValue(isDarkState);
     const [isLoading, setIsLoading] = useState(true);
     const [series, setData] = useState([]);
 
@@ -43,8 +46,17 @@ function ChartCandleStick({ name, width, code, height }) {
                 <ChartContainer>
                     <ApexChart
                         type="candlestick"
-                        series={series && [{ data: series }]}
+                        series={
+                            series && [
+                                {
+                                    data: series,
+                                },
+                            ]
+                        }
                         options={{
+                            theme: {
+                                mode: isDark === 'darkMode' ? 'dark' : 'light',
+                            },
                             title: {
                                 text: name,
                                 style: {
@@ -60,6 +72,7 @@ function ChartCandleStick({ name, width, code, height }) {
                                 zoom: {
                                     enabled: false,
                                 },
+                                background: 'transparent',
                             },
                             events: {
                                 mounted: chart => {
@@ -100,7 +113,7 @@ const Wrapper = styled.div`
 const LoadingContainer = styled.div`
     height: 100%;
     min-height: 375px;
-    width: 100%;
+    min-width: 1165px;
     display: flex;
     justify-content: center;
     align-items: center;

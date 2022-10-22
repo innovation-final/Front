@@ -85,6 +85,7 @@ const StyleStocksBox = styled.div`
     width: 100%;
     overflow: ${props => (props.isOpen ? 'hidden' : 'visible')};
     height: ${props => (props.isOpen ? '85vh' : '100%')};
+    margin-top: 20px;
 `;
 const StyleHeader = styled.div`
     display: flex;

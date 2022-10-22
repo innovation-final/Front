@@ -38,7 +38,9 @@ function InvestmentInfoBox() {
     return (
         <StyleContainer>
             {isLoading ? (
-                <LoadingSpinner />
+                <LoadingWrapper>
+                    <LoadingSpinner />
+                </LoadingWrapper>
             ) : (
                 <Wrapper>
                     <TopContainer>
@@ -76,4 +78,12 @@ const BottomWrapper = styled.div``;
 
 const Wrapper = styled.div`
     padding: 1rem;
+`;
+
+const LoadingWrapper = styled.div`
+    min-width: 100%;
+    min-height: 29rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

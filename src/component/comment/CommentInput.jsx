@@ -72,9 +72,10 @@ const Input = styled.input`
 `;
 
 const InputBox = styled.div`
-    width: 90%;
+    max-width: 1500px;
+    width: 100%;
 `;
 
 const ButtonBox = styled.div`
-    width: 5%;
+    width: 10%;
 `;

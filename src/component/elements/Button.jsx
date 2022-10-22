@@ -77,6 +77,7 @@ const StyleButton = styled.button`
     border-radius: var(--button-radius, 8px);
     background-color: var(--button-bg-color, #0d6efd);
     color: var(--button-color, #ffffff);
+    white-space: nowrap;
     cursor: pointer;
 
     &:active,

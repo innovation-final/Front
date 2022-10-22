@@ -19,7 +19,9 @@ function SideBar() {
     const [isLogin] = useState(!!localStorage.getItem('access-token'));
 
     const logOutFunction = () => {
-        localStorage.clear();
+        localStorage.removeItem('refresh-token');
+        localStorage.removeItem('access-token');
+        localStorage.removeItem('newNoti');
         window.location.href = '/login';
     };
 

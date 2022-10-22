@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import ApexChart from 'react-apexcharts';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
 import api from '../../shared/api';
+import { esUSNumberParser } from '../../util/parser';
 import LoadingSpinner from '../elements/LoadingSpinner';
+import { isDarkState } from '../../atoms/common/commonState';
 
 function ChartAreaIndex({ name, width, height }) {
+    const isDark = useRecoilValue(isDarkState);
     const [isLoading, setIsLoading] = useState(true);
     const [series, setData] = useState([]);
 
@@ -41,8 +45,19 @@ function ChartAreaIndex({ name, width, height }) {
                 <ChartContainer>
                     <ApexChart
                         type="area"
-                        series={series && [{ data: series }]}
+                        series={
+                            series && [
+                                {
+                                    name:
+                                        name === 'kospi' ? '코스피' : '코스닥',
+                                    data: series,
+                                },
+                            ]
+                        }
                         options={{
+                            theme: {
+                                mode: isDark === 'darkMode' ? 'dark' : 'light',
+                            },
                             title: {
                                 text: name === 'kospi' ? '코스피' : '코스닥',
                                 style: {
@@ -59,6 +74,7 @@ function ChartAreaIndex({ name, width, height }) {
                                 zoom: {
                                     enabled: false,
                                 },
+                                background: 'transparent',
                             },
                             dataLabels: {
                                 enabled: false,
@@ -74,6 +90,15 @@ function ChartAreaIndex({ name, width, height }) {
                                         return dayjs(val).format('YYYY');
                                     },
                                     rotate: 0,
+                                },
+                            },
+                            tooltip: {
+                                y: {
+                                    formatter: value =>
+                                        `${esUSNumberParser(value)}`,
+                                },
+                                title: {
+                                    formatter: seriesName => seriesName,
                                 },
                             },
                             noData: {

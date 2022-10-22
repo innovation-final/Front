@@ -94,6 +94,4 @@ const UserName = styled.div`
 `;
 const UserComment = styled.div``;
 
-const ButtonBox = styled.div`
-    width: 10%;
-`;
+const ButtonBox = styled.div``;

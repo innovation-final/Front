@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import ApexChart from 'react-apexcharts';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
 import api from '../../shared/api';
 import LoadingSpinner from '../elements/LoadingSpinner';
+import { esUSNumberParser } from '../../util/parser';
+import { isDarkState } from '../../atoms/common/commonState';
 
 function ChartArea({ name, width, code, height }) {
+    const isDark = useRecoilValue(isDarkState);
     const [isLoading, setIsLoading] = useState(true);
     const [series, setData] = useState([]);
 
@@ -41,8 +45,11 @@ function ChartArea({ name, width, code, height }) {
                 <ChartContainer>
                     <ApexChart
                         type="area"
-                        series={series && [{ data: series }]}
+                        series={series && [{ name: name, data: series }]}
                         options={{
+                            theme: {
+                                mode: isDark === 'darkMode' ? 'dark' : 'light',
+                            },
                             title: {
                                 text: name,
                                 style: {
@@ -59,6 +66,7 @@ function ChartArea({ name, width, code, height }) {
                                 zoom: {
                                     enabled: false,
                                 },
+                                background: 'transparent',
                             },
                             dataLabels: {
                                 enabled: false,
@@ -74,6 +82,12 @@ function ChartArea({ name, width, code, height }) {
                                         return dayjs(val).format('YY`MMM');
                                     },
                                     rotate: 0,
+                                },
+                            },
+                            tooltip: {
+                                y: {
+                                    formatter: value =>
+                                        `${esUSNumberParser(value)}KRW`,
                                 },
                             },
                             noData: {
@@ -100,7 +114,7 @@ const Wrapper = styled.div`
 const LoadingContainer = styled.div`
     height: 100%;
     min-height: 375px;
-    width: 100%;
+    min-width: 1165px;
     display: flex;
     justify-content: center;
     align-items: center;

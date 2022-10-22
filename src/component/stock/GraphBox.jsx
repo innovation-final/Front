@@ -6,7 +6,7 @@ import { ChartCandleStick, ChartArea } from '../chart';
 function GraphBox({ isPC, code }) {
     const divRef = useRef(null);
     // eslint-disable-next-line no-unused-vars
-    const [currentState, setCurrentState] = useState('월봉');
+    const [currentState, setCurrentState] = useState('일봉');
     const width = '100%';
     const onClick = event => {
         setCurrentState(event.target.innerText);
@@ -17,9 +17,9 @@ function GraphBox({ isPC, code }) {
                 <Button
                     type="button"
                     onClick={onClick}
-                    isCurrent={currentState === '월봉'}
+                    isCurrent={currentState === '일봉'}
                 >
-                    월봉
+                    일봉
                 </Button>
                 <Button
                     type="button"
@@ -29,7 +29,7 @@ function GraphBox({ isPC, code }) {
                     연
                 </Button>
             </Buttons>
-            {currentState === '월봉' ? (
+            {currentState === '일봉' ? (
                 <ChartCandleStick
                     name=""
                     code={code}

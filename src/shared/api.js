@@ -28,6 +28,7 @@ api.interceptors.response.use(
     async function (error) {
         const { config, response } = error;
         const originalRequest = config;
+        console.log(config);
 
         if (response && response.data.error.code === 'ACCESS_TOKEN_EXPIRED') {
             const refreshToken = localStorage.getItem('refresh-token');
@@ -37,7 +38,7 @@ api.interceptors.response.use(
             header['refresh-token'] = refreshToken;
 
             await axios
-                .post(`${BASE_URL}/auth/reissue`, null, {
+                .post(`${BASE_URL}auth/reissue`, null, {
                     headers: header,
                 })
                 .then(res => {
@@ -64,7 +65,7 @@ api.interceptors.response.use(
                         console.log(err.response.data.error.code);
                         localStorage.removeItem('access-token');
                         localStorage.removeItem('refresh-token');
-                        window.location.href = '../login';
+                        window.location.replace = '/login';
                     }
                 });
         }

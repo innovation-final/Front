@@ -249,7 +249,7 @@ const View = styled.span`
     right: 1rem;
     bottom: -1.3rem;
     font-size: 15px;
-    color: black;
+    color: ${props => props.theme.textColor};
 `;
 
 const Button = styled.input`
@@ -258,7 +258,7 @@ const Button = styled.input`
     border: 1px solid ${props => props.theme.secondaryColor};
     border-radius: 15px;
     background-color: ${props => props.theme.secondaryColor};
-    color: ${props => props.theme.bgColor};
+    color: white;
     &:hover {
         background-color: ${props => props.theme.hoverSecondaryColor};
     }
