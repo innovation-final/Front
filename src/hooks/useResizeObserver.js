@@ -1,6 +1,7 @@
+/* eslint-disable */
 import { useCallback, useLayoutEffect, useState } from 'react';
 
-export const useResizeObserver = (ref, callback) => {
+const useResizeObserver = (ref, callback) => {
     const [width, setWidth] = useState();
     const [height, setHeight] = useState();
 
@@ -36,3 +37,5 @@ export const useResizeObserver = (ref, callback) => {
 
     return [width, height];
 };
+
+export default useResizeObserver;
