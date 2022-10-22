@@ -206,7 +206,7 @@ function MypageEdit() {
                     </>
                 ) : (
                     <>
-                        <Button onClick={onClickEdit}>수정완료</Button>
+                        <EditButton onClick={onClickEdit}>수정완료</EditButton>
                         <ImgCard>
                             {profileImg && (
                                 <CardMedia
@@ -223,12 +223,14 @@ function MypageEdit() {
                                     style={{ display: 'none' }}
                                     onChange={onChangeImg}
                                 />
-
                                 <CogButton onClick={onChangeImg}>
-                                    <CogBtn src={editcog} />
-                                </CogButton>
+                                    <CogBtn src={editcog} />{' '}
+                                </CogButton>{' '}
                             </CogLayout>
-                        </ImgCard>
+                        </ImgCard>{' '}
+                        <CogText>
+                            1mb이하 파일 사이즈만 사진변경 가능합니다
+                        </CogText>
                         <InputContent>
                             <InputBox>
                                 <Input
@@ -300,6 +302,20 @@ const Button = styled.button`
     background-color: transparent;
     border: 0;
     cursor: pointer;
+    font-weight: bold;
+    position: absolute;
+    right: 2px;
+    top: 5px;
+`;
+const EditButton = styled.button`
+    background-color: transparent;
+    border: 0;
+    margin: 10px;
+    border-radius: 500px;
+    color: ${props => props.theme.textColor};
+    background-color: ${props => props.theme.buttonColor};
+    cursor: pointer;
+    font-weight: bold;
     position: absolute;
     right: 2px;
     top: 5px;
@@ -405,6 +421,14 @@ const Card = styled.div`
 const Text = styled.p`
     font-weight: bold;
     margin: 5px;
+    color: ${props => props.theme.textColor};
+`;
+const CogText = styled.div`
+    font-size: 12px;
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    justify-content: center;
     color: ${props => props.theme.textColor};
 `;
 const IconLayout = styled.div`

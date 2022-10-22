@@ -1,6 +1,6 @@
 export const esUSNumberParser = value => {
     if (!Number.isNaN(value)) {
-        return value.toLocaleString('en-US');
+        return value && value.toLocaleString('en-US');
     }
     return value;
 };

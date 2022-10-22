@@ -7,11 +7,11 @@ import Badge from '@mui/material/Badge';
 import useGetUser from '../../hooks/useGetUser';
 import { userState } from '../../atoms/user/userState';
 import Notice from '../notice/Notice';
-import usePushNotification from '../../hooks/usePushNotification ';
+// import usePushNotification from '../../hooks/usePushNotification ';
 import alarmState from '../../atoms/alarms/alarmState';
 
 function HeaderProfile() {
-    const { fireNotificationWithTimeout } = usePushNotification();
+    // const { fireNotificationWithTimeout } = usePushNotification();
     const navigate = useNavigate();
     const { data, isLoading } = useGetUser();
     const id = data && data.id;
@@ -78,9 +78,9 @@ function HeaderProfile() {
         const shiftData = alarmData.slice(1);
         if (shiftData.length === 0) return;
         const newAlarmData = JSON.parse(shiftData.at(-1));
-        fireNotificationWithTimeout('Stocks talk', 5000, {
-            body: newAlarmData.message,
-        });
+        // fireNotificationWithTimeout('Stocks talk', 5000, {
+        //     body: newAlarmData.message,
+        // });
         setAlarmCount(props => props + 1);
 
         console.log('dd', shiftData);

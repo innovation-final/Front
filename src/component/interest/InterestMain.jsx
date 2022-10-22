@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -7,16 +7,17 @@ import ListIcon from '@mui/icons-material/List';
 import InterestStockList from './InterestStockList';
 import { stockAPI } from '../../shared/api';
 import InterestNewsList from './InterestNews';
-import LoadingSpinner from '../elements/LoadingSpinner';
-import InterestChartList from './InterestChartList';
+// import InterestChartList from './InterestChartList';
+import useWindowSize from '../../hooks/useWindowSize';
+import InterestChart from './InterestChart';
 
 function InterestMain() {
     const [param, setParam] = useState('');
-    const { data, isLoading } = useQuery(['stock'], () =>
-        stockAPI.getLikeStock(),
-    );
-    if (isLoading) return <LoadingSpinner />;
-
+    const { data } = useQuery(['stock'], () => stockAPI.getLikeStock());
+    const { width } = useWindowSize();
+    const isPC = useMemo(() => {
+        return width >= 1024;
+    }, [width]);
     const interestStock = data?.data.data;
     const onClick = code => {
         setParam(code);
@@ -49,7 +50,7 @@ function InterestMain() {
                         <BarChartIcon />
                         <Text>관련그래프</Text>
                     </IconLayout>
-                    <InterestChartList code={param} />
+                    <InterestChart isPC={isPC} code={param} />
                 </Card>
 
                 <NewsCard>

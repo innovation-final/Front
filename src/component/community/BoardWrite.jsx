@@ -233,7 +233,6 @@ const ClearButton = styled.div`
 `;
 const ButtonBox = styled.div`
     float: right;
-
     display: flex;
 `;
 

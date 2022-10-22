@@ -27,7 +27,7 @@ function StockInfoBox({ stockData }) {
     } = stockData;
 
     const isDark = useRecoilValue(isDarkState);
-    const dayToDay = close - prevPrice.close;
+    const dayToDay = close && close - prevPrice.close;
 
     const colorParser = value => {
         if (value === 0) return isDark === 'darkMode' ? 'white' : 'black';
@@ -112,7 +112,7 @@ function StockInfoBox({ stockData }) {
             <StockInfoRightBox>
                 <StockInfoRightTopBox>
                     <StockInfoPrevious>
-                        전일 {esUSNumberParser(prevPrice.close)}
+                        전일 {esUSNumberParser(prevPrice && prevPrice.close)}
                     </StockInfoPrevious>
                     <StockInfoHigh>고가 {esUSNumberParser(high)}</StockInfoHigh>
                 </StockInfoRightTopBox>

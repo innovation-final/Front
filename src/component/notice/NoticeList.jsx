@@ -2,15 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { timeToToday } from '../../util/parser';
 
-function NoticeList({ alarms, read }) {
+function NoticeList({ alarms }) {
     const { message, createdAt } = alarms;
-    const { data } = read;
-    console.log(data.substr(0, 2));
 
     return (
         <CardContent>
             <NoticeTitle>{message}</NoticeTitle>
-            <NoticeRead>{data.substr(0, 2)}</NoticeRead>
             <NoticeContent>{timeToToday(createdAt)}</NoticeContent>
             <NoticeContent />
         </CardContent>
@@ -39,18 +36,11 @@ const NoticeTitle = styled.div`
     display: flex;
     flex-direction: row;
     width: 300%;
+
     align-items: center;
     padding: 10px;
 `;
-const NoticeRead = styled.div`
-    font-size: 12px;
-    color: #82807c;
-    display: flex;
-    width: 30%;
-    margin-right: 5px;
-    white-space: nowrap;
-    align-items: center;
-`;
+
 const NoticeContent = styled.div`
     font-size: 12px;
     color: #82807c;
