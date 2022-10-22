@@ -9,13 +9,14 @@ function InvestmentMyStock() {
     const { data } = useStocksAccount();
 
     return (
-        <>
+        <Wrapper>
             <IconLayout>
                 <PaidIcon />
                 <Text>내 주식잔고</Text>
             </IconLayout>
             <StyleTableName>
                 <TextLayout>종목</TextLayout>
+                <TextLayout>보유가</TextLayout>
                 <TextLayout>평가손익</TextLayout>
                 <TextLayout>수익률</TextLayout>
                 <TextLayout>잔고수량</TextLayout>
@@ -26,11 +27,16 @@ function InvestmentMyStock() {
                         <MyPageBage key={stock.id} stock={stock} />
                     ))}
             </CardContent>
-        </>
+        </Wrapper>
     );
 }
 
 export default InvestmentMyStock;
+
+const Wrapper = styled.div`
+    padding: 1rem;
+    min-height: 240px;
+`;
 
 const Text = styled.p`
     font-weight: bold;

@@ -130,7 +130,9 @@ const Table = styled.div`
 `;
 const Item = styled.div`
     text-align: center;
+    font-size: 0.8vw;
     padding: 5px;
+    white-space: nowrap;
 `;
 
 const Contents = styled.div`

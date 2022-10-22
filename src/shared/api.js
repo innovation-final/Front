@@ -123,6 +123,7 @@ export const stockAPI = {
 };
 export const noticeAPI = {
     getNotice: () => api.get(`/auth/notifications`),
+    getNoticeRead: () => api.get(`/auth/notifications/read`),
     deleteNotice: () => api.delete(`/auth/notifications`),
     getArams: id => api.get(`/subscribe/${id}`),
     getStockArams: () => api.get(`/auth/tracelikestock`),

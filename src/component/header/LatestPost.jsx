@@ -74,6 +74,8 @@ const StyleLatestPost = styled.div`
     line-height: 60px;
     justify-content: center;
     height: 60px;
+    min-width: 200px;
+    margin-left: 10%;
 `;
 
 const PostBox = styled.div`
@@ -82,8 +84,11 @@ const PostBox = styled.div`
     cursor: pointer;
 `;
 const Title = styled.h3`
+    display: flex;
+    align-items: center;
     margin-right: 10px;
-    width: 300px;
+    white-space: nowrap;
+    font-size: 0.9vw;
 `;
 
 const StyleSlider = styled(Slider)``;

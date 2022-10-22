@@ -1,14 +1,24 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
+import dayjs from 'dayjs';
 
-function CandleStickChart({ data, width, height }) {
+function CandleStickChart({ data: fake, width, height }) {
+    const data = fake && fake.slice(-90, -1);
     const options = {
         chart: {
             id: '코스피',
+            toolbar: {
+                show: true,
+            },
         },
         xaxis: {
+            type: 'numeric',
+            tickAmount: 20,
+            format: 'yyyy-MM-dd',
             labels: {
-                show: true,
+                function(val) {
+                    return dayjs(val).format('MMM DD');
+                },
             },
         },
     };
@@ -22,10 +32,11 @@ function CandleStickChart({ data, width, height }) {
         <div>
             {data && (
                 <ReactApexChart
+                    type="candlestick"
                     options={options}
                     series={series}
                     width={width}
-                    height={height * 0.85}
+                    height={height * 0.8}
                 />
             )}
         </div>

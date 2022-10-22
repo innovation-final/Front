@@ -122,6 +122,7 @@ function Bought() {
                 <div>주문수량</div>
                 <Input
                     type="number"
+                    min="0"
                     value={Number(quantity)}
                     onChange={event => onChange(event, setQuantity)}
                     onBlur={event => onBlur(event, setQuantity, qunatityRef)}
@@ -136,6 +137,7 @@ function Bought() {
                 <div>매수가격</div>
                 <Input
                     type="number"
+                    min="0"
                     value={Number(price)}
                     onChange={event => onChange(event, setPrice)}
                     onBlur={event => onBlur(event, setPrice, priceRef)}
@@ -180,6 +182,7 @@ const InputBox = styled.div`
     position: relative;
     label {
         margin-left: 20px;
+        white-space: nowrap;
         [type='radio'] {
             appearance: none;
             border: max(2px, 0.1em) solid gray;
@@ -193,6 +196,10 @@ const InputBox = styled.div`
         [type='radio']:checked {
             border: 0.4em solid ${props => props.theme.buttonColor};
         }
+    }
+    div {
+        font-size: 0.8vw;
+        white-space: nowrap;
     }
 `;
 
@@ -221,6 +228,7 @@ const Input = styled.input`
     border: 1px solid ${props => props.theme.buttonColor};
     border-radius: 5px;
     padding-right: 3rem;
+    width: 50%;
 
     &:focus {
         outline: 2px solid ${props => props.theme.buttonColor};

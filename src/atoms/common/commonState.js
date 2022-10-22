@@ -17,11 +17,7 @@ export const slideStockState = atom({
 
 export const isDarkState = atom({
     key: 'darkmode',
-    default:
-        localStorage.getItem('app_theme') === null ||
-        localStorage.getItem('app_theme') === 'lightMode'
-            ? 'lightMode'
-            : 'darkMode',
+    default: localStorage.getItem('app_theme'),
 });
 
 export const isDarkSelector = selector({
@@ -43,11 +39,7 @@ export const isDarkSelector = selector({
 
 export const isPushState = atom({
     key: 'push',
-    default:
-        localStorage.getItem('pushAlarm') === null ||
-        localStorage.getItem('pushAlarm') === 'noPush'
-            ? 'noPush'
-            : 'push',
+    default: localStorage.getItem('pushAlarm'),
 });
 
 export const isPushSelector = selector({

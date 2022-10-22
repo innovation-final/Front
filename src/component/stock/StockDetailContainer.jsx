@@ -78,20 +78,23 @@ const StyleDetailContainer = styled.div`
 const StockInfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 100%;
+    @media screen and (min-width: 1400px) {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+    }
 `;
 
 const ContainerTop = styled.div`
     position: relative;
     ${props => (props.isPC ? responsive.pc : responsive.phone)};
     width: 100%;
-    height: 50%;
     display: flex;
 `;
 const ContainerBottom = styled.div`
     position: relative;
     ${props => (props.isPC ? responsive.pc : responsive.phone)};
     width: 100%;
-    height: 50%;
     display: flex;
 `;

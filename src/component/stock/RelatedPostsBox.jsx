@@ -66,7 +66,7 @@ const StyleRelatedPostsBox = styled.div`
 const Title = styled.div`
     height: 50px;
     font-weight: 600;
-    font-size: 24px;
+    font-size: 1.3vw;
     line-height: 50px;
 `;
 

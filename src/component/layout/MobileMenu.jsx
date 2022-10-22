@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import MobileMenuHeader from '../mobile/MobileMenuHeader';
 import MobileMenuItem from '../mobile/MobileMenuItem';
-import { wideState, isDarkSelector } from '../../atoms/common/commonState';
+import { wideState } from '../../atoms/common/commonState';
+import { DarkModeContext } from '../../contexts/Store';
 
 function MobileMenu() {
     const navigate = useNavigate();
+    const { handler } = useContext(DarkModeContext);
     const wide = useRecoilValue(wideState);
-    const [isDark, setDarkMode] = useRecoilState(isDarkSelector);
     // const setIsDark = useSetRecoilState(isDarkState);
     const [isLogin] = useState(!!localStorage.getItem('access-token'));
 
@@ -19,14 +20,6 @@ function MobileMenu() {
     };
     const logInFunction = () => {
         navigate('/');
-    };
-    const setIsDark = () => {
-        if (isDark === 'lightMode') {
-            localStorage.setItem('app_theme', 'darkMode');
-        } else {
-            localStorage.setItem('app_theme', 'lightMode');
-        }
-        setDarkMode();
     };
 
     const menuItems = [
@@ -64,7 +57,7 @@ function MobileMenu() {
     const menuBottomItems = [
         {
             title: '다크모드',
-            onClickFn: () => setIsDark(),
+            onClickFn: () => handler(),
         },
         {
             title: isLogin ? '로그아웃' : '로그인',

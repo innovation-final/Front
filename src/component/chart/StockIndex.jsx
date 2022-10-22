@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import LineChart from './LineChart';
 import api from '../../shared/api';
 
-function StockIndex({ name, width, height }) {
+function StockIndex({ name, width }) {
     const [data, setData] = useState([]);
     const [index, setIndex] = useState([]);
     useEffect(() => {
@@ -36,12 +36,7 @@ function StockIndex({ name, width, height }) {
                 {name === 'kospi' ? '코스피' : '코스닥'} : {index}
             </h1>
             {data.length > 0 && (
-                <LineChart
-                    data={data}
-                    width={width}
-                    height={height * 0.85}
-                    name={name}
-                />
+                <LineChart data={data} width={width} height={350} name={name} />
             )}
         </Div>
     );
