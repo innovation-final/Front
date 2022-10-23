@@ -12,11 +12,6 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { wideState } from '../../atoms/common/commonState';
 
-const Animation = {
-    start: { opacity: 0, y: 10 },
-    end: { opacity: 1, y: 0, transition: { duration: 0.0001 } },
-};
-
 function SideBarItem({ title, onClickFn, param }) {
     const [wide, setWide] = useRecoilState(wideState);
     const { pathname } = useLocation();
@@ -49,9 +44,15 @@ function SideBarItem({ title, onClickFn, param }) {
                             {title}
                             {param === pathname ? (
                                 <SelectedMenu
-                                    variants={Animation}
-                                    initial="start"
-                                    animate="end"
+                                    initial={{ opacity: 0, y: 5 }}
+                                    animate={{
+                                        opacity: 1,
+                                        y: 0,
+                                        transition: {
+                                            type: 'linear',
+                                            duration: 0.01,
+                                        },
+                                    }}
                                 />
                             ) : null}
                         </ItemTitle>

@@ -9,6 +9,7 @@ import { searchState } from '../../atoms/search/searchState';
 import currentStockCode from '../../atoms/investment/stockState';
 import useAccount from '../../hooks/useAccount';
 import { esUSNumberParser } from '../../util/parser';
+import tutorialState from '../../atoms/tutorial/tutorialState';
 
 function InvestmentHeader() {
     const client = useQueryClient();
@@ -16,6 +17,7 @@ function InvestmentHeader() {
     const myAccount = useAccount();
     const stocksData = stocksQuery?.data.data;
     const setCurrentState = useSetRecoilState(currentStockCode);
+    const setTutorial = useSetRecoilState(tutorialState);
     const search = useRecoilValue(searchState);
     const onClick = () => {
         if (!stocksData) return;
@@ -33,6 +35,11 @@ function InvestmentHeader() {
                             <SearchIcon />
                         </Button>
                     </ButtonBox>
+                    <TutorialButton
+                        onClick={() => setTutorial(props => !props)}
+                    >
+                        ?
+                    </TutorialButton>
                 </SearchBox>
                 <MyInfo>
                     {!myAccount.data?.balance ? (
@@ -169,4 +176,19 @@ const Unit = styled.div`
     position: absolute;
     right: 10px;
     bottom: 11px;
+`;
+
+const TutorialButton = styled.div`
+    visibility: hidden;
+    @media screen and (min-width: 1400px) {
+        visibility: visible;
+        width: 50px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        margin-left: 10px;
+        background-color: ${props => props.theme.buttonColor};
+    }
 `;
