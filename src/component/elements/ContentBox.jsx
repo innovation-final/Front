@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
 function ContentBox({ children }) {
-    let i = 0;
-    i = `${i}px`;
-    console.log(i);
     return (
         <Wrapper>
             <StyleContentBox>{children}</StyleContentBox>

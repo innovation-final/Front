@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
 import ContentBox from '../elements/ContentBox';
 import { esUSNumberParser } from '../../util/parser';
 
@@ -18,7 +19,7 @@ function TradingVolumeBox({ isPC, volumeData }) {
                     </TableNames>
                     <TableData>
                         {volumeData.map(volume => (
-                            <VolumeInfo key={volume.date}>
+                            <VolumeInfo key={uuid()}>
                                 <VolumeDate>{volume.date}</VolumeDate>
                                 <VolumeClose>
                                     {esUSNumberParser(volume.close)}

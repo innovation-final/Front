@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import StockInfo from '../stock/StockInfoBox';
-// import { ChartCandleStick } from '../chart';
 import useResizeObserver from '../../hooks/useResizeObserver';
 import currentStockCode from '../../atoms/investment/stockState';
 import useGetStockInfo from '../../hooks/useGetStockInfo';
@@ -64,7 +63,7 @@ const StyleContainer = styled.div`
     border: 2px solid ${props => props.theme.borderColor};
     border-radius: 20px;
     margin-bottom: 10px;
-    max-height: 29rem;
+    max-height: 33rem;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;

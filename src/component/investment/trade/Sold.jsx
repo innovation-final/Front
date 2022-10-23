@@ -224,6 +224,7 @@ const InputBox = styled.div`
     div {
         font-size: 0.8vw;
         white-space: nowrap;
+        font-weight: bold;
     }
 `;
 
@@ -278,6 +279,7 @@ const View = styled.span`
 const Button = styled.input`
     padding: 1rem;
     font-size: 1rem;
+    font-weight: bold;
     border: 1px solid ${props => props.theme.secondaryColor};
     border-radius: 15px;
     background-color: ${props => props.theme.secondaryColor};

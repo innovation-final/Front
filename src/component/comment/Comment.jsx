@@ -1,17 +1,17 @@
 import React, { useRef } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import Swal from 'sweetalert2';
+import PropTypes from 'prop-types';
+import { useRecoilValue } from 'recoil';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
-import PropTypes from 'prop-types';
-import { useRecoilValue } from 'recoil';
 import Button from '../elements/Button';
-import { commentAPI } from '../../shared/api';
 import { timeToToday } from '../../util/parser';
 import { userState } from '../../atoms/user/userState';
+import useMutateComment from '../../hooks/useMutateComment';
 
 const commentAnimation = {
     start: { opacity: 0, y: 10 },
@@ -25,37 +25,27 @@ function Comment(props) {
 
     const [editComment, setEditComment] = React.useState(content);
     const [isEdit, setIsEdit] = React.useState(false);
-    const queryClient = useQueryClient();
 
     const user = useRecoilValue(userState);
 
-    const deleteComment = async _id => {
-        const response = await commentAPI.deleteComment(_id);
-        return response;
-    };
-    const putComment = async req => {
-        const response = await commentAPI.putComment(id, req);
-        return response;
-    };
-
-    const deleteMutation = useMutation(_id => deleteComment(_id), {
-        onError: error => console.log(error),
-        onSuccess: () => {
-            queryClient.invalidateQueries('post');
-        },
-    });
-    const editMutation = useMutation(req => putComment(req), {
-        onError: error => console.log(error),
-        onSuccess: () => {
-            queryClient.invalidateQueries('post');
-        },
-    });
+    const { deleteMutation, editMutation } = useMutateComment(id);
 
     const onDelete = () => {
-        deleteMutation.mutate(id);
+        deleteMutation.mutate(id, {
+            onError: () => {
+                Swal.fire('서버 오류입니다.');
+            },
+        });
     };
     const onClickEdit = () => {
-        editMutation.mutate({ content: editComment });
+        editMutation.mutate(
+            { content: editComment },
+            {
+                onError: () => {
+                    Swal.fire('서버 오류입니다.');
+                },
+            },
+        );
         setIsEdit(false);
     };
     const onCancel = () => {

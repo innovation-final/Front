@@ -13,11 +13,6 @@ import LoadingSpinner from '../component/elements/LoadingSpinner';
 import PostContainer from '../component/post/PostContainer';
 import { postAPI } from '../shared/api';
 
-const Animation = {
-    start: { opacity: 0, y: 30 },
-    end: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-};
-
 function PostDetail() {
     const { id } = useParams();
     const { data, isLoading, isError } = useQuery(['post', id], () =>
@@ -42,7 +37,7 @@ function PostDetail() {
             <Helmet>
                 <title>{`Stock's talk | 게시글`}</title>
             </Helmet>
-            <PageWrapper variants={Animation} initial="start" animate="end">
+            <PageWrapper>
                 <PostContainer>
                     <PostBox postInfo={info} />
                 </PostContainer>

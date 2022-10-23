@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ThemeProvider } from 'styled-components';
+import { AnimatePresence } from 'framer-motion';
 import LiveChat from './component/livechat/LiveChat';
 import Router from './Router';
 import GlobalStyles from './GlobalStyles';
@@ -28,8 +29,10 @@ function App() {
                 >
                     <GlobalStyles />
                     <React.Suspense fallback={<LoadingSpinner />}>
-                        <Router />
-                        <LiveChat />
+                        <AnimatePresence>
+                            <Router />
+                            <LiveChat />
+                        </AnimatePresence>
                     </React.Suspense>
                 </ThemeProvider>
                 <ReactQueryDevtools initialIsOpen={false} />

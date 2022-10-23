@@ -81,6 +81,7 @@ const Button = styled.button`
     font-size: 0.9rem;
     white-space: nowrap;
     overflow: hidden;
+    font-weight: bold;
 `;
 
 const PageLayer = styled.div``;

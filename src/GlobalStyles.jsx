@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
     };
 
     html {
-        font-size: 16px;
+        font-size: 14px;
     }
     body{
         font-size: 1.8vmin;

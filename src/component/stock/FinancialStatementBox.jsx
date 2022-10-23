@@ -24,10 +24,16 @@ function FinancialStatementBox({ isPC }) {
 
     const renderTable = () => {
         if (!info) {
-            return <NoData>재무제표 정보가 없습니다.</NoData>;
+            return (
+                <NoDataWrapper>
+                    <NoData>재무제표 정보가 없습니다.</NoData>
+                </NoDataWrapper>
+            );
         }
         return isError ? (
-            <NoData>재무제표 정보가 없습니다.</NoData>
+            <NoDataWrapper>
+                <NoData>재무제표 정보가 없습니다.</NoData>{' '}
+            </NoDataWrapper>
         ) : (
             <TableWrapper>
                 <RowWrapper>
@@ -65,7 +71,13 @@ function FinancialStatementBox({ isPC }) {
             <Title>재무제표</Title>
             <Wrapper>
                 <ContentBox>
-                    {isLoading ? <LoadingSpinner /> : renderTable()}
+                    {isLoading ? (
+                        <NoDataWrapper>
+                            <LoadingSpinner />
+                        </NoDataWrapper>
+                    ) : (
+                        renderTable()
+                    )}
                 </ContentBox>
             </Wrapper>
         </StyleFinancialStatementBox>
@@ -169,4 +181,17 @@ const Unit = styled.span`
 const NoData = styled.div`
     color: ${props => props.theme.textColor};
     z-index: 1;
+`;
+
+const NoDataWrapper = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 99%;
+    min-height: 318px;
+    border: 1px solid ${props => props.theme.borderColor};
+    border-radius: 15px;
+    overflow: hidden;
 `;
