@@ -31,41 +31,11 @@ function Login() {
             {isPC && <LoginHeader />}
 
             <MainPage id="main" bgColor="skyblue" />
-            <LoginLayout id="developer" bgColor="white" />
-            <LoginLayout id="introduce" bgColor="black" />
         </>
     );
 }
 
 export default Login;
-
-const LoginLayout = styled.div`
-    font-family: 'Roboto';
-    width: 100vw;
-    height: 100vh;
-    background-color: skyblue;
-    background-size: cover;
-    display: flex;
-    flex-direction: ${props => (props.isPC ? 'row' : 'column')};
-    color: white;
-    font-weight: bold;
-    background-color: ${props => props.bgColor};
-
-    .scroll {
-        width: 2rem;
-        position: absolute;
-        bottom: 0%;
-        left: 49%;
-        z-index: 15px;
-    }
-
-    @media screen and (max-width: 1023px) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-`;
 
 const Loading = styled.div`
     background-color: white;

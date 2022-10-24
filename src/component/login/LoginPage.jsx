@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { LoginLayout } from './style';
-import ScrollIcon from '../../static/scroll-icon.png';
 import GoogleButton from './GoogleButton';
 import KakaoButton from './KakaoButton';
 
@@ -53,11 +52,6 @@ function MainPage(props) {
                 <KakaoButton />
                 <GoogleButton />
             </DivContent>
-            <img
-                className="scroll"
-                src={ScrollIcon}
-                alt="아래로 스크롤 해보세요"
-            />
         </LoginLayout>
     );
 }
