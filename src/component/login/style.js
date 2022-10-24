@@ -54,6 +54,7 @@ export const DivButton = styled.div`
         background: none;
         border: none;
         width: 250px;
+        z-index: 1;
     }
 
     img {
