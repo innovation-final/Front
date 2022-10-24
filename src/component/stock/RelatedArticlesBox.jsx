@@ -22,7 +22,9 @@ function RelatedArticlesBox({ isPC }) {
                         ))}
                     </TableNames>
                     {isLoading ? (
-                        <LoadingSpinner />
+                        <NoDataWrapper>
+                            <LoadingSpinner />
+                        </NoDataWrapper>
                     ) : (
                         <TableData>
                             {data.map(article => (
@@ -117,4 +119,12 @@ const ArticleDate = styled.div`
     font-size: 14.5px;
     letter-spacing: -1px;
     align-items: flex-end;
+`;
+
+const NoDataWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid ${props => props.theme.borderColor};
+    border-radius: 15px;
 `;

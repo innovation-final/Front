@@ -40,7 +40,7 @@ function MainStockIndex({ myStock, isLoading }) {
     );
 }
 
-export default MainStockIndex;
+export default React.memo(MainStockIndex);
 
 const Wrapper = styled.div`
     display: flex;

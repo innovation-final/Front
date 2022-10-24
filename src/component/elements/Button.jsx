@@ -78,6 +78,7 @@ const StyleButton = styled.button`
     background-color: var(--button-bg-color, #0d6efd);
     color: var(--button-color, #ffffff);
     white-space: nowrap;
+    font-weight: bold;
     cursor: pointer;
 
     &:active,

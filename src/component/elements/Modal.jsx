@@ -22,13 +22,26 @@ const BackGround = styled.div`
     top: 0;
     left: 0;
     display: inline-flex;
-    transform: translate(-70px, -57px);
+    transform: translate(0px, -57px);
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.3);
     width: 100vw;
     height: 100vh;
     z-index: 998;
+    @media screen and (min-width: 1400px) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: inline-flex;
+        transform: translate(-70px, -57px);
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        width: 100vw;
+        height: 100vh;
+        z-index: 998;
+    }
 `;
 const ModalBox = styled.div`
     position: relative;

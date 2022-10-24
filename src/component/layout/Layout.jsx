@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
 import useWindowSize from '../../hooks/useWindowSize';
 import Header from './Header';
 import SideBar from './SideBar';
@@ -42,7 +43,28 @@ function Layout({ children, sidebar = true, header = true }) {
         <StyleLayout>
             {header && isPC ? <Header /> : null}
             {sidebar && menuRender()}
-            <Main $wide={wide} isPC={isPC}>
+            <Main
+                $wide={wide}
+                ispc={isPC.toString()}
+                initial={
+                    isPC
+                        ? { opacity: 0, x: wide ? 260 : 50, y: 57 }
+                        : { opacity: 0, x: 0, y: 57 }
+                }
+                animate={
+                    isPC
+                        ? {
+                              opacity: 1,
+                              x: wide ? 270 : 70,
+                              y: 57,
+                              transition: {
+                                  duration: 0.5,
+                                  type: 'linear',
+                              },
+                          }
+                        : { opacity: 1, x: 0, y: 57 }
+                }
+            >
                 {children}
             </Main>
         </StyleLayout>
@@ -56,8 +78,8 @@ const StyleLayout = styled.div`
     font-family: 'Pretendard-Regular';
 `;
 
-const Main = styled.div`
-    ${props => (props.isPC ? responsive.pc : responsive.phone)};
+const Main = styled(motion.div)`
+    ${props => (props.ispc ? responsive.pc : responsive.phone)};
     position: relative;
     display: flex;
     flex-direction: column;
@@ -66,7 +88,6 @@ const Main = styled.div`
     height: 90vh;
     box-sizing: border-box;
     z-index: 11;
-    transition: all ease-in-out 0.3s;
 `;
 
 Layout.propTypes = {

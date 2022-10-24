@@ -1,34 +1,40 @@
 import React, { useState, useRef } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 import Button from '../elements/Button';
-import { commentAPI } from '../../shared/api';
+import useMutateComment from '../../hooks/useMutateComment';
 
 function CommentInput() {
     const ref = useRef(null);
     const { id } = useParams();
-    const queryClient = useQueryClient();
     const [content, setContent] = useState('');
     const onChange = e => {
         setContent(e.target.value);
     };
 
-    const addComment = async req => {
-        const response = await commentAPI.postComment(id, req);
-        return response;
-    };
+    const { addMutation } = useMutateComment(id);
 
-    const mutation = useMutation(req => addComment(req), {
-        onError: error => console.log(error),
-        onSuccess: () => {
-            queryClient.invalidateQueries('post');
-        },
-    });
     const onClick = () => {
         setContent('');
         ref.current.value = '';
-        mutation.mutate({ content });
+        addMutation.mutate(
+            { content },
+            {
+                onSuccess: () => {
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: document.body.scrollHeight,
+                            left: 100,
+                            behavior: 'smooth',
+                        });
+                    }, 500);
+                },
+                onError: () => {
+                    Swal.fire('서버 오류입니다.');
+                },
+            },
+        );
     };
     return (
         <StyledCommentInput>
@@ -72,8 +78,10 @@ const Input = styled.input`
 `;
 
 const InputBox = styled.div`
-    max-width: 1500px;
-    width: 90%;
+    width: 78%;
+    @media screen and (min-width: 1400px) {
+        width: 93%;
+    }
 `;
 
 const ButtonBox = styled.div``;

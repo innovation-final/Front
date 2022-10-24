@@ -30,7 +30,7 @@ function Calendar({ getCurrentDate }) {
 export default Calendar;
 
 const StyledDatePicker = styled(DatePicker)`
-    padding: 5px 15px;
+    padding: 10px 15px;
     width: 100%;
     box-sizing: border-box;
     border-radius: 10px;

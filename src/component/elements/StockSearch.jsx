@@ -18,7 +18,6 @@ function StockSearch() {
         });
 
     const wholeTextArray = stocksNameArray;
-
     // 종목
 
     const [inputValue, setInputValue] = useRecoilState(searchState);
@@ -90,32 +89,40 @@ function StockSearch() {
                 <StockDropInputLayout>
                     {isHaveInputValue && (
                         <DropDownBox>
-                            {dropDownList.length === 0 && (
+                            {dropDownList && dropDownList.length === 0 && (
                                 <DropDownItem>
                                     해당하는 단어가 없습니다
                                 </DropDownItem>
                             )}
-                            {dropDownList.map((dropDownItem, dropDownIndex) => {
-                                return (
-                                    <DropDownItem
-                                        key={uuidv4()}
-                                        dropDownList={dropDownIndex}
-                                        onClick={() =>
-                                            clickDropDownItem(dropDownItem)
-                                        }
-                                        onMouseOver={() =>
-                                            setDropDownItemIndex(dropDownIndex)
-                                        }
-                                        className={
-                                            dropDownItemIndex === dropDownIndex
-                                                ? 'selected'
-                                                : ''
-                                        }
-                                    >
-                                        {dropDownItem}
-                                    </DropDownItem>
-                                );
-                            })}
+                            {dropDownList &&
+                                dropDownList.map(
+                                    (dropDownItem, dropDownIndex) => {
+                                        return (
+                                            <DropDownItem
+                                                key={uuidv4()}
+                                                dropDownList={dropDownIndex}
+                                                onClick={() =>
+                                                    clickDropDownItem(
+                                                        dropDownItem,
+                                                    )
+                                                }
+                                                onMouseOver={() =>
+                                                    setDropDownItemIndex(
+                                                        dropDownIndex,
+                                                    )
+                                                }
+                                                className={
+                                                    dropDownItemIndex ===
+                                                    dropDownIndex
+                                                        ? 'selected'
+                                                        : ''
+                                                }
+                                            >
+                                                {dropDownItem}
+                                            </DropDownItem>
+                                        );
+                                    },
+                                )}
                         </DropDownBox>
                     )}
                 </StockDropInputLayout>

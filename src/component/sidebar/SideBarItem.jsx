@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import PeopleIcon from '@mui/icons-material/People';
@@ -41,7 +42,19 @@ function SideBarItem({ title, onClickFn, param }) {
                     {wide ? (
                         <ItemTitle>
                             {title}
-                            {param === pathname ? <SelectedMenu /> : null}
+                            {param === pathname ? (
+                                <SelectedMenu
+                                    initial={{ opacity: 0, y: 5 }}
+                                    animate={{
+                                        opacity: 1,
+                                        y: 0,
+                                        transition: {
+                                            type: 'linear',
+                                            duration: 0.01,
+                                        },
+                                    }}
+                                />
+                            ) : null}
                         </ItemTitle>
                     ) : null}
                 </TitleBox>
@@ -97,7 +110,7 @@ const ItemTitle = styled.div`
     cursor: pointer;
 `;
 
-const SelectedMenu = styled.div`
+const SelectedMenu = styled(motion.div)`
     position: absolute;
     top: 5px;
     left: 10px;
@@ -106,4 +119,5 @@ const SelectedMenu = styled.div`
     border-radius: 15px 0px 0px 15px;
     background-color: ${props => props.theme.bgColor};
     z-index: -1;
+    transition: all 1s ease-in-out;
 `;

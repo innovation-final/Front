@@ -88,7 +88,10 @@ const Title = styled.h3`
     align-items: center;
     margin-right: 10px;
     white-space: nowrap;
-    font-size: 0.9vw;
+    font-size: 13px;
+    @media screen and (min-width: 1400px) {
+        font-size: 16px;
+    }
 `;
 
 const StyleSlider = styled(Slider)``;

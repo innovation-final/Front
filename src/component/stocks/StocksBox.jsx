@@ -71,9 +71,7 @@ function StocksBox() {
                 )}
             </StocksContainer>
             {open ? (
-                <StocksSearch width={800} height={700} setIsOpen={setIsOpen}>
-                    hello
-                </StocksSearch>
+                <StocksSearch width={800} height={700} setIsOpen={setIsOpen} />
             ) : null}
         </StyleStocksBox>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { useQueryClient } from 'react-query';
+import Swal from 'sweetalert2';
 import SearchIcon from '@mui/icons-material/Search';
 import StockSearch from '../elements/StockSearch';
 import Button from '../elements/Button';
@@ -9,6 +10,8 @@ import { searchState } from '../../atoms/search/searchState';
 import currentStockCode from '../../atoms/investment/stockState';
 import useAccount from '../../hooks/useAccount';
 import { esUSNumberParser } from '../../util/parser';
+import tutorialState from '../../atoms/tutorial/tutorialState';
+import useWindowSize from '../../hooks/useWindowSize';
 
 function InvestmentHeader() {
     const client = useQueryClient();
@@ -16,11 +19,20 @@ function InvestmentHeader() {
     const myAccount = useAccount();
     const stocksData = stocksQuery?.data.data;
     const setCurrentState = useSetRecoilState(currentStockCode);
+    const setTutorial = useSetRecoilState(tutorialState);
     const search = useRecoilValue(searchState);
+    const window = useWindowSize();
     const onClick = () => {
         if (!stocksData) return;
         const stockCode = stocksData?.find(stock => stock.name === search).code;
         setCurrentState(stockCode);
+    };
+    const onTutorial = () => {
+        if (window.width < 1919 || window.height < 930) {
+            Swal.fire('전체화면에서 실행해 주세요');
+            return;
+        }
+        setTutorial(props => !props);
     };
 
     return (
@@ -33,6 +45,9 @@ function InvestmentHeader() {
                             <SearchIcon />
                         </Button>
                     </ButtonBox>
+                    <TutorialButton onClick={() => onTutorial()}>
+                        ?
+                    </TutorialButton>
                 </SearchBox>
                 <MyInfo>
                     {!myAccount.data?.balance ? (
@@ -169,4 +184,19 @@ const Unit = styled.div`
     position: absolute;
     right: 10px;
     bottom: 11px;
+`;
+
+const TutorialButton = styled.div`
+    visibility: hidden;
+    @media screen and (min-width: 1400px) {
+        visibility: visible;
+        width: 50px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        margin-left: 10px;
+        background-color: ${props => props.theme.buttonColor};
+    }
 `;

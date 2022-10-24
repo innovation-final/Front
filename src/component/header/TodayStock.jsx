@@ -109,17 +109,22 @@ const Title = styled.p`
     justify-content: center;
     align-items: center;
     margin-right: 10px;
-    font-size: 0.9vw;
     height: 60px;
+    @media screen and (min-width: 1400px) {
+        font-size: 16px;
+    }
 `;
 const Div = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 180px;
-    font-size: 0.9vw;
     white-space: nowrap;
     height: 60px;
+    font-size: 13px;
+    @media screen and (min-width: 1400px) {
+        font-size: 16px;
+    }
 `;
 
 const Today = styled.div`
@@ -127,10 +132,12 @@ const Today = styled.div`
     justify-content: center;
     align-items: center;
     margin-right: 10px;
-    font-size: 0.9vw;
-
     white-space: nowrap;
     height: 60px;
+    font-size: 13px;
+    @media screen and (min-width: 1400px) {
+        font-size: 16px;
+    }
 `;
 
 const Author = styled.p`
