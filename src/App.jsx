@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { ThemeProvider } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
 import LiveChat from './component/livechat/LiveChat';
@@ -36,7 +35,6 @@ function App() {
                     </React.Suspense>
                 </ThemeProvider>
             </Store>
-            <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );
 }

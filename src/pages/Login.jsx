@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet';
 import MainPage from '../component/login/LoginPage';
 import Spinner from '../static/Spinner.gif';
 import useWindowSize from '../hooks/useWindowSize';
-import LoginHeader from '../component/login/LoginHeader';
 
 function Login() {
     const [isLoading, setIsLoading] = useState(false);
@@ -28,8 +27,6 @@ function Login() {
                     <img src={Spinner} alt="로딩중입니다" />
                 </Loading>
             )}
-            {isPC && <LoginHeader />}
-
             <MainPage id="main" bgColor="skyblue" />
         </>
     );

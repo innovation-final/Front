@@ -194,5 +194,6 @@ const TutorialButton = styled.div`
         border-radius: 50%;
         margin-left: 10px;
         background-color: ${props => props.theme.buttonColor};
+        cursor: pointer;
     }
 `;
