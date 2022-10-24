@@ -6,8 +6,10 @@ function MyStocks({ stock }) {
     return (
         <StyleTableName>
             <TextLayout>{stockName}</TextLayout>{' '}
-            <TextLayout>{avgBuying}원</TextLayout>
-            <StockContent isMinus={profit < 0}>{`${profit}원`}</StockContent>
+            <TextLayout>{avgBuying.toLocaleString()}원</TextLayout>
+            <StockContent
+                isMinus={profit < 0}
+            >{`${profit.toLocaleString()}원`}</StockContent>
             <StockContent isMinus={returnRate < 0}>
                 {(returnRate * 100).toFixed(3)}%
             </StockContent>

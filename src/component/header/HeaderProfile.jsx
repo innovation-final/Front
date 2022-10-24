@@ -82,9 +82,6 @@ function HeaderProfile() {
             body: newAlarmData.message,
         });
         setAlarmCount(props => props + 1);
-
-        console.log('dd', shiftData);
-        console.log('dd', newAlarmData);
     }, [alarmData]);
 
     useEffect(() => {

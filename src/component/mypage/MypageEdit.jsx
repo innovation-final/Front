@@ -239,9 +239,9 @@ function MypageEdit() {
                             <InputBox>
                                 <Input
                                     onChange={onChangeNickName}
-                                    placeholder="닉네임 (10자 이내)"
+                                    placeholder="닉네임 (6자 이내)"
                                     value={editNickName}
-                                    maxLength={10}
+                                    maxLength={6}
                                 />
                             </InputBox>
                             <ProfileMsgBox>
