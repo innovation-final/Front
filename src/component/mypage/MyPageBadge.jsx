@@ -28,15 +28,36 @@ function MypageBadge({ badge }) {
                     {isInclude('POST') ? (
                         <BadgeImg src={post} />
                     ) : (
-                        <BadgeImg src={mark} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={mark} />
+                                <BoxInfo>
+                                    <p>
+                                        커뮤니티/ 5개 이상 글 쓰면 얻을 수
+                                        있습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     )}
+
                     <BadgeTitle>활발한 주식박사</BadgeTitle>
                 </BadgeContainer>
                 <BadgeContainer>
                     {isInclude('COMMENT') ? (
                         <BadgeImg src={comment} />
                     ) : (
-                        <BadgeImg src={mark} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={mark} />
+                                <BoxInfo>
+                                    <p>
+                                        커뮤니티/ 작성된 글에서 10개 이상 댓글
+                                        달면 얻을 수 있습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     )}
                     <BadgeTitle>조잘조잘 수다왕</BadgeTitle>
                 </BadgeContainer>
@@ -44,7 +65,17 @@ function MypageBadge({ badge }) {
                     {isInclude('LIKE') ? (
                         <BadgeImg src={like} />
                     ) : (
-                        <BadgeImg src={mark} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={mark} />
+                                <BoxInfo>
+                                    <p>
+                                        커뮤니티/ 작성한 글 합산 좋아요 10개
+                                        이상 받으면 얻을 수 있습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     )}
                     <BadgeTitle>러블리한 인플루언서</BadgeTitle>
                 </BadgeContainer>
@@ -52,7 +83,15 @@ function MypageBadge({ badge }) {
                     {isInclude('DISLIKE') ? (
                         <BadgeImg src={dislike} />
                     ) : (
-                        <BadgeImg src={mark} />
+                        <Box>
+                            <BadgeImg src={mark} />
+                            <BoxInfo>
+                                <p>
+                                    커뮤니티/ 이 뱃지를 받게 된다면 앞으로 글을
+                                    이쁘게 써주세요!
+                                </p>
+                            </BoxInfo>
+                        </Box>
                     )}
                     <BadgeTitle>음 무슨글을 썼길래?</BadgeTitle>
                 </BadgeContainer>
@@ -60,7 +99,17 @@ function MypageBadge({ badge }) {
                     {isInclude('VIEW') ? (
                         <BadgeImg src={kinds} />
                     ) : (
-                        <BadgeImg src={mark} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={mark} />
+                                <BoxInfo>
+                                    <p>
+                                        커뮤니티/ 작성된 글 합산 조회 수 50회
+                                        이상 넘으면 받을 수 있습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     )}
                     <BadgeTitle>개미들의 친구</BadgeTitle>
                 </BadgeContainer>
@@ -68,7 +117,17 @@ function MypageBadge({ badge }) {
                     {isInclude('BUY') ? (
                         <BadgeImg src={buyStock} />
                     ) : (
-                        <BadgeImg src={mark} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={mark} />
+                                <BoxInfo>
+                                    <p>
+                                        모의투자/ 첫 주식 매수시 얻으실 수
+                                        있습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     )}
                     <BadgeTitle>워렌버핏이 돼보자</BadgeTitle>
                 </BadgeContainer>
@@ -76,7 +135,17 @@ function MypageBadge({ badge }) {
                     {isInclude('STOCKHOLD') ? (
                         <BadgeImg src={manyStock} />
                     ) : (
-                        <BadgeImg src={mark} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={mark} />
+                                <BoxInfo>
+                                    <p>
+                                        모의투자/ 한 종목에서 100주 이상
+                                        매수하시면 얻으실 수 있습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     )}
                     <BadgeTitle>이 구역의 최대주주</BadgeTitle>
                 </BadgeContainer>
@@ -95,11 +164,43 @@ const BadgeGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
+    margin-right: 10px;
 `;
+
 const BadgeContainer = styled.div``;
-const BadgeTitle = styled.p``;
+const BadgeTitle = styled.div``;
 const BadgeImg = styled.img`
     justify-content: space-evenly;
     width: 75%;
     cursor: pointer;
+`;
+const Boxwrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const BoxInfo = styled.div`
+    color: #fff;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    width: 75%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    opacity: 0;
+    left: 0;
+    bottom: 0;
+    overflow: scroll;
+    transition: opacity 0.35s ease-in-out;
+    p {
+        font-size: 14px;
+    }
+`;
+const Box = styled.div`
+    position: relative;
+
+    &:hover ${BoxInfo} {
+        opacity: 1;
+    }
 `;

@@ -28,7 +28,7 @@ function RankingMain() {
         setPage(event.target.value);
     };
     const { data } = useRank();
-    const ranks = data;
+    const ranks = data && data;
 
     return (
         <>
@@ -82,7 +82,7 @@ function RankingMain() {
                 </Container>
 
                 <BadgeContainer>
-                    <Medal ranks={ranks?.slice(0, 3)} />
+                    <Medal ranks={ranks} />
                 </BadgeContainer>
             </MainContainer>
         </>

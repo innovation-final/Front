@@ -6,7 +6,7 @@ import BankSpinner from './BankSpinner';
 
 function BankAccount() {
     const { data } = useAccount();
-
+    console.log(data);
     if (!data) return <BankSpinner />;
 
     const accountNumber =
@@ -20,6 +20,10 @@ function BankAccount() {
     const seedMoney = data && data.seedMoney.toLocaleString();
     const balance = data && data.balance.toLocaleString();
     const targetReturnRate = data && data.targetReturnRate;
+    const totalReturnRate = data && data.totalReturnRate;
+    const totalProfit = data && data.totalProfit.toLocaleString();
+    const totalRealizedProfit =
+        data && data.totalRealizedProfit.toLocaleString();
 
     // const particles = [];
     // const colors = ['#eb6383', '#fa9191', '#ffe9c5', '#b4f2e1'];
@@ -86,17 +90,35 @@ function BankAccount() {
             </TextLayout>
             <TextLayout>
                 <Text>시드머니</Text>
-                <Content>{seedMoney}</Content>
+                <Content>{seedMoney}원</Content>
             </TextLayout>
             <TextLayout>
                 <Text>현재머니</Text>
-                <Content>{balance}</Content>
+                <Content>{balance}원</Content>
             </TextLayout>
             <TextLayout>
                 <Text gutterBottom variant="h5" component="div">
                     목표 수익률
                 </Text>
                 <Content>{targetReturnRate}%</Content>
+            </TextLayout>
+            <TextLayout>
+                <Text gutterBottom variant="h5" component="div">
+                    현재 수익률
+                </Text>
+                <Content>{totalReturnRate}%</Content>
+            </TextLayout>
+            <TextLayout>
+                <Text gutterBottom variant="h5" component="div">
+                    평가손익
+                </Text>
+                <Content>{totalProfit}원</Content>
+            </TextLayout>
+            <TextLayout>
+                <Text gutterBottom variant="h5" component="div">
+                    실현손익
+                </Text>
+                <Content>{totalRealizedProfit}원</Content>
             </TextLayout>
         </ContentLayout>
     );
@@ -107,11 +129,11 @@ export default BankAccount;
 const ContentLayout = styled.div`
     padding-left: 20px;
     margin: 20px;
-    padding-top: 5%;
+    padding-top: 2%;
     overflow: hidden;
 `;
 const TextLayout = styled.div`
-    padding: 3px;
+    padding: 2px;
     display: flex;
 `;
 const Text = styled.p`
