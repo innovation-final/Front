@@ -7,7 +7,7 @@ import top3 from '../../static/3.png';
 function Medal({ ranks }) {
     const nickname1 = ranks && ranks[0].nickname;
     const returnRate1 = ranks && ranks[0].returnRate;
-    //    d
+
     const nickname2 = ranks && ranks[1].nickname;
     const returnRate2 = ranks && ranks[1].returnRate;
 
@@ -22,7 +22,7 @@ function Medal({ ranks }) {
                 <Text>닉네임:{nickname1}</Text>
             </TextLayout>
             <TextLayout>
-                <Text>수익률:{returnRate1}%</Text>
+                <Text>수익률: {(returnRate1 * 100).toFixed(3)}%</Text>
             </TextLayout>
             <MedalLayout>
                 <MedalImg src={top2} />
@@ -33,8 +33,8 @@ function Medal({ ranks }) {
                 <Text>닉네임:{nickname3}</Text>
             </TextLayout>
             <TextLayout>
-                <Text>수익률:{returnRate2}%</Text>
-                <Text>수익률:{returnRate3}%</Text>
+                <Text>수익률: {(returnRate2 * 100).toFixed(3)}%</Text>
+                <Text>수익률: {(returnRate3 * 100).toFixed(3)}%</Text>
             </TextLayout>
         </Layout>
     );

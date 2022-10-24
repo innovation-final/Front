@@ -116,34 +116,10 @@ function SideBar() {
                             onClickFn={item.onClickFn}
                         />
                     ))}
-
-                    {/* <ToggleContainer>
-                        <ToggleLayout className="relative inline-block w-12 mr-2 align-middle">
-                            <input
-                                type="checkbox"
-                                name="toggle"
-                                id="toggle"
-                                onChange={onChangeToggle}
-                                checked={pushStatus}
-                                className={
-                                    pushStatus ? (
-                                        <Toggle />
-                                    ) : (
-                                        ' left-0 bg-white absolute block w-7 h-7 rounded-full border-4 appearance-none cursor-pointer'
-                                    )
-                                }
-                            /> */}
-                    {/* <label
-                                htmlFor="toggle"
-                                className="block overflow-hidden h-7 rounded-full bg-gray-300 cursor-pointer"
-                            ></label> */}
-                    {/* </ToggleLayout>
-                        <p>{pushStatus ? '설정' : '미설정'}</p>
-                    </ToggleContainer> */}
                 </TopCotainer>
 
                 <BottomContainer>
-                    <StyleItem $wide={wide}>
+                    {/* <StyleItem $wide={wide}>
                         <TitleBox>
                             <PushText>푸쉬알림</PushText>
                         </TitleBox>
@@ -158,8 +134,7 @@ function SideBar() {
                             <ToggleButton htmlFor="toggle" />
                         </ToggleSwitch>{' '}
                         {/* <p>{pushStatus ? 'On' : 'Off'}</p> */}
-                    </StyleItem>
-
+                    {/* </StyleItem> */}
                     {menuBottomItems.map(item => (
                         <SideBarItem
                             key={item.title}
@@ -205,64 +180,64 @@ const BottomContainer = styled.div`
     flex-direction: column;
 `;
 
-const StyleItem = styled.div`
-    position: relative;
-    width: 100%;
-    height: 60px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    visibility: ${props => (props.$wide ? 'none' : 'hidden')};
-`;
+// const StyleItem = styled.div`
+//     position: relative;
+//     width: 100%;
+//     height: 60px;
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     visibility: ${props => (props.$wide ? 'none' : 'hidden')};
+// `;
 
-const TitleBox = styled.div`
-    display: flex;
-    padding: 10px;
-    margin-left: 20px;
-    flex-direction: row;
-    align-items: center;
-`;
-const PushText = styled.div`
-    display: inline-block;
-    padding: 5px;
-    font-weight: 600;
-    color: ${props => props.theme.menuTextColor};
-    letter-spacing: -1px;
-    font-size: 17px;
-    white-space: nowrap;
-    box-sizing: border-box;
-    cursor: pointer;
-`;
+// const TitleBox = styled.div`
+//     display: flex;
+//     padding: 10px;
+//     margin-left: 20px;
+//     flex-direction: row;
+//     align-items: center;
+// `;
+// const PushText = styled.div`
+//     display: inline-block;
+//     padding: 5px;
+//     font-weight: 600;
+//     color: ${props => props.theme.menuTextColor};
+//     letter-spacing: -1px;
+//     font-size: 17px;
+//     white-space: nowrap;
+//     box-sizing: border-box;
+//     cursor: pointer;
+// `;
 
-const ToggleSwitch = styled.label`
-    width: 80px;
-    margin: 10px;
-    height: 45px;
-    display: block;
-    position: relative;
-    border-radius: 32px;
-    background-color: #fff;
-    box-shadow: 0 0 1rem 3px rgba(0 0 0 / 15%);
-    cursor: pointer;
-`;
+// const ToggleSwitch = styled.label`
+//     width: 80px;
+//     margin: 10px;
+//     height: 45px;
+//     display: block;
+//     position: relative;
+//     border-radius: 32px;
+//     background-color: #fff;
+//     box-shadow: 0 0 1rem 3px rgba(0 0 0 / 15%);
+//     cursor: pointer;
+// `;
 
-const ToggleButton = styled.span`
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: 50%;
-    left: 0.2rem;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    background: #42a8c7;
-    transition: all 0.2s ease-in;
-`;
-const ToggleInput = styled.input`
-    &:checked ~ ${ToggleSwitch} {
-        background: rgb(240, 154, 78);
-    }
-    &:checked ~ ${ToggleSwitch} ${ToggleButton} {
-        background-color: #004565;
-        left: calc(100% - 2.8rem);
-    }
-`;
+// const ToggleButton = styled.span`
+//     width: 40px;
+//     height: 40px;
+//     position: absolute;
+//     top: 50%;
+//     left: 0.2rem;
+//     transform: translateY(-50%);
+//     border-radius: 50%;
+//     background: #42a8c7;
+//     transition: all 0.2s ease-in;
+// `;
+// const ToggleInput = styled.input`
+//     &:checked ~ ${ToggleSwitch} {
+//         background: rgb(240, 154, 78);
+//     }
+//     &:checked ~ ${ToggleSwitch} ${ToggleButton} {
+//         background-color: #004565;
+//         left: calc(100% - 2.8rem);
+//     }
+// `;
