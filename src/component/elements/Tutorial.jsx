@@ -31,6 +31,8 @@ function Tutorial() {
     }, []);
     return (
         <Screen onClick={() => nextStep()}>
+            <HeaderBlock />
+            <SideBarBlock $isWide={isWide} />
             <Wrapper isWide={isWide} window={window}>
                 <Exit onClick={() => exit()}>X</Exit>
                 <StyleContainer isWide={isWide}>
@@ -82,13 +84,36 @@ const Screen = styled.div`
     z-index: 999;
 `;
 
+const HeaderBlock = styled.div`
+    position: fixed;
+    height: 60px;
+    width: 100%;
+`;
+
+const SideBarBlock = styled.div`
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: ${props => (props.$isWide ? 290 : 74)}px;
+    height: 100vh;
+    color: ${props => props.theme.textColor};
+    transition: width ease-in-out 0.3s;
+`;
+
 const Wrapper = styled.div`
+    transform: translate(${props => (props.$wide ? 270 : 70)}px, 57px);
+    width: calc(100vw - ${props => (props.$wide ? 270 : 70)}px);
+    padding: 10px;
+    padding-left: 60px;
     position: relative;
     display: flex;
-    transform: ${props =>
-        !props.isWide ? 'translate(120px, 68px)' : 'translate(323px, 68px)'};
-    width: ${props => (props.isWide ? 82.5 : 93)}vw;
-    min-height: 33rem;
+    flex-direction: column;
+    max-width: 100%;
+    min-width: 480px;
+    height: 90vh;
+    box-sizing: border-box;
+    z-index: 11;
 `;
 
 const Exit = styled.div`
@@ -99,10 +124,8 @@ const Exit = styled.div`
 `;
 
 const StyleContainer = styled.div`
-    position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
 `;
 
 const StyleHeader = styled.div`
