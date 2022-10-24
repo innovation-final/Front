@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+/* eslint-disable */
+import React, { useState, useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { wideState } from '../../atoms/common/commonState';
 import tutorialState from '../../atoms/tutorial/tutorialState';
 import TutorialMessage from './TutorialMessage';
+import useWindowSize from '../../hooks/useWindowSize';
 
 function Tutorial() {
     const [step, setStep] = useState(0);
+    const isWide = useRecoilValue(wideState);
     const setTutorial = useSetRecoilState(tutorialState);
+    const window = useWindowSize();
 
     const nextStep = () => {
         if (step > 2) {
@@ -20,11 +25,15 @@ function Tutorial() {
         setTutorial(false);
         setStep(0);
     };
+    useEffect(() => {
+        document.body.style = `overflow: hidden`;
+        return () => (document.body.style = `overflow: auto`);
+    }, []);
     return (
         <Screen onClick={() => nextStep()}>
-            <Wrapper>
+            <Wrapper isWide={isWide} window={window}>
                 <Exit onClick={() => exit()}>X</Exit>
-                <StyleContainer>
+                <StyleContainer isWide={isWide}>
                     <StyleHeader step={step === 0}>
                         <TutorialMessage>
                             이 창에서 주식 종목을 검색하고, 내 잔고와 수익률을
@@ -64,7 +73,7 @@ function Tutorial() {
 export default Tutorial;
 
 const Screen = styled.div`
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     position: absolute;
     top: 0;
@@ -75,7 +84,11 @@ const Screen = styled.div`
 
 const Wrapper = styled.div`
     position: relative;
-    transform: translate(323px, 68px);
+    display: flex;
+    transform: ${props =>
+        !props.isWide ? 'translate(120px, 68px)' : 'translate(323px, 68px)'};
+    width: ${props => (props.isWide ? 82.5 : 93)}vw;
+    min-height: 33rem;
 `;
 
 const Exit = styled.div`
@@ -86,22 +99,20 @@ const Exit = styled.div`
 `;
 
 const StyleContainer = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
-    width: 82.5vw;
+    width: 100%;
 `;
 
 const StyleHeader = styled.div`
     position: relative;
     padding: 0.9rem;
-    width: 98%;
     min-height: 2.2rem;
-    background-color: transparent;
     border: 3px dotted white;
     border-radius: 15px;
     margin-bottom: 21px;
     visibility: ${props => (props.step ? 'visible' : 'hidden')};
-    /* border: 1px solid ${props => props.theme.borderColor}; */
 `;
 
 const StyleInfoContainer = styled.div`
@@ -115,11 +126,12 @@ const StyleInfoContainer = styled.div`
     min-height: 33rem;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    width: 100%;
 `;
 
 const StyleMyStockLine = styled.div`
-    padding: 1rem;
-    min-height: 230px;
+    min-height: 260px;
+    width: 100%;
     border: 3px dotted white;
     visibility: ${props => (props.step ? 'visible' : 'hidden')};
     border-radius: 15px;
@@ -128,12 +140,11 @@ const StyleMyStockLine = styled.div`
 const StyleTrade = styled.div`
     position: relative;
     border: 3px dotted white;
+    width: 100%;
     visibility: ${props => (props.step ? 'visible' : 'hidden')};
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     height: 96%;
     background-color: transparent;
 `;
@@ -145,18 +156,18 @@ const StyleWrapper = styled.div`
 
     @media screen and (min-width: 1400px) {
         display: grid;
-        min-width: 97%;
+        width: 100%;
         position: relative;
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(3, minmax(120px, 100%));
         gap: 20px;
-        background-color: rgba(0.3, 41, 3, 0.4);
+        /* background-color: rgba(0.3, 41, 3, 0.4); */
     }
 `;
 
 const StyleLeftSide = styled.div`
     margin-bottom: 20px;
-    width: auto;
+    width: 100%;
     @media screen and (min-width: 1400px) {
         grid-column: 1/4;
         grid-row: 1/4;

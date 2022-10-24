@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 function MyStocks({ stock }) {
-    console.log(stock);
     const { stockName, profit, returnRate, amount, avgBuying } = stock;
     return (
         <StyleTableName>

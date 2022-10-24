@@ -14,8 +14,6 @@ function ChatScreen({ publish, user }) {
         setChat(event.target.value);
     };
 
-    console.log(user);
-
     const handleSubmit = (event, ch) => {
         // 보내기 버튼 눌렀을 때 publish
         event.preventDefault();

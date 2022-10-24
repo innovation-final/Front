@@ -30,13 +30,13 @@ function App() {
                     <GlobalStyles />
                     <React.Suspense fallback={<LoadingSpinner />}>
                         <AnimatePresence>
-                            <Router />
-                            <LiveChat />
+                            <Router key="router" />
+                            <LiveChat key="liveChat" />
                         </AnimatePresence>
                     </React.Suspense>
                 </ThemeProvider>
-                <ReactQueryDevtools initialIsOpen={false} />
             </Store>
+            <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );
 }
