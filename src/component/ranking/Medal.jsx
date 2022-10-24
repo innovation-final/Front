@@ -13,6 +13,32 @@ function Medal({ ranks }) {
 
     const nickname3 = ranks && ranks[2].nickname;
     const returnRate3 = ranks && ranks[2].returnRate;
+    if (!ranks)
+        return (
+            <Layout>
+                <MedalLayout>
+                    <MedalImg src={top1} />
+                </MedalLayout>
+                <TextLayout>
+                    <Text>닉네임:</Text>
+                </TextLayout>
+                <TextLayout>
+                    <Text>수익률:</Text>
+                </TextLayout>
+                <MedalLayout>
+                    <MedalImg src={top2} />
+                    <MedalImg src={top3} />
+                </MedalLayout>
+                <TextLayout>
+                    <Text>닉네임:</Text>
+                    <Text>닉네임:</Text>
+                </TextLayout>
+                <TextLayout>
+                    <Text>수익률:</Text>
+                    <Text>수익률:</Text>
+                </TextLayout>
+            </Layout>
+        );
     return (
         <Layout>
             <MedalLayout>

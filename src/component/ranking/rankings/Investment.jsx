@@ -102,7 +102,7 @@ const StyleTableName = styled.div`
     margin-bottom: 10px;
     padding: 10px;
 `;
-const TextLayout = styled.p`
+const TextLayout = styled.div`
     font-weight: bold;
     flex-direction: row;
     width: 100%;

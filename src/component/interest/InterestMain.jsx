@@ -1,23 +1,18 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from 'react-query';
-import BarChartIcon from '@mui/icons-material/BarChart';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ListIcon from '@mui/icons-material/List';
 import InterestStockList from './InterestStockList';
 import { stockAPI } from '../../shared/api';
 import InterestNewsList from './InterestNews';
-// import InterestChartList from './InterestChartList';
-import useWindowSize from '../../hooks/useWindowSize';
-import InterestChart from './InterestChart';
+import InterestPost from './InterestPost';
 
 function InterestMain() {
     const [param, setParam] = useState('');
     const { data } = useQuery(['stock'], () => stockAPI.getLikeStock());
-    const { width } = useWindowSize();
-    const isPC = useMemo(() => {
-        return width >= 1024;
-    }, [width]);
+
     const interestStock = data?.data.data;
     const onClick = code => {
         setParam(code);
@@ -71,10 +66,10 @@ function InterestMain() {
             <CardsLayout>
                 <Card>
                     <IconLayout>
-                        <BarChartIcon />
-                        <Text>관련그래프</Text>
+                        <MenuBookIcon />
+                        <Text>관련게시글</Text>
                     </IconLayout>
-                    <InterestChart isPC={isPC} code={param} />
+                    <InterestPost code={param} />
                 </Card>
 
                 <NewsCard>
