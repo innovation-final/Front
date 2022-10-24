@@ -71,22 +71,45 @@ function BoardWrite({ isEdit, originData }) {
         }).then(result => {
             if (result.isConfirmed) {
                 if (!isEdit) {
-                    mutation.mutate({
-                        content,
-                        title,
-                        stockName: inputValue,
-                    });
-                    setInputValue('');
-                    Swal.fire('작성되었습니다.');
-                    navigate('/community');
+                    mutation.mutate(
+                        {
+                            content,
+                            title,
+                            stockName: inputValue,
+                        },
+                        {
+                            onSuccess: () => {
+                                Swal.fire('작성되었습니다.');
+                                navigate('/community');
+                            },
+                            onError: () => {
+                                Swal.fire('서버오류입니다.');
+                            },
+                            onSettled: () => {
+                                setInputValue('');
+                            },
+                        },
+                    );
                 } else {
-                    editMutation.mutate({
-                        content,
-                        title,
-                        stockName: inputValue,
-                    });
-                    Swal.fire('수정되었습니다.');
-                    navigate(`/post/${id}`);
+                    editMutation.mutate(
+                        {
+                            content,
+                            title,
+                            stockName: inputValue,
+                        },
+                        {
+                            onSuccess: () => {
+                                Swal.fire('작성되었습니다.');
+                                navigate(`/post/${id}`);
+                            },
+                            onError: () => {
+                                Swal.fire('서버오류입니다.');
+                            },
+                            onSettled: () => {
+                                setInputValue('');
+                            },
+                        },
+                    );
                 }
             } else {
                 return false;

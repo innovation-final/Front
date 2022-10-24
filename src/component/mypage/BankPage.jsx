@@ -59,13 +59,31 @@ function BankPage() {
             reverseButtons: true,
         }).then(result => {
             if (result.isConfirmed) {
-                setPage(event.target.value);
-                setIsEdit(props => !props);
-                mutation.mutate({ seedMoney, targetReturnRate, expireAt });
-                setSeedMoney(5000000);
-                setTargetReturnRate(0);
-                setOpenExpireAt(30);
-                Swal.fire('개설되었습니다.');
+                mutation.mutate(
+                    { seedMoney, targetReturnRate, expireAt },
+                    {
+                        onSuccess: () => {
+                            Swal.fire('개설되었습니다.');
+                        },
+                        onError: error => {
+                            if (
+                                error.response.data.error.code ===
+                                'ONE_ACCOUNT_PER_PERSON'
+                            ) {
+                                Swal.fire('계좌가 이미 있습니다.');
+                            } else {
+                                Swal.fire('서버 오류입니다..');
+                            }
+                        },
+                        onSettled: () => {
+                            setPage(event.target.value);
+                            setIsEdit(props => !props);
+                            setSeedMoney(5000000);
+                            setTargetReturnRate(0);
+                            setOpenExpireAt(30);
+                        },
+                    },
+                );
             }
         });
     };
