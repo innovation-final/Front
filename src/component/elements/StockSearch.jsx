@@ -25,9 +25,6 @@ function StockSearch() {
     const [dropDownList, setDropDownList] = useState(wholeTextArray);
     const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
 
-    // const pickOne = stock?.filter(el => el.name === inputValue);
-    // console.log(pickOne);
-
     const showDropDownList = () => {
         if (inputValue === '') {
             setIsHaveInputValue(false);

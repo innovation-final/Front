@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 function Investment({ ranks }) {
-    console.log(ranks);
     return (
         <div>
             {ranks &&

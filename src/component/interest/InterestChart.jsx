@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import useGetStockInfo from '../../hooks/useGetStockInfo';
 import useWindowSize from '../../hooks/useWindowSize';
-import { GraphBox } from '../stock/index';
+import { ChartCandleStick } from '../chart/index';
 
 function InterestChart({ code }) {
     const { data } = useGetStockInfo(code);
@@ -17,7 +17,12 @@ function InterestChart({ code }) {
         <Wrapper>
             <StockInfoWrapper>
                 {code !== '' && (
-                    <GraphBox isPC={isPC} code={code} name={name} />
+                    <ChartCandleStick
+                        isPC={isPC}
+                        code={code}
+                        name={name}
+                        height={200}
+                    />
                 )}
             </StockInfoWrapper>
         </Wrapper>
@@ -25,6 +30,18 @@ function InterestChart({ code }) {
 }
 
 export default InterestChart;
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: 1400px) {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+`;
+
 const StockInfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -32,14 +49,6 @@ const StockInfoWrapper = styled.div`
         display: flex;
         flex-direction: column;
         width: 100%;
-    }
-`;
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    @media screen and (min-width: 1400px) {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
+        height: 320px;
     }
 `;

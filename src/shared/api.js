@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://hakjoonkim.shop/api/';
+const BASE_URL = process.env.REACT_APP_URL;
 
 const api = axios.create({
     baseURL: BASE_URL,
@@ -60,7 +60,6 @@ api.interceptors.response.use(
                     if (
                         err.response.data.error.code === 'REFRESH_TOKEN_EXPIRED'
                     ) {
-                        console.log(err.response.data.error.code);
                         localStorage.removeItem('access-token');
                         localStorage.removeItem('refresh-token');
                         window.location.replace = '/login';

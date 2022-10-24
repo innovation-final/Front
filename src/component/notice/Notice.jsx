@@ -25,7 +25,6 @@ function Notice({ setModalOpen }) {
 
     useEffect(() => {
         if (SSE.getAlarmData().length === 0) {
-            console.log(SSE.getAlarmData());
             return;
         }
         SSE.pushAlarm();

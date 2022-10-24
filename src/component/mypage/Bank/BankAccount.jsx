@@ -6,7 +6,7 @@ import BankSpinner from './BankSpinner';
 
 function BankAccount() {
     const { data } = useAccount();
-    console.log(data);
+
     if (!data) return <BankSpinner />;
 
     const accountNumber =

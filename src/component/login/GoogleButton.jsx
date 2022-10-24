@@ -5,9 +5,8 @@ import GoogleLogo from '../../static/GoogleLogo.png';
 
 function GoogleButton() {
     const navigate = useNavigate();
-    const clientID =
-        '763811702193-7dlv53qfrn4h3fbhcoq0m522i60pgg12.apps.googleusercontent.com';
-    const redirectURI = 'http://localhost:3000/login/oauth2/code/google';
+    const clientID = process.env.REACT_APP_GOOGLE_CLIENT;
+    const redirectURI = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
 
     return (
         <DivButton>

@@ -35,6 +35,7 @@ function ChartArea({ name, width, code, height }) {
             getValueData();
         }, 1);
     }, []);
+
     return (
         <Wrapper>
             {isLoading ? (

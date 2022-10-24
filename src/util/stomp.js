@@ -4,7 +4,7 @@ import { userState } from '../atoms/user/userState';
 
 // Header "Authorization" token 보내기
 
-const WS_URL = 'ws://hakjoonkim.shop/stomp';
+const WS_URL = process.env.REACT_APP_WEBSOCKET_URL;
 let imageUrl = null;
 let nickName = null;
 let client = null;

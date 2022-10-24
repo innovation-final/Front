@@ -27,7 +27,6 @@ function InterestMain() {
     const colorChange = index => {
         setNowColorNum(index);
     };
-    console.log(nowColorNum);
 
     return (
         <CardLayout>

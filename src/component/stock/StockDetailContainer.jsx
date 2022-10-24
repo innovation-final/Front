@@ -52,7 +52,12 @@ function StockDetailContainer() {
                 <ContainerTop isPC={isPC}>
                     <StockInfoWrapper>
                         <StockInfoBox stockData={stockData} isPC={isPC} />
-                        <GraphBox isPC={isPC} code={code} name={name} />
+                        <GraphBox
+                            isPC={isPC}
+                            code={code}
+                            name={name}
+                            height={300}
+                        />
                     </StockInfoWrapper>
                     <TradingVolumeBox volumeData={volumeData} isPC={isPC} />
                 </ContainerTop>

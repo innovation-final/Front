@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
 import ContentBox from '../elements/ContentBox';
 import LoadingSpinner from '../elements/LoadingSpinner';
 import { dateParser } from '../../util/parser';
@@ -29,9 +30,9 @@ function RelatedPostsBox({ isPC }) {
                         <NoArticle>관련 게시글이 없습니다.</NoArticle>
                     ) : (
                         <TableData>
-                            {data.map(post => (
+                            {data.slice(-8, -1).map(post => (
                                 <ArticleInfo
-                                    key={post.title}
+                                    key={uuid()}
                                     onClick={() => navigate(`/post/${post.id}`)}
                                 >
                                     <ArticleTitle>
