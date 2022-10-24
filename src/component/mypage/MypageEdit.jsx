@@ -28,11 +28,11 @@ function MypageEdit() {
         e.preventDefault();
         imageInput.current.click();
         const reader = new FileReader();
-        const file = e.target.files[0];
+        const file = e.target.files && e.target.files[0];
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             if (file.size > 0.5 * 1024 * 1024) {
-                alert('파일 사이즈가 1mb를 넘습니다');
+                Swal.fire('파일 사이즈가 1mb를 넘습니다');
                 return;
             }
             const resultImage = reader.result;
@@ -60,14 +60,12 @@ function MypageEdit() {
     const [editNickName, setEditNickName] = React.useState(nickname);
     const onChangeNickName = event => {
         setEditNickName(event.target.value);
-        editMutation.mutate(editNickName);
     };
 
     // 자기소개
     const [editProfileMsg, setProfileMsg] = React.useState(profileMsg);
     const onChangeProfileMsg = event => {
         setProfileMsg(event.target.value);
-        editMutation.mutate(editProfileMsg);
     };
 
     // 탈퇴
@@ -149,10 +147,16 @@ function MypageEdit() {
                 formData.append('nickname', editNickName);
                 formData.append('profileMsg', editProfileMsg);
 
-                editMutation.mutate(formData);
-                Swal.fire('수정되었습니다.');
-                localStorage.setItem('nickName', editNickName);
-                localStorage.setItem('imgUrl', userImage);
+                editMutation.mutate(formData, {
+                    onSuccess: () => {
+                        Swal.fire('수정되었습니다.');
+                        localStorage.setItem('nickName', editNickName);
+                        localStorage.setItem('imgUrl', userImage);
+                    },
+                    onError: () => {
+                        Swal.fire('서버 오류입니다.');
+                    },
+                });
             }
         });
     };
@@ -200,7 +204,7 @@ function MypageEdit() {
                             <IconLayout>
                                 <EmojiEventsIcon />
                                 <Text>뱃지/업적</Text>
-                            </IconLayout>{' '}
+                            </IconLayout>
                             <MypageBadge badge={badge} />
                         </Card>
                     </>
@@ -235,16 +239,17 @@ function MypageEdit() {
                             <InputBox>
                                 <Input
                                     onChange={onChangeNickName}
-                                    placeholder="닉네임"
+                                    placeholder="닉네임 (10자 이내)"
                                     value={editNickName}
+                                    maxLength={10}
                                 />
                             </InputBox>
-
                             <ProfileMsgBox>
                                 <ProfileMsgInput
                                     onChange={onChangeProfileMsg}
-                                    placeholder="소개글"
+                                    placeholder="소개글 (50자 이내)"
                                     value={editProfileMsg}
+                                    maxLength={50}
                                 />
                             </ProfileMsgBox>
                         </InputContent>
