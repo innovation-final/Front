@@ -11,7 +11,7 @@ export const LoginLayout = styled.div`
     color: white;
     font-weight: bold;
     background-color: ${props => props.bgColor};
-
+    background-image: url(https://velog.velcdn.com/images/soonger3306/post/31c29f01-7303-4cf1-a4df-6000adc541ae/image.gif);
     .scroll {
         width: 2rem;
         position: absolute;
