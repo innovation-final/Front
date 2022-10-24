@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoginLayout } from './style';
 import GoogleButton from './GoogleButton';
 import KakaoButton from './KakaoButton';
+import LoginHeader from './LoginHeader';
 
 function MainPage(props) {
     const { id, bgColor } = props;
@@ -43,6 +44,7 @@ function MainPage(props) {
 
     return (
         <LoginLayout id={id} bgColor={bgColor}>
+            <LoginHeader />
             <DivContent>
                 <h1>
                     모의투자로 대비하는 <br />

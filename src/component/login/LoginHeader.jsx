@@ -22,7 +22,7 @@ function LoginHeader() {
                 >
                     <li>
                         <Link to="#main" className="menu-item">
-                            스톡스톡
+                            PC환경에서 사용을 권장합니다.
                         </Link>
                     </li>
                 </ul>
@@ -34,7 +34,7 @@ function LoginHeader() {
 export default LoginHeader;
 
 const Header = styled.header`
-    width: 256px;
+    width: 500px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -51,7 +51,7 @@ const Header = styled.header`
     }
 
     a {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         text-decoration: none;
         color: white;
     }
