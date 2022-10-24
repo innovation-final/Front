@@ -11,7 +11,7 @@ function Google() {
             try {
                 const res = await axios
                     .get(
-                        `https://hakjoonkim.shop/api/member/login/google?code=${code}`,
+                        `${process.env.REACT_APP_URL}member/login/google?code=${code}`,
                     )
                     .then(response => {
                         console.log('응답 확인', response);

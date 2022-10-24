@@ -11,7 +11,7 @@ function Kakao() {
             try {
                 const response = await axios
                     .get(
-                        `https://hakjoonkim.shop/api/member/login/kakao?code=${code}`,
+                        `${process.env.REACT_APP_URL}member/login/kakao?code=${code}`,
                     )
                     .then(res => {
                         const accessToken = res.headers.authorization;
