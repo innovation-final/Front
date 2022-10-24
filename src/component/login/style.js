@@ -11,7 +11,7 @@ export const LoginLayout = styled.div`
     color: white;
     font-weight: bold;
     background-color: ${props => props.bgColor};
-
+    background-image: url(https://velog.velcdn.com/images/soonger3306/post/1de5f374-5c53-41dc-bc40-9c89c55356ab/image.png);
     .scroll {
         width: 2rem;
         position: absolute;
@@ -63,7 +63,7 @@ export const DivButton = styled.div`
 
 export const GoogleBtn = styled.button`
     margin-left: 0.3rem;
-    width: 15rem !important;
+    width: 240px !important;
     background-color: white !important;
     border: none;
 
@@ -80,7 +80,7 @@ export const GoogleBtn = styled.button`
         margin-right: 1.6rem;
     }
     span {
-        margin: 0 0.6rem;
+        margin: 0 0.8rem;
         font-size: 18px;
     }
 `;

@@ -109,8 +109,8 @@ const StyleHeader = styled.div`
     position: relative;
     padding: 0.9rem;
     min-height: 2.2rem;
-    border: 3px dotted white;
-    border-radius: 15px;
+    /* border: 3px dotted white;
+    border-radius: 15px; */
     margin-bottom: 21px;
     visibility: ${props => (props.step ? 'visible' : 'hidden')};
 `;
@@ -118,9 +118,9 @@ const StyleHeader = styled.div`
 const StyleInfoContainer = styled.div`
     position: relative;
     width: 100%;
-    border: 3px dotted white;
+    /* border: 3px dotted white; */
     visibility: ${props => (props.step ? 'visible' : 'hidden')};
-    border-radius: 20px;
+    /* border-radius: 20px; */
     background-color: transparent;
     margin-bottom: 10px;
     min-height: 33rem;

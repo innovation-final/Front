@@ -60,14 +60,12 @@ function MypageEdit() {
     const [editNickName, setEditNickName] = React.useState(nickname);
     const onChangeNickName = event => {
         setEditNickName(event.target.value);
-        editMutation.mutate(editNickName);
     };
 
     // 자기소개
     const [editProfileMsg, setProfileMsg] = React.useState(profileMsg);
     const onChangeProfileMsg = event => {
         setProfileMsg(event.target.value);
-        editMutation.mutate(editProfileMsg);
     };
 
     // 탈퇴
