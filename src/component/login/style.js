@@ -63,7 +63,7 @@ export const DivButton = styled.div`
 
 export const GoogleBtn = styled.button`
     margin-left: 0.3rem;
-    width: 15rem !important;
+    width: 240px !important;
     background-color: white !important;
     border: none;
 
@@ -80,7 +80,7 @@ export const GoogleBtn = styled.button`
         margin-right: 1.6rem;
     }
     span {
-        margin: 0 0.6rem;
+        margin: 0 0.8rem;
         font-size: 18px;
     }
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { useQueryClient } from 'react-query';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 import SearchIcon from '@mui/icons-material/Search';
 import StockSearch from '../elements/StockSearch';
 import Button from '../elements/Button';
@@ -11,7 +11,7 @@ import currentStockCode from '../../atoms/investment/stockState';
 import useAccount from '../../hooks/useAccount';
 import { esUSNumberParser } from '../../util/parser';
 import tutorialState from '../../atoms/tutorial/tutorialState';
-import useWindowSize from '../../hooks/useWindowSize';
+// import useWindowSize from '../../hooks/useWindowSize';
 
 function InvestmentHeader() {
     const client = useQueryClient();
@@ -21,17 +21,17 @@ function InvestmentHeader() {
     const setCurrentState = useSetRecoilState(currentStockCode);
     const setTutorial = useSetRecoilState(tutorialState);
     const search = useRecoilValue(searchState);
-    const window = useWindowSize();
+    // const window = useWindowSize();
     const onClick = () => {
         if (!stocksData) return;
         const stockCode = stocksData?.find(stock => stock.name === search).code;
         setCurrentState(stockCode);
     };
     const onTutorial = () => {
-        if (window.width < 1919 || window.height < 930) {
-            Swal.fire('전체화면에서 실행해 주세요');
-            return;
-        }
+        // if (window.width < 1919 || window.height < 930) {
+        //     Swal.fire('전체화면에서 실행해 주세요');
+        //     return;
+        // }
         setTutorial(props => !props);
     };
 
