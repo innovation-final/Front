@@ -16,7 +16,7 @@ function MainPage(props) {
             try {
                 const res = await axios
                     .get(
-                        `https://hakjoonkim.shop/api/member/login/kakao?code=${code}`,
+                        `${process.env.REACT_APP_URL}member/login/kakao?code=${code}`,
                     )
                     .then(response => {
                         console.log('응답 확인', response);

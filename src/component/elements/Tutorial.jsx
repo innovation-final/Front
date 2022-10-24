@@ -36,7 +36,7 @@ function Tutorial() {
             <Wrapper isWide={isWide} window={window}>
                 <Exit onClick={() => exit()}>X</Exit>
                 <StyleContainer isWide={isWide}>
-                    <StyleHeader step={step === 0}>
+                    <StyleHeader $step={step === 0}>
                         <TutorialMessage>
                             이 창에서 주식 종목을 검색하고, 내 잔고와 수익률을
                             확인하세요.
@@ -44,14 +44,14 @@ function Tutorial() {
                     </StyleHeader>
                     <StyleWrapper>
                         <StyleLeftSide>
-                            <StyleInfoContainer step={step === 1}>
+                            <StyleInfoContainer $step={step === 1}>
                                 <TutorialMessage>
                                     현재 선택된 주식정보입니다. 모의투자
                                     진행시에 해당 창의 주식 정보로 진행됩니다.
                                 </TutorialMessage>
                             </StyleInfoContainer>
                             <StyleMyStock>
-                                <StyleMyStockLine step={step === 2}>
+                                <StyleMyStockLine $step={step === 2}>
                                     <TutorialMessage top>
                                         현재 가지고 있는 주식 잔고입니다.
                                     </TutorialMessage>
@@ -59,7 +59,7 @@ function Tutorial() {
                             </StyleMyStock>
                         </StyleLeftSide>
                         <StyledRightSide>
-                            <StyleTrade step={step === 3}>
+                            <StyleTrade $step={step === 3}>
                                 <TutorialMessage left>
                                     버튼을 눌러 투자를 진행하세요!
                                 </TutorialMessage>
@@ -132,18 +132,18 @@ const StyleHeader = styled.div`
     position: relative;
     padding: 0.9rem;
     min-height: 2.2rem;
-    /* border: 3px dotted white;
-    border-radius: 15px; */
+    border: 3px dotted white;
+    border-radius: 15px;
     margin-bottom: 21px;
-    visibility: ${props => (props.step ? 'visible' : 'hidden')};
+    visibility: ${props => (props.$step ? 'visible' : 'hidden')};
 `;
 
 const StyleInfoContainer = styled.div`
     position: relative;
     width: 100%;
-    /* border: 3px dotted white; */
-    visibility: ${props => (props.step ? 'visible' : 'hidden')};
-    /* border-radius: 20px; */
+    border: 3px dotted white;
+    visibility: ${props => (props.$step ? 'visible' : 'hidden')};
+    border-radius: 20px;
     background-color: transparent;
     margin-bottom: 10px;
     min-height: 33rem;
@@ -156,7 +156,7 @@ const StyleMyStockLine = styled.div`
     min-height: 260px;
     width: 100%;
     border: 3px dotted white;
-    visibility: ${props => (props.step ? 'visible' : 'hidden')};
+    visibility: ${props => (props.$step ? 'visible' : 'hidden')};
     border-radius: 15px;
 `;
 
@@ -164,7 +164,7 @@ const StyleTrade = styled.div`
     position: relative;
     border: 3px dotted white;
     width: 100%;
-    visibility: ${props => (props.step ? 'visible' : 'hidden')};
+    visibility: ${props => (props.$step ? 'visible' : 'hidden')};
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -184,7 +184,6 @@ const StyleWrapper = styled.div`
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(3, minmax(120px, 100%));
         gap: 20px;
-        /* background-color: rgba(0.3, 41, 3, 0.4); */
     }
 `;
 

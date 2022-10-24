@@ -14,7 +14,7 @@ export default function SSE(_id) {
     function connectSSE() {
         if (!listening) {
             eventSource.onopen = () => {
-                console.log('connection opened', '한번만 가는지 ');
+                console.log('connection opened');
             };
 
             eventSource.onmessage = event => {
@@ -43,7 +43,6 @@ export default function SSE(_id) {
 
     function getAlarmData() {
         const shiftData = alarmData.slice(1);
-        console.log(shiftData);
         if (shiftData.length === 0) return [];
         const newAlarmData = JSON.parse(shiftData.at(-1));
         return newAlarmData;
@@ -53,7 +52,6 @@ export default function SSE(_id) {
         fireNotificationWithTimeout('Stocks talk', 5000, {
             body: getAlarmData().message,
         });
-        console.log(getAlarmData().message, 'd');
     }
 
     return { connectSSE, pushAlarm, getAlarmData, disconnectSSE };

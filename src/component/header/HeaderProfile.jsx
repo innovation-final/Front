@@ -42,7 +42,7 @@ function HeaderProfile() {
     useEffect(() => {
         if (!listening) {
             const eventSource = new EventSource(
-                `https://hakjoonkim.shop/api/subscribe/${id}`,
+                `${process.env.REACT_APP_URL}subscribe/${id}`,
             );
 
             msetEventSource(eventSource);

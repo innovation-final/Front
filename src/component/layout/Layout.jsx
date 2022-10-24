@@ -88,6 +88,7 @@ const Main = styled(motion.div)`
     height: 90vh;
     box-sizing: border-box;
     z-index: 11;
+    margin: auto;
 `;
 
 Layout.propTypes = {

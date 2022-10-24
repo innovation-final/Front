@@ -7,7 +7,6 @@ function LoginHeader() {
         e.preventDefault();
         if (e.target.classList.contains('menu-item')) {
             const id = e.target.getAttribute('href').slice(6);
-            console.log(id);
             document.querySelector(id).scrollIntoView({
                 behavior: 'smooth',
             });

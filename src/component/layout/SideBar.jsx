@@ -27,37 +27,6 @@ function SideBar() {
     const logInFunction = () => {
         navigate('/');
     };
-    // const id = data && data.id;
-    // const alarm = sse(id);
-    // // eslint-disable-next-line no-unused-vars
-    // const [isPush, setPush] = useRecoilState(isPushSelector);
-    // const [pushStatus, setPushStatus] = useState(false);
-    // // eslint-disable-next-line no-unused-vars
-    // const [alarmData, setAlarmData] = useState(alarm.getAlarmData());
-
-    // const onChangeToggle = e => {
-    //     console.log(e.target.checked);
-    //     setPushStatus(!pushStatus); // toggle 기능
-
-    //     if (e.target.checked) {
-    //         // checked시 알람 발송(기본값)
-    //         alarm.connectSSE();
-    //         alert('푸쉬 알람 설정이 저장되었습니다.');
-    //         localStorage.setItem('pushAlarm', 'push');
-    //     } else {
-    //         // unchecked시 알람 미발송
-    //         alert('푸쉬 알람 미발송 처리 되었습니다.');
-    //         localStorage.setItem('pushAlarm', 'noPush');
-    //         alarm.disconnectSSE();
-    //     }
-    //     setPush();
-    // };
-
-    // useEffect(() => {
-    //     if (alarm.getAlarmData() === []) return;
-    //     if (!pushStatus) return;
-    //     alarm.pushAlarm();
-    // }, [alarm.getAlarmData]);
 
     const menuItems = [
         {
