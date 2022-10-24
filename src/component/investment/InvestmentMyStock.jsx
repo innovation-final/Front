@@ -7,7 +7,7 @@ import useStocksAccount from '../../hooks/useStocksAccount';
 
 function InvestmentMyStock() {
     const { data } = useStocksAccount();
-
+    console.log(data);
     return (
         <Wrapper>
             <IconLayout>

@@ -26,16 +26,6 @@ function LoginHeader() {
                             스톡스톡
                         </Link>
                     </li>
-                    <li>
-                        <Link to="#developer" className="menu-item">
-                            만든 사람들
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="#introduce" className="menu-item">
-                            프로젝트 소개
-                        </Link>
-                    </li>
                 </ul>
             </nav>
         </Header>
