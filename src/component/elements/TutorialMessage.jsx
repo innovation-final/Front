@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function TutorialMessage({ children, left }) {
+function TutorialMessage({ children, left, top }) {
     return (
-        <Wrapper left={left}>
+        <Wrapper left={left} top={top}>
             <Message>{children}</Message>
         </Wrapper>
     );
@@ -15,6 +15,7 @@ const Wrapper = styled.div`
     position: absolute;
     left: ${props => (props.left ? '-230px' : '-120px')};
     bottom: ${props => (props.left ? '30px' : '-100px')};
+    top: ${props => (props.top ? '-80px' : '60px')};
     padding: 10px;
     height: 50px;
     border-radius: 15px;

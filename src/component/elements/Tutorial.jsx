@@ -52,7 +52,7 @@ function Tutorial() {
                             </StyleInfoContainer>
                             <StyleMyStock>
                                 <StyleMyStockLine step={step === 2}>
-                                    <TutorialMessage left>
+                                    <TutorialMessage top>
                                         현재 가지고 있는 주식 잔고입니다.
                                     </TutorialMessage>
                                 </StyleMyStockLine>
