@@ -22,6 +22,12 @@ function InterestMain() {
     const onClick = code => {
         setParam(code);
     };
+    // eslint-disable-next-line no-unused-vars
+    const [nowColorNum, setNowColorNum] = useState();
+    const colorChange = index => {
+        setNowColorNum(index);
+    };
+    console.log(nowColorNum);
 
     return (
         <CardLayout>
@@ -32,13 +38,32 @@ function InterestMain() {
                         <Text>관심 등록한 주식 리스트</Text>
                     </IconLayout>
                     {interestStock &&
-                        interestStock.map(interestStocks => (
-                            <InterestStockList
-                                key={interestStocks.name}
-                                _onClick={() => onClick(interestStocks.code)}
-                                interestStocks={interestStocks}
-                            />
-                        ))}
+                        interestStock.map((interestStocks, index) => {
+                            return index === nowColorNum ? (
+                                <InterestStockList
+                                    key={interestStocks.name}
+                                    _onClick={() =>
+                                        onClick(interestStocks.code)
+                                    }
+                                    interestStocks={interestStocks}
+                                    className="checked"
+                                    indexNum={index}
+                                    nowColorNum={nowColorNum}
+                                    colorChange={colorChange}
+                                />
+                            ) : (
+                                <InterestStockList
+                                    key={interestStocks.name}
+                                    _onClick={() =>
+                                        onClick(interestStocks.code)
+                                    }
+                                    interestStocks={interestStocks}
+                                    indexNum={index}
+                                    nowColorNum={nowColorNum}
+                                    colorChange={colorChange}
+                                />
+                            );
+                        })}
                     {/* <Button>
                         <EditCogBtn />
                     </Button> */}

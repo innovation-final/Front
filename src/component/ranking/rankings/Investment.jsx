@@ -10,39 +10,64 @@ function Investment({ ranks }) {
                     if (index + 1 === 1) {
                         return (
                             <StyleTableName key={rank.nickname} ranking={rank}>
-                                <RankText>🥇 {index + 1}등</RankText>
-                                <Profile src={rank.profileImg} />
-                                <NickNameText>{rank.nickname}</NickNameText>
-                                <Text>{rank.returnRate * 100}</Text>
+                                <TextLayout>🥇 {index + 1}등</TextLayout>
+
+                                <TextLayout>
+                                    <NickNameText>
+                                        <Profile src={rank.profileImg} />
+                                        {rank.nickname}
+                                    </NickNameText>
+                                </TextLayout>
+                                <TextLayout>
+                                    {(rank.returnRate * 100).toFixed(3)}%
+                                </TextLayout>
                             </StyleTableName>
                         );
                     }
                     if (index + 1 === 2) {
                         return (
                             <StyleTableName key={rank.nickname} ranking={rank}>
-                                <RankText>🥈 {index + 1}등</RankText>
-                                <Profile src={rank.profileImg} />
-                                <NickNameText>{rank.nickname}</NickNameText>
-                                <Text>{rank.returnRate * 100}</Text>
+                                <TextLayout>🥈 {index + 1}등</TextLayout>
+                                <TextLayout>
+                                    <NickNameText>
+                                        <Profile src={rank.profileImg} />
+                                        {rank.nickname}
+                                    </NickNameText>
+                                </TextLayout>
+                                <TextLayout>
+                                    {(rank.returnRate * 100).toFixed(3)}%
+                                </TextLayout>
                             </StyleTableName>
                         );
                     }
                     if (index + 1 === 3) {
                         return (
                             <StyleTableName key={rank.nickname} ranking={rank}>
-                                <RankText>🥉 {index + 1}등</RankText>
-                                <Profile src={rank.profileImg} />
-                                <NickNameText>{rank.nickname}</NickNameText>
-                                <Text>{rank.returnRate * 100}</Text>
+                                <TextLayout>🥉 {index + 1}등</TextLayout>
+                                <TextLayout>
+                                    <NickNameText>
+                                        <Profile src={rank.profileImg} />
+                                        {rank.nickname}
+                                    </NickNameText>
+                                </TextLayout>
+                                <TextLayout>
+                                    {(rank.returnRate * 100).toFixed(3)}%
+                                </TextLayout>
                             </StyleTableName>
                         );
                     }
                     return (
                         <StyleTableName key={rank.nickname} ranking={rank}>
-                            <RankText>{index + 1}등</RankText>
-                            <Profile src={rank.profileImg} />
-                            <NickNameText>{rank.nickname}</NickNameText>
-                            <Text>{rank.returnRate * 100}</Text>
+                            <TextLayout>{index + 1}등</TextLayout>
+                            <TextLayout>
+                                <NickNameText>
+                                    <Profile src={rank.profileImg} />
+                                    {rank.nickname}
+                                </NickNameText>
+                            </TextLayout>
+                            <TextLayout>
+                                {(rank.returnRate * 100).toFixed(3)}%
+                            </TextLayout>
                         </StyleTableName>
                     );
                 })}
@@ -52,33 +77,21 @@ function Investment({ ranks }) {
 
 export default Investment;
 
-const RankText = styled.p`
+const NickNameText = styled.div`
     font-weight: bold;
-    width: 30%;
+    margin-right: 40px;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin: 10px 10px 10px 5px;
-
-    color: ${props => props.theme.textColor};
-`;
-const Text = styled.p`
-    font-weight: bold;
-    width: 31%;
-    text-align: center;
-    margin: 17px;
-    color: ${props => props.theme.textColor};
-`;
-const NickNameText = styled.p`
-    font-weight: bold;
-    width: 31%;
-    text-align: center;
-    margin: 17px;
-
+    white-space: nowrap;
+    display: flex;
     color: ${props => props.theme.textColor};
 `;
 const Profile = styled.img`
     width: 30px;
     height: 30px;
-    margin-left: 45px;
+    margin-left: 25px;
+    margin-right: 10px;
     border-radius: 50%;
 `;
 
@@ -89,4 +102,15 @@ const StyleTableName = styled.div`
     border-radius: 15px;
     margin-bottom: 10px;
     padding: 10px;
+`;
+const TextLayout = styled.p`
+    font-weight: bold;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    color: ${props => props.theme.textColor};
 `;

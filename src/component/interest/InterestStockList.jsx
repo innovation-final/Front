@@ -3,8 +3,15 @@ import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import FavoritesIcon from '../elements/FavoritesIcon';
 import { stockAPI } from '../../shared/api';
+// import { lightTheme, darkTheme } from '../../theme/ThemeColor';
 
-function InterestStockList({ interestStocks, _onClick }) {
+function InterestStockList({
+    interestStocks,
+    _onClick,
+    indexNum,
+    colorChange,
+    nowColorNum,
+}) {
     const { current, name, doneInterest, code } = interestStocks;
 
     // 관심종목 등록
@@ -22,7 +29,6 @@ function InterestStockList({ interestStocks, _onClick }) {
             queryClient.invalidateQueries();
         },
     });
-    // const [color, setColor] = useState('red');
 
     const dislikeHandler = e => {
         e.preventDefault();
@@ -30,14 +36,25 @@ function InterestStockList({ interestStocks, _onClick }) {
 
         dislikemutation.mutate(code);
     };
-    // const onClick = () => {
-    //     color === 'red' ? setColor('yellow') : setColor('red');
-    // };
-
-    console.log(interestStocks);
 
     return (
-        <CardContent onClick={_onClick}>
+        <CardContent
+            onClick={() => {
+                _onClick();
+                colorChange(indexNum);
+            }}
+            style={
+                indexNum === nowColorNum
+                    ? {
+                          backgroundColor: `${
+                              localStorage.getItem('app_theme') === 'lightMode'
+                                  ? '#cef3ff'
+                                  : '#E27D56'
+                          }`,
+                      }
+                    : null
+            }
+        >
             <InterestTitle>{name}</InterestTitle>
             <InterestContent>{current.open}</InterestContent>
             <InterestContent>
@@ -58,15 +75,10 @@ const CardContent = styled.div`
     display: flex;
     height: 61px;
     cursor: pointer;
+
     &:hover {
         border: 2px solid ${props => props.theme.hoverBorderColor};
         background-color: ${props => props.theme.hoverColor};
-    }
-    &:checked {
-        background-color: ${props => props.theme.hoverColor};
-    }
-    .clicked {
-        color: gold;
     }
 `;
 const InterestTitle = styled.div`
