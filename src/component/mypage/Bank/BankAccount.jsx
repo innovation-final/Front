@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import useAccount from '../../../hooks/useAccount';
 import BankSpinner from './BankSpinner';
-// import './firework.css';
 
 function BankAccount() {
     const { data } = useAccount();
-    console.log(data);
+
     if (!data) return <BankSpinner />;
 
     const accountNumber =
@@ -25,53 +24,6 @@ function BankAccount() {
     const totalRealizedProfit =
         data && data.totalRealizedProfit.toLocaleString();
 
-    // const particles = [];
-    // const colors = ['#eb6383', '#fa9191', '#ffe9c5', '#b4f2e1'];
-    // function pop() {
-    //     for (let i = 0; i < 150; i += 1) {
-    //         const p = document.createElement('particule');
-    //         p.x = window.innerWidth * 0.5;
-    //         p.y = window.innerHeight + Math.random() * window.innerHeight * 0.3;
-    //         p.vel = {
-    //             x: (Math.random() - 0.5) * 10,
-    //             y: Math.random() * -20 - 15,
-    //         };
-    //         p.mass = Math.random() * 0.2 + 0.8;
-    //         particles.push(p);
-    //         p.style.transform = `translate(${p.x}px, ${p.y}px)`;
-    //         const size = Math.random() * 15 + 5;
-    //         p.style.width = `${size}px`;
-    //         p.style.height = `${size}px`;
-    //         p.style.background =
-    //             colors[Math.floor(Math.random() * colors.length)];
-    //         document.body.appendChild(p);
-    //     }
-    // }
-
-    // function render() {
-    //     for (let i = particles.length - 1; i > -1; i -= 1) {
-    //         const p = particles[i];
-    //         p.style.transform = `translate3d(${p.x}px, ${p.y}px, 1px)`;
-
-    //         p.x += p.vel.x;
-    //         p.y += p.vel.y;
-
-    //         p.vel.y += 0.5 * p.mass;
-    //         if (p.y > window.innerHeight * 2) {
-    //             p.remove();
-    //             particles.splice(i, 1);
-    //         }
-    //     }
-    //     requestAnimationFrame(render);
-    // }
-
-    // //
-    // // window.addEventListener('click', pop);
-
-    // useEffect(() => {
-    //     pop();
-    //     window.setTimeout(render, 700);
-    // }, []);
     return (
         <ContentLayout>
             <TextLayout>
@@ -106,19 +58,25 @@ function BankAccount() {
                 <Text gutterBottom variant="h5" component="div">
                     현재 수익률
                 </Text>
-                <Content>{totalReturnRate}%</Content>
+                <StockContent isMinus={totalReturnRate < 0}>
+                    {totalReturnRate}%
+                </StockContent>
             </TextLayout>
             <TextLayout>
                 <Text gutterBottom variant="h5" component="div">
                     평가손익
                 </Text>
-                <Content>{totalProfit}원</Content>
+                <StockContent isMinus={totalProfit < 0}>
+                    {totalProfit}원
+                </StockContent>
             </TextLayout>
             <TextLayout>
                 <Text gutterBottom variant="h5" component="div">
                     실현손익
                 </Text>
-                <Content>{totalRealizedProfit}원</Content>
+                <StockContent isMinus={totalRealizedProfit < 0}>
+                    {totalRealizedProfit}원
+                </StockContent>
             </TextLayout>
         </ContentLayout>
     );
@@ -138,7 +96,7 @@ const TextLayout = styled.div`
 `;
 const Text = styled.p`
     font-weight: bold;
-    font-size: 2vmin;
+    font-size: 1.5vmin;
     overflow: hidden; // 을 사용해 영역을 감출 것
     text-overflow: ellipsis; // 로 ... 을 만들기
     white-space: nowrap;
@@ -159,10 +117,21 @@ const Content = styled.p`
     font-weight: bold;
     margin-left: 20px;
     width: 400px;
-    font-size: 2vmin;
+    font-size: 1.5vmin;
     line-height: 2vmin;
     color: ${props => props.theme.textColor};
     display: flex;
     flex-direction: row;
     padding: 5px;
+`;
+const StockContent = styled.p`
+    font-weight: bold;
+    margin-left: 20px;
+    width: 400px;
+    font-size: 1.5vmin;
+    line-height: 2vmin;
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    color: ${props => (props.isMinus ? '#2980b9' : '#e74c3c')};
 `;
