@@ -170,7 +170,7 @@ function MypageEdit() {
                     <>
                         <Button onClick={onClickSetEdit}>
                             <EditCogBtn src={editcog} />
-                        </Button>
+                        </Button>{' '}
                         <ImgCard>
                             <CardMedia src={profileImg} />
                         </ImgCard>
@@ -196,11 +196,6 @@ function MypageEdit() {
                                     {profileMsg}
                                 </Typography>
                             </ContentLayout>
-                            <WithdrawLayout>
-                                <WithdrawButton onClick={onDelete}>
-                                    회원탈퇴
-                                </WithdrawButton>
-                            </WithdrawLayout>
                         </CardContent>
                         <Card>
                             <IconLayout>
@@ -212,7 +207,9 @@ function MypageEdit() {
                     </>
                 ) : (
                     <>
-                        <EditButton onClick={onClickEdit}>수정완료</EditButton>
+                        <EditLayout onClick={onClickEdit}>
+                            <EditButton>수정완료</EditButton>
+                        </EditLayout>
                         <ImgCard>
                             {profileImg && (
                                 <CardMedia
@@ -253,8 +250,13 @@ function MypageEdit() {
                                     value={editProfileMsg || ''}
                                     maxLength={50}
                                 />
-                            </ProfileMsgBox>
-                        </InputContent>
+                            </ProfileMsgBox>{' '}
+                        </InputContent>{' '}
+                        <WithdrawLayout>
+                            <WithdrawButton onClick={onDelete}>
+                                회원탈퇴
+                            </WithdrawButton>
+                        </WithdrawLayout>
                     </>
                 )}{' '}
             </ProfileCard>
@@ -314,18 +316,24 @@ const Button = styled.button`
     right: 2px;
     top: 5px;
 `;
-const EditButton = styled.button`
-    background-color: transparent;
-    border: 0;
+const EditLayout = styled.div`
+    margin-top: 10px;
+    position: absolute;
+    z-index: 15;
+    top: 7px;
+    right: 0;
+`;
+const EditButton = styled.span`
     margin: 10px;
-    border-radius: 500px;
+    border-radius: 200px;
     color: ${props => props.theme.textColor};
     background-color: ${props => props.theme.buttonColor};
     cursor: pointer;
     font-weight: bold;
-    position: absolute;
+    font-size: 15px;
+    padding: 10px;
     right: 2px;
-    top: 5px;
+    top: 50px;
 `;
 const InputContent = styled.div`
     padding: 60px;
@@ -336,18 +344,21 @@ const ContentLayout = styled.div`
     height: 100px;
 `;
 const WithdrawLayout = styled.div`
-    width: 20%;
-    margin-top: 15px;
+    margin-top: 5px;
+    position: absolute;
+    right: 16%;
+    bottom: 10%;
 `;
 const WithdrawButton = styled.button`
     background-color: transparent;
     border: 1px solid #e64343;
     border-radius: 5px;
+    font-size: 10px;
     color: ${props => props.theme.withDrawTextColor};
     cursor: pointer;
-    padding: 10px;
+    padding: 5px;
     background-color: rgba(254, 112, 112, 0.13);
-    width: 80px;
+    width: 60px;
     position: absolute;
     &:hover {
         background-color: #ff5858;
