@@ -31,7 +31,7 @@ function BankAccount() {
                     계좌
                 </Text>
                 <Content> {accountNumber}</Content>
-            </TextLayout>{' '}
+            </TextLayout>
             <TextLayout>
                 <Text gutterBottom variant="h5" component="div">
                     계좌 만기일

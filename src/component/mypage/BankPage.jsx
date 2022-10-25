@@ -114,7 +114,7 @@ function BankPage() {
                             value="account"
                             current={page === 'account'}
                         >
-                            개설완료
+                            개설하기
                         </OpenButton>
                     </ButtonLayout>
                 )}

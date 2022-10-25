@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { useQueryClient } from 'react-query';
+import Swal from 'sweetalert2';
 import SearchIcon from '@mui/icons-material/Search';
 import StockSearch from '../elements/StockSearch';
 import Button from '../elements/Button';
@@ -16,13 +17,19 @@ function InvestmentHeader() {
     const client = useQueryClient();
     const stocksQuery = client.getQueryData('stockSearch');
     const myAccount = useAccount();
-    const stocksData = stocksQuery?.data.data;
+    const stocksData = stocksQuery?.data?.data;
+    const stocksNames = stocksData?.map(stocks => {
+        return stocks.name;
+    });
     const setCurrentState = useSetRecoilState(currentStockCode);
     const setTutorial = useSetRecoilState(tutorialState);
     const setIsWide = useSetRecoilState(wideState);
     const search = useRecoilValue(searchState);
     const onClick = () => {
-        if (!stocksData) return;
+        if (!stocksData || !stocksNames.includes(search)) {
+            Swal.fire('종목명을 정확히 적어주세요.');
+            return;
+        }
         const stockCode = stocksData?.find(stock => stock.name === search).code;
         setCurrentState(stockCode);
     };
