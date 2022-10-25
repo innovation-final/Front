@@ -7,7 +7,6 @@ import MyPageBage from '../investment/MyStocks';
 function MyInvestment() {
     return (
         <div>
-            {' '}
             <IconLayout>
                 <PaidIcon />
                 <Text>모의투자 수익률</Text>

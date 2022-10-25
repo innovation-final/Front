@@ -29,15 +29,17 @@ function MypageEdit() {
         imageInput.current.click();
         const reader = new FileReader();
         const file = e.target.files && e.target.files[0];
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            if (file.size > 0.5 * 1024 * 1024) {
-                Swal.fire('파일 사이즈가 1mb를 넘습니다');
-                return;
-            }
-            const resultImage = reader.result;
-            setUserImage(resultImage);
-        };
+        if (file) {
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                if (file.size > 0.5 * 1024 * 1024) {
+                    Swal.fire('파일 사이즈가 1mb를 넘습니다');
+                    return;
+                }
+                const resultImage = reader.result;
+                setUserImage(resultImage);
+            };
+        }
 
         if (e.target.files) {
             const uploadFile = e.target.files[0];
@@ -225,10 +227,10 @@ function MypageEdit() {
                                     onChange={onChangeImg}
                                 />
                                 <CogButton onClick={onChangeImg}>
-                                    <CogBtn src={editcog} />{' '}
-                                </CogButton>{' '}
+                                    <CogBtn src={editcog} />
+                                </CogButton>
                             </CogLayout>
-                        </ImgCard>{' '}
+                        </ImgCard>
                         <CogText>
                             1mb이하 파일 사이즈만 사진변경 가능합니다
                         </CogText>
@@ -245,7 +247,7 @@ function MypageEdit() {
                                 <ProfileMsgInput
                                     onChange={onChangeProfileMsg}
                                     placeholder="소개글 (50자 이내)"
-                                    value={editProfileMsg}
+                                    value={editProfileMsg || ''}
                                     maxLength={50}
                                 />
                             </ProfileMsgBox>{' '}

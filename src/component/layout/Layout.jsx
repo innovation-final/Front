@@ -45,7 +45,7 @@ function Layout({ children, sidebar = true, header = true }) {
             {sidebar && menuRender()}
             <Main
                 $wide={wide}
-                ispc={isPC}
+                $ispc={isPC}
                 initial={
                     isPC
                         ? { opacity: 0, x: wide ? 260 : 50, y: 57 }
@@ -79,7 +79,7 @@ const StyleLayout = styled.div`
 `;
 
 const Main = styled(motion.div)`
-    ${props => (props.ispc ? responsive.pc : responsive.phone)};
+    ${props => (props.$ispc ? responsive.pc : responsive.phone)};
     position: relative;
     display: flex;
     flex-direction: column;

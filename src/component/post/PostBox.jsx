@@ -146,6 +146,7 @@ function PostBox() {
                             onClick={() => {
                                 navigate('/community');
                             }}
+                            fontSize="large"
                         />
                     </ClearButton>
                 </ButtonBox>
@@ -319,11 +320,10 @@ const JoinBtn2 = styled.div`
 
 const ButtonBox = styled.div`
     float: right;
-
     display: flex;
 `;
 const ClearButton = styled.div`
-    color: #c7c7c7;
+    color: ${props => props.theme.textColor};
     &:hover {
         color: #a3a1a1;
     }

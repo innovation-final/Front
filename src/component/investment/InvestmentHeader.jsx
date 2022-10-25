@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { useQueryClient } from 'react-query';
+import Swal from 'sweetalert2';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import StockSearch from '../elements/StockSearch';
@@ -19,13 +20,19 @@ function InvestmentHeader() {
     const client = useQueryClient();
     const stocksQuery = client.getQueryData('stockSearch');
     const myAccount = useAccount();
-    const stocksData = stocksQuery?.data.data;
+    const stocksData = stocksQuery?.data?.data;
+    const stocksNames = stocksData?.map(stocks => {
+        return stocks.name;
+    });
     const setCurrentState = useSetRecoilState(currentStockCode);
     const setTutorial = useSetRecoilState(tutorialState);
     const setIsWide = useSetRecoilState(wideState);
     const search = useRecoilValue(searchState);
     const onClick = () => {
-        if (!stocksData) return;
+        if (!stocksData || !stocksNames.includes(search)) {
+            Swal.fire('종목명을 정확히 적어주세요.');
+            return;
+        }
         const stockCode = stocksData?.find(stock => stock.name === search).code;
         setCurrentState(stockCode);
     };
@@ -47,6 +54,7 @@ function InvestmentHeader() {
                     <TutorialButton onClick={() => onTutorial()}>
                         ?
                     </TutorialButton>
+                    <TimeInfo>스톡스톡 장시간 (09:00~21:00)</TimeInfo>
                 </SearchBox>
                 <MyInfo>
                     {!myAccount.data?.balance ? (
@@ -120,7 +128,7 @@ const SearchBox = styled.div`
     @media screen and (min-width: 1400px) {
         display: flex;
         align-items: center;
-        width: 40%;
+        width: 80%;
     }
 `;
 
@@ -143,8 +151,8 @@ const MyInfo = styled.div`
 `;
 const MyInfoContainer = styled.div`
     display: flex;
-    margin-left: 45%;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     width: 100%;
 
     @media screen and (min-width: 1400px) {
@@ -152,6 +160,7 @@ const MyInfoContainer = styled.div`
         align-items: center;
         justify-content: space-around;
         width: 50%;
+        white-space: nowrap;
     }
 `;
 
@@ -220,4 +229,10 @@ const TutorialButton = styled.div`
         background-color: ${props => props.theme.buttonColor};
         cursor: pointer;
     }
+`;
+
+const TimeInfo = styled.div`
+    margin-left: 10px;
+    font-weight: 600;
+    font-size: 12px;
 `;
