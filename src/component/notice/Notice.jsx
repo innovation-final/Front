@@ -96,6 +96,7 @@ const Container = styled.div`
     width: 400px;
     height: 300px;
     position: fixed;
+    background-color: ${props => props.theme.bgColor};
     left: 63%;
     margin-top: 30px;
     transform: translate(50%, 5%);
