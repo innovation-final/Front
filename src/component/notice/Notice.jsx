@@ -99,7 +99,6 @@ const Container = styled.div`
     left: 63%;
     margin-top: 30px;
     transform: translate(50%, 5%);
-    background-color: #ffffff;
     border: 2px solid ${props => props.theme.borderColor};
     border-radius: 8px;
     z-index: 30;
