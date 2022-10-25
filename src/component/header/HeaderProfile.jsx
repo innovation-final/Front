@@ -9,7 +9,7 @@ import useGetUser from '../../hooks/useGetUser';
 import { userState } from '../../atoms/user/userState';
 import Notice from '../notice/Notice';
 import usePushNotification from '../../hooks/usePushNotification ';
-import { alarmState, listeningState } from '../../atoms/alarms/alarmState';
+import { alarmState } from '../../atoms/alarms/alarmState';
 
 function HeaderProfile({ visible }) {
     const client = useQueryClient();
@@ -30,7 +30,7 @@ function HeaderProfile({ visible }) {
         }
     }, [isLoading]);
 
-    const [listening, setListening] = useRecoilState(listeningState);
+    const [listening, setListening] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [alarmData, setAlarmData] = useState([]);
     // eslint-disable-next-line no-unused-vars
