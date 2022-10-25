@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const LoginLayout = styled.div`
+    position: relative;
     font-family: 'Roboto';
     width: 100vw;
     height: 100vh;
@@ -63,8 +64,8 @@ export const DivButton = styled.div`
 `;
 
 export const GoogleBtn = styled.button`
-    margin-left: 0.3rem;
-    width: 240px !important;
+    margin-left: 0.45rem;
+    width: 237px !important;
     background-color: white !important;
     border: none;
 
@@ -72,7 +73,7 @@ export const GoogleBtn = styled.button`
     align-items: center;
 
     border-radius: 0.5rem;
-    height: 3.5rem;
+    height: 4rem;
     img {
         width: 1.5rem !important;
         object-fit: contain;

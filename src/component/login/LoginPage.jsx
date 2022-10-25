@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { LoginLayout } from './style';
+import Egg from '../../static/egg.png';
 import GoogleButton from './GoogleButton';
 import KakaoButton from './KakaoButton';
 import LoginHeader from './LoginHeader';
@@ -54,6 +55,10 @@ function MainPage(props) {
                 <KakaoButton />
                 <GoogleButton />
             </DivContent>
+            <EasterEgg
+                src={Egg}
+                onClick={() => window.open('https://ever-rent.vercel.app/')}
+            />
         </LoginLayout>
     );
 }
@@ -78,6 +83,19 @@ const DivContent = styled.div`
 
     @media screen and (max-width: 1023px) {
         margin: 0 auto;
+    }
+`;
+
+const EasterEgg = styled.img`
+    position: absolute;
+    width: 140px;
+    height: 40px;
+    right: 410px;
+    bottom: 500px;
+    opacity: 0;
+    cursor: pointer;
+    &:hover {
+        opacity: 1;
     }
 `;
 
