@@ -92,6 +92,14 @@ function ChartCandleStick({ name, width, code, height }) {
                             noData: {
                                 text: 'Loading..',
                             },
+                            plotOptions: {
+                                candlestick: {
+                                    colors: {
+                                        downward: '#4c5fca',
+                                        upward: '#EF403C',
+                                    },
+                                },
+                            },
                         }}
                         width={width}
                         height={height}
