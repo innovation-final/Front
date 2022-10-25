@@ -151,8 +151,8 @@ const MyInfo = styled.div`
 `;
 const MyInfoContainer = styled.div`
     display: flex;
-    margin-left: 45%;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     width: 100%;
 
     @media screen and (min-width: 1400px) {
@@ -160,6 +160,7 @@ const MyInfoContainer = styled.div`
         align-items: center;
         justify-content: space-around;
         width: 50%;
+        white-space: nowrap;
     }
 `;
 
