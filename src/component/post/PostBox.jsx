@@ -18,8 +18,17 @@ import { userState } from '../../atoms/user/userState';
 
 function PostBox() {
     const { id } = useParams();
-    const { data, isLoading } = useQuery(['post', id], () =>
-        postAPI.getPost(id),
+    const { data, isLoading } = useQuery(
+        ['post', id],
+        () => postAPI.getPost(id),
+        {
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            refetchIntervalInBackground: false,
+            staleTime: Infinity,
+            cacheTime: Infinity,
+            enabled: Boolean(id),
+        },
     );
     const member = useRecoilValue(userState);
 
@@ -146,7 +155,7 @@ function PostBox() {
                     <StockName>{postInfo.stockName}</StockName>
 
                     <PostInfoBox>
-                        <ViewCount>조회 수 : 0</ViewCount>
+                        <ViewCount>조회 수 : {postInfo.views}</ViewCount>
                         <CommentCount>
                             댓글: {postInfo.comments.length}
                         </CommentCount>

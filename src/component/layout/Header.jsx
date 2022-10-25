@@ -8,7 +8,7 @@ function Header() {
         <StyleHeader>
             <Wrapper>
                 <HeaderOverview />
-                <HeaderProfile />
+                <HeaderProfile visible />
             </Wrapper>
         </StyleHeader>
     );

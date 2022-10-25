@@ -37,4 +37,5 @@ const TableList = styled.ul`
 const TableContent = styled.li`
     text-align: center;
     width: 100%;
+    white-space: nowrap;
 `;

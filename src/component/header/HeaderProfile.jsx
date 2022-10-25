@@ -10,7 +10,7 @@ import Notice from '../notice/Notice';
 import usePushNotification from '../../hooks/usePushNotification ';
 import alarmState from '../../atoms/alarms/alarmState';
 
-function HeaderProfile() {
+function HeaderProfile({ visible }) {
     const { fireNotificationWithTimeout } = usePushNotification();
     const navigate = useNavigate();
     const { data, isLoading } = useGetUser();
@@ -100,7 +100,7 @@ function HeaderProfile() {
     };
 
     return (
-        <StyleProfile>
+        <StyleProfile visible={visible}>
             <ImageBox>
                 <ProfileImage
                     onClick={() => {
@@ -132,6 +132,8 @@ const StyleProfile = styled.div`
     flex-direction: row;
     margin-right: 30px;
     padding: 5px;
+
+    display: ${props => (props.visible ? 'auto' : 'none')};
 `;
 
 const ImageBox = styled.div`
