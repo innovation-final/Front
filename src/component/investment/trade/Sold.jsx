@@ -81,15 +81,21 @@ function Sold() {
                                 error.response.data.error.code === 'ORDER_FAIL'
                             ) {
                                 Swal.fire('주문 수량을 확인해주세요.');
-                                setQuantity(0);
-                                setPrice(0);
-                                setIsMarket(false);
+                            }
+                            if (
+                                error.response.data.error.code ===
+                                'OUT_OF_MARKET_HOUR'
+                            ) {
+                                Swal.fire('장마감 입니다.');
                             } else {
                                 Swal.fire('서버 오류입니다.');
                             }
                         },
                         onSuccess: () => {
                             Swal.fire('매도하였습니다.');
+                        },
+
+                        onSettled: () => {
                             setQuantity(0);
                             setPrice(0);
                             setIsMarket(false);

@@ -19,7 +19,7 @@ const responsive = {
     phone: css`
         transform: translate(0px, 57px);
         flex-direction: column;
-        width: 100%;
+        min-width: 100%;
         padding: 10px;
     `,
 };
@@ -45,7 +45,7 @@ function Layout({ children, sidebar = true, header = true }) {
             {sidebar && menuRender()}
             <Main
                 $wide={wide}
-                ispc={isPC.toString()}
+                ispc={isPC}
                 initial={
                     isPC
                         ? { opacity: 0, x: wide ? 260 : 50, y: 57 }

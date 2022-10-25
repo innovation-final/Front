@@ -15,8 +15,12 @@ import { postAPI } from '../shared/api';
 
 function PostDetail() {
     const { id } = useParams();
-    const { data, isLoading, isError } = useQuery(['post', id], () =>
-        postAPI.getPost(id),
+    const { data, isLoading, isError } = useQuery(
+        ['post', id],
+        () => postAPI.getPost(id),
+        {
+            refetchOnWindowFocus: false,
+        },
     );
     const info = data?.data.data;
 

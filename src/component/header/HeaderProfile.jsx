@@ -11,7 +11,7 @@ import Notice from '../notice/Notice';
 import usePushNotification from '../../hooks/usePushNotification ';
 import { alarmState, listeningState } from '../../atoms/alarms/alarmState';
 
-function HeaderProfile() {
+function HeaderProfile({ visible }) {
     const client = useQueryClient();
     const noticeData = client.getQueryData(['alarmNotice'])?.data.data;
 
@@ -109,7 +109,7 @@ function HeaderProfile() {
     };
 
     return (
-        <StyleProfile>
+        <StyleProfile visible={visible}>
             <ImageBox>
                 <ProfileImage
                     onClick={() => {
@@ -141,6 +141,8 @@ const StyleProfile = styled.div`
     flex-direction: row;
     margin-right: 30px;
     padding: 5px;
+
+    display: ${props => (props.visible ? 'auto' : 'none')};
 `;
 
 const ImageBox = styled.div`

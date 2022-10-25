@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import MenuIcon from '@mui/icons-material/Menu';
 import Logo from '../elements/Logo';
 import { wideState } from '../../atoms/common/commonState';
+import HeaderProfile from '../header/HeaderProfile';
 
 function MobileMenuHeader() {
     const [wide, setWide] = useRecoilState(wideState);
@@ -16,6 +17,7 @@ function MobileMenuHeader() {
             <LogoBox $wide={wide}>
                 <Logo />
             </LogoBox>
+            <HeaderProfile visible={false} />
         </StyleHeader>
     );
 }

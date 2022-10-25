@@ -16,6 +16,12 @@ function BoardWrite({ isEdit, originData }) {
     const { id } = useParams();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const client = useQueryClient();
+    const [stockData] = useState(
+        client.getQueryData('stockSearch')?.data?.data?.map(stocks => {
+            return stocks.name;
+        }),
+    );
     const [inputValue, setInputValue] = useRecoilState(searchState);
 
     const onChangeTitleHandler = e => {
@@ -53,6 +59,10 @@ function BoardWrite({ isEdit, originData }) {
     });
 
     const submitHandler = () => {
+        if (stockData && !stockData.includes(inputValue)) {
+            Swal.fire('종목명을 확인해 주세요.');
+            return;
+        }
         Swal.fire({
             title: isEdit ? '수정하겠습니까?' : '작성하겠습니까?',
             imageUrl:
