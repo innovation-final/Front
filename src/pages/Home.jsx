@@ -31,7 +31,12 @@ function Home() {
     );
     const myStock = myStockData?.data?.data;
 
-    if (isLoading || rateIsLoading) return <LoadingSpinner />;
+    if (isLoading || rateIsLoading)
+        return (
+            <LoadingWrapper>
+                <LoadingSpinner />
+            </LoadingWrapper>
+        );
     const values = data.data.data;
     const rateValues = rateData.data.data;
 
@@ -88,4 +93,12 @@ export default Home;
 const DivCarousel = styled.div`
     width: 100%;
     height: 100%;
+`;
+
+const LoadingWrapper = styled.div`
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
