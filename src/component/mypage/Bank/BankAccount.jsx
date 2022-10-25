@@ -52,7 +52,7 @@ function BankAccount() {
                 <Text gutterBottom variant="h5" component="div">
                     목표 수익률
                 </Text>
-                <Content>{targetReturnRate}%</Content>
+                <Content>{(targetReturnRate * 100).toFixed()}%</Content>
             </TextLayout>
             <TextLayout>
                 <Text gutterBottom variant="h5" component="div">
