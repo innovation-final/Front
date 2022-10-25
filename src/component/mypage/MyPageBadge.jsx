@@ -33,7 +33,7 @@ function MypageBadge({ badge }) {
                                 <BadgeImg src={mark} />
                                 <BoxInfo>
                                     <p>
-                                        커뮤니티/ 5개 이상 글 쓰면 얻을 수
+                                        커뮤니티/ ?개 이상 글 쓰면 얻을 수
                                         있습니다!
                                     </p>
                                 </BoxInfo>
@@ -52,7 +52,7 @@ function MypageBadge({ badge }) {
                                 <BadgeImg src={mark} />
                                 <BoxInfo>
                                     <p>
-                                        커뮤니티/ 작성된 글에서 10개 이상 댓글
+                                        커뮤니티/ 작성된 글에서 ?개 이상 댓글
                                         달면 얻을 수 있습니다!
                                     </p>
                                 </BoxInfo>
@@ -70,8 +70,8 @@ function MypageBadge({ badge }) {
                                 <BadgeImg src={mark} />
                                 <BoxInfo>
                                     <p>
-                                        커뮤니티/ 작성한 글 합산 좋아요 10개
-                                        이상 받으면 얻을 수 있습니다!
+                                        커뮤니티/ 작성한 글 합산 좋아요 ?개 이상
+                                        받으면 얻을 수 있습니다!
                                     </p>
                                 </BoxInfo>
                             </Box>
@@ -104,7 +104,7 @@ function MypageBadge({ badge }) {
                                 <BadgeImg src={mark} />
                                 <BoxInfo>
                                     <p>
-                                        커뮤니티/ 작성된 글 합산 조회 수 50회
+                                        커뮤니티/ 작성된 글 합산 조회 수 ?회
                                         이상 넘으면 받을 수 있습니다!
                                     </p>
                                 </BoxInfo>
@@ -140,7 +140,7 @@ function MypageBadge({ badge }) {
                                 <BadgeImg src={mark} />
                                 <BoxInfo>
                                     <p>
-                                        모의투자/ 한 종목에서 100주 이상
+                                        모의투자/ 한 종목에서 ?주 이상
                                         매수하시면 얻으실 수 있습니다!
                                     </p>
                                 </BoxInfo>

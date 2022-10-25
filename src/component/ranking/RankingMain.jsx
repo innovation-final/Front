@@ -13,16 +13,6 @@ import { wideState } from '../../atoms/common/commonState';
 
 function RankingMain() {
     const wide = useRecoilState(wideState);
-    // const options = [
-    //     { name: '실시간 순위', value: '실시간순위' },
-    //     { name: '일주일 순위', value: '일주일순위' },
-    //     { name: '한달 순위', value: '한달순위' },
-    // ];
-    // const defaultOption = '실시간순위';
-    // const [option, setOption] = useState(defaultOption);
-    // const getOption = selected => {
-    //     setOption(selected);
-    // };
     const [page, setPage] = useState('investment');
 
     const onClick = event => {
@@ -33,9 +23,8 @@ function RankingMain() {
     const like = useLike();
     const likes = like;
     const likeRank = likes && likes?.data;
-    console.log(likeRank);
     return (
-        <>
+        <Wrapper>
             <IconLayout $wide={wide}>
                 <IconButton
                     onClick={onClick}
@@ -89,28 +78,32 @@ function RankingMain() {
                     <Medal ranks={ranks} />
                 </BadgeContainer>
             </MainContainer>
-        </>
+        </Wrapper>
     );
 }
 
 export default RankingMain;
+
+const Wrapper = styled.div`
+    position: relative;
+    height: 85vh;
+`;
 
 const Container = styled.div`
     width: 100%;
     padding: 10px;
     border: 2px solid ${props => props.theme.borderColor};
     border-radius: 20px;
-    min-height: 40.7rem;
     display: flex;
     flex-direction: column;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    overflow-y: auto;
 `;
 const BadgeContainer = styled.div`
     width: 100%;
-    padding: 2rem;
+    /* padding: 2rem; */
     border-radius: 20px;
-    min-height: 40.7rem;
     display: flex;
     flex-direction: column;
 `;

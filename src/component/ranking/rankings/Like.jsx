@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 function Like({ likeRank }) {
-    console.log(likeRank);
     return (
         <div>
             {likeRank &&
