@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DivButton } from './style';
-
 import KakaoLogin from '../../static/kakao_login_large_narrow.png';
 
 function KakaoButton() {
