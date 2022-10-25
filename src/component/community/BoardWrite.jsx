@@ -172,7 +172,7 @@ function BoardWrite({ isEdit, originData }) {
                     </ContentDiv>
                 </CardLayout>
                 <ButtonLayout>
-                    <Button size="md" _onClick={submitHandler}>
+                    <Button type="submit" size="md" _onClick={submitHandler}>
                         {isEdit ? '수정완료' : '작성완료'}
                     </Button>
                 </ButtonLayout>

@@ -132,5 +132,6 @@ export const bankAPI = {
     getStocksAccount: () => api.get(`/auth/account/stocks`),
 };
 export const rankAPI = {
-    getRank: () => api.get(`/rank`),
+    getRank: () => api.get(`/rank/return`),
+    getLike: () => api.get(`/rank/like`),
 };

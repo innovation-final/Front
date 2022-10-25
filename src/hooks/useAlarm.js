@@ -3,8 +3,10 @@ import { noticeAPI } from '../shared/api';
 
 const useAlarm = () => {
     const queryClient = useQueryClient();
-    const { data, isLoading } = useQuery(['alarmNotice'], () =>
-        noticeAPI.getNotice(),
+    const { data, isLoading } = useQuery(
+        ['alarmNotice'],
+        () => noticeAPI.getNotice(),
+        { staleTime: Infinity, cacheTime: Infinity },
     );
 
     const invalidate = () => {
