@@ -1,8 +1,11 @@
 import { atom } from 'recoil';
 
-const alarmState = atom({
+export const listeningState = atom({
+    key: 'listen',
+    default: false,
+});
+
+export const alarmState = atom({
     key: 'alarm',
     default: 0,
 });
-
-export default alarmState;

@@ -59,7 +59,7 @@ function BankAccount() {
                     현재 수익률
                 </Text>
                 <StockContent isMinus={totalReturnRate < 0}>
-                    {totalReturnRate}%
+                    {(totalReturnRate * 100).toFixed(3)}%
                 </StockContent>
             </TextLayout>
             <TextLayout>

@@ -80,15 +80,17 @@ const MedalLayout = styled.div`
 `;
 const MedalImg = styled.img`
     justify-content: space-evenly;
-    width: 35%;
+    width: 40%;
     object-fit: cover;
     cursor: pointer;
 `;
 const Text = styled.p`
     font-weight: bold;
     margin: 5px;
+    margin-left: 15px;
     color: ${props => props.theme.textColor};
 `;
+
 const TextLayout = styled.div`
     display: flex;
     flex-direction: row;

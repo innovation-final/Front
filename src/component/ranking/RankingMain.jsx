@@ -7,6 +7,7 @@ import Medal from './Medal';
 import Like from './rankings/Like';
 import Investment from './rankings/Investment';
 import useRank from '../../hooks/useRank';
+import useLike from '../../hooks/useLike';
 import MainContainer from '../main/MainContainer';
 import { wideState } from '../../atoms/common/commonState';
 
@@ -29,7 +30,10 @@ function RankingMain() {
     };
     const { data } = useRank();
     const ranks = data && data;
-
+    const like = useLike();
+    const likes = like;
+    const likeRank = likes && likes?.data;
+    console.log(likeRank);
     return (
         <>
             <IconLayout $wide={wide}>
@@ -77,7 +81,7 @@ function RankingMain() {
                         {page === 'investment' ? (
                             <Investment ranks={ranks} />
                         ) : null}
-                        {page === 'like' ? <Like /> : null}
+                        {page === 'like' ? <Like likeRank={likeRank} /> : null}
                     </PageLayer>
                 </Container>
 
@@ -90,10 +94,6 @@ function RankingMain() {
 }
 
 export default RankingMain;
-// const Layout = styled.div`
-//     display: flex;
-//     flex-direction: row;
-// `;
 
 const Container = styled.div`
     width: 100%;
@@ -117,6 +117,7 @@ const BadgeContainer = styled.div`
 const IconLayout = styled.div`
     display: flex;
     height: 20px;
+    margin-top: 30px;
     margin-left: 20px;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 
@@ -145,13 +146,7 @@ const IconButton = styled.button`
             : props.theme.transparentButtonColor};
     transition: background-color ease-in-out 0.1s;
 `;
-// const SelectLayout = styled.div`
-//     height: 35px;
-//     margin-bottom: 17px;
-//     margin-left: auto;
-//     display: flex;
-//     align-items: center;
-// `;
+
 const Text = styled.p`
     font-weight: bold;
     margin: 5px;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -9,26 +9,13 @@ import { v4 as uuid } from 'uuid';
 import useGetUser from '../../hooks/useGetUser';
 import useAlarm from '../../hooks/useAlarm';
 import NoticeList from './NoticeList';
-import sse from '../../util/sse';
 import { noticeAPI } from '../../shared/api';
 
-function Notice({ setModalOpen }) {
+function Notice({ setModalOpen, modalOpen }) {
     const { data } = useGetUser();
     const id = data && data.id;
     const notices = useAlarm();
     const notice = notices.data;
-    const SSE = sse(id);
-    useEffect(() => {
-        SSE.connectSSE();
-        return () => SSE.disconnectSSE();
-    }, []);
-
-    useEffect(() => {
-        if (SSE.getAlarmData().length === 0) {
-            return;
-        }
-        SSE.pushAlarm();
-    }, [notice, SSE]);
     const queryClient = useQueryClient();
 
     const deleteNotices = async () => {
@@ -67,7 +54,7 @@ function Notice({ setModalOpen }) {
     };
 
     return (
-        <Container>
+        <Container modalOpen={modalOpen}>
             <DeleletButton onClick={onNoticeDelete}>
                 <DeleteOutlineIcon name="postDeleteButton" />
             </DeleletButton>
@@ -105,6 +92,7 @@ const ClearButton = styled.div`
     }
 `;
 const Container = styled.div`
+    display: ${props => (props.modalOpen ? 'auto' : 'none')};
     width: 400px;
     height: 300px;
     position: fixed;
