@@ -92,6 +92,7 @@ const Profile = styled.img`
     margin-left: 25px;
     margin-right: 10px;
     border-radius: 50%;
+    box-shadow: 1px 1px 1px 1px gray;
 `;
 
 const StyleTableName = styled.div`

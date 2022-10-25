@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
@@ -8,9 +9,12 @@ import useGetUser from '../../hooks/useGetUser';
 import { userState } from '../../atoms/user/userState';
 import Notice from '../notice/Notice';
 import usePushNotification from '../../hooks/usePushNotification ';
-import alarmState from '../../atoms/alarms/alarmState';
+import { alarmState, listeningState } from '../../atoms/alarms/alarmState';
 
 function HeaderProfile() {
+    const client = useQueryClient();
+    const noticeData = client.getQueryData(['alarmNotice'])?.data.data;
+
     const { fireNotificationWithTimeout } = usePushNotification();
     const navigate = useNavigate();
     const { data, isLoading } = useGetUser();
@@ -26,7 +30,7 @@ function HeaderProfile() {
         }
     }, [isLoading]);
 
-    const [listening, setListening] = useState(false);
+    const [listening, setListening] = useRecoilState(listeningState);
     // eslint-disable-next-line no-unused-vars
     const [alarmData, setAlarmData] = useState([]);
     // eslint-disable-next-line no-unused-vars
@@ -36,15 +40,17 @@ function HeaderProfile() {
     // eslint-disable-next-line no-unused-vars
     const count = useRecoilValue(alarmState);
     // eslint-disable-next-line no-unused-vars
-    const [alarmCount, setAlarmCount] = useState(0);
+    const [alarmCount, setAlarmCount] = useState(
+        Number(localStorage.getItem('newNoti')) || 0,
+    );
 
     // 알림
     useEffect(() => {
-        if (!listening) {
-            const eventSource = new EventSource(
-                `${process.env.REACT_APP_URL}subscribe/${id}`,
-            );
+        const eventSource =
+            id &&
+            new EventSource(`${process.env.REACT_APP_URL}subscribe/${id}`);
 
+        if (id && !listening) {
             msetEventSource(eventSource);
 
             eventSource.onopen = () => {
@@ -67,12 +73,12 @@ function HeaderProfile() {
 
             setListening(true);
         }
-        const eventSource = undefined;
-        return () => {
-            eventSource?.close();
-            console.log('eventsource closed');
-        };
-    }, [alarmData]);
+
+        // return () => {
+        //     eventSource?.close();
+        //     console.log('eventsource closed');
+        // };
+    }, [listening, id]);
 
     useEffect(() => {
         const shiftData = alarmData.slice(1);
@@ -87,8 +93,10 @@ function HeaderProfile() {
     useEffect(() => {
         if (!localStorage.getItem('newNoti')) {
             localStorage.setItem('newNoti', 0);
+            return;
         }
-    }, []);
+        localStorage.setItem('newNoti', alarmCount);
+    }, [alarmCount, noticeData]);
 
     // 모달창 노출 여부 state
     const [modalOpen, setModalOpen] = useState(false);
@@ -96,6 +104,7 @@ function HeaderProfile() {
     // 모달창 노출
     const showModal = () => {
         setModalOpen(props => !props);
+        localStorage.setItem('newNoti', 0);
         setAlarmCount(0);
     };
 
@@ -118,7 +127,7 @@ function HeaderProfile() {
             <NotiBox>
                 <Badge badgeContent={alarmCount} color="primary">
                     <NotificationsIcon onClick={showModal} />
-                    {modalOpen && <Notice setModalOpen={showModal} />}
+                    <Notice setModalOpen={showModal} modalOpen={modalOpen} />
                 </Badge>
             </NotiBox>
         </StyleProfile>
