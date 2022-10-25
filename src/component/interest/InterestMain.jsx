@@ -5,6 +5,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ListIcon from '@mui/icons-material/List';
 import InterestStockList from './InterestStockList';
+import MainContainer from '../main/MainContainer';
 import { stockAPI } from '../../shared/api';
 import InterestNewsList from './InterestNews';
 import InterestPost from './InterestPost';
@@ -24,7 +25,7 @@ function InterestMain() {
     };
 
     return (
-        <CardLayout>
+        <MainContainer>
             <InterestLayout>
                 <InterestCard>
                     <IconLayout>
@@ -80,20 +81,20 @@ function InterestMain() {
                     <InterestNewsList code={param} />
                 </NewsCard>
             </CardsLayout>
-        </CardLayout>
+        </MainContainer>
     );
 }
 
 export default InterestMain;
-const CardLayout = styled.div`
-    display: flex;
-    margin: 30px;
-    width: 92%;
-    height: 750px;
-`;
+// const CardLayout = styled.div`
+//     display: flex;
+//     margin: 30px;
+//     width: 92%;
+//     height: 750px;
+// `;
 
 const InterestLayout = styled.div`
-    width: 44%;
+    width: 100%;
     height: 100%;
     height: 750px;
 `;
@@ -128,7 +129,7 @@ const NewsCard = styled.div`
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 const CardsLayout = styled.div`
-    width: 56%;
+    width: 100%;
     object-fit: cover;
 `;
 

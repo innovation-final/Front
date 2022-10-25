@@ -271,15 +271,18 @@ const SubHeader = styled.div`
 const PostInfoBox = styled.div`
     display: flex;
     flex-direction: row;
-    width: 10%;
-    justify-content: space-evenly;
+    width: 100%;
+    justify-content: flex-end;
     white-space: nowrap;
 `;
 const ViewCount = styled.div`
     font-size: 13px;
+    white-space: nowrap;
 `;
 const CommentCount = styled.div`
     font-size: 13px;
+    white-space: nowrap;
+    margin-left: 20px;
 `;
 const Content = styled.div`
     margin-left: 40px;

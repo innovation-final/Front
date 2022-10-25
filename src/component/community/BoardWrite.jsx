@@ -59,7 +59,7 @@ function BoardWrite({ isEdit, originData }) {
     });
 
     const submitHandler = () => {
-        if (!stockData.includes(inputValue)) {
+        if (stockData && !stockData.includes(inputValue)) {
             Swal.fire('종목명을 확인해 주세요.');
             return;
         }

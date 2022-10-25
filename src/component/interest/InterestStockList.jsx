@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import FavoritesIcon from '../elements/FavoritesIcon';
 import { stockAPI } from '../../shared/api';
-// import { lightTheme, darkTheme } from '../../theme/ThemeColor';
+import { esUSNumberParser } from '../../util/parser';
 
 function InterestStockList({
     interestStocks,
@@ -56,7 +56,9 @@ function InterestStockList({
             }
         >
             <InterestTitle>{name}</InterestTitle>
-            <InterestContent>{current.open}</InterestContent>
+            <InterestContent>{`현재가 : ${esUSNumberParser(
+                current.open,
+            )} KRW`}</InterestContent>
             <InterestContent>
                 <DeleteLikeBtn done={like} onClick={e => dislikeHandler(e)}>
                     <FavoritesIcon isFavorites={doneInterest} />
@@ -95,7 +97,7 @@ const InterestTitle = styled.div`
 `;
 
 const InterestContent = styled.div`
-    font-size: 18px;
+    font-size: 0.8vw;
     color: #82807c;
     display: flex;
     flex-direction: row;
@@ -103,6 +105,7 @@ const InterestContent = styled.div`
     align-items: center;
     justify-content: space-evenly;
     padding: 10px;
+    white-space: nowrap;
 `;
 
 const DeleteLikeBtn = styled.div`
