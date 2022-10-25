@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { useQueryClient } from 'react-query';
 import SearchIcon from '@mui/icons-material/Search';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import StockSearch from '../elements/StockSearch';
 import Button from '../elements/Button';
 import { searchState } from '../../atoms/search/searchState';
@@ -13,6 +15,7 @@ import tutorialState from '../../atoms/tutorial/tutorialState';
 import { wideState } from '../../atoms/common/commonState';
 
 function InvestmentHeader() {
+    const navigate = useNavigate();
     const client = useQueryClient();
     const stocksQuery = client.getQueryData('stockSearch');
     const myAccount = useAccount();
@@ -47,7 +50,13 @@ function InvestmentHeader() {
                 </SearchBox>
                 <MyInfo>
                     {!myAccount.data?.balance ? (
-                        <MyInfoContainer>계좌를 만들어 주세요</MyInfoContainer>
+                        <MyInfoContainer>
+                            계좌를 만들어 주세요
+                            <ArrowRightAltIcon />
+                            <AccountButton onClick={() => navigate(`/mypage`)}>
+                                계좌 계설하러 가기
+                            </AccountButton>
+                        </MyInfoContainer>
                     ) : (
                         <>
                             <MyBalance>
@@ -134,6 +143,7 @@ const MyInfo = styled.div`
 `;
 const MyInfoContainer = styled.div`
     display: flex;
+    margin-left: 45%;
     justify-content: space-between;
     width: 100%;
 
@@ -173,6 +183,20 @@ const MyBalance = styled.div`
 `;
 
 const Title = styled.div``;
+const AccountButton = styled.button`
+    background-color: ${props => props.theme.stockBorderColor};
+    border: 0;
+    border-radius: 200px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 5px;
+    padding: 10px;
+    font-size: 12px;
+    color: ${props => props.theme.textColor};
+    &:hover {
+        background-color: ${props => props.theme.buttonColor};
+    }
+`;
 const Money = styled.div`
     padding-right: 40px;
 `;

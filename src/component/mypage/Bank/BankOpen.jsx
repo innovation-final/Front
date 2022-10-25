@@ -42,16 +42,6 @@ function BankOpen() {
                     className="form-control form-control-lg"
                     type="number"
                     min="0"
-                    max="100"
-                    onInput={e => {
-                        if (e.target.value >= 0) {
-                            if (e.target.value.length > 3) {
-                                if (e.target.value > 100) {
-                                    alert('최대 100까지 입력가능');
-                                }
-                            }
-                        }
-                    }}
                     placeholder="수익률"
                     onChange={targetChangeHandler}
                     value={targetReturnRate}
