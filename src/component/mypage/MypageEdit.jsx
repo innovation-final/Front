@@ -230,10 +230,10 @@ function MypageEdit() {
                                     onChange={onChangeImg}
                                 />
                                 <CogButton onClick={onChangeImg}>
-                                    <CogBtn src={editcog} />{' '}
-                                </CogButton>{' '}
+                                    <CogBtn src={editcog} />
+                                </CogButton>
                             </CogLayout>
-                        </ImgCard>{' '}
+                        </ImgCard>
                         <CogText>
                             1mb이하 파일 사이즈만 사진변경 가능합니다
                         </CogText>
