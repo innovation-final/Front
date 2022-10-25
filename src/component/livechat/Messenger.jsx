@@ -11,7 +11,7 @@ const UpAnimation = {
     start: { opacity: 0, y: 50 },
     end: { opacity: 1, y: 0 },
 };
-const WS_URL = 'ws://hakjoonkim.shop/stomp';
+const WS_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 function Messenger() {
     const setChatList = useSetRecoilState(chatLogState);
