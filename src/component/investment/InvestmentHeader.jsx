@@ -51,6 +51,7 @@ function InvestmentHeader() {
                     <TutorialButton onClick={() => onTutorial()}>
                         ?
                     </TutorialButton>
+                    <TimeInfo>스톡스톡 장시간 (09:00~21:00)</TimeInfo>
                 </SearchBox>
                 <MyInfo>
                     {!myAccount.data?.balance ? (
@@ -118,7 +119,7 @@ const SearchBox = styled.div`
     @media screen and (min-width: 1400px) {
         display: flex;
         align-items: center;
-        width: 40%;
+        width: 80%;
     }
 `;
 
@@ -203,4 +204,10 @@ const TutorialButton = styled.div`
         background-color: ${props => props.theme.buttonColor};
         cursor: pointer;
     }
+`;
+
+const TimeInfo = styled.div`
+    margin-left: 10px;
+    font-weight: 600;
+    font-size: 12px;
 `;

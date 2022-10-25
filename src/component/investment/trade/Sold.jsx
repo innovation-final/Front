@@ -86,7 +86,9 @@ function Sold() {
                                 error.response.data.error.code ===
                                 'OUT_OF_MARKET_HOUR'
                             ) {
-                                Swal.fire('장마감 입니다.');
+                                Swal.fire(
+                                    '장마감입니다. / 장시간 (09:00~21:00)',
+                                );
                             } else {
                                 Swal.fire('서버 오류입니다.');
                             }
