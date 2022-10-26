@@ -24,9 +24,7 @@ function Sse() {
 
             msetEventSource(eventSource);
 
-            eventSource.onopen = event => {
-                console.log('connection opened');
-            };
+            eventSource.onopen = event => {};
 
             eventSource.onmessage = event => {
                 if (event.data === 'EventStream Created.') return;
