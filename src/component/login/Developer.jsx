@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import Card from './Card';
 import { ScrollLayout } from './style';
 import hakjoon from '../../static/hakjoon.jpg';
-import jiyoung from '../../static/jiyoung.png';
-import junhyoung from '../../static/junhyoung.png';
+import jiyoung from '../../static/jiyoung.jpg';
+import junhyoung from '../../static/junhyoung.jpg';
 import soonger from '../../static/soonger.jpg';
 import junsu from '../../static/junsu.jpg';
 
@@ -45,6 +46,28 @@ function Developers() {
                         img={junsu}
                     />
                 </Grid>
+                <Container>
+                    <Repository
+                        onClick={() =>
+                            window.open(
+                                'https://github.com/innovation-final/Front',
+                            )
+                        }
+                    >
+                        <GitHubIcon fontSize="large" />
+                        Front-End
+                    </Repository>
+                    <Repository
+                        onClick={() =>
+                            window.open(
+                                'https://github.com/innovation-final/Backend',
+                            )
+                        }
+                    >
+                        <GitHubIcon fontSize="large" />
+                        Back-End
+                    </Repository>
+                </Container>
             </Wrapper>
         </ScrollLayout>
     );
@@ -79,5 +102,36 @@ const Grid = styled.div`
         align-items: center;
         min-width: 480px;
         gap: 30px;
+    }
+`;
+
+const Container = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 80px;
+    width: 700px;
+`;
+
+const Repository = styled.div`
+    width: 250px;
+    height: 70px;
+    border-radius: 15px;
+    background-color: white;
+    color: black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+    cursor: pointer;
+
+    &:hover {
+        scale: 1.05;
+        transition: scale ease-in-out 0.1s;
     }
 `;

@@ -3,14 +3,12 @@ import styled from 'styled-components';
 
 function Card({ name, url, position, img }) {
     return (
-        <Container>
+        <Container onClick={() => window.open(url)}>
             <ProfileImg src={img} />
             <Introduce>
                 <IntroduceWrapper>
                     <Name>{`${name} (${position})`}</Name>
-                    <GitHub
-                        onClick={() => window.open(url)}
-                    >{`GitHub : ${url}`}</GitHub>
+                    <GitHub>{`GitHub : ${url}`}</GitHub>
                 </IntroduceWrapper>
             </Introduce>
         </Container>
@@ -31,6 +29,12 @@ const Container = styled.div`
     align-items: center;
     border-radius: 10px;
     font-family: 'Pretendard-Regular';
+
+    &:hover {
+        scale: 1.1;
+        transition: scale ease-in-out 0.1s;
+    }
+    cursor: pointer;
 `;
 
 const ProfileImg = styled.img`
@@ -63,5 +67,4 @@ const GitHub = styled.div`
     color: black;
     letter-spacing: -1.5px;
     font-size: 15px;
-    cursor: pointer;
 `;
