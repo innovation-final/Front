@@ -1,16 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import ProfileOtherUser from '../../post/ProfileOtherUser';
 
 function Investment({ ranks }) {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const openModal = () => {
-        setIsOpen(true);
-    };
-    const closeModal = () => {
-        setIsOpen(false);
-    };
     return (
         <div>
             {ranks &&
@@ -21,18 +12,12 @@ function Investment({ ranks }) {
                                 <TextLayout>🥇 {index + 1}등</TextLayout>
 
                                 <TextLayout>
-                                    <NickNameText onClick={openModal}>
+                                    <NickNameText>
                                         <Profile src={rank.profileImg} />
                                         {rank.nickname}
                                     </NickNameText>
                                 </TextLayout>
-                                {isOpen ? (
-                                    <ProfileOtherUser
-                                        isOpen={isOpen}
-                                        closeModal={closeModal}
-                                        userId={rank.memberId}
-                                    />
-                                ) : null}
+
                                 <TextLayout>
                                     {(rank.returnRate * 100).toFixed(3)}%
                                 </TextLayout>
@@ -44,18 +29,11 @@ function Investment({ ranks }) {
                             <StyleTableName key={rank.nickname} ranking={rank}>
                                 <TextLayout>🥈 {index + 1}등</TextLayout>
                                 <TextLayout>
-                                    <NickNameText onClick={openModal}>
+                                    <NickNameText>
                                         <Profile src={rank.profileImg} />
                                         {rank.nickname}
                                     </NickNameText>
                                 </TextLayout>
-                                {isOpen ? (
-                                    <ProfileOtherUser
-                                        isOpen={isOpen}
-                                        closeModal={closeModal}
-                                        userId={rank.memberId}
-                                    />
-                                ) : null}
                                 <TextLayout>
                                     {(rank.returnRate * 100).toFixed(3)}%
                                 </TextLayout>
@@ -67,18 +45,12 @@ function Investment({ ranks }) {
                             <StyleTableName key={rank.nickname} ranking={rank}>
                                 <TextLayout>🥉 {index + 1}등</TextLayout>
                                 <TextLayout>
-                                    <NickNameText onClick={openModal}>
+                                    <NickNameText>
                                         <Profile src={rank.profileImg} />
                                         {rank.nickname}
                                     </NickNameText>
                                 </TextLayout>
-                                {isOpen ? (
-                                    <ProfileOtherUser
-                                        isOpen={isOpen}
-                                        closeModal={closeModal}
-                                        userId={rank.memberId}
-                                    />
-                                ) : null}
+
                                 <TextLayout>
                                     {(rank.returnRate * 100).toFixed(3)}%
                                 </TextLayout>
@@ -89,18 +61,12 @@ function Investment({ ranks }) {
                         <StyleTableName key={rank.nickname} ranking={rank}>
                             <TextLayout>{index + 1}등</TextLayout>
                             <TextLayout>
-                                <NickNameText onClick={openModal}>
+                                <NickNameText>
                                     <Profile src={rank.profileImg} />
                                     {rank.nickname}
                                 </NickNameText>
                             </TextLayout>
-                            {isOpen ? (
-                                <ProfileOtherUser
-                                    isOpen={isOpen}
-                                    closeModal={closeModal}
-                                    userId={rank.memberId}
-                                />
-                            ) : null}
+
                             <TextLayout>
                                 {(rank.returnRate * 100).toFixed(3)}%
                             </TextLayout>
