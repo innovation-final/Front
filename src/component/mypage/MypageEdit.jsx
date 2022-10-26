@@ -22,8 +22,8 @@ function MypageEdit() {
     const [isEdit, setIsEdit] = React.useState(false);
 
     // 사진 수정,미리보기
-    const [img, setImg] = useState('');
-    const [userImage, setUserImage] = useState('');
+    const [img, setImg] = useState(null);
+    const [userImage, setUserImage] = useState(null);
     const onChangeImg = e => {
         e.preventDefault();
         imageInput.current.click();
@@ -138,12 +138,6 @@ function MypageEdit() {
             if (result.isConfirmed) {
                 setIsEdit(false);
                 const formData = new FormData();
-                formData.append(
-                    'mypage',
-                    new Blob([JSON.stringify()], {
-                        type: 'application/json',
-                    }),
-                );
                 // key값 서버랑 동일해야됨
                 formData.append('profileImg', img);
                 formData.append('nickname', editNickName);
@@ -156,7 +150,7 @@ function MypageEdit() {
                         localStorage.setItem('imgUrl', userImage);
                     },
                     onError: () => {
-                        Swal.fire('서버 오류입니다.');
+                        Swal.fire('프로필 사진을 선택해주세요.');
                     },
                 });
             }

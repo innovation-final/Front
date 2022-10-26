@@ -19,7 +19,9 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-style: normal;
     };
-
+    * {
+        scroll-behavior: smooth;
+    }
     html {
         font-size: 14px;
     }

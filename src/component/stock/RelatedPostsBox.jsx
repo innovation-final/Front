@@ -69,6 +69,7 @@ const Title = styled.div`
     font-weight: 600;
     font-size: 1.3vw;
     line-height: 50px;
+    font-size: 1.8rem;
 `;
 
 const PostWrapper = styled.div`

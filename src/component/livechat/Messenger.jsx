@@ -52,7 +52,6 @@ function Messenger() {
         client.current = new StompJs.Client({
             brokerURL: WS_URL,
             onConnect: () => {
-                console.log('success');
                 subscribe(setChatList);
             },
         });

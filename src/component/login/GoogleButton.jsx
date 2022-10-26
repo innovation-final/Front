@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DivButton, GoogleBtn } from './style';
 import GoogleLogo from '../../static/GoogleLogo.png';
+import styled from 'styled-components';
 
 function GoogleButton() {
     const navigate = useNavigate();

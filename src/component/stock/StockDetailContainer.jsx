@@ -108,5 +108,5 @@ const ContainerBottom = styled.div`
     ${props => (props.isPC ? responsive.pc : responsive.phone)};
     width: 100%;
     display: flex;
-    margin-top: -30px;
+    margin-top: -20px;
 `;

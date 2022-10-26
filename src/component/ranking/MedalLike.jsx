@@ -4,53 +4,25 @@ import top1 from '../../static/1.png';
 import top2 from '../../static/2.png';
 import top3 from '../../static/3.png';
 
-function Medal({ ranks }) {
-    const nickname1 = ranks && ranks[0].nickname;
-    const returnRate1 = ranks && ranks[0].returnRate;
-
-    const nickname2 = ranks && ranks[1].nickname;
-    const returnRate2 = ranks && ranks[1].returnRate;
-
-    const nickname3 = ranks && ranks[2].nickname;
-    const returnRate3 = ranks && ranks[2].returnRate;
+function MedalLike({ likeRank }) {
+    const nickname1 = likeRank && likeRank[0].nickname;
+    const likeNum1 = likeRank && likeRank[0].likeNum;
+    const nickname2 = likeRank && likeRank[1].nickname;
+    const likeNum2 = likeRank && likeRank[1].likeNum;
+    const nickname3 = likeRank && likeRank[2].nickname;
+    const likeNum3 = likeRank && likeRank[2].likeNum;
 
     if (
         (!nickname1,
-        returnRate1,
+        likeNum1,
         nickname2,
-        returnRate2,
+        likeNum2,
         nickname3,
-        returnRate3 === undefined)
+        likeNum3 === undefined)
     ) {
         return null;
     }
 
-    if (!ranks)
-        return (
-            <Layout>
-                <MedalLayout>
-                    <MedalImg src={top1} />
-                </MedalLayout>
-                <TextLayout>
-                    <Text>닉네임:</Text>
-                </TextLayout>
-                <TextLayout>
-                    <Text>수익률:</Text>
-                </TextLayout>
-                <MedalLayout>
-                    <MedalImg src={top2} />
-                    <MedalImg src={top3} />
-                </MedalLayout>
-                <TextLayout>
-                    <Text>닉네임:</Text>
-                    <Text>닉네임:</Text>
-                </TextLayout>
-                <TextLayout>
-                    <Text>수익률:</Text>
-                    <Text>수익률:</Text>
-                </TextLayout>
-            </Layout>
-        );
     return (
         <Layout>
             <MedalLayout>
@@ -60,7 +32,7 @@ function Medal({ ranks }) {
                 <Text>닉네임:{nickname1}</Text>
             </TextLayout>
             <TextLayout>
-                <Text>수익률: {(returnRate1 * 100).toFixed(3)}%</Text>
+                <Text>좋아요: {likeNum1}개</Text>
             </TextLayout>
             <MedalLayout>
                 <MedalImg src={top2} />
@@ -71,15 +43,14 @@ function Medal({ ranks }) {
                 <Text>닉네임:{nickname3}</Text>
             </TextLayout>
             <TextLayout>
-                <Text>수익률: {(returnRate2 * 100).toFixed(3)}%</Text>
-                <Text>수익률: {(returnRate3 * 100).toFixed(3)}%</Text>
+                <Text>좋아요 : {likeNum2}개</Text>
+                <Text>좋아요 : {likeNum3}개</Text>
             </TextLayout>
         </Layout>
     );
 }
 
-export default Medal;
-
+export default MedalLike;
 const Layout = styled.div`
     width: 100%;
     height: 100%;

@@ -1,12 +1,28 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { timeToToday } from '../../util/parser';
 
 function NoticeList({ alarms }) {
-    const { message, createdAt } = alarms;
+    const { message, createdAt, type, postId } = alarms;
+    const navigate = useNavigate();
+
+    const navigatePage = (_type, _postId) => {
+        if (type === '뱃지취득') {
+            navigate('/mypage');
+            return;
+        }
+        if (type === '댓글') {
+            navigate(`/post/${_postId}`);
+            return;
+        }
+        if (type === '지정가') {
+            navigate('/mypage');
+        }
+    };
 
     return (
-        <CardContent>
+        <CardContent onClick={() => navigatePage(type, postId)}>
             <NoticeTitle>{message}</NoticeTitle>
             <NoticeContent>{timeToToday(createdAt)}</NoticeContent>
             <NoticeContent />

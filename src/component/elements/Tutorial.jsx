@@ -135,14 +135,16 @@ const StyleHeader = styled.div`
     border: 3px dotted white;
     border-radius: 15px;
     margin-bottom: 21px;
-    visibility: ${props => (props.$step ? 'visible' : 'hidden')};
+    opacity: ${props => (props.$step ? 1 : 0)};
+    transition: all ease-in-out 0.2s;
 `;
 
 const StyleInfoContainer = styled.div`
     position: relative;
     width: 100%;
     border: 3px dotted white;
-    visibility: ${props => (props.$step ? 'visible' : 'hidden')};
+    opacity: ${props => (props.$step ? 1 : 0)};
+    transition: all ease-in-out 0.2s;
     border-radius: 20px;
     background-color: transparent;
     margin-bottom: 10px;
@@ -156,7 +158,8 @@ const StyleMyStockLine = styled.div`
     min-height: 260px;
     width: 100%;
     border: 3px dotted white;
-    visibility: ${props => (props.$step ? 'visible' : 'hidden')};
+    opacity: ${props => (props.$step ? 1 : 0)};
+    transition: all ease-in-out 0.2s;
     border-radius: 15px;
 `;
 
@@ -164,7 +167,8 @@ const StyleTrade = styled.div`
     position: relative;
     border: 3px dotted white;
     width: 100%;
-    visibility: ${props => (props.$step ? 'visible' : 'hidden')};
+    opacity: ${props => (props.$step ? 1 : 0)};
+    transition: all ease-in-out 0.2s;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
