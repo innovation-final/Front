@@ -29,6 +29,7 @@ function Home() {
         ['stock'],
         () => stockAPI.getLikeStock(),
     );
+
     const myStock = myStockData?.data?.data;
 
     if (isLoading || rateIsLoading)

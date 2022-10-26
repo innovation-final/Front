@@ -38,7 +38,7 @@ const Header = styled.header`
     height: 100%;
     display: flex;
     justify-content: center;
-    position: fixed;
+    position: absolute;
     top: 100px;
     left: 50px;
 

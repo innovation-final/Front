@@ -29,6 +29,63 @@ export const LoginLayout = styled.div`
     }
 `;
 
+export const ScrollLayout = styled.div`
+    position: relative;
+    font-family: 'Roboto';
+    width: 100vw;
+    height: 100vh;
+    background-color: skyblue;
+    background-size: cover;
+    display: flex;
+    flex-direction: ${props => (props.isPC ? 'row' : 'column')};
+    color: white;
+    font-weight: bold;
+    background-color: ${props => props.bgColor};
+    .scroll {
+        width: 2rem;
+        position: absolute;
+        bottom: 0%;
+        left: 49%;
+        z-index: 15px;
+    }
+
+    @media screen and (max-width: 1023px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+`;
+
+export const IntroduceLayout = styled.div`
+    position: relative;
+    font-family: 'Roboto';
+    width: 100vw;
+    height: 100vh;
+    background-color: skyblue;
+    background-size: cover;
+    display: flex;
+    flex-direction: ${props => (props.isPC ? 'row' : 'column')};
+    color: white;
+    font-weight: bold;
+    background-color: ${props => props.bgColor};
+    background-image: url(https://blog.kakaocdn.net/dn/cuxHLl/btrPyzl9vBB/kysaAxZZoUucOq6RQyHf50/img.jpg);
+    .scroll {
+        width: 2rem;
+        position: absolute;
+        bottom: 0%;
+        left: 49%;
+        z-index: 15px;
+    }
+
+    @media screen and (max-width: 1023px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+`;
+
 export const DivContent = styled.div`
     width: 100vw;
     height: 100vh;
