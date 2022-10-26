@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useMutation, useQueryClient } from 'react-query';
 import FavoritesIcon from '../elements/FavoritesIcon';
@@ -25,7 +26,7 @@ function StockInfoBox({ stockData }) {
         change,
         prevPrice,
     } = stockData;
-
+    const navigate = useNavigate();
     const isDark = useRecoilValue(isDarkState);
     const dayToDay = close && close - prevPrice.close;
 
@@ -92,7 +93,11 @@ function StockInfoBox({ stockData }) {
                             </DeleteLikeBtn>
                         )}
 
-                        <StockInfoName>{name}</StockInfoName>
+                        <StockInfoName
+                            onClick={() => navigate(`/stock/${code}`)}
+                        >
+                            {name}
+                        </StockInfoName>
                     </StyleFavorite>
                     <StockInfoCode>{`E${code}`}</StockInfoCode>
                     <StockInfoType>{isKospi}</StockInfoType>
