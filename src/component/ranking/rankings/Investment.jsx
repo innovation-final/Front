@@ -30,7 +30,7 @@ function Investment({ ranks }) {
                                     <ProfileOtherUser
                                         isOpen={isOpen}
                                         closeModal={closeModal}
-                                        userId={rank.id}
+                                        userId={rank.memberId}
                                     />
                                 ) : null}
                                 <TextLayout>
@@ -53,7 +53,7 @@ function Investment({ ranks }) {
                                     <ProfileOtherUser
                                         isOpen={isOpen}
                                         closeModal={closeModal}
-                                        userId={rank.id}
+                                        userId={rank.memberId}
                                     />
                                 ) : null}
                                 <TextLayout>
@@ -76,7 +76,7 @@ function Investment({ ranks }) {
                                     <ProfileOtherUser
                                         isOpen={isOpen}
                                         closeModal={closeModal}
-                                        userId={rank.id}
+                                        userId={rank.memberId}
                                     />
                                 ) : null}
                                 <TextLayout>
@@ -89,7 +89,7 @@ function Investment({ ranks }) {
                         <StyleTableName key={rank.nickname} ranking={rank}>
                             <TextLayout>{index + 1}등</TextLayout>
                             <TextLayout>
-                                <NickNameText _onClick={openModal}>
+                                <NickNameText onClick={openModal}>
                                     <Profile src={rank.profileImg} />
                                     {rank.nickname}
                                 </NickNameText>
@@ -98,7 +98,7 @@ function Investment({ ranks }) {
                                 <ProfileOtherUser
                                     isOpen={isOpen}
                                     closeModal={closeModal}
-                                    userId={rank.id}
+                                    userId={rank.memberId}
                                 />
                             ) : null}
                             <TextLayout>

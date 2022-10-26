@@ -52,7 +52,7 @@ function Like({ likeRank }) {
                                     <ProfileOtherUser
                                         isOpen={isOpen}
                                         closeModal={closeModal}
-                                        userId={like.id}
+                                        userId={like.memberId}
                                     />
                                 ) : null}
 
@@ -74,7 +74,7 @@ function Like({ likeRank }) {
                                     <ProfileOtherUser
                                         isOpen={isOpen}
                                         closeModal={closeModal}
-                                        userId={like.id}
+                                        userId={like.memberId}
                                     />
                                 ) : null}
                                 <TextLayout>{like.likeNum}</TextLayout>
@@ -94,7 +94,7 @@ function Like({ likeRank }) {
                                 <ProfileOtherUser
                                     isOpen={isOpen}
                                     closeModal={closeModal}
-                                    userId={like.id}
+                                    userId={like.memberId}
                                 />
                             ) : null}
                             <TextLayout>{like.likeNum}</TextLayout>
