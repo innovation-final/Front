@@ -117,6 +117,9 @@ const CardTitle = styled.div`
     letter-spacing: -1px;
     display: flex;
     margin-top: 1%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 const CardCommentCount = styled.div`
     margin-left: 10px;
