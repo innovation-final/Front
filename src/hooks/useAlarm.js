@@ -13,8 +13,6 @@ const useAlarm = () => {
         queryClient.invalidateQueries(['alarmNotice']);
     };
 
-    console.log(data?.data.data);
-
     return { data: data?.data.data, isLoading, invalidate, refetch };
 };
 export default useAlarm;
