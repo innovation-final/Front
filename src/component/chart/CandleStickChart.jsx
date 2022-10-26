@@ -4,7 +4,6 @@ import dayjs from 'dayjs';
 
 function CandleStickChart({ data: fake, width, height }) {
     const data = fake && fake.slice(-90);
-    console.log(data);
     const options = {
         chart: {
             id: '코스피',
