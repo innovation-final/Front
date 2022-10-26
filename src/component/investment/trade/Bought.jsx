@@ -164,7 +164,6 @@ function Bought() {
                 <Input
                     type="number"
                     min="0"
-                    max="100"
                     value={Number(price)}
                     onChange={event => onChange(event, setPrice)}
                     onBlur={event => onBlur(event, setPrice, priceRef)}

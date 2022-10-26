@@ -3,7 +3,7 @@ import ReactApexChart from 'react-apexcharts';
 import dayjs from 'dayjs';
 
 function CandleStickChart({ data: fake, width, height }) {
-    const data = fake && fake.slice(-90, -1);
+    const data = fake && fake.slice(-90);
     const options = {
         chart: {
             id: '코스피',
