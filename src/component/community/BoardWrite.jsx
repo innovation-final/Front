@@ -163,6 +163,7 @@ function BoardWrite({ isEdit, originData }) {
                             type="text"
                             placeholder="제목"
                             value={title}
+                            maxLength={20}
                             onChange={onChangeTitleHandler}
                         />
                     </CardDiv>

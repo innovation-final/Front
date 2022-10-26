@@ -110,7 +110,7 @@ const CardDivide2 = styled.div`
     width: 100%;
 `;
 const CardTitle = styled.div`
-    font-size: 3vmin;
+    font-size: 2.8vmin;
     line-height: 1.5;
     overflow: hidden;
     margin-left: 40px;
@@ -118,8 +118,6 @@ const CardTitle = styled.div`
     display: flex;
     margin-top: 1%;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 `;
 const CardCommentCount = styled.div`
     margin-left: 10px;
