@@ -62,7 +62,7 @@ function InvestmentHeader() {
                             계좌를 만들어 주세요
                             <ArrowRightAltIcon />
                             <AccountButton onClick={() => navigate(`/mypage`)}>
-                                계좌 계설하러 가기
+                                계좌 개설하러 가기
                             </AccountButton>
                         </MyInfoContainer>
                     ) : (
