@@ -2,23 +2,19 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import useGetUser from '../../hooks/useGetUser';
 import { userState } from '../../atoms/user/userState';
 import Notice from '../notice/Notice';
-import usePushNotification from '../../hooks/usePushNotification ';
 import { alarmState } from '../../atoms/alarms/alarmState';
 
 function HeaderProfile({ visible }) {
     const client = useQueryClient();
     const noticeData = client.getQueryData(['alarmNotice'])?.data.data;
-
-    const { fireNotificationWithTimeout } = usePushNotification();
     const navigate = useNavigate();
     const { data, isLoading } = useGetUser();
-    const id = data && data.id;
     const [user, setUser] = useRecoilState(userState);
     useEffect(() => {
         if (!isLoading && user) {
@@ -30,65 +26,8 @@ function HeaderProfile({ visible }) {
         }
     }, [isLoading]);
 
-    const [listening, setListening] = useState(false);
     // eslint-disable-next-line no-unused-vars
-    const [alarmData, setAlarmData] = useState([]);
-    // eslint-disable-next-line no-unused-vars
-    const [value, setValue] = useState(null);
-    // eslint-disable-next-line no-unused-vars
-    const [meventSource, msetEventSource] = useState(undefined);
-    // eslint-disable-next-line no-unused-vars
-    const count = useRecoilValue(alarmState);
-    // eslint-disable-next-line no-unused-vars
-    const [alarmCount, setAlarmCount] = useState(
-        Number(localStorage.getItem('newNoti')) || 0,
-    );
-
-    // 알림
-    useEffect(() => {
-        const eventSource =
-            id &&
-            new EventSource(`${process.env.REACT_APP_URL}subscribe/${id}`);
-
-        if (id && !listening) {
-            msetEventSource(eventSource);
-
-            eventSource.onopen = () => {
-                console.log('connection opened');
-            };
-
-            eventSource.onmessage = event => {
-                setAlarmData(old => [...old, event.data]);
-                setValue(event.data);
-            };
-
-            eventSource.onerror = event => {
-                if (event.target.readyState === EventSource.CLOSED) {
-                    console.log(
-                        'eventsource closed ( + event.target.readyState + )',
-                    );
-                }
-                eventSource.close();
-            };
-
-            setListening(true);
-        }
-
-        // return () => {
-        //     eventSource?.close();
-        //     console.log('eventsource closed');
-        // };
-    }, [listening, id]);
-
-    useEffect(() => {
-        const shiftData = alarmData.slice(1);
-        if (shiftData.length === 0) return;
-        const newAlarmData = JSON.parse(shiftData.at(-1));
-        fireNotificationWithTimeout('Stocks talk', 5000, {
-            body: newAlarmData.message,
-        });
-        setAlarmCount(props => props + 1);
-    }, [alarmData]);
+    const [alarmCount, setAlarmCount] = useRecoilState(alarmState);
 
     useEffect(() => {
         if (!localStorage.getItem('newNoti')) {

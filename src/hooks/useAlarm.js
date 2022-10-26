@@ -3,7 +3,7 @@ import { noticeAPI } from '../shared/api';
 
 const useAlarm = () => {
     const queryClient = useQueryClient();
-    const { data, isLoading } = useQuery(
+    const { data, isLoading, refetch } = useQuery(
         ['alarmNotice'],
         () => noticeAPI.getNotice(),
         { staleTime: Infinity, cacheTime: Infinity },
@@ -13,6 +13,6 @@ const useAlarm = () => {
         queryClient.invalidateQueries(['alarmNotice']);
     };
 
-    return { data: data?.data.data, isLoading, invalidate };
+    return { data: data?.data.data, isLoading, invalidate, refetch };
 };
 export default useAlarm;

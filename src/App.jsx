@@ -18,7 +18,7 @@ function App() {
             localStorage.setItem('app_theme', 'lightMode');
             setIsDark(localStorage.getItem('app_theme'));
         }
-    }, [isDark]);
+    }, []);
 
     return (
         <QueryClientProvider client={queryClient}>

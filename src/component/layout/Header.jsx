@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import HeaderOverview from '../header/HeaderOverview';
 import HeaderProfile from '../header/HeaderProfile';
+import Sse from '../sse/sse';
 
 function Header() {
     return (
@@ -9,6 +10,7 @@ function Header() {
             <Wrapper>
                 <HeaderOverview />
                 <HeaderProfile visible />
+                <Sse />
             </Wrapper>
         </StyleHeader>
     );
