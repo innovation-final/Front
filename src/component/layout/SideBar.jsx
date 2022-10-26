@@ -13,7 +13,7 @@ function SideBar() {
     // const { data } = useGetUser();
     const navigate = useNavigate();
     const wide = useRecoilValue(wideState);
-    const { handler } = useContext(DarkModeContext);
+    const { handler, isDark } = useContext(DarkModeContext);
     // const setIsDark = useSetRecoilState(isDarkState);
     const [isLogin] = useState(!!localStorage.getItem('access-token'));
 
@@ -62,7 +62,7 @@ function SideBar() {
     ];
     const menuBottomItems = [
         {
-            title: '다크모드',
+            title: isDark ? '다크모드' : '라이트모드',
             onClickFn: () => handler(),
         },
         {
