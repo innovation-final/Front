@@ -156,7 +156,6 @@ function MypageEdit() {
             }
         });
     };
-    console.log(img, editNickName, editProfileMsg);
 
     return (
         <div>
