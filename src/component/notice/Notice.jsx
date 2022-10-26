@@ -54,7 +54,7 @@ function Notice({ setModalOpen, modalOpen }) {
 
     useEffect(() => {
         refetch();
-    }, [modalOpen, setModalOpen]);
+    }, []);
 
     return (
         <Container modalOpen={modalOpen}>
