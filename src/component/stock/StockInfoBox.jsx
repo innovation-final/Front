@@ -151,6 +151,7 @@ const StyleFavorite = styled.div`
     display: flex;
 `;
 const StockInfoName = styled.div`
+    cursor: pointer;
     display: flex;
     align-items: center;
     font-size: 2.3rem;

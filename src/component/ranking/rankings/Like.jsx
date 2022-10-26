@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import ProfileOtherUser from '../../post/ProfileOtherUser';
 
 function Like({ likeRank }) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openModal = () => {
+        setIsOpen(true);
+    };
+    const closeModal = () => {
+        setIsOpen(false);
+    };
+
     return (
         <div>
             {likeRank &&
@@ -12,11 +22,18 @@ function Like({ likeRank }) {
                                 <TextLayout>🥇 {index + 1}등</TextLayout>
 
                                 <TextLayout>
-                                    <NickNameText>
+                                    <NickNameText onClick={openModal}>
                                         <Profile src={like.profileImg} />
                                         {like.nickname}
                                     </NickNameText>
                                 </TextLayout>
+                                {isOpen ? (
+                                    <ProfileOtherUser
+                                        isOpen={isOpen}
+                                        closeModal={closeModal}
+                                        userId={like.id}
+                                    />
+                                ) : null}
                                 <TextLayout>{like.likeNum}</TextLayout>
                             </StyleTableName>
                         );
@@ -26,11 +43,18 @@ function Like({ likeRank }) {
                             <StyleTableName key={like.nickname} likes={like}>
                                 <TextLayout>🥈 {index + 1}등</TextLayout>
                                 <TextLayout>
-                                    <NickNameText>
+                                    <NickNameText onClick={openModal}>
                                         <Profile src={like.profileImg} />
                                         {like.nickname}
                                     </NickNameText>
                                 </TextLayout>
+                                {isOpen ? (
+                                    <ProfileOtherUser
+                                        isOpen={isOpen}
+                                        closeModal={closeModal}
+                                        userId={like.id}
+                                    />
+                                ) : null}
 
                                 <TextLayout>{like.likeNum}</TextLayout>
                             </StyleTableName>
@@ -41,11 +65,18 @@ function Like({ likeRank }) {
                             <StyleTableName key={like.nickname} likes={like}>
                                 <TextLayout>🥉 {index + 1}등</TextLayout>
                                 <TextLayout>
-                                    <NickNameText>
+                                    <NickNameText onClick={openModal}>
                                         <Profile src={like.profileImg} />
                                         {like.nickname}
                                     </NickNameText>
                                 </TextLayout>
+                                {isOpen ? (
+                                    <ProfileOtherUser
+                                        isOpen={isOpen}
+                                        closeModal={closeModal}
+                                        userId={like.id}
+                                    />
+                                ) : null}
                                 <TextLayout>{like.likeNum}</TextLayout>
                             </StyleTableName>
                         );
@@ -54,11 +85,18 @@ function Like({ likeRank }) {
                         <StyleTableName key={like.nickname} likes={like}>
                             <TextLayout>{index + 1}등</TextLayout>
                             <TextLayout>
-                                <NickNameText>
+                                <NickNameText onClick={openModal}>
                                     <Profile src={like.profileImg} />
                                     {like.nickname}
                                 </NickNameText>
                             </TextLayout>
+                            {isOpen ? (
+                                <ProfileOtherUser
+                                    isOpen={isOpen}
+                                    closeModal={closeModal}
+                                    userId={like.id}
+                                />
+                            ) : null}
                             <TextLayout>{like.likeNum}</TextLayout>
                         </StyleTableName>
                     );
@@ -69,6 +107,7 @@ function Like({ likeRank }) {
 
 export default Like;
 const NickNameText = styled.div`
+    cursor: pointer;
     font-weight: bold;
     margin-right: 40px;
     justify-content: center;
