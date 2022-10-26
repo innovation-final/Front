@@ -95,7 +95,7 @@ const Wrapper = styled.div``;
 const Title = styled.div`
     height: 50px;
     font-weight: 600;
-    font-size: 1.3vw;
+    font-size: 1.8rem;
     line-height: 50px;
 `;
 
@@ -126,6 +126,9 @@ const RowTable = styled.ul`
     padding-left: 100px;
     width: 100%;
     height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 const ColumnTable = styled.ul`
@@ -140,6 +143,9 @@ const ColumnTable = styled.ul`
     background-color: ${props => props.theme.secondaryColor};
     border-right: 1px solid ${props => props.theme.borderColor};
     z-index: -1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 const DataTable = styled.div`
     transform: translate(32px, 18px);
@@ -147,6 +153,9 @@ const DataTable = styled.div`
     padding-right: 40px;
     padding-bottom: 25px;
     height: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 const ItemList = styled.ul`
     display: flex;
@@ -156,6 +165,9 @@ const ItemList = styled.ul`
     justify-content: space-evenly;
     padding: 10px;
     margin-bottom: 7px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 const ItemContent = styled.li`
     text-align: center;
@@ -163,6 +175,7 @@ const ItemContent = styled.li`
     font-size: 14px;
     width: 100%;
     white-space: pre-wrap;
+    overflow: hidden;
 `;
 const Data = styled.li`
     text-align: center;
@@ -170,6 +183,9 @@ const Data = styled.li`
     font-size: 14px;
     width: 100%;
     margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 const Unit = styled.span`
     position: absolute;

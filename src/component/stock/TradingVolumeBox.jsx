@@ -47,6 +47,10 @@ const Title = styled.div`
     font-weight: 600;
     font-size: 1.3vw;
     line-height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.8rem;
 `;
 const VolumeWrapper = styled.div`
     display: flex;
@@ -73,6 +77,9 @@ const TableData = styled.div`
     justify-content: space-around;
     align-items: center;
     min-height: 280px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 const VolumeInfo = styled.div`
     display: flex;

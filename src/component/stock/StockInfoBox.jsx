@@ -148,9 +148,12 @@ const StyleFavorite = styled.div`
 const StockInfoName = styled.div`
     display: flex;
     align-items: center;
-    font-size: 1.7vw;
+    font-size: 2.3rem;
     font-weight: 700;
     margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 const StockInfoCode = styled.div`
     display: flex;
