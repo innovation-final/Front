@@ -76,18 +76,17 @@ function Bought() {
                     },
                     {
                         onError: error => {
-                            if (
-                                error.response.data.error.code === 'ORDER_FAIL'
-                            ) {
+                            if (error.response.status === 400) {
                                 Swal.fire('주문 수량을 확인해주세요.');
-                            }
-                            if (
+                                return;
+                            } else if (
                                 error.response.data.error.code ===
                                 'OUT_OF_MARKET_HOUR'
                             ) {
                                 Swal.fire(
                                     '장마감입니다. / 장시간 (09:00~21:00)',
                                 );
+                                return;
                             } else {
                                 Swal.fire('서버 오류입니다.');
                             }
@@ -149,6 +148,7 @@ function Bought() {
                 <Input
                     type="number"
                     min="0"
+                    max="100"
                     value={Number(quantity)}
                     onChange={event => onChange(event, setQuantity)}
                     onBlur={event => onBlur(event, setQuantity, qunatityRef)}
@@ -164,6 +164,7 @@ function Bought() {
                 <Input
                     type="number"
                     min="0"
+                    max="100"
                     value={Number(price)}
                     onChange={event => onChange(event, setPrice)}
                     onBlur={event => onBlur(event, setPrice, priceRef)}
