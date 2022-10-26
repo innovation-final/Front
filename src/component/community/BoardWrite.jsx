@@ -194,6 +194,7 @@ function BoardWrite({ isEdit, originData }) {
 export default BoardWrite;
 const WriteTitle = styled.div`
     display: flex;
+    margin-top: 10px;
     margin-bottom: 10px;
     height: 20px;
     align-items: center;
