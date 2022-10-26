@@ -1,18 +1,13 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import MainPage from '../component/login/LoginPage';
 import Spinner from '../static/Spinner.gif';
-import useWindowSize from '../hooks/useWindowSize';
 import Developers from '../component/login/Developer';
 
 function Login() {
     const [isLoading, setIsLoading] = useState(false);
-    const { width } = useWindowSize();
     const outerDivRef = useRef();
-    const isPC = useMemo(() => {
-        return width >= 1024;
-    }, [width]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -30,7 +25,6 @@ function Login() {
                 // 스크롤 내릴 때
                 if (scrollTop >= 0 && scrollTop < pageHeight) {
                     //현재 1페이지
-                    console.log('현재 1페이지, down');
                     outerDivRef.current.scrollTo({
                         top: pageHeight,
                         left: 0,
@@ -41,7 +35,6 @@ function Login() {
                     scrollTop < pageHeight * 2
                 ) {
                     //현재 2페이지
-                    console.log('현재 2페이지, down');
                     outerDivRef.current.scrollTo({
                         top: pageHeight * 2,
                         left: 0,
@@ -52,7 +45,6 @@ function Login() {
                 // 스크롤 올릴 때
                 if (scrollTop >= 0 && scrollTop < pageHeight) {
                     //현재 1페이지
-                    console.log('현재 1페이지, up');
                     outerDivRef.current.scrollTo({
                         top: 0,
                         left: 0,
@@ -63,7 +55,6 @@ function Login() {
                     scrollTop < pageHeight * 2
                 ) {
                     //현재 2페이지
-                    console.log('현재 2페이지, up');
                     outerDivRef.current.scrollTo({
                         top: 0,
                         left: 0,
