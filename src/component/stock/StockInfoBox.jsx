@@ -105,7 +105,7 @@ function StockInfoBox({ stockData }) {
                     <StockInfoRate colorParser={colorParser(dayToDay)}>
                         {`전일대비 ${arrowParser(dayToDay)}
                           ${esUSNumberParser(dayToDay)} |
-                        ${toFixTwoPoint(change)}%`}
+                        등락률 ${toFixTwoPoint(change)}%`}
                     </StockInfoRate>
                 </StockInfoTitleBox>
             </StockInfoLeftBox>
