@@ -137,7 +137,9 @@ function ProfileOtherUser({ isOpen, closeModal, userId }) {
                                         목표 수익률
                                     </Text>
                                     <Content>
-                                        {userInfo?.account?.targetReturnRate}%
+                                        {userInfo?.account?.targetReturnRate *
+                                            100}
+                                        %
                                     </Content>
                                 </TextLayout>
                             </Account>

@@ -44,6 +44,7 @@ const Card = styled.div`
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 const BankCard = styled.div`
+    overflow: scroll;
     border: 2px solid ${props => props.theme.borderColor};
     border-bottom: 20px double ${props => props.theme.borderColor};
     margin: 20px;
