@@ -55,7 +55,6 @@ function ChatScreen({ publish, user }) {
                         ) : (
                             <EnterMessage
                                 key={`${uuid()} ${Date.now()}`}
-                                isMine={ch.userId === id}
                             >{`${ch.message}`}</EnterMessage>
                         ),
                     )}

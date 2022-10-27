@@ -73,7 +73,7 @@ const TableName = styled.div`
 `;
 const TableData = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: space-around;
     align-items: center;
     min-height: 280px;

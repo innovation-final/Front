@@ -65,10 +65,14 @@ function MypageEdit() {
     };
 
     // 자기소개
-    const [editProfileMsg, setProfileMsg] = React.useState(profileMsg || '');
+    const [editProfileMsg, setProfileMsg] = React.useState(
+        profileMsg === null ? '' : profileMsg,
+    );
     const onChangeProfileMsg = event => {
-        setProfileMsg(event.target.value);
+        setProfileMsg(event.target.value === null ? '' : event.target.value);
     };
+
+    console.log(editProfileMsg);
 
     // 탈퇴
 
@@ -115,7 +119,11 @@ function MypageEdit() {
     };
     const onClickSetEdit = () => {
         setEditNickName(nickname);
-        setProfileMsg(profileMsg);
+        if (profileMsg === null) {
+            setProfileMsg('');
+        } else {
+            setProfileMsg(profileMsg);
+        }
         setIsEdit(true);
     };
 
@@ -139,7 +147,9 @@ function MypageEdit() {
                 setIsEdit(false);
                 const formData = new FormData();
                 // key값 서버랑 동일해야됨
-                formData.append('profileImg', img);
+                if (img !== null) {
+                    formData.append('profileImg', img);
+                }
                 formData.append('nickname', editNickName);
                 formData.append('profileMsg', editProfileMsg);
 

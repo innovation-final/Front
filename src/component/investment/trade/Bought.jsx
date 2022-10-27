@@ -239,7 +239,7 @@ const Radios = styled.div`
     label {
         [type='radio'] {
             appearance: none;
-            border: max(2px, 0.1em) solid gray;
+            border: max(2px, 0.1em) solid ${props => props.theme.secondaryColor};
             border-radius: 50%;
             transition: all ease-in-out 0.1s;
             margin: 0px 10px;

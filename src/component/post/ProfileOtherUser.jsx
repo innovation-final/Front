@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import CardContent from '@mui/material/CardContent';
 import SavingsIcon from '@mui/icons-material/Savings';
+import MypageBadge from '../mypage/MyPageBadge';
 import api from '../../shared/api';
 import { dateParser, esUSNumberParser } from '../../util/parser';
 
@@ -33,6 +34,7 @@ const styleModal = {
         borderColor: 'skyblue',
         borderWidth: '2px',
         outline: 'none',
+        fontFamily: 'Pretendard-Regular',
         zIndex: 999,
     },
 };
@@ -42,6 +44,7 @@ function ProfileOtherUser({ isOpen, closeModal, userId }) {
         api.get(`/profile/${userId}`),
     );
     const userInfo = data?.data?.data;
+    console.log(userInfo);
     return (
         <Modal
             isOpen={isOpen}
@@ -63,9 +66,6 @@ function ProfileOtherUser({ isOpen, closeModal, userId }) {
                             >
                                 {userInfo?.nickname}
                             </NickNameTypography>
-                            <Typography variant="body2" color="text.secondary">
-                                {userInfo?.email}
-                            </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 {userInfo?.profileMsg}
                             </Typography>
@@ -103,8 +103,8 @@ function ProfileOtherUser({ isOpen, closeModal, userId }) {
                                     <Content>
                                         {dateParser(
                                             userInfo?.account?.createdAt,
-                                        )}{' '}
-                                        ~{' '}
+                                        )}
+                                        ~
                                         {dateParser(
                                             userInfo?.account?.expireAt,
                                         )}
@@ -142,8 +142,25 @@ function ProfileOtherUser({ isOpen, closeModal, userId }) {
                                         %
                                     </Content>
                                 </TextLayout>
+                                <TextLayout>
+                                    <Text
+                                        gutterBottom
+                                        variant="h5"
+                                        component="div"
+                                    >
+                                        현재 수익률
+                                    </Text>
+                                    <Content>
+                                        {userInfo?.account?.totalReturnRate *
+                                            100}
+                                        %
+                                    </Content>
+                                </TextLayout>
                             </Account>
                         )}
+                        <BadgeWrapper>
+                            <MypageBadge badge={userInfo?.achievements} />
+                        </BadgeWrapper>
                     </AccountLayout>
                 </Block>
             </StyleLayout>
@@ -160,6 +177,7 @@ const StyleLayout = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
+    color: ${props => props.theme.textColor};
 `;
 
 const Block = styled.div`
@@ -172,8 +190,9 @@ const Block = styled.div`
 
 const Typography = styled.p`
     margin: 5px;
-    color: ${props => props.theme.textColor};
+    color: black;
 `;
+
 const ImgCard = styled.div`
     border-radius: 500px;
     position: relative;
@@ -186,7 +205,8 @@ const NickNameTypography = styled.p`
     font-weight: bold;
     margin: 5px;
     font-size: 25px;
-    color: ${props => props.theme.textColor};
+    color: black;
+    margin-bottom: 10px;
 `;
 const CardMedia = styled.img`
     border-radius: 50%;
@@ -196,7 +216,8 @@ const CardMedia = styled.img`
     justify-content: center;
     object-fit: cover;
     /* margin: 5% 30% 1% 20%; */
-    width: 30%;
+    width: 200px;
+    height: 200px;
 
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
         rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
@@ -211,11 +232,12 @@ const AccountLayout = styled.div`
     flex-direction: column;
     position: relative;
     justify-content: space-between;
+    font-family: 'Pretendard-Regular';
 `;
 const IconText = styled.p`
     font-weight: bold;
     margin: 5px;
-    color: ${props => props.theme.textColor};
+    color: black;
 `;
 const IconLayout = styled.div`
     display: flex;
@@ -246,7 +268,7 @@ const Text = styled.p`
     text-overflow: ellipsis; // 로 ... 을 만들기
     white-space: nowrap;
     margin-left: 20px;
-    color: ${props => props.theme.textColor};
+    color: black;
     word-break: break-all;
     flex-grow: ${props => props.flexRatio};
     justify-content: space-between;
@@ -261,8 +283,12 @@ const Content = styled.p`
     font-weight: bold;
     margin-left: 20px;
     font-size: 1.5vmin;
-    color: ${props => props.theme.textColor};
+    color: black;
     display: flex;
     flex-direction: row;
     padding: 5px;
+`;
+
+const BadgeWrapper = styled.div`
+    margin-top: 20px;
 `;

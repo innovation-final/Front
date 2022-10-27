@@ -80,8 +80,16 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 400px;
     height: 100%;
+    @media screen and (min-width: 1400px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 const Header = styled.div`
