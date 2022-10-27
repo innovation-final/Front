@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import * as StompJs from '@stomp/stompjs';
-// import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ChatScreen from './ChatScreen';
 import { userState } from '../../atoms/user/userState';
 import { chatLogState, toggleLiveChat } from '../../atoms/chat/chatState';
@@ -22,6 +22,7 @@ function Messenger() {
 
     const subscribeCallback = data => {
         setChatList(props => [...props, data]);
+        console.log(data);
         const chatScreen = document.getElementById('chatting');
         setTimeout(() => {
             if (chatScreen !== null)
@@ -35,6 +36,7 @@ function Messenger() {
             subscribeCallback(jsonBody, setChatList);
         });
     };
+
     const publish = (ch, type) => {
         if (!client.current.connected) return;
         client.current.publish({
@@ -75,10 +77,10 @@ function Messenger() {
             <Speaker />
             <ChatScreen publish={publish} user={user} />
             <HomeButton />
-            {/* <CurrentPerson>
+            <CurrentPerson>
                 <PeopleAltIcon />
                 123
-            </CurrentPerson> */}
+            </CurrentPerson>
         </StyleMessenger>
     );
 }
@@ -138,19 +140,19 @@ const Speaker = styled.span`
     background-color: gray;
 `;
 
-// const CurrentPerson = styled.div`
-//     position: absolute;
-//     width: 100px;
-//     height: 100px;
-//     border-radius: 50%;
-//     z-index: 10;
+const CurrentPerson = styled.div`
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    z-index: 10;
 
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     font-weight: 600;
-//     font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15px;
 
-//     top: -15px;
-//     right: 15px;
-// `;
+    top: -15px;
+    right: 15px;
+`;
