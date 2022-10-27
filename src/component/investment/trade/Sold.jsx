@@ -112,6 +112,7 @@ function Sold() {
                             setQuantity(0);
                             setPrice(0);
                             setIsMarket(false);
+                            priceRef.current.disabled = false;
                         },
                     },
                 );
@@ -120,8 +121,6 @@ function Sold() {
                 setQuantity(0);
                 setPrice(0);
                 setIsMarket(false);
-                /* eslint-disable no-param-reassign */
-                priceRef.current.disabled = true;
             } else {
                 Swal.fire('취소하였습니다.');
             }
