@@ -44,7 +44,6 @@ function ProfileOtherUser({ isOpen, closeModal, userId }) {
         api.get(`/profile/${userId}`),
     );
     const userInfo = data?.data?.data;
-    console.log(userInfo);
     return (
         <Modal
             isOpen={isOpen}

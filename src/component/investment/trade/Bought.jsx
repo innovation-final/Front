@@ -76,8 +76,11 @@ function Bought() {
                     },
                     {
                         onError: error => {
-                            if (error.response.status === 400) {
-                                Swal.fire('주문 수량을 확인해주세요.');
+                            if (
+                                error.response.data.error.message ===
+                                'Over Balance'
+                            ) {
+                                Swal.fire('잔액을 확인해주세요.');
                                 return;
                             } else if (
                                 error.response.data.error.code ===

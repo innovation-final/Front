@@ -77,8 +77,18 @@ function Sold() {
                     },
                     {
                         onError: error => {
-                            if (error.response.status === 400) {
-                                Swal.fire('주문 수량을 확인해주세요.');
+                            if (
+                                error.response.data.error.message ===
+                                'Over Holding Amount'
+                            ) {
+                                Swal.fire('보유 갯수를 초과하였습니다..');
+                                return;
+                            }
+                            if (
+                                error.response.data.error.message ===
+                                'Not Owner of the Stock'
+                            ) {
+                                Swal.fire('보유하지 않은 주식입니다.');
                                 return;
                             }
                             if (
