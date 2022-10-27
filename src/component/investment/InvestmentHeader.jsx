@@ -54,7 +54,7 @@ function InvestmentHeader() {
                     <TutorialButton onClick={() => onTutorial()}>
                         ?
                     </TutorialButton>
-                    <TimeInfo>스톡스톡 장시간 (09:00~21:00)</TimeInfo>
+                    <TimeInfo>스톡스톡 장시간 (09:30~21:00)</TimeInfo>
                 </SearchBox>
                 <MyInfo>
                     {!myAccount.data?.balance ? (
