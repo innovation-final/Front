@@ -30,7 +30,7 @@ function RelatedPostsBox({ isPC }) {
                         <NoArticle>관련 게시글이 없습니다.</NoArticle>
                     ) : (
                         <TableData>
-                            {data.slice(-8, -1).map(post => (
+                            {data.slice(-8).map(post => (
                                 <ArticleInfo
                                     key={uuid()}
                                     onClick={() => navigate(`/post/${post.id}`)}
