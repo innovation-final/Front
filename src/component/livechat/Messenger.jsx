@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
@@ -16,13 +16,13 @@ const WS_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 function Messenger() {
     const setChatList = useSetRecoilState(chatLogState);
+    const [currentUser, setCurrent] = useState(0);
     const onChat = useRecoilValue(toggleLiveChat);
     const user = useRecoilValue(userState);
     const client = useRef({});
 
     const subscribeCallback = data => {
         setChatList(props => [...props, data]);
-        console.log(data);
         const chatScreen = document.getElementById('chatting');
         setTimeout(() => {
             if (chatScreen !== null)
@@ -54,7 +54,8 @@ function Messenger() {
     const connect = () => {
         client.current = new StompJs.Client({
             brokerURL: WS_URL,
-            onConnect: () => {
+            onConnect: frame => {
+                console.log(frame);
                 subscribe(setChatList);
             },
         });
