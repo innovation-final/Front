@@ -72,8 +72,6 @@ function MypageEdit() {
         setProfileMsg(event.target.value === null ? '' : event.target.value);
     };
 
-    console.log(editProfileMsg);
-
     // 탈퇴
 
     const deleteMypage = () => {
@@ -159,8 +157,31 @@ function MypageEdit() {
                         localStorage.setItem('nickName', editNickName);
                         localStorage.setItem('imgUrl', userImage);
                     },
-                    onError: () => {
-                        Swal.fire('프로필 사진을 선택해주세요.');
+                    onError: error => {
+                        if (
+                            error.response.data.error.code ===
+                            'NICKNAME_SIZE_OVER'
+                        ) {
+                            Swal.fire('닉네임이 너무 깁니다.(20자 이내)');
+                            return;
+                        }
+                        if (
+                            error.response.data.error.code ===
+                            'PROFILE_MSG_SIZE_OVER'
+                        ) {
+                            Swal.fire('프로필메시지가 너무 깁니다.(50자 이내)');
+                            return;
+                        }
+                        if (
+                            error.response.data.error.code ===
+                            'BOTH_SIZE_OVER"),'
+                        ) {
+                            Swal.fire(
+                                '닉네임과 프로필메시지가 너무 깁니다.(20자 이내, 50자 이내)',
+                            );
+                            return;
+                        }
+                        Swal.fire('서버 오류입니다.');
                     },
                 });
             }
@@ -245,9 +266,9 @@ function MypageEdit() {
                             <InputBox>
                                 <Input
                                     onChange={onChangeNickName}
-                                    placeholder="닉네임 (6자 이내)"
+                                    placeholder="닉네임"
                                     value={editNickName}
-                                    maxLength={6}
+                                    maxLength={20}
                                 />
                             </InputBox>
                             <ProfileMsgBox>
