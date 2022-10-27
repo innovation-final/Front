@@ -52,11 +52,11 @@ function ChatScreen({ publish, user }) {
                                     isMine={ch.userId === id}
                                 >{`${ch.message}`}</MessageContainer>
                             </Wrapper>
-                        ) : (
+                        ) : ch.type === 'ENTER' ? (
                             <EnterMessage
                                 key={`${uuid()} ${Date.now()}`}
                             >{`${ch.message}`}</EnterMessage>
-                        ),
+                        ) : null,
                     )}
                 </MessageBox>
                 <Form onSubmit={event => handleSubmit(event, chat)}>
