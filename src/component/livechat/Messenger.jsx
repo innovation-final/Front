@@ -33,7 +33,6 @@ function Messenger() {
     const subscribe = () => {
         client.current.subscribe(`/sub/chat`, body => {
             const jsonBody = JSON.parse(body.body);
-            console.log(jsonBody);
             subscribeCallback(jsonBody, setChatList);
         });
     };
@@ -80,7 +79,7 @@ function Messenger() {
             <HomeButton />
             <CurrentPerson>
                 <PeopleAltIcon />
-                123
+                {currentUser}
             </CurrentPerson>
         </StyleMessenger>
     );
