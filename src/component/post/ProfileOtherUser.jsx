@@ -150,8 +150,10 @@ function ProfileOtherUser({ isOpen, closeModal, userId }) {
                                         현재 수익률
                                     </Text>
                                     <Content>
-                                        {userInfo?.account?.totalReturnRate *
-                                            100}
+                                        {(
+                                            userInfo?.account?.totalReturnRate *
+                                            100
+                                        ).toFixed(3)}
                                         %
                                     </Content>
                                 </TextLayout>

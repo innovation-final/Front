@@ -85,7 +85,7 @@ function Login() {
                     <img src={Spinner} alt="로딩중입니다" />
                 </Loading>
             )}
-            <Outer ref={outerDivRef} className="outer">
+            <Outer ref={outerDivRef} isPC={isPC} className="outer">
                 <MainPage id="main" bgColor="skyblue" />
                 {isPC ? <Developers /> : null}
             </Outer>
@@ -96,7 +96,7 @@ function Login() {
 export default Login;
 
 const Outer = styled.div`
-    height: 100vh;
+    height: ${props => (props.isPC ? 100 : 120)}vh;
     overflow-y: auto;
 `;
 

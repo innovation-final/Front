@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import * as StompJs from '@stomp/stompjs';
+// import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ChatScreen from './ChatScreen';
 import { userState } from '../../atoms/user/userState';
 import { chatLogState, toggleLiveChat } from '../../atoms/chat/chatState';
@@ -74,6 +75,10 @@ function Messenger() {
             <Speaker />
             <ChatScreen publish={publish} user={user} />
             <HomeButton />
+            {/* <CurrentPerson>
+                <PeopleAltIcon />
+                123
+            </CurrentPerson> */}
         </StyleMessenger>
     );
 }
@@ -132,3 +137,20 @@ const Speaker = styled.span`
     top: 25px;
     background-color: gray;
 `;
+
+// const CurrentPerson = styled.div`
+//     position: absolute;
+//     width: 100px;
+//     height: 100px;
+//     border-radius: 50%;
+//     z-index: 10;
+
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     font-weight: 600;
+//     font-size: 15px;
+
+//     top: -15px;
+//     right: 15px;
+// `;
