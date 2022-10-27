@@ -102,6 +102,7 @@ function Bought() {
                             setQuantity(0);
                             setPrice(0);
                             setIsMarket(false);
+                            priceRef.current.disabled = false;
                         },
                     },
                 );
