@@ -65,7 +65,7 @@ function MypageEdit() {
     };
 
     // 자기소개
-    const [editProfileMsg, setProfileMsg] = React.useState(profileMsg);
+    const [editProfileMsg, setProfileMsg] = React.useState(profileMsg || '');
     const onChangeProfileMsg = event => {
         setProfileMsg(event.target.value);
     };
@@ -164,7 +164,7 @@ function MypageEdit() {
                     <>
                         <Button onClick={onClickSetEdit}>
                             <EditCogBtn src={editcog} />
-                        </Button>{' '}
+                        </Button>
                         <ImgCard>
                             <CardMedia src={profileImg} />
                         </ImgCard>

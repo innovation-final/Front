@@ -4,7 +4,7 @@ import api from '../shared/api';
 const useGetOrder = (startDate, endDate, isSigned, orderCategory) => {
     const queryClient = useQueryClient();
 
-    const { data, isLoading, refetch } = useQuery('order', () =>
+    const { data, isLoading, isError, refetch } = useQuery('order', () =>
         api.get(
             `auth/order?startDate=${startDate}&endDate=${endDate}&isSigned=${isSigned}&orderCategory=${orderCategory}`,
         ),
@@ -14,7 +14,7 @@ const useGetOrder = (startDate, endDate, isSigned, orderCategory) => {
         queryClient.invalidateQueries('order');
     };
 
-    return { data: data?.data.data, isLoading, invalidate, refetch };
+    return { data: data?.data.data, isLoading, isError, invalidate, refetch };
 };
 
 export default useGetOrder;
