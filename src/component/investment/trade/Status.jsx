@@ -93,9 +93,9 @@ function Status() {
                 {isLoading ? (
                     <LoadingSpinner />
                 ) : isError ? (
-                    renderData(data, option2, option)
-                ) : (
                     <div>정보가 없습니다.</div>
+                ) : (
+                    renderData(data, option2, option)
                 )}
             </Contents>
         </Container>
