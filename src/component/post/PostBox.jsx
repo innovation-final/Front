@@ -170,7 +170,16 @@ function PostBox() {
                 </Header>
 
                 <ProfileCard user={postInfo.member} />
-                <Content>{postInfo.content}</Content>
+                <Content>
+                    {postInfo.content.split('\n').map(line => {
+                        return (
+                            <span>
+                                {line}
+                                <br />
+                            </span>
+                        );
+                    })}
+                </Content>
             </ContentWrapper>
             <LikeToggleBox>
                 <Buttons>

@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import FavoritesIcon from '../elements/FavoritesIcon';
 import { stockAPI } from '../../shared/api';
 import { esUSNumberParser } from '../../util/parser';
+import LoadingSpinner from '../elements/LoadingSpinner';
 
 function InterestStockList({
     interestStocks,
@@ -11,7 +12,9 @@ function InterestStockList({
     indexNum,
     colorChange,
     nowColorNum,
+    isLoading,
 }) {
+
     const { current, name, doneInterest, code } = interestStocks;
 
     // 관심종목 등록
@@ -29,7 +32,7 @@ function InterestStockList({
             queryClient.invalidateQueries();
         },
     });
-
+    if (isLoading) return <LoadingSpinner />;
     const dislikeHandler = e => {
         e.preventDefault();
         setLikes(!like);
