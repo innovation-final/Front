@@ -22,7 +22,7 @@ function LoginHeader() {
                 >
                     <li>
                         <Link to="#main" className="menu-item">
-                            PC환경에서 사용을 권장합니다.
+                            시스템 점검중입니다.
                         </Link>
                     </li>
                 </ul>
