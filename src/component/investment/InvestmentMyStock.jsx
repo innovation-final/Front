@@ -16,7 +16,7 @@ function InvestmentMyStock() {
             </IconLayout>
             <StyleTableName>
                 <TextLayout>종목</TextLayout>
-                <TextLayout>보유가</TextLayout>
+                <TextLayout>매수단가</TextLayout>
                 <TextLayout>평가손익</TextLayout>
                 <TextLayout>수익률</TextLayout>
                 <TextLayout>잔고수량</TextLayout>
