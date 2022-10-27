@@ -12,7 +12,9 @@ import InterestPost from './InterestPost';
 
 function InterestMain() {
     const [param, setParam] = useState('');
-    const { data } = useQuery(['stock'], () => stockAPI.getLikeStock());
+    const { data, isLoading } = useQuery(['stock'], () =>
+        stockAPI.getLikeStock(),
+    );
 
     const interestStock = data?.data.data;
     const onClick = code => {
@@ -36,6 +38,7 @@ function InterestMain() {
                         interestStock.map((interestStocks, index) => {
                             return index === nowColorNum ? (
                                 <InterestStockList
+                                    isLoading={isLoading}
                                     key={interestStocks.name}
                                     _onClick={() =>
                                         onClick(interestStocks.code)
@@ -48,6 +51,7 @@ function InterestMain() {
                                 />
                             ) : (
                                 <InterestStockList
+                                    isLoading={isLoading}
                                     key={interestStocks.name}
                                     _onClick={() =>
                                         onClick(interestStocks.code)

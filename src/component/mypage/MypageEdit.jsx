@@ -201,10 +201,13 @@ function MypageEdit() {
                     </>
                 ) : (
                     <>
-                        <EditLayout onClick={onClickEdit}>
-                            <EditButton>수정완료</EditButton>
-                        </EditLayout>
                         <ImgCard>
+                            {' '}
+                            <WithdrawLayout>
+                                <WithdrawButton onClick={onDelete}>
+                                    회원탈퇴
+                                </WithdrawButton>
+                            </WithdrawLayout>
                             {profileImg && (
                                 <CardMedia
                                     src={userImage || profileImg}
@@ -244,15 +247,14 @@ function MypageEdit() {
                                     value={editProfileMsg || ''}
                                     maxLength={50}
                                 />
-                            </ProfileMsgBox>{' '}
-                        </InputContent>{' '}
-                        <WithdrawLayout>
-                            <WithdrawButton onClick={onDelete}>
-                                회원탈퇴
-                            </WithdrawButton>
-                        </WithdrawLayout>
+                            </ProfileMsgBox>
+                        </InputContent>
+
+                        <EditLayout onClick={onClickEdit}>
+                            <EditButton>수정완료</EditButton>
+                        </EditLayout>
                     </>
-                )}{' '}
+                )}
             </ProfileCard>
         </div>
     );
@@ -312,10 +314,10 @@ const Button = styled.button`
 `;
 const EditLayout = styled.div`
     margin-top: 10px;
-    position: absolute;
+    display: flex;
+    justify-content: center;
     z-index: 15;
-    top: 7px;
-    right: 0;
+    margin-top: -80px;
 `;
 const EditButton = styled.span`
     margin: 10px;
@@ -326,8 +328,6 @@ const EditButton = styled.span`
     font-weight: bold;
     font-size: 15px;
     padding: 10px;
-    right: 2px;
-    top: 50px;
 `;
 const InputContent = styled.div`
     padding: 60px;
@@ -340,23 +340,19 @@ const ContentLayout = styled.div`
 const WithdrawLayout = styled.div`
     margin-top: 5px;
     position: absolute;
-    right: 16%;
-    bottom: 10%;
+    left: 10px;
+    top: 1%;
 `;
 const WithdrawButton = styled.button`
     background-color: transparent;
-    border: 1px solid #e64343;
+    border: none;
     border-radius: 5px;
     font-size: 10px;
     color: ${props => props.theme.withDrawTextColor};
     cursor: pointer;
     padding: 5px;
-    background-color: rgba(254, 112, 112, 0.13);
     width: 60px;
     position: absolute;
-    &:hover {
-        background-color: #ff5858;
-    }
 `;
 const CogBtn = styled.img`
     width: 40px;

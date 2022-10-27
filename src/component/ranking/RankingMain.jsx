@@ -48,13 +48,6 @@ function RankingMain() {
                     </Icon>
                     커뮤니티 좋아요 랭킹
                 </IconButton>
-                {/* <SelectLayout>
-                    <SelectBox
-                        options={options}
-                        selectedOption={option}
-                        _getOption={getOption}
-                    />
-                </SelectLayout> */}
             </IconLayout>
             <MainContainer>
                 <Container>
