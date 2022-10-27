@@ -68,7 +68,7 @@ function InvestmentHeader() {
                     ) : (
                         <>
                             <MyBalance>
-                                <Title>내 잔고</Title>
+                                <Title>보유 현금</Title>
                                 <Money>
                                     {myAccount.data &&
                                         esUSNumberParser(
@@ -186,6 +186,7 @@ const MyBalance = styled.div`
         position: relative;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
             rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     }
@@ -208,11 +209,23 @@ const AccountButton = styled.button`
 `;
 const Money = styled.div`
     padding-right: 40px;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (min-width: 1400px) {
+        padding-right: 20%;
+        font-size: 0.9vw;
+        display: flex;
+        margin-top: 1px;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 const Unit = styled.div`
     position: absolute;
     right: 10px;
-    bottom: 11px;
+    bottom: 11.5px;
 `;
 
 const TutorialButton = styled.div`

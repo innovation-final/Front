@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
@@ -12,6 +12,7 @@ import Button from '../elements/Button';
 import { timeToToday } from '../../util/parser';
 import { userState } from '../../atoms/user/userState';
 import useMutateComment from '../../hooks/useMutateComment';
+import ProfileOtherUser from '../post/ProfileOtherUser';
 
 const commentAnimation = {
     start: { opacity: 0, y: 10 },
@@ -27,6 +28,14 @@ function Comment(props) {
     const [isEdit, setIsEdit] = React.useState(false);
 
     const user = useRecoilValue(userState);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openModal = () => {
+        setIsOpen(true);
+    };
+    const closeModal = () => {
+        setIsOpen(false);
+    };
 
     const { deleteMutation, editMutation } = useMutateComment(id);
 
@@ -67,7 +76,7 @@ function Comment(props) {
             <WriterBox>
                 <WrapperUserInfo>
                     <ProfileImage src={member.profileImg} />
-                    <Writer>{member.nickname}</Writer>
+                    <Writer onClick={openModal}>{member.nickname}</Writer>
                     <DateBox>{timeToToday(date)}</DateBox>
                 </WrapperUserInfo>
                 {member.id === user.id && (
@@ -135,6 +144,13 @@ function Comment(props) {
                 </Wrapper>
                 {/* <Tail /> */}
             </StyleComment>
+            {isOpen ? (
+                <ProfileOtherUser
+                    isOpen={isOpen}
+                    closeModal={closeModal}
+                    userId={member.id}
+                />
+            ) : null}
         </WrapperContainer>
     );
 }
@@ -159,7 +175,6 @@ const WrapperContainer = styled(motion.div)`
     flex-direction: column;
     align-items: center;
     z-index: 0;
-
     border-bottom: 1px solid ${props => props.theme.borderColor};
     margin-bottom: 10px;
 `;
@@ -174,6 +189,7 @@ const WriterBox = styled.div`
 const Writer = styled.div`
     font-size: 15px;
     margin-left: 7px;
+    cursor: pointer;
 `;
 const StyleComment = styled.div`
     position: relative;

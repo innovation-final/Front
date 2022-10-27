@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
+import useWindowSize from '../hooks/useWindowSize';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import MainPage from '../component/login/LoginPage';
@@ -8,6 +9,10 @@ import Developers from '../component/login/Developer';
 function Login() {
     const [isLoading, setIsLoading] = useState(false);
     const outerDivRef = useRef();
+    const { width } = useWindowSize();
+    const isPC = useMemo(() => {
+        return width >= 1024;
+    }, [width]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -82,7 +87,7 @@ function Login() {
             )}
             <Outer ref={outerDivRef} className="outer">
                 <MainPage id="main" bgColor="skyblue" />
-                <Developers />
+                {isPC ? <Developers /> : null}
             </Outer>
         </>
     );

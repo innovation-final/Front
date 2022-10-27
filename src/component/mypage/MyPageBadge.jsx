@@ -26,7 +26,14 @@ function MypageBadge({ badge }) {
             <BadgeGrid>
                 <BadgeContainer>
                     {isInclude('POST') ? (
-                        <BadgeImg src={post} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={post} />
+                            </Box>
+                            <BoxInfo>
+                                <p>커뮤니티/ 10개 이상 글 써서 얻었습니다!</p>
+                            </BoxInfo>
+                        </Boxwrap>
                     ) : (
                         <Boxwrap>
                             <Box>
@@ -45,7 +52,17 @@ function MypageBadge({ badge }) {
                 </BadgeContainer>
                 <BadgeContainer>
                     {isInclude('COMMENT') ? (
-                        <BadgeImg src={comment} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={comment} />
+                                <BoxInfo>
+                                    <p>
+                                        커뮤니티/ 작성된 글에서 10개 이상 댓글
+                                        달아서 얻었습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     ) : (
                         <Boxwrap>
                             <Box>
@@ -63,7 +80,17 @@ function MypageBadge({ badge }) {
                 </BadgeContainer>
                 <BadgeContainer>
                     {isInclude('LIKE') ? (
-                        <BadgeImg src={like} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={like} />
+                                <BoxInfo>
+                                    <p>
+                                        커뮤니티/ 작성한 글 합산 좋아요 10개
+                                        이상 받아서 얻었습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     ) : (
                         <Boxwrap>
                             <Box>
@@ -81,7 +108,14 @@ function MypageBadge({ badge }) {
                 </BadgeContainer>
                 <BadgeContainer>
                     {isInclude('DISLIKE') ? (
-                        <BadgeImg src={dislike} />
+                        <Box>
+                            <BadgeImg src={dislike} />
+                            <BoxInfo>
+                                <p>
+                                    커뮤니티/ 싫어요를 20개 받아서 얻었습니다!😢
+                                </p>
+                            </BoxInfo>
+                        </Box>
                     ) : (
                         <Box>
                             <BadgeImg src={mark} />
@@ -97,7 +131,17 @@ function MypageBadge({ badge }) {
                 </BadgeContainer>
                 <BadgeContainer>
                     {isInclude('VIEW') ? (
-                        <BadgeImg src={kinds} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={kinds} />
+                                <BoxInfo>
+                                    <p>
+                                        커뮤니티/ 작성된 글 합산 조회 수 50회
+                                        넘어서 얻었습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     ) : (
                         <Boxwrap>
                             <Box>
@@ -105,7 +149,7 @@ function MypageBadge({ badge }) {
                                 <BoxInfo>
                                     <p>
                                         커뮤니티/ 작성된 글 합산 조회 수 ?회
-                                        이상 넘으면 받을 수 있습니다!
+                                        이상 넘으면 얻을 수 있습니다!
                                     </p>
                                 </BoxInfo>
                             </Box>
@@ -115,7 +159,16 @@ function MypageBadge({ badge }) {
                 </BadgeContainer>
                 <BadgeContainer>
                     {isInclude('BUY') ? (
-                        <BadgeImg src={buyStock} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={buyStock} />
+                                <BoxInfo>
+                                    <p>
+                                        모의투자/ 첫 주식 매수해서 얻었습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     ) : (
                         <Boxwrap>
                             <Box>
@@ -133,7 +186,17 @@ function MypageBadge({ badge }) {
                 </BadgeContainer>
                 <BadgeContainer>
                     {isInclude('STOCKHOLD') ? (
-                        <BadgeImg src={manyStock} />
+                        <Boxwrap>
+                            <Box>
+                                <BadgeImg src={manyStock} />
+                                <BoxInfo>
+                                    <p>
+                                        모의투자/ 한 종목에서 100주 이상
+                                        매수하셔서 얻었습니다!
+                                    </p>
+                                </BoxInfo>
+                            </Box>
+                        </Boxwrap>
                     ) : (
                         <Boxwrap>
                             <Box>

@@ -76,8 +76,11 @@ function Bought() {
                     },
                     {
                         onError: error => {
-                            if (error.response.status === 400) {
-                                Swal.fire('주문 수량을 확인해주세요.');
+                            if (
+                                error.response.data.error.message ===
+                                'Over Balance'
+                            ) {
+                                Swal.fire('잔액을 확인해주세요.');
                                 return;
                             } else if (
                                 error.response.data.error.code ===
@@ -239,7 +242,7 @@ const Radios = styled.div`
     label {
         [type='radio'] {
             appearance: none;
-            border: max(2px, 0.1em) solid gray;
+            border: max(2px, 0.1em) solid ${props => props.theme.secondaryColor};
             border-radius: 50%;
             transition: all ease-in-out 0.1s;
             margin: 0px 10px;

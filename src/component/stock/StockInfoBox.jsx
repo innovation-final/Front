@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useMutation, useQueryClient } from 'react-query';
 import FavoritesIcon from '../elements/FavoritesIcon';
 import {
@@ -11,6 +11,7 @@ import {
 } from '../../util/parser';
 import { isDarkState } from '../../atoms/common/commonState';
 import { stockAPI } from '../../shared/api';
+import currentStockCode from '../../atoms/investment/stockState';
 
 function StockInfoBox({ stockData }) {
     const {
@@ -27,8 +28,15 @@ function StockInfoBox({ stockData }) {
         prevPrice,
     } = stockData;
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const isDark = useRecoilValue(isDarkState);
+    const setCurrentCode = useSetRecoilState(currentStockCode);
     const dayToDay = close && close - prevPrice.close;
+
+    const onClickInvestment = () => {
+        setCurrentCode(code);
+        navigate('/investment');
+    };
 
     const colorParser = value => {
         if (value === 0) return isDark === 'darkMode' ? 'white' : 'black';
@@ -77,43 +85,54 @@ function StockInfoBox({ stockData }) {
 
     return (
         <StockInfoContainer>
-            <StockInfoLeftBox>
-                <StockInfoTitleBox>
-                    <StyleFavorite>
-                        {!doneInterest ? (
-                            <LikeBtn done={like} onClick={e => likeHandler(e)}>
-                                <FavoritesIcon isFavorites={doneInterest} />
-                            </LikeBtn>
-                        ) : (
-                            <DeleteLikeBtn
-                                done={like}
-                                onClick={e => dislikeHandler(e)}
-                            >
-                                <FavoritesIcon isFavorites={doneInterest} />
-                            </DeleteLikeBtn>
-                        )}
+            <LeftContainer>
+                <StockInfoLeftBox>
+                    <StockInfoTitleBox>
+                        <StyleFavorite>
+                            {!doneInterest ? (
+                                <LikeBtn
+                                    done={like}
+                                    onClick={e => likeHandler(e)}
+                                >
+                                    <FavoritesIcon isFavorites={doneInterest} />
+                                </LikeBtn>
+                            ) : (
+                                <DeleteLikeBtn
+                                    done={like}
+                                    onClick={e => dislikeHandler(e)}
+                                >
+                                    <FavoritesIcon isFavorites={doneInterest} />
+                                </DeleteLikeBtn>
+                            )}
 
-                        <StockInfoName
-                            onClick={() => navigate(`/stock/${code}`)}
-                        >
-                            {name}
-                        </StockInfoName>
-                    </StyleFavorite>
-                    <StockInfoCode>{`E${code}`}</StockInfoCode>
-                    <StockInfoType>{isKospi}</StockInfoType>
-                    <StockDate>{date}</StockDate>
-                </StockInfoTitleBox>
-                <StockInfoTitleBox>
-                    <StockInfoPrice>{`${esUSNumberParser(
-                        close,
-                    )} KRW`}</StockInfoPrice>
-                    <StockInfoRate colorParser={colorParser(dayToDay)}>
-                        {`전일대비 ${arrowParser(dayToDay)}
+                            <StockInfoName
+                                onClick={() => navigate(`/stock/${code}`)}
+                            >
+                                {name}
+                            </StockInfoName>
+                        </StyleFavorite>
+                        <StockInfoCode>{`E${code}`}</StockInfoCode>
+                        <StockInfoType>{isKospi}</StockInfoType>
+                        <StockDate>{date}</StockDate>
+                    </StockInfoTitleBox>
+                    <StockInfoTitleBox>
+                        <StockInfoPrice>{`${esUSNumberParser(
+                            close,
+                        )} KRW`}</StockInfoPrice>
+                        <StockInfoRate colorParser={colorParser(dayToDay)}>
+                            {`전일대비 ${arrowParser(dayToDay)}
                           ${esUSNumberParser(dayToDay)} |
                         등락률 ${toFixTwoPoint(change)}%`}
-                    </StockInfoRate>
-                </StockInfoTitleBox>
-            </StockInfoLeftBox>
+                        </StockInfoRate>
+                    </StockInfoTitleBox>
+                </StockInfoLeftBox>
+                <InvestmentButton
+                    onClick={onClickInvestment}
+                    $locate={pathname === '/investment'}
+                >
+                    모의투자 바로가기
+                </InvestmentButton>
+            </LeftContainer>
             <StockInfoRightBox>
                 <StockInfoRightTopBox>
                     <StockInfoPrevious>
@@ -134,14 +153,22 @@ function StockInfoBox({ stockData }) {
 
 export default StockInfoBox;
 const StockInfoContainer = styled.div`
+    position: relative;
     display: flex;
     justify-content: space-between;
     height: 50px;
     margin-bottom: 20px;
 `;
 const StockInfoLeftBox = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
+    margin-right: 10px;
+`;
+
+const LeftContainer = styled.div`
+    display: flex;
+    flex-direction: row;
 `;
 const StockInfoTitleBox = styled.div`
     display: flex;
@@ -212,4 +239,23 @@ const LikeBtn = styled.div`
 `;
 const DeleteLikeBtn = styled.div`
     width: 30px;
+`;
+const InvestmentButton = styled.div`
+    display: none;
+
+    @media screen and (min-width: 1050px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2px 5px;
+        border-radius: 15px;
+        font-size: 13px;
+        letter-spacing: -1px;
+        visibility: ${props => (props.$locate ? 'hidden' : 'visible')};
+        background-color: ${props => props.theme.secondaryColor};
+        cursor: pointer;
+        &:hover {
+            background-color: ${props => props.theme.hoverSecondaryColor};
+        }
+    }
 `;
