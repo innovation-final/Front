@@ -7,5 +7,5 @@ export const listeningState = atom({
 
 export const alarmState = atom({
     key: 'alarm',
-    default: 0,
+    default: Number(localStorage.getItem('newNoti')) || 0,
 });

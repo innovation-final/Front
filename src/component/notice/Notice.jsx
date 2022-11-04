@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -14,8 +14,7 @@ import { noticeAPI } from '../../shared/api';
 function Notice({ setModalOpen, modalOpen }) {
     const { data } = useGetUser();
     const id = data && data.id;
-    const notices = useAlarm();
-    const notice = notices.data;
+    const { data: notice, refetch } = useAlarm();
     const queryClient = useQueryClient();
 
     const deleteNotices = async () => {
@@ -52,6 +51,10 @@ function Notice({ setModalOpen, modalOpen }) {
             }
         });
     };
+
+    useEffect(() => {
+        refetch();
+    }, []);
 
     return (
         <Container modalOpen={modalOpen}>
@@ -96,10 +99,10 @@ const Container = styled.div`
     width: 400px;
     height: 300px;
     position: fixed;
+    background-color: ${props => props.theme.bgColor};
     left: 63%;
     margin-top: 30px;
     transform: translate(50%, 5%);
-    background-color: #ffffff;
     border: 2px solid ${props => props.theme.borderColor};
     border-radius: 8px;
     z-index: 30;

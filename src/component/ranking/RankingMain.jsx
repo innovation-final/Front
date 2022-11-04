@@ -10,6 +10,7 @@ import useRank from '../../hooks/useRank';
 import useLike from '../../hooks/useLike';
 import MainContainer from '../main/MainContainer';
 import { wideState } from '../../atoms/common/commonState';
+import MedalLike from './MedalLike';
 
 function RankingMain() {
     const wide = useRecoilState(wideState);
@@ -23,6 +24,7 @@ function RankingMain() {
     const like = useLike();
     const likes = like;
     const likeRank = likes && likes?.data;
+
     return (
         <Wrapper>
             <IconLayout $wide={wide}>
@@ -46,13 +48,6 @@ function RankingMain() {
                     </Icon>
                     커뮤니티 좋아요 랭킹
                 </IconButton>
-                {/* <SelectLayout>
-                    <SelectBox
-                        options={options}
-                        selectedOption={option}
-                        _getOption={getOption}
-                    />
-                </SelectLayout> */}
             </IconLayout>
             <MainContainer>
                 <Container>
@@ -75,7 +70,11 @@ function RankingMain() {
                 </Container>
 
                 <BadgeContainer>
-                    <Medal ranks={ranks} />
+                    {page === 'investment' ? (
+                        <Medal ranks={ranks} />
+                    ) : (
+                        <MedalLike likeRank={likeRank} />
+                    )}
                 </BadgeContainer>
             </MainContainer>
         </Wrapper>

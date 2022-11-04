@@ -77,17 +77,19 @@ function Bought() {
                     {
                         onError: error => {
                             if (
-                                error.response.data.error.code === 'ORDER_FAIL'
+                                error.response.data.error.message ===
+                                'Over Balance'
                             ) {
-                                Swal.fire('주문 수량을 확인해주세요.');
-                            }
-                            if (
+                                Swal.fire('잔액을 확인해주세요.');
+                                return;
+                            } else if (
                                 error.response.data.error.code ===
                                 'OUT_OF_MARKET_HOUR'
                             ) {
                                 Swal.fire(
                                     '장마감입니다. / 장시간 (09:00~21:00)',
                                 );
+                                return;
                             } else {
                                 Swal.fire('서버 오류입니다.');
                             }
@@ -100,6 +102,7 @@ function Bought() {
                             setQuantity(0);
                             setPrice(0);
                             setIsMarket(false);
+                            priceRef.current.disabled = false;
                         },
                     },
                 );
@@ -149,6 +152,7 @@ function Bought() {
                 <Input
                     type="number"
                     min="0"
+                    max="1000"
                     value={Number(quantity)}
                     onChange={event => onChange(event, setQuantity)}
                     onBlur={event => onBlur(event, setQuantity, qunatityRef)}
@@ -239,7 +243,7 @@ const Radios = styled.div`
     label {
         [type='radio'] {
             appearance: none;
-            border: max(2px, 0.1em) solid gray;
+            border: max(2px, 0.1em) solid ${props => props.theme.secondaryColor};
             border-radius: 50%;
             transition: all ease-in-out 0.1s;
             margin: 0px 10px;

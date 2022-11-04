@@ -9,10 +9,13 @@ import MainContainer from '../main/MainContainer';
 import { stockAPI } from '../../shared/api';
 import InterestNewsList from './InterestNews';
 import InterestPost from './InterestPost';
+import LoadingSpinner from '../elements/LoadingSpinner';
 
 function InterestMain() {
     const [param, setParam] = useState('');
-    const { data } = useQuery(['stock'], () => stockAPI.getLikeStock());
+    const { data, isLoading } = useQuery(['stock'], () =>
+        stockAPI.getLikeStock(),
+    );
 
     const interestStock = data?.data.data;
     const onClick = code => {
@@ -32,33 +35,42 @@ function InterestMain() {
                         <ListIcon />
                         <Text>관심 등록한 주식 리스트</Text>
                     </IconLayout>
-                    {interestStock &&
-                        interestStock.map((interestStocks, index) => {
-                            return index === nowColorNum ? (
-                                <InterestStockList
-                                    key={interestStocks.name}
-                                    _onClick={() =>
-                                        onClick(interestStocks.code)
-                                    }
-                                    interestStocks={interestStocks}
-                                    className="checked"
-                                    indexNum={index}
-                                    nowColorNum={nowColorNum}
-                                    colorChange={colorChange}
-                                />
-                            ) : (
-                                <InterestStockList
-                                    key={interestStocks.name}
-                                    _onClick={() =>
-                                        onClick(interestStocks.code)
-                                    }
-                                    interestStocks={interestStocks}
-                                    indexNum={index}
-                                    nowColorNum={nowColorNum}
-                                    colorChange={colorChange}
-                                />
-                            );
-                        })}
+                    {isLoading ? (
+                        <LoadingWrapper>
+                            <LoadingSpinner />
+                        </LoadingWrapper>
+                    ) : (
+                        <>
+                            {interestStock &&
+                                interestStock.map((interestStocks, index) => {
+                                    return index === nowColorNum ? (
+                                        <InterestStockList
+                                            key={interestStocks.name}
+                                            _onClick={() =>
+                                                onClick(interestStocks.code)
+                                            }
+                                            interestStocks={interestStocks}
+                                            className="checked"
+                                            indexNum={index}
+                                            nowColorNum={nowColorNum}
+                                            colorChange={colorChange}
+                                        />
+                                    ) : (
+                                        <InterestStockList
+                                            key={interestStocks.name}
+                                            _onClick={() =>
+                                                onClick(interestStocks.code)
+                                            }
+                                            interestStocks={interestStocks}
+                                            indexNum={index}
+                                            nowColorNum={nowColorNum}
+                                            colorChange={colorChange}
+                                        />
+                                    );
+                                })}
+                        </>
+                    )}
+
                     {/* <Button>
                         <EditCogBtn />
                     </Button> */}
@@ -142,4 +154,12 @@ const IconLayout = styled.div`
     display: flex;
     align-items: center;
     margin: 5px;
+`;
+
+const LoadingWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

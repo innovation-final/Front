@@ -22,7 +22,7 @@ function LoginHeader() {
                 >
                     <li>
                         <Link to="#main" className="menu-item">
-                            PC환경에서 사용을 권장합니다.
+                            PC화면에서 사용을 권장합니다.
                         </Link>
                     </li>
                 </ul>
@@ -38,7 +38,7 @@ const Header = styled.header`
     height: 100%;
     display: flex;
     justify-content: center;
-    position: fixed;
+    position: absolute;
     top: 100px;
     left: 50px;
 

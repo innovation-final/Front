@@ -16,14 +16,12 @@ function ChartCandleStick({ name, width, code, height }) {
         const getValueData = async () => {
             const newValue = [];
             const reqData = await api.get(`/stock/${code}`);
-            const resData = reqData.data.data.stockDetail
-                .slice(-30, -1)
-                .map(v => {
-                    return {
-                        x: v.date,
-                        y: [v.open, v.high, v.low, v.close],
-                    };
-                });
+            const resData = reqData.data.data.stockDetail.slice(-30).map(v => {
+                return {
+                    x: v.date,
+                    y: [v.open, v.high, v.low, v.close],
+                };
+            });
             for (let i = 0; i < resData.length; i += 1) {
                 newValue.push(resData[i]);
             }
@@ -91,6 +89,14 @@ function ChartCandleStick({ name, width, code, height }) {
                             },
                             noData: {
                                 text: 'Loading..',
+                            },
+                            plotOptions: {
+                                candlestick: {
+                                    colors: {
+                                        downward: '#4c5fca',
+                                        upward: '#EF403C',
+                                    },
+                                },
                             },
                         }}
                         width={width}

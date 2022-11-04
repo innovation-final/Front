@@ -66,6 +66,7 @@ const Title = styled.div`
     font-weight: 600;
     font-size: 1.3vw;
     line-height: 50px;
+    font-size: 1.8rem;
 `;
 
 const ArticleWrapper = styled.div`
@@ -111,6 +112,9 @@ const ArticleTitle = styled.div`
     letter-spacing: -1px;
     font-size: 14.5px;
     margin-left: -10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 const ArticleDate = styled.div`

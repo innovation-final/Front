@@ -36,7 +36,7 @@ function Status() {
         setOption2(selected);
     };
 
-    const { data, isLoading, refetch } = useGetOrder(
+    const { data, isLoading, isError, refetch } = useGetOrder(
         dateParser(startDate),
         dateParser(endDate),
         option2,
@@ -92,6 +92,8 @@ function Status() {
             <Contents>
                 {isLoading ? (
                     <LoadingSpinner />
+                ) : isError ? (
+                    <div>정보가 없습니다.</div>
                 ) : (
                     renderData(data, option2, option)
                 )}

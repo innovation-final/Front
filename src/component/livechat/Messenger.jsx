@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import * as StompJs from '@stomp/stompjs';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ChatScreen from './ChatScreen';
 import { userState } from '../../atoms/user/userState';
 import { chatLogState, toggleLiveChat } from '../../atoms/chat/chatState';
@@ -11,10 +12,11 @@ const UpAnimation = {
     start: { opacity: 0, y: 50 },
     end: { opacity: 1, y: 0 },
 };
-const WS_URL = 'ws://hakjoonkim.shop/stomp';
+const WS_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 function Messenger() {
     const setChatList = useSetRecoilState(chatLogState);
+    const [currentUser, setCurrent] = useState(0);
     const onChat = useRecoilValue(toggleLiveChat);
     const user = useRecoilValue(userState);
     const client = useRef({});
@@ -34,6 +36,7 @@ function Messenger() {
             subscribeCallback(jsonBody, setChatList);
         });
     };
+
     const publish = (ch, type) => {
         if (!client.current.connected) return;
         client.current.publish({
@@ -52,7 +55,6 @@ function Messenger() {
         client.current = new StompJs.Client({
             brokerURL: WS_URL,
             onConnect: () => {
-                console.log('success');
                 subscribe(setChatList);
             },
         });
@@ -75,6 +77,10 @@ function Messenger() {
             <Speaker />
             <ChatScreen publish={publish} user={user} />
             <HomeButton />
+            <CurrentPerson>
+                <PeopleAltIcon />
+                {currentUser}
+            </CurrentPerson>
         </StyleMessenger>
     );
 }
@@ -132,4 +138,21 @@ const Speaker = styled.span`
     border-radius: 10px;
     top: 25px;
     background-color: gray;
+`;
+
+const CurrentPerson = styled.div`
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    z-index: 10;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15px;
+
+    top: -15px;
+    right: 15px;
 `;

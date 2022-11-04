@@ -22,8 +22,8 @@ function MypageEdit() {
     const [isEdit, setIsEdit] = React.useState(false);
 
     // 사진 수정,미리보기
-    const [img, setImg] = useState('');
-    const [userImage, setUserImage] = useState('');
+    const [img, setImg] = useState(null);
+    const [userImage, setUserImage] = useState(null);
     const onChangeImg = e => {
         e.preventDefault();
         imageInput.current.click();
@@ -65,9 +65,11 @@ function MypageEdit() {
     };
 
     // 자기소개
-    const [editProfileMsg, setProfileMsg] = React.useState(profileMsg);
+    const [editProfileMsg, setProfileMsg] = React.useState(
+        profileMsg === null ? '' : profileMsg,
+    );
     const onChangeProfileMsg = event => {
-        setProfileMsg(event.target.value);
+        setProfileMsg(event.target.value === null ? '' : event.target.value);
     };
 
     // 탈퇴
@@ -115,7 +117,11 @@ function MypageEdit() {
     };
     const onClickSetEdit = () => {
         setEditNickName(nickname);
-        setProfileMsg(profileMsg);
+        if (profileMsg === null) {
+            setProfileMsg('');
+        } else {
+            setProfileMsg(profileMsg);
+        }
         setIsEdit(true);
     };
 
@@ -138,14 +144,10 @@ function MypageEdit() {
             if (result.isConfirmed) {
                 setIsEdit(false);
                 const formData = new FormData();
-                formData.append(
-                    'mypage',
-                    new Blob([JSON.stringify()], {
-                        type: 'application/json',
-                    }),
-                );
                 // key값 서버랑 동일해야됨
-                formData.append('profileImg', img);
+                if (img !== null) {
+                    formData.append('profileImg', img);
+                }
                 formData.append('nickname', editNickName);
                 formData.append('profileMsg', editProfileMsg);
 
@@ -155,7 +157,30 @@ function MypageEdit() {
                         localStorage.setItem('nickName', editNickName);
                         localStorage.setItem('imgUrl', userImage);
                     },
-                    onError: () => {
+                    onError: error => {
+                        if (
+                            error.response.data.error.code ===
+                            'NICKNAME_SIZE_OVER'
+                        ) {
+                            Swal.fire('닉네임이 너무 깁니다.(20자 이내)');
+                            return;
+                        }
+                        if (
+                            error.response.data.error.code ===
+                            'PROFILE_MSG_SIZE_OVER'
+                        ) {
+                            Swal.fire('프로필메시지가 너무 깁니다.(50자 이내)');
+                            return;
+                        }
+                        if (
+                            error.response.data.error.code ===
+                            'BOTH_SIZE_OVER"),'
+                        ) {
+                            Swal.fire(
+                                '닉네임과 프로필메시지가 너무 깁니다.(20자 이내, 50자 이내)',
+                            );
+                            return;
+                        }
                         Swal.fire('서버 오류입니다.');
                     },
                 });
@@ -170,7 +195,7 @@ function MypageEdit() {
                     <>
                         <Button onClick={onClickSetEdit}>
                             <EditCogBtn src={editcog} />
-                        </Button>{' '}
+                        </Button>
                         <ImgCard>
                             <CardMedia src={profileImg} />
                         </ImgCard>
@@ -207,10 +232,13 @@ function MypageEdit() {
                     </>
                 ) : (
                     <>
-                        <EditLayout onClick={onClickEdit}>
-                            <EditButton>수정완료</EditButton>
-                        </EditLayout>
                         <ImgCard>
+                            {' '}
+                            <WithdrawLayout>
+                                <WithdrawButton onClick={onDelete}>
+                                    회원탈퇴
+                                </WithdrawButton>
+                            </WithdrawLayout>
                             {profileImg && (
                                 <CardMedia
                                     src={userImage || profileImg}
@@ -238,9 +266,9 @@ function MypageEdit() {
                             <InputBox>
                                 <Input
                                     onChange={onChangeNickName}
-                                    placeholder="닉네임 (6자 이내)"
+                                    placeholder="닉네임"
                                     value={editNickName}
-                                    maxLength={6}
+                                    maxLength={20}
                                 />
                             </InputBox>
                             <ProfileMsgBox>
@@ -250,15 +278,14 @@ function MypageEdit() {
                                     value={editProfileMsg || ''}
                                     maxLength={50}
                                 />
-                            </ProfileMsgBox>{' '}
-                        </InputContent>{' '}
-                        <WithdrawLayout>
-                            <WithdrawButton onClick={onDelete}>
-                                회원탈퇴
-                            </WithdrawButton>
-                        </WithdrawLayout>
+                            </ProfileMsgBox>
+                        </InputContent>
+
+                        <EditLayout onClick={onClickEdit}>
+                            <EditButton>수정완료</EditButton>
+                        </EditLayout>
                     </>
-                )}{' '}
+                )}
             </ProfileCard>
         </div>
     );
@@ -318,10 +345,10 @@ const Button = styled.button`
 `;
 const EditLayout = styled.div`
     margin-top: 10px;
-    position: absolute;
+    display: flex;
+    justify-content: center;
     z-index: 15;
-    top: 7px;
-    right: 0;
+    margin-top: -80px;
 `;
 const EditButton = styled.span`
     margin: 10px;
@@ -332,8 +359,6 @@ const EditButton = styled.span`
     font-weight: bold;
     font-size: 15px;
     padding: 10px;
-    right: 2px;
-    top: 50px;
 `;
 const InputContent = styled.div`
     padding: 60px;
@@ -346,23 +371,19 @@ const ContentLayout = styled.div`
 const WithdrawLayout = styled.div`
     margin-top: 5px;
     position: absolute;
-    right: 16%;
-    bottom: 10%;
+    left: 10px;
+    top: 1%;
 `;
 const WithdrawButton = styled.button`
     background-color: transparent;
-    border: 1px solid #e64343;
+    border: none;
     border-radius: 5px;
     font-size: 10px;
     color: ${props => props.theme.withDrawTextColor};
     cursor: pointer;
     padding: 5px;
-    background-color: rgba(254, 112, 112, 0.13);
     width: 60px;
     position: absolute;
-    &:hover {
-        background-color: #ff5858;
-    }
 `;
 const CogBtn = styled.img`
     width: 40px;

@@ -78,9 +78,18 @@ function Sold() {
                     {
                         onError: error => {
                             if (
-                                error.response.data.error.code === 'ORDER_FAIL'
+                                error.response.data.error.message ===
+                                'Over Holding Amount'
                             ) {
-                                Swal.fire('주문 수량을 확인해주세요.');
+                                Swal.fire('보유 갯수를 초과하였습니다..');
+                                return;
+                            }
+                            if (
+                                error.response.data.error.message ===
+                                'Not Owner of the Stock'
+                            ) {
+                                Swal.fire('보유하지 않은 주식입니다.');
+                                return;
                             }
                             if (
                                 error.response.data.error.code ===
@@ -89,8 +98,10 @@ function Sold() {
                                 Swal.fire(
                                     '장마감입니다. / 장시간 (09:00~21:00)',
                                 );
+                                return;
                             } else {
                                 Swal.fire('서버 오류입니다.');
+                                return;
                             }
                         },
                         onSuccess: () => {
@@ -101,6 +112,7 @@ function Sold() {
                             setQuantity(0);
                             setPrice(0);
                             setIsMarket(false);
+                            priceRef.current.disabled = false;
                         },
                     },
                 );
@@ -109,8 +121,6 @@ function Sold() {
                 setQuantity(0);
                 setPrice(0);
                 setIsMarket(false);
-                /* eslint-disable no-param-reassign */
-                priceRef.current.disabled = true;
             } else {
                 Swal.fire('취소하였습니다.');
             }
@@ -155,6 +165,7 @@ function Sold() {
                 <Input
                     type="number"
                     min="0"
+                    max="1000"
                     value={Number(quantity)}
                     onChange={event => onChange(event, setQuantity)}
                     onBlur={event => onBlur(event, setQuantity, qunatityRef)}
@@ -245,7 +256,7 @@ const Radios = styled.div`
     label {
         [type='radio'] {
             appearance: none;
-            border: max(2px, 0.1em) solid gray;
+            border: max(2px, 0.1em) solid ${props => props.theme.secondaryColor};
             border-radius: 50%;
             transition: all ease-in-out 0.1s;
             margin: 0px 10px;

@@ -163,6 +163,7 @@ function BoardWrite({ isEdit, originData }) {
                             type="text"
                             placeholder="제목"
                             value={title}
+                            maxLength={20}
                             onChange={onChangeTitleHandler}
                         />
                     </CardDiv>
@@ -194,6 +195,7 @@ function BoardWrite({ isEdit, originData }) {
 export default BoardWrite;
 const WriteTitle = styled.div`
     display: flex;
+    margin-top: 10px;
     margin-bottom: 10px;
     height: 20px;
     align-items: center;

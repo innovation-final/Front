@@ -62,7 +62,10 @@ function SideBar() {
     ];
     const menuBottomItems = [
         {
-            title: '다크모드',
+            title:
+                localStorage.getItem('app_theme') !== 'darkMode'
+                    ? '다크모드'
+                    : '라이트모드',
             onClickFn: () => handler(),
         },
         {

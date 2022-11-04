@@ -68,6 +68,7 @@ const Buttons = styled.div`
     justify-content: space-evenly;
     align-items: center;
     margin-bottom: 20px;
+    cursor: pointer;
 `;
 const Button = styled.button`
     border: 2px solid ${props => props.theme.secondaryColor};
